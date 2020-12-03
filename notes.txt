@@ -259,6 +259,32 @@ Redirections using file descriptors greater than 9 should be used with care, as 
 descriptors the shell uses internally.
 
 Redirecting Input:
+Redirection of input causes the file whose name results from the expansion of word to be opened for reading on 
+file descriptor n, or the standard input (file descriptor 0) if n is not specified.
+e.g. [n]<word
 
+Redirecting Output:
+Redirection of output causes the file whose name results from the expansion of word to be opened for writing on 
+file descriptor n, or the standard output (file descriptor 1) if n is not specified. If the file does not exist 
+it is created; if it does exist it is truncated to zero size.
+e.g. [n]>[|]word
 
+Appending Redirected Output
+Redirection of output in this fashion causes the file whose name results from the expansion of word to be opened 
+for appending on file descriptor n, or the standard output (file descriptor 1) if n is not specified. If the file 
+does not exist it is created.
+e.g. [n]>>word
 
+TOMORROW:
+I can really understand the 
+malloc, free, write, open, read, close, fork, wait,
+waitpid, wait3, wait4, signal, kill, exit
+functions and finish parser basic
+me echo?
+
+sanne can
+really understand the 
+getcwd, chdir, stat, lstat, fstat, execve, dup, dup2, pipe,
+opendir, readdir, closedir, strerror, errno
+functions and decide what she wants to do
+pwd?

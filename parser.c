@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/03 18:18:57 by avan-dam      ########   odam.nl         */
+/*   Updated: 2020/12/04 16:10:56 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,61 @@ int		ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int		check_liney(char **liney)
+void	ft_first_word(char *liney, t_mini *mini)
 {
-	if (ft_strcmp(*liney, "echo") == 0)
-		printf("I got an echo baby");
-	else if (ft_strcmp(*liney, "cd") == 0)
-		printf("I got an cd baby");
-	else if (ft_strcmp(*liney, "pwd") == 0)
-		printf("I got a PWD baby");
-	else if (ft_strcmp(*liney, "export") == 0)
-		printf("I got an export baby");
-	else if (ft_strcmp(*liney, "unset") == 0)
-		printf("I got an UNSNET baby");
-	else if (ft_strcmp(*liney, "env") == 0)
-		printf("I got an ENV baby");
-	else if (ft_strcmp(*liney, "exit") == 0)
+	int i;
+	int j;
+	int k;
+	i = 0;
+	j = 0;
+	while (liney[i] != '\n' && liney[i] != '\0' && liney[i] != ' ')
+		i++;
+	mini->command = (char *)malloc(sizeof(char) * (i + 1));
+	while (j < i)
 	{
-		printf("I got an exit baby");
+		mini->command[j] = liney[j];
+		j++;
+	}
+	mini->command[j] = '\0';
+	while (liney[j] != '\0')
+		j++;
+	i++;
+	k = 0;
+	mini->more = (char *)malloc(sizeof(char) * (i + 1));
+	while (k < j)
+	{
+		mini->more[k] = liney[i];
+		i++;
+		k++;
+	}
+	mini->more[k] = '\0';
+	return ;
+}
+
+int		check_liney(char **liney, t_mini *mini)
+{	
+	ft_first_word(*liney, mini);
+	if (ft_strcmp(mini->command, "echo") == 0)
+		ft_echo(mini);
+	else if (ft_strcmp(mini->command, "cd") == 0)
+		printf("I got an cd baby\n");
+	else if (ft_strcmp(mini->command, "pwd") == 0)
+		printf("I got a PWD baby\n");
+	else if (ft_strcmp(mini->command, "export") == 0)
+		printf("I got an export baby\n");
+	else if (ft_strcmp(mini->command, "unset") == 0)
+		printf("I got an UNSNET baby\n");
+	else if (ft_strcmp(mini->command, "env") == 0)
+		printf("I got an ENV baby\n");
+	else if (ft_strcmp(mini->command, "exit") == 0)
+	{
+		printf("I got an exit baby\n");
 		liney = NULL;
 		return (-1);
 	}
 	else
 		printf("I do not recgonise the input entered[%s]", *liney);
+	// printf("command = [%s] more = [%s]\n", mini->command, mini->more);
 	liney = NULL;
 	return (0);
 }
@@ -53,17 +86,18 @@ int		main(void)
 {
 	char	*line;
 	int		liney;
+	t_mini	mini;
 
+	ft_memset(&mini, 0, sizeof(t_mini));
 	while (1)
 	{
 		liney = get_next_line(1, &line);
 		if (liney == -1)
 			printf("error");
-		if (check_liney(&line) == -1)
+		if (check_liney(&line, &mini) == -1)
 			return (0);
 	}
 	return (0);
 }
 
-// USE FORK AND WAIT
 

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 17:53:55 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/04 17:55:11 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/04 19:16:25 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 	*lst = NULL;
 	while (store != NULL)
 	{
-		del(store->content);
+		del(store->var1);
+		del(store->var2);
 		me = (store->next);
 		free(store);
 		store = me;
@@ -61,18 +62,23 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 		return ;
 	if (lst)
 	{
-		del(lst->content);
+		del(lst->var1);
+		del(lst->var2);
 		free(lst);
 	}
 }
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+void	ft_lstprint(t_list *lst)
 {
-	if (f == NULL || lst == NULL)
+	if (lst == NULL)
 		return ;
 	while (lst != NULL)
 	{
-		f(lst->content);
+        ft_putstr("vars1 is: ");
+		ft_putstr(lst->var1);
+        ft_putstr(" and vars2 is: ");
+		ft_putstr(lst->var2);
+		ft_putchar('\n');
 		lst = lst->next;
 	}
 }

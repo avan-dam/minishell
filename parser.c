@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/04 16:15:08 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/04 18:10:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ int		check_liney(char **liney, t_mini *mini)
 	else if (ft_strcmp(mini->command, "pwd") == 0)
 		printf("I got a PWD baby\n");
 	else if (ft_strcmp(mini->command, "export") == 0)
-		printf("I got an export baby\n");
+	{
+		printf("command = [%s] more = [%s]\n", mini->command, mini->more);
+		printf("about to go into export\n");
+		ft_export(mini);		
+	}
 	else if (ft_strcmp(mini->command, "unset") == 0)
 		printf("I got an UNSNET baby\n");
 	else if (ft_strcmp(mini->command, "env") == 0)
@@ -76,7 +80,7 @@ int		check_liney(char **liney, t_mini *mini)
 		return (-1);
 	}
 	else
-		printf("I do not recgonise the input entered[%s]", *liney);
+		printf("I do not recgonise the input entered[%s]\n", *liney);
 	liney = NULL;
 	return (0);
 }

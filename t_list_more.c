@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 17:55:31 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/04 17:56:17 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/04 19:09:17 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,7 @@ t_list	*ft_lstlast(t_list *lst)
 	return (lst);
 }
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
-{
-	t_list	*head;
-	t_list	*new;
-
-	if (lst == NULL || f == NULL)
-		return (NULL);
-	head = ft_lstnew(f(lst->content));
-	if (head == NULL)
-		return (NULL);
-	while (lst->next)
-	{
-		lst = lst->next;
-		new = ft_lstnew(f(lst->content));
-		if (new == NULL)
-		{
-			ft_lstclear(&head, del);
-			return (NULL);
-		}
-		ft_lstadd_back(&head, new);
-	}
-	return (head);
-}
-
-t_list	*ft_lstnew(void *content)
+t_list	*ft_lstnew(void *var1, void *var2)
 {
 	t_list	*tmp;
 
@@ -55,7 +31,8 @@ t_list	*ft_lstnew(void *content)
 		return (NULL);
 	if (tmp)
 	{
-		tmp->content = content;
+		tmp->var1 = var1;
+		tmp->var2 = var2;
 		tmp->next = NULL;
 	}
 	return (tmp);

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/04 17:29:26 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/04 17:48:23 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@
 
 typedef struct		s_list
 {
-	void			*content;
+	char			*content;
 	struct s_list	*next;
 }					t_list;
 
 typedef struct		s_mini
 {
-	char	*command;
-	char	*more;
-	int		flag;
-	t_list	tlist;
+	char			*command;
+	char			*more;
+	int				flag;
+	t_list			*tlist;
 }					t_mini;
 
-int		ft_echo(t_mini *mini);
-int		ft_strcmp(const char *s1, const char *s2);
-int		check_liney(char **liney, t_mini *mini);
-void	ft_first_word(char *liney, t_mini *mini);
-void	*ft_memset(void *b, int c, size_t len);
-void	ft_putchar(char c);
-void	ft_putstr(char *s);
+int					ft_echo(t_mini *mini);
+int					ft_strcmp(const char *s1, const char *s2);
+int					check_liney(char **liney, t_mini *mini);
+void				ft_first_word(char *liney, t_mini *mini);
+void				*ft_memset(void *b, int c, size_t len);
+void				ft_putchar(char c);
+void				ft_putstr(char *s);
 
 t_list				*ft_lstnew(void *content);
 void				ft_lstadd_front(t_list **alst, t_list *new);

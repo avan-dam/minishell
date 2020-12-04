@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/04 16:10:56 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/04 16:15:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int		check_liney(char **liney, t_mini *mini)
 	}
 	else
 		printf("I do not recgonise the input entered[%s]", *liney);
-	// printf("command = [%s] more = [%s]\n", mini->command, mini->more);
 	liney = NULL;
 	return (0);
 }
@@ -97,6 +96,7 @@ int		main(void)
 		if (check_liney(&line, &mini) == -1)
 			return (0);
 	}
+	// printf("command = [%s] more = [%s]\n", mini->command, mini->more);
 	return (0);
 }
 

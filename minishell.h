@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/04 16:10:03 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/05 18:34:35 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,8 @@ void	ft_first_word(char *liney, t_mini *mini);
 void	*ft_memset(void *b, int c, size_t len);
 void	ft_putchar(char c);
 void	ft_putstr(char *s);
+
+void	ft_cd(t_mini *mini);
+void	ft_pwd(t_mini *mini);
 
 #endif

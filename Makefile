@@ -6,7 +6,7 @@
 #    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/03 17:24:32 by avan-dam      #+#    #+#                  #
-#    Updated: 2020/12/04 17:32:44 by salbregh      ########   odam.nl          #
+#    Updated: 2020/12/05 17:59:21 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME =		minishell
 
 SRCS =		parser.c \
 			echo.c \
-			utils.c
+			utils.c \
+			newsanne.c
 
 FLAGS = 	-Wall -Werror -Wextra -O3
 

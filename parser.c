@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/04 16:10:56 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/05 19:19:40 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,17 @@ void	ft_first_word(char *liney, t_mini *mini)
 }
 
 int		check_liney(char **liney, t_mini *mini)
-{	
+{
 	ft_first_word(*liney, mini);
 	if (ft_strcmp(mini->command, "echo") == 0)
 		ft_echo(mini);
 	else if (ft_strcmp(mini->command, "cd") == 0)
+	{
 		printf("I got an cd baby\n");
+		ft_cd(mini);
+	}
 	else if (ft_strcmp(mini->command, "pwd") == 0)
-		printf("I got a PWD baby\n");
+		ft_pwd(mini);
 	else if (ft_strcmp(mini->command, "export") == 0)
 		printf("I got an export baby\n");
 	else if (ft_strcmp(mini->command, "unset") == 0)
@@ -99,5 +102,3 @@ int		main(void)
 	}
 	return (0);
 }
-
-

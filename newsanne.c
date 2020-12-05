@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/05 17:59:29 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/05 19:14:53 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/05 20:12:45 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 
 void	ft_cd(t_mini *mini)
 {
+	char	cwd[PATH_MAX];
+
+	printf("current directory: %s\n", getcwd(cwd, sizeof(cwd)));
+	// chdir("..");
+	chdir(mini->more);
+	printf("directory after cd : %s\n", getcwd(cwd, sizeof(cwd)));
 	// input befor minimore: cd
 	printf("GOES IN CD\n");
 	printf("value of mini->more: %s\n", mini->more);
@@ -35,7 +41,7 @@ void	ft_cd(t_mini *mini)
 
 void	ft_pwd(t_mini *mini)
 {
-	char				buf[PATH_MAX];// check is use of limits includes is allowed
+	char				cwd[PATH_MAX];// check is use of limits includes is allowed
 	unsigned long int	i;
 
 	i = 0;
@@ -51,7 +57,7 @@ void	ft_pwd(t_mini *mini)
 			i++;
 		}
 	}
-	if (getcwd(buf, sizeof(buf)) != NULL)
-		ft_putstr(buf);
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		ft_putstr(cwd);
 	ft_putchar('\n');
 }

@@ -6,14 +6,15 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/06 12:38:59 by avan-dam      ########   odam.nl         */
+/*   Updated: 2020/12/06 12:50:36 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-# define CUB3D_H
+# define MINISHELL_H
+# include "gnl/libgnl.h"
 # include <stdio.h>
-# include <stdlib.h> 
+# include <stdlib.h>
 
 typedef struct		s_list
 {

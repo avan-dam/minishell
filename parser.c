@@ -6,11 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2020/12/04 18:10:44 by ambervandam   ########   odam.nl         */
-=======
-/*   Updated: 2020/12/05 19:19:40 by salbregh      ########   odam.nl         */
->>>>>>> origin/sannebranch
+/*   Updated: 2020/12/06 12:43:18 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +23,31 @@ int		ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-void	ft_first_word(char *liney, t_mini *mini)
+static void	ft_find_command(char *line, t_mini *mini)
 {
 	int i;
 	int j;
 	int k;
+
 	i = 0;
 	j = 0;
-	while (liney[i] != '\n' && liney[i] != '\0' && liney[i] != ' ')
+	while (line[i] != '\n' && line[i] != '\0' && line[i] != ' ')
 		i++;
-	mini->command = (char *)malloc(sizeof(char) * (i + 1));
+	mini->command = (char *)malloc(sizeof(char) * (i + 1)); //free
 	while (j < i)
 	{
-		mini->command[j] = liney[j];
+		mini->command[j] = line[j];
 		j++;
 	}
 	mini->command[j] = '\0';
-	while (liney[j] != '\0')
+	while (line[j] != '\0')
 		j++;
 	i++;
 	k = 0;
-	mini->more = (char *)malloc(sizeof(char) * (i + 1));
+	mini->more = (char *)malloc(sizeof(char) * (i + 1)); //free
 	while (k < j)
 	{
-		mini->more[k] = liney[i];
+		mini->more[k] = line[i];
 		i++;
 		k++;
 	}
@@ -58,9 +55,9 @@ void	ft_first_word(char *liney, t_mini *mini)
 	return ;
 }
 
-int		check_liney(char **liney, t_mini *mini)
+static int		ft_parse_input(char **line, t_mini *mini)
 {
-	ft_first_word(*liney, mini);
+	ft_find_command(*line, mini);
 	if (ft_strcmp(mini->command, "echo") == 0)
 		ft_echo(mini);
 	else if (ft_strcmp(mini->command, "cd") == 0)
@@ -74,7 +71,7 @@ int		check_liney(char **liney, t_mini *mini)
 	{
 		printf("command = [%s] more = [%s]\n", mini->command, mini->more);
 		printf("about to go into export\n");
-		ft_export(mini);		
+		ft_export(mini);
 	}
 	else if (ft_strcmp(mini->command, "unset") == 0)
 		printf("I got an UNSNET baby\n");
@@ -83,28 +80,28 @@ int		check_liney(char **liney, t_mini *mini)
 	else if (ft_strcmp(mini->command, "exit") == 0)
 	{
 		printf("I got an exit baby\n");
-		liney = NULL;
+		line = NULL;
 		return (-1);
 	}
 	else
-		printf("I do not recgonise the input entered[%s]\n", *liney);
-	liney = NULL;
+		printf("I do not recgonise the input entered[%s]\n", *line);
+	line = NULL;
 	return (0);
 }
 
 int		main(void)
 {
 	char	*line;
-	int		liney;
+	int		lineret;
 	t_mini	mini;
 
 	ft_memset(&mini, 0, sizeof(t_mini));
 	while (1)
 	{
-		liney = get_next_line(1, &line);
-		if (liney == -1)
-			printf("error");
-		if (check_liney(&line, &mini) == -1)
+		lineret = get_next_line(1, &line);
+		if (lineret < 0)
+			ft_putstr("error");
+		if (ft_parse_input(&line, &mini) == -1)
 			return (0);
 	}
 	// printf("command = [%s] more = [%s]\n", mini->command, mini->more);

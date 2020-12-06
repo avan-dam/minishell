@@ -6,11 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2020/12/04 19:09:29 by ambervandam   ########   odam.nl         */
-=======
-/*   Updated: 2020/12/05 18:34:35 by salbregh      ########   odam.nl         */
->>>>>>> origin/sannebranch
+/*   Updated: 2020/12/06 12:38:59 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +32,6 @@ typedef struct		s_mini
 
 int					ft_echo(t_mini *mini);
 int					ft_strcmp(const char *s1, const char *s2);
-int					check_liney(char **liney, t_mini *mini);
-void				ft_first_word(char *liney, t_mini *mini);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_putchar(char c);
 void				ft_putstr(char *s);

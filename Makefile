@@ -6,7 +6,7 @@
 #    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/06 12:33:02 by avan-dam      #+#    #+#                  #
-#    Updated: 2020/12/06 12:33:42 by avan-dam      ########   odam.nl          #
+#    Updated: 2020/12/06 13:59:38 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,20 +18,27 @@ SRCS =		parser.c \
 			export.c \
 			t_list.c \
 			t_list_more.c \
-			newsanne.c
+			cd.c \
+			pwd.c
 
-FLAGS = 	-Wall -Werror -Wextra -O3
+FLAGS = 	-Wall -Werror -Wextra
 
 OFILES =	$(SRCS:.c=.o)
 
+INCLUDES =	./gnl \
+			./libft
+
 all:		$(NAME)
 
-$(NAME):	$(OFILES)
+$(NAME):	$(OFILES) $(INCLUDES)
 			make -C gnl/
 			cp gnl/libgnl.a .
-			gcc -Lgnl -lgnl -o $(NAME) $(OFILES) $(FLAGS)
+			make -C libft/
+			cp libft/libft.a .
+			$(CC) -Lgnl -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS)
+			
 %.o:		%.c
-			gcc -Ignl $(FLAGS) -c $< -o $@
+			gcc -Ilibft -Ignl $(FLAGS) -c $< -o $@
 
 clean:
 			/bin/rm -f $(OFILES)

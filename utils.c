@@ -6,25 +6,32 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/06 12:39:37 by avan-dam      ########   odam.nl         */
+/*   Updated: 2020/12/06 14:14:48 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libgnl.h"
+// #include "libgnl.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+
+
+// void	*ft_memset(void *b, int c, size_t len)
+// {
+// 	size_t			i;
+// 	unsigned char	*ptr;
+// 	i = 0;
+// 	ptr = b;
+// 	while (i < len)
+// 	{
+// 		ptr[i] = (unsigned char)c;
+// 		i++;
+// 	}
+// 	return (b);
+// }
+
+char	*ft_trim_line(char *line)
 {
-	size_t			i;
-	unsigned char	*ptr;
-	i = 0;
-	ptr = b;
-	while (i < len)
-	{
-		ptr[i] = (unsigned char)c;
-		i++;
-	}
-	return (b);
+	char	*tmp;
 }
 
 void	ft_putchar(char c)

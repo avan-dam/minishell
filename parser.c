@@ -6,22 +6,21 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/06 12:43:18 by avan-dam      ########   odam.nl         */
+/*   Updated: 2020/12/06 14:08:18 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libgnl.h"
 #include "minishell.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
+// int		ft_strcmp(const char *s1, const char *s2)
+// {
+// 	size_t	i;
 
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
+// 	i = 0;
+// 	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+// 		i++;
+// 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+// }
 
 static void	ft_find_command(char *line, t_mini *mini)
 {

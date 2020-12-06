@@ -6,13 +6,14 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/06 12:50:36 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/06 14:02:50 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "gnl/libgnl.h"
+# include "libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 

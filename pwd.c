@@ -6,13 +6,12 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/05 17:59:29 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/06 12:52:24 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/06 14:03:08 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/syslimits.h> // not sure if allowed?
-#include <string.h>
 
 /*
 **	pwd : Print Working Directory
@@ -31,9 +30,9 @@ void	ft_pwd(t_mini *mini)
 	unsigned long int	i;
 
 	i = 0;
-	if (strcmp("", mini->more) != 0) // what is mini->more initialized too?
+	if (ft_strcmp("", mini->more) != 0) // what is mini->more initialized too?
 	{
-		while (i < strlen(mini->more))
+		while (i < ft_strlen(mini->more))
 		{
 			if (mini->more[i] != ' ')
 			{

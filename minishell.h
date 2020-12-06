@@ -6,7 +6,11 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2020/12/04 19:09:29 by ambervandam   ########   odam.nl         */
+=======
+/*   Updated: 2020/12/05 18:34:35 by salbregh      ########   odam.nl         */
+>>>>>>> origin/sannebranch
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +52,8 @@ void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstprint(t_list *lst);
+
+void	ft_cd(t_mini *mini);
+void	ft_pwd(t_mini *mini);
 
 #endif

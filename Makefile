@@ -7,10 +7,14 @@
 #                                                    +#+                       #
 #    Created: 2020/12/03 17:24:32 by avan-dam      #+#    #+#                  #
 <<<<<<< HEAD
+<<<<<<< HEAD
 #    Updated: 2020/12/04 17:32:44 by salbregh      ########   odam.nl          #
 =======
 #    Updated: 2020/12/04 18:11:14 by ambervandam   ########   odam.nl          #
 >>>>>>> origin/env
+=======
+#    Updated: 2020/12/05 17:59:21 by salbregh      ########   odam.nl          #
+>>>>>>> origin/sannebranch
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +23,13 @@ NAME =		minishell
 SRCS =		parser.c \
 			echo.c \
 			utils.c \
+<<<<<<< HEAD
 			export.c \
 			t_list.c \
 			t_list_more.c 
+=======
+			newsanne.c
+>>>>>>> origin/sannebranch
 
 FLAGS = 	-Wall -Werror -Wextra -O3
 

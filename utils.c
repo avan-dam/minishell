@@ -6,7 +6,11 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2020/12/04 18:57:13 by ambervandam   ########   odam.nl         */
+=======
+/*   Updated: 2020/12/05 19:04:50 by salbregh      ########   odam.nl         */
+>>>>>>> origin/sannebranch
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +40,7 @@ void	ft_putstr(char *s)
 {
 	write(1, s, ft_len(s));
 }
+<<<<<<< HEAD
 
 
 int	    ft_strchr_numb(const char *s, int c)
@@ -57,3 +62,5 @@ int	    ft_strchr_numb(const char *s, int c)
 	}
 	return (0);
 }
+=======
+>>>>>>> origin/sannebranch

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/06 14:29:56 by avan-dam      ########   odam.nl         */
+/*   Updated: 2020/12/06 16:17:54 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 // 	return (b);
 // }
 
-char	*ft_trim_line(char *line)
-{
-	char	*tmp;
-}
+// char	*ft_trim_line(char *line)
+// {
+// 	char	*tmp;
+// }
 
 void	ft_putchar(char c)
 {

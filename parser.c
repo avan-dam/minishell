@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/06 14:29:45 by avan-dam      ########   odam.nl         */
+/*   Updated: 2020/12/06 16:22:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,29 @@ static void	ft_find_command(char *line, t_mini *mini)
 static int		ft_parse_input(char **line, t_mini *mini)
 {
 	ft_find_command(*line, mini);
+	printf("before env function\n");
 	ft_check_env(mini);
-	if (ft_strcmp(mini->command, "echo") == 0)
+	printf("after env function\n");
+	if (ft_strncmp(mini->command, "echo", ft_strlen(mini->command)) == 0)
 		ft_echo(mini);
-	else if (ft_strcmp(mini->command, "cd") == 0)
+	else if (ft_strncmp(mini->command, "cd", ft_strlen(mini->command)) == 0)
 	{
 		printf("I got an cd baby\n");
 		ft_cd(mini);
 	}
-	else if (ft_strcmp(mini->command, "pwd") == 0)
+	else if (ft_strncmp(mini->command, "pwd", ft_strlen(mini->command)) == 0)
 		ft_pwd(mini);
-	else if (ft_strcmp(mini->command, "export") == 0)
+	else if (ft_strncmp(mini->command, "export", ft_strlen(mini->command)) == 0)
 	{
 		printf("command = [%s] more = [%s]\n", mini->command, mini->more);
 		printf("about to go into export\n");
 		ft_export(mini);
 	}
-	else if (ft_strcmp(mini->command, "unset") == 0)
+	else if (ft_strncmp(mini->command, "unset", ft_strlen(mini->command)) == 0)
 		printf("I got an UNSNET baby\n");
-	else if (ft_strcmp(mini->command, "env") == 0)
+	else if (ft_strncmp(mini->command, "env", ft_strlen(mini->command)) == 0)
 		printf("I got an ENV baby\n");
-	else if (ft_strcmp(mini->command, "exit") == 0)
+	else if (ft_strncmp(mini->command, "exit", ft_strlen(mini->command)) == 0)
 	{
 		printf("I got an exit baby\n");
 		line = NULL;

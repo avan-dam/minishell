@@ -1,3 +1,15 @@
+GIT:
+Adding amber branch to head:
+git checkout amberbranch                
+git add .
+git commit -m"me"
+git push origin amberbranch
+git checkout master
+git merge amberbranch
+git add .
+git commit -m"merging amber branch"
+git push origin master
+
 External functions allowed:
 - malloc
 - free
@@ -274,17 +286,3 @@ Redirection of output in this fashion causes the file whose name results from th
 for appending on file descriptor n, or the standard output (file descriptor 1) if n is not specified. If the file 
 does not exist it is created.
 e.g. [n]>>word
-
-TOMORROW:
-I can really understand the 
-malloc, free, write, open, read, close, fork, wait,
-waitpid, wait3, wait4, signal, kill, exit
-functions and finish parser basic
-me echo?
-
-sanne can
-really understand the 
-getcwd, chdir, stat, lstat, fstat, execve, dup, dup2, pipe,
-opendir, readdir, closedir, strerror, errno
-functions and decide what she wants to do
-pwd?

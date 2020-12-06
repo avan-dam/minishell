@@ -6,7 +6,11 @@
 #    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/03 17:24:32 by avan-dam      #+#    #+#                  #
+<<<<<<< HEAD
 #    Updated: 2020/12/04 17:32:44 by salbregh      ########   odam.nl          #
+=======
+#    Updated: 2020/12/04 18:11:14 by ambervandam   ########   odam.nl          #
+>>>>>>> origin/env
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +18,10 @@ NAME =		minishell
 
 SRCS =		parser.c \
 			echo.c \
-			utils.c
+			utils.c \
+			export.c \
+			t_list.c \
+			t_list_more.c 
 
 FLAGS = 	-Wall -Werror -Wextra -O3
 

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/06 12:43:18 by avan-dam      ########   odam.nl         */
+/*   Updated: 2020/12/06 14:02:49 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	ft_find_command(char *line, t_mini *mini)
 static int		ft_parse_input(char **line, t_mini *mini)
 {
 	ft_find_command(*line, mini);
+	ft_check_env(mini);
 	if (ft_strcmp(mini->command, "echo") == 0)
 		ft_echo(mini);
 	else if (ft_strcmp(mini->command, "cd") == 0)

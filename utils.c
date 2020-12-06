@@ -29,11 +29,6 @@
 // 	return (b);
 // }
 
-char	*ft_trim_line(char *line)
-{
-	char	*tmp;
-}
-
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);

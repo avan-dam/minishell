@@ -6,7 +6,7 @@
 #    By: sannealbreghs <sannealbreghs@student.co      +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/11/21 13:28:31 by sannealbreg   #+#    #+#                  #
-#    Updated: 2020/12/06 13:48:53 by salbregh      ########   odam.nl          #
+#    Updated: 2020/12/07 07:37:37 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS	=	./ft_memset.c \
 			./ft_tolower.c \
 			./ft_toupper.c \
 			./ft_strncmp.c \
+			./ft_strcmp.c \
 			./ft_strnstr.c \
 			./ft_atoi.c \
 			./ft_calloc.c \
@@ -69,4 +70,4 @@ clean:
 fclean:	clean
 			@/bin/rm -f $(NAME)
 
-re: fclean all
+re: 	fclean all

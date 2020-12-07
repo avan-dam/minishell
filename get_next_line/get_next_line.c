@@ -6,14 +6,14 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 17:58:43 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/06/08 10:29:51 by Amber         ########   odam.nl         */
+/*   Updated: 2020/12/07 09:50:37 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libgnl.h"
+#include "get_next_line.h"
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1000
+# define BUFFER_SIZE 1
 
 #endif
 

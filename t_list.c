@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   t_list.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ambervandam <ambervandam@student.codam.      +#+                     */
+/*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/04 17:53:55 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/04 19:16:25 by ambervandam   ########   odam.nl         */
+/*   Created: 2020/12/07 07:20:21 by salbregh      #+#    #+#                 */
+/*   Updated: 2020/12/07 07:20:23 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void	ft_lstprint(t_list *lst)
 		return ;
 	while (lst != NULL)
 	{
-        ft_putstr("vars1 is: ");
+		ft_putstr("vars1 is: ");
 		ft_putstr(lst->var1);
-        ft_putstr(" and vars2 is: ");
+		ft_putstr(" and vars2 is: ");
 		ft_putstr(lst->var2);
 		ft_putchar('\n');
 		lst = lst->next;

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/07 10:49:59 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/07 12:27:30 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,7 @@ static int		ft_parse_input(char **line, t_mini *mini)
 	if (ft_strncmp(mini->command, "echo", ft_strlen(mini->command)) == 0)
 		ft_echo(mini);
 	else if (ft_strcmp(mini->command, "cd") == 0)
-	{
-		printf("I got an cd baby\n");
 		ft_cd(mini);
-	}
 	else if (ft_strcmp(mini->command, "pwd") == 0)
 		ft_pwd(mini);
 	else if (ft_strcmp(mini->command, "export") == 0)
@@ -141,7 +138,8 @@ static int		ft_parse_input(char **line, t_mini *mini)
 		return (-1);
 	}
 	else
-		printf("I do not recgonise the input entered[%s]\n", *line);
+		printf("bash: %s: command not found\n", mini->command);
+		// printf("I do not recgonise the input entered[%s]\n", *line);
 	// line = NULL;
 	return (0);
 }

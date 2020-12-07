@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/07 08:35:31 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/07 13:44:06 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct		s_mini
 	char			*more;
 	int				flag;
 	char			*path;
+	int				cd;
 	t_list			*tlist;
 }					t_mini;
 

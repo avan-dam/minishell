@@ -3,14 +3,10 @@
 /*                                                        ::::::::            */
 /*   utils.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ambervandam <ambervandam@student.codam.      +#+                     */
+/*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2020/12/07 10:11:25 by salbregh      ########   odam.nl         */
-=======
-/*   Updated: 2020/12/07 08:39:53 by salbregh      ########   odam.nl         */
->>>>>>> sannebranch
+/*   Created: 2020/12/07 10:26:00 by salbregh      #+#    #+#                 */
+/*   Updated: 2020/12/07 10:26:01 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

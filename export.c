@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 18:02:26 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/07 08:47:14 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/07 10:19:59 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,14 @@ int    ft_export(t_mini *mini)
     return (1);
 }
 
-static void ft_replace_env(t_mini *mini, char *var1, char *var2)
+static void ft_replace_env(char *var1, char *var2)
 {
     printf("I am now in my replace function wanting to replace [%s] with [%s]\n", var1, var2);
-    (void)mini;
     (void)var1;
     (void)var2;
 }
 
-static void	ft_find_env(t_mini *mini, int i)
+static char	*ft_find_env(char *replace, int i, t_mini *mini)
 {
     // printf("in ft_find_env\n");
 	int		j;
@@ -50,22 +49,22 @@ static void	ft_find_env(t_mini *mini, int i)
 
     lst = mini->tlist;
 	j = i;
-	while (mini->more[i] != '\0' && mini->more[i] != ' ')
+	while (replace[i] != '\0' && replace[i] != ' ')
 		i++;
-    envvar = ft_substrr(mini->more, j, i - j);
-	ft_replace_env(mini, envvar, lst->var2);
+    envvar = ft_substrr(replace, j, i - j);
+    printf("envvar:%s", envvar);
 	if (lst == NULL)
-		return ;
+		return (envvar);
 	while (lst != NULL)
 	{
         if (lst->var1 == envvar)
         {
-            ft_replace_env(mini, envvar, lst->var2);
-            return ;
+            ft_replace_env(envvar, lst->var2);
+            return (envvar);
         }
         lst = lst->next;
 	}
-    return ;
+    return (envvar);
         
 }
 
@@ -75,12 +74,19 @@ int		ft_check_env(t_mini *mini)
 
     i = 0;
     // printf("in ft_check_env\n");
+	if (mini->command[0] == '$')
+		mini->command = ft_find_env(mini->command, 0, mini);
+	while (mini->command[i] != '\0')
+	{
+		if (mini->command[i] == '$')
+			mini->command = ft_find_env(mini->command, i, mini);
+	}
 	if (mini->more[0] == '$')
-		ft_find_env(mini, 0);
+		mini->more = ft_find_env(mini->more, 0, mini);
 	while (mini->more[i] != '\0')
 	{
 		if (mini->more[i] == '$')
-			ft_find_env(mini, i);
+			mini->more = ft_find_env(mini->more, i, mini);
 	}
     return (0);
 }

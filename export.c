@@ -6,11 +6,29 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 18:02:26 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/07 10:19:59 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/07 11:51:50 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int  ft_check_var1_already_in_list(char *var1, char *var2, t_mini *mini)
+{
+    t_list *tlist;
+
+    tlist = mini->tlist;
+    while (tlist != NULL)
+	{
+        if (ft_strcmp(tlist->var1, var1) == 0)
+        {
+            tlist->var2 = var2;
+            mini->tlist = tlist;
+    	    return (1);   
+        }
+        tlist = tlist->next;
+	}
+    return (0);
+}
 
 int    ft_export(t_mini *mini)
 {
@@ -26,67 +44,83 @@ int    ft_export(t_mini *mini)
         return (0);
     var1 = ft_substrr(mini->more, 0, i);
     var2 = ft_substrr(mini->more, i + 1, ft_len(mini->more) - i - 1);
-    // check if var1 already in tlist and change var2 accordingly then
+    if (ft_check_var1_already_in_list(var1, var2, mini) == 1)
+    {
+        printf("here\n");
+        ft_lstprint(mini->tlist);
+        return (1);
+    }
+    printf("there\n");
     adding = ft_lstnew(var1, var2);
     ft_lstadd_back(&mini->tlist, adding);
     ft_lstprint(mini->tlist);
     return (1);
 }
 
-static void ft_replace_env(char *var1, char *var2)
+static char *line_replaced(char *start, char *newvar, char *end)
 {
-    printf("I am now in my replace function wanting to replace [%s] with [%s]\n", var1, var2);
-    (void)var1;
-    (void)var2;
+    char *temp;
+    char *newline;
+    
+    printf("char *start[%s], char *newvar[%s], t_mini *end[%s]\n", start, newvar, end);
+    temp = ft_strjoin(start, newvar);
+    newline = ft_strjoin(temp, end);
+    printf("my newline is : [%s]", newline);
+    return (newline);
 }
 
-static char	*ft_find_env(char *replace, int i, t_mini *mini)
+static char	*ft_find_env(char *line, int i, t_mini *mini)
 {
-    // printf("in ft_find_env\n");
+    printf("in ft_find_env\n");
 	int		j;
-	char	*envvar;
-    t_list  *lst;
+    char    *start;
+	char	*oldvar;
+    char    *newvar;
+    char    *end;
 
-    lst = mini->tlist;
 	j = i;
-	while (replace[i] != '\0' && replace[i] != ' ')
+    printf("line: %s, int i %d", line, i);
+	while (line[i] != '\0' && line[i] != ' ')
 		i++;
-    envvar = ft_substrr(replace, j, i - j);
-    printf("envvar:%s", envvar);
-	if (lst == NULL)
-		return (envvar);
-	while (lst != NULL)
+    oldvar = ft_substr(line, j + 1, i - j - 1);
+    if (j == 0)
+        start = ft_substr(line, 1, j);
+    else
+        start = ft_substr(line, 0, j - 1);
+    end = ft_substr(line, i + 1, ft_strlen(line) - i);
+    printf("oldvar:[%s] start:[%s] end: [%s]", oldvar, start, end);
+	if (mini->tlist == NULL)
 	{
-        if (lst->var1 == envvar)
+        newvar = ft_strdup(" ");
+        printf("1new var: [%s]", newvar);
+    	return (line_replaced(start, newvar, end));   
+    }
+	while (mini->tlist != NULL)
+	{
+        if (ft_strcmp(mini->tlist->var1, oldvar) == 0)
         {
-            ft_replace_env(envvar, lst->var2);
-            return (envvar);
+            newvar = ft_strjoin(" ", mini->tlist->var2);
+            newvar = ft_strjoin(newvar, " ");
+            printf("2new var: [%s]", newvar);
+    	    return (line_replaced(start, newvar, end));   
         }
-        lst = lst->next;
+        mini->tlist = mini->tlist->next;
 	}
-    return (envvar);
-        
+    return (line_replaced(start, " ", end));
 }
 
-int		ft_check_env(t_mini *mini)
+char		*ft_check_env(char *line, t_mini *mini)
 {
 	int i;
 
     i = 0;
-    // printf("in ft_check_env\n");
-	if (mini->command[0] == '$')
-		mini->command = ft_find_env(mini->command, 0, mini);
-	while (mini->command[i] != '\0')
-	{
-		if (mini->command[i] == '$')
-			mini->command = ft_find_env(mini->command, i, mini);
+    if (line == NULL)
+        return (line);
+	while (line[i] != '\0')
+	{ 
+		if (line[i] == '$')
+			line = ft_find_env(line, i, mini);
+        i++;
 	}
-	if (mini->more[0] == '$')
-		mini->more = ft_find_env(mini->more, 0, mini);
-	while (mini->more[i] != '\0')
-	{
-		if (mini->more[i] == '$')
-			mini->more = ft_find_env(mini->more, i, mini);
-	}
-    return (0);
+    return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/07 08:35:31 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/07 11:17:07 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void				ft_putchar(char c);
 void				ft_putstr(char *s);
 int	    			ft_strchr_numb(const char *s, int c);
 int				    ft_export(t_mini *mini);
-int					ft_check_env(t_mini *mini);
+char				*ft_check_env(char *line, t_mini *mini);
 
 t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_front(t_list **alst, t_list *new);

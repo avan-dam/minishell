@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/07 10:30:50 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/07 11:17:54 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,9 @@ static void	ft_find_command(char *line, t_mini *mini)
 
 static int		ft_parse_input(char **line, t_mini *mini)
 {
+	*line = ft_check_env(*line, mini);
 	ft_find_command(*line, mini);
 	// printf("before env function\n");
-	// ft_check_env(mini);
 	// printf("after env function\n");
 	if (ft_strncmp(mini->command, "echo", ft_strlen(mini->command)) == 0)
 		ft_echo(mini);

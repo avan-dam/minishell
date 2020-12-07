@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/07 17:34:14 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/07 18:18:10 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static int		ft_parse_input(char **line, t_mini *mini)
 	ft_find_command(*line, mini);
 	// printf("before env function\n");
 	// printf("after env function\n");
-	if (ft_strncmp(mini->command, "echo", ft_strlen(mini->command)) == 0)
+	if (ft_strcmp(mini->command, "echo") == 0)
 		ft_echo(mini);
 	else if (ft_strcmp(mini->command, "cd") == 0)
 	{
@@ -162,6 +162,8 @@ int		main(void)
 		if (ft_parse_input(&line, &mini) == -1)
 			return (0);
 	}
+    // system("leaks minshell");
+	
 	// printf("command = [%s] more = [%s]\n", mini->command, mini->more);
 	return (0);
 }

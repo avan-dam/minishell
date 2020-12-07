@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/07 10:09:31 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/07 10:30:50 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,17 @@ static void	ft_find_command(char *line, t_mini *mini)
 	}
 	mini->command[j] = '\0';
 	// printf("value mini->command: %s\n", mini->command);
-	j++; // would skip the space after command
-	while (line[j] != '\0')
+	if (line[j])
 	{
-		// printf("value of line[%d]: %c\n", j, line[j]);
-		j++;
+		j++; // would skip the space after command
+		while (line[j] != '\0')
+		{
+			// printf("value of line[%d]: %c\n", j, line[j]);
+			j++;
+		}
 	}
+	else
+		return;
 	i++;
 	// printf("value of i: %d\n", i);
 	// printf("value of j: %d\n", j);

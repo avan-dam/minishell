@@ -6,11 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2020/12/07 10:11:25 by salbregh      ########   odam.nl         */
-=======
-/*   Updated: 2020/12/07 08:39:53 by salbregh      ########   odam.nl         */
->>>>>>> sannebranch
+/*   Updated: 2020/12/07 10:26:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

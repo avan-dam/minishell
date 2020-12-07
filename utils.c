@@ -5,8 +5,13 @@
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
+<<<<<<< HEAD
 /*   Created: 2020/12/07 10:26:00 by salbregh      #+#    #+#                 */
 /*   Updated: 2020/12/07 10:26:01 by salbregh      ########   odam.nl         */
+=======
+/*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
+/*   Updated: 2020/12/07 10:26:08 by ambervandam   ########   odam.nl         */
+>>>>>>> 997f859e1dfb974b611f3d5e583d0be9da22fd5d
 /*                                                                            */
 /* ************************************************************************** */
 

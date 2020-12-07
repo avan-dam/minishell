@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/05 17:59:29 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/06 14:03:08 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/06 16:21:19 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_pwd(t_mini *mini)
 	unsigned long int	i;
 
 	i = 0;
-	if (ft_strcmp("", mini->more) != 0) // what is mini->more initialized too?
+	if (ft_strncmp("", mini->more, ft_strlen(mini->more)) != 0) // what is mini->more initialized too?
 	{
 		while (i < ft_strlen(mini->more))
 		{

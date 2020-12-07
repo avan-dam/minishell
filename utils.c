@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/06 14:14:48 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/07 10:11:25 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 // 		i++;
 // 	}
 // 	return (b);
+// }
+
+// char	*ft_trim_line(char *line)
+// {
+// 	char	*tmp;
 // }
 
 void	ft_putchar(char c)
@@ -51,9 +56,7 @@ int	    ft_strchr_numb(const char *s, int c)
 	while (i < length)
 	{
 		if (s[i] == (char)c)
-		{
 			return (i);
-		}
 		i++;
 	}
 	return (0);

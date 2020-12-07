@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/07 10:26:08 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/07 16:27:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ void	ft_putstr(char *s)
 	write(1, s, ft_strlen(s));
 }
 
-int		ft_strchr_numb(const char *s, int c)
-{
-	int		length;
-	int		i;
+// int		ft_strchr_numb(const char *s, int c)
+// {
+// 	int		length;
+// 	int		i;
 
-	i = 0;
-	length = ft_strlen(s);
-	if ((char)c == '\0')
-		return (length);
-	while (i < length)
-	{
-		if (s[i] == (char)c)
-			return (i);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	length = ft_strlen(s);
+// 	if ((char)c == '\0')ho h
+// 		return (length);
+// 	while (i < length)
+// 	{
+// 		if (s[i] == (char)c)
+// 			return (i);
+// 		i++;
+// 	}
+// 	return (0);
+// }

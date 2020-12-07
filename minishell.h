@@ -6,13 +6,13 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/06 14:29:39 by avan-dam      ########   odam.nl         */
+/*   Updated: 2020/12/07 08:35:31 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include "gnl/libgnl.h"
+# include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
@@ -29,6 +29,7 @@ typedef struct		s_mini
 	char			*command;
 	char			*more;
 	int				flag;
+	char			*path;
 	t_list			*tlist;
 }					t_mini;
 

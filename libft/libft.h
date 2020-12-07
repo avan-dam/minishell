@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:12:13 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/06 13:49:02 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/07 07:36:21 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ size_t		ft_strlcat(char *dst, const char *src,
 			size_t dstsize);
 size_t		ft_strlcpy(char *dst, const char *src,
 			size_t dstsize);
+int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strstr(const char *haystack, const char *needle);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);

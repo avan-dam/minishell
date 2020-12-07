@@ -6,12 +6,11 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 11:40:20 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/04 18:19:17 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/07 08:47:04 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libgnl.h"
 
 int    ft_echo_n(t_mini *mini)
 {

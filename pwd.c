@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/05 17:59:29 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/06 16:21:19 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/07 08:15:31 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,12 @@
 **	will print: pwd: too many arguments
 */
 
-void	ft_pwd(t_mini *mini)
+void		ft_pwd(t_mini *mini)
 {
-	char				cwd[PATH_MAX];// check is use of limits includes is allowed
-	unsigned long int	i;
+	char	cwd[PATH_MAX];// check is use of limits includes is allowed
 
-	i = 0;
-	if (ft_strncmp("", mini->more, ft_strlen(mini->more)) != 0) // what is mini->more initialized too?
-	{
-		while (i < ft_strlen(mini->more))
-		{
-			if (mini->more[i] != ' ')
-			{
-				ft_putstr("pwd: too many arguments\n");
-				return ;
-			}
-			i++;
-		}
-	}
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		ft_putstr(cwd);
+	mini->path = cwd;
 	ft_putchar('\n');
 }

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   t_list_more.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ambervandam <ambervandam@student.codam.      +#+                     */
+/*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/04 17:55:31 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/04 19:09:17 by ambervandam   ########   odam.nl         */
+/*   Created: 2020/12/07 07:20:47 by salbregh      #+#    #+#                 */
+/*   Updated: 2020/12/07 07:20:48 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_list	*ft_lstnew(void *var1, void *var2)
 	return (tmp);
 }
 
-int	ft_lstsize(t_list *lst)
+int		ft_lstsize(t_list *lst)
 {
 	int	i;
 

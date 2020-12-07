@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 18:02:26 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/06 16:14:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/07 08:47:14 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void ft_replace_env(t_mini *mini, char *var1, char *var2)
 
 static void	ft_find_env(t_mini *mini, int i)
 {
-    printf("in ft_find_env\n");
+    // printf("in ft_find_env\n");
 	int		j;
 	char	*envvar;
     t_list  *lst;
@@ -74,7 +74,7 @@ int		ft_check_env(t_mini *mini)
 	int i;
 
     i = 0;
-    printf("in ft_check_env\n");
+    // printf("in ft_check_env\n");
 	if (mini->more[0] == '$')
 		ft_find_env(mini, 0);
 	while (mini->more[i] != '\0')

@@ -6,33 +6,15 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2020/12/07 10:11:25 by salbregh      ########   odam.nl         */
+=======
+/*   Updated: 2020/12/07 08:39:53 by salbregh      ########   odam.nl         */
+>>>>>>> sannebranch
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// #include "libgnl.h"
-
-
-
-// void	*ft_memset(void *b, int c, size_t len)
-// {
-// 	size_t			i;
-// 	unsigned char	*ptr;
-// 	i = 0;
-// 	ptr = b;
-// 	while (i < len)
-// 	{
-// 		ptr[i] = (unsigned char)c;
-// 		i++;
-// 	}
-// 	return (b);
-// }
-
-// char	*ft_trim_line(char *line)
-// {
-// 	char	*tmp;
-// }
 
 void	ft_putchar(char c)
 {
@@ -41,16 +23,16 @@ void	ft_putchar(char c)
 
 void	ft_putstr(char *s)
 {
-	write(1, s, ft_len(s));
+	write(1, s, ft_strlen(s));
 }
 
-int	    ft_strchr_numb(const char *s, int c)
+int		ft_strchr_numb(const char *s, int c)
 {
 	int		length;
 	int		i;
 
 	i = 0;
-	length = ft_len(s);
+	length = ft_strlen(s);
 	if ((char)c == '\0')
 		return (length);
 	while (i < length)

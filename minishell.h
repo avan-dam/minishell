@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/08 12:01:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/08 13:27:01 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ void				ft_putchar(char c);
 void				ft_putstr(char *s);
 int	    			ft_strchr_numb(const char *s, int c);
 int				    ft_export(t_mini *mini);
-char				*ft_check_env(char *line, t_mini *mini);
+char				*ft_check_dolla(char *line, t_mini *mini);
 int 				ft_unset(t_mini *mini);
 
 t_list				*ft_lstnew(void *var1, void *var2);
-void				ft_lstadd_front(t_list **alst, t_list *new);
-int					ft_lstsize(t_list *lst);
-t_list				*ft_lstlast(t_list *lst);
+// void				ft_lstadd_front(t_list **alst, t_list *new);
+// int					ft_lstsize(t_list *lst);
+// t_list				*ft_lstlast(t_list *lst);
 void				ft_lstadd_back(t_list **alst, t_list *new);
-void				ft_lstdelone(t_list *lst, void (*del)(void *));
-void				ft_lstclear(t_list **lst, void (*del)(void *));
+// void				ft_lstdelone(t_list *lst, void (*del)(void *));
+// void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstprint(t_list *lst);
 
 void	ft_cd(t_mini *mini);

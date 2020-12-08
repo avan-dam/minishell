@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   replace_envs.c                                     :+:    :+:            */
+/*   replace_dolla.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/07 17:55:36 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/08 15:51:52 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,8 @@ static char *ft_check_var_tlist(t_mini *mini, char *oldvar)
     return (ft_strdup(" "));
 }
 
-static char	*ft_find_env(char *line, int i, t_mini *mini)
+static char	*ft_find_dolla(char *line, int i, t_mini *mini)
 {
-    printf("in ft_find_env\n");
 	int		j;
     char    *start;
 	char	*oldvar;
@@ -53,9 +52,6 @@ static char	*ft_find_env(char *line, int i, t_mini *mini)
     char    *end;
 
 	j = i;
-    printf("here");
-    printf("line: %s, int i %d", line, i);
-    printf("there");
 	while (line[i] != '\0' && line[i] != ' ')
 		i++;
     oldvar = ft_substr(line, j + 1, i - j - 1);
@@ -64,22 +60,19 @@ static char	*ft_find_env(char *line, int i, t_mini *mini)
     else
         start = ft_substr(line, 0, j - 1);
     end = ft_substr(line, i + 1, ft_strlen(line) - i);
-    printf("oldvar:[%s] start:[%s] end: [%s]", oldvar, start, end);
-	printf("heee\n");
     if (mini->tlist == NULL)
     {
-        printf("am i printing");
+        // printf("am i printing");
     	return (line_replaced(start, ft_strdup(" "), end));   
     }
-    printf("loo\n");
     newvar = ft_check_var_tlist(mini, oldvar);
     if (ft_strcmp(end, "") != 0)
         newvar = ft_strjoin(newvar, " ");
-    printf("newvar[%s]\n", newvar);
+    // printf("newvar[%s]\n", newvar);
     return (line_replaced(start, newvar, end));
 }
 
-char		*ft_check_env(char *line, t_mini *mini)
+char		*ft_check_dolla(char *line, t_mini *mini)
 {
 	int     i;
     char    *temp;
@@ -93,7 +86,7 @@ char		*ft_check_env(char *line, t_mini *mini)
         // printf("line[%s] line[i] %c\n", line, line[i]);
 		if (line[i] == '$')
         {
-			line = ft_find_env(temp, i, mini);
+			line = ft_find_dolla(temp, i, mini);
             temp = ft_strdup(line);
             if (line[i] != '\0')
                 i++;

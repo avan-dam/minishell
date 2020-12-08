@@ -6,7 +6,7 @@
 #    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/06 12:33:02 by avan-dam      #+#    #+#                  #
-#    Updated: 2020/12/08 12:05:07 by ambervandam   ########   odam.nl          #
+#    Updated: 2020/12/08 13:22:25 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS =		parser.c \
 			t_list.c \
 			t_list_more.c \
 			cd.c \
-			replace_envs.c \
+			replace_dolla.c \
 			unset.c \
 			pwd.c
 

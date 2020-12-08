@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/08 12:00:34 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/08 15:51:25 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static void	ft_find_command(char *line, t_mini *mini)
 
 static int		ft_parse_input(char **line, t_mini *mini)
 {
-	*line = ft_check_env(*line, mini);
+	*line = ft_check_dolla(*line, mini);
 	ft_find_command(*line, mini);
 	// printf("before env function\n");
 	// printf("after env function\n");
@@ -126,8 +126,7 @@ static int		ft_parse_input(char **line, t_mini *mini)
 		ft_pwd(mini);
 	else if (ft_strcmp(mini->command, "export") == 0)
 	{
-		printf("command = [%s] more = [%s]\n", mini->command, mini->more);
-		printf("about to go into export\n");
+		printf("About to do into export with command = [%s] more = [%s]\n", mini->command, mini->more);
 		ft_export(mini);
 	}
 	else if (ft_strcmp(mini->command, "unset") == 0)

@@ -6,31 +6,31 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/08 11:58:56 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/08 13:16:10 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/08 15:52:20 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	delete_node(t_list *lst, t_list *target)
+static void	delete_node(t_list *lst, t_list *target, t_mini *mini)
 {
-	//if target is first node
-	if(lst == target) 
+    t_list *temp;
+    temp = NULL;
+	if (lst == NULL)
+		return ;
+	if (lst == target) 
     { 
-		// if only one node lst cant be empty
-    	if (lst->next == NULL) 
-            return; 
-        // send data of target to head
+	    if (lst->next == NULL)
+        {
+            free(lst);
+            mini->tlist = temp;
+            return ;
+        }
         lst->var1 = lst->next->var1; 
         lst->var2 = lst->next->var2; 
-        // address of next node 
-        target = lst->next; 
-        // Remove the link of next node 
         lst->next = lst->next->next;
-        // free memory 
-        free(target); 
-        return; 
-    } 
+        return;
+	}
     // if not first node, find previous node 
     t_list *prev = lst; 
     while(prev->next != NULL && prev->next != target) 
@@ -53,12 +53,12 @@ static void	ft_remove_from_tlist(char *word, t_mini *mini)
 	{
         if (ft_strcmp(tlist->var1, word) == 0)
         {
-			// printf("Initial tlist is\n");
-		    ft_lstprint(mini->tlist);
-			delete_node(mini->tlist, tlist);
-			// printf("after deleting [%s] tlist is\n", word);
-		    ft_lstprint(mini->tlist);
-			// printf("found word%s now need to remove from list\n", word);
+			printf("Initial tlist is\n");
+            ft_lstprint(mini->tlist);
+			delete_node(mini->tlist, tlist, mini);
+			printf("after deleting [%s] tlist is\n", word);
+            ft_lstprint(mini->tlist);
+    		printf("found word [%s] now need to remove from list\n", word);
     	    return ;    
         }
         tlist = tlist->next;

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/07 16:27:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/08 16:41:56 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ void	ft_putchar(char c)
 
 void	ft_putstr(char *s)
 {
-	write(1, s, ft_strlen(s));
+	int i;
+	
+	if (s == NULL)
+		return ;
+	i = ft_strlen(s);
+	write(1, s, i);
 }
 
 // int		ft_strchr_numb(const char *s, int c)

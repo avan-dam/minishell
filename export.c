@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 18:02:26 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/07 16:43:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/07 21:22:15 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ int    ft_export(t_mini *mini)
     if (mini->more[i - 1] == ' ' || mini->more[i + 1] == ' ')
         return (0);
     j = ft_find_start_var(mini->more, i, 0);
-    var1 = ft_substrr(mini->more, j, i - j);
+    var1 = ft_substr(mini->more, j, i - j);
 	j = ft_find_start_var(mini->more, i, 1);
-	var2 = ft_substrr(mini->more, i + 1, j - i - 1);
+	var2 = ft_substr(mini->more, i + 1, j - i - 1);
 	if (ft_check_var1_already_in_list(var1, var2, mini) == 1)
     {
         ft_lstprint(mini->tlist);

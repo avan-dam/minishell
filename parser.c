@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/07 18:18:10 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/08 12:00:34 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ static int		ft_parse_input(char **line, t_mini *mini)
 		ft_export(mini);
 	}
 	else if (ft_strcmp(mini->command, "unset") == 0)
-		printf("I got an UNSNET baby\n");
+		ft_unset(mini);
 	else if (ft_strcmp(mini->command, "env") == 0)
 		printf("I got an ENV baby\n");
 	else if (ft_strcmp(mini->command, "exit") == 0)

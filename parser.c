@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/07 22:26:02 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/09 12:24:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ static void	ft_find_command(char *line, t_mini *mini)
 
 static int		ft_parse_input(char **line, t_mini *mini)
 {
+	*line = ft_check_dolla(*line, mini);
 	ft_find_command(*line, mini);
 	// printf("before env function\n");
-	// ft_check_env(mini);
 	// printf("after env function\n");
-	if (ft_strncmp(mini->command, "echo", ft_strlen(mini->command)) == 0)
+	if (ft_strcmp(mini->command, "echo") == 0)
 		ft_echo(mini);
 	else if (ft_strcmp(mini->command, "cd") == 0)
 		ft_cd(mini);
@@ -76,12 +76,11 @@ static int		ft_parse_input(char **line, t_mini *mini)
 		ft_pwd(mini);
 	else if (ft_strcmp(mini->command, "export") == 0)
 	{
-		printf("command = [%s] more = [%s]\n", mini->command, mini->more);
-		printf("about to go into export\n");
+		printf("About to do into export with command = [%s] more = [%s]\n", mini->command, mini->more);
 		ft_export(mini);
 	}
 	else if (ft_strcmp(mini->command, "unset") == 0)
-		printf("I got an UNSNET baby\n");
+		ft_unset(mini);
 	else if (ft_strcmp(mini->command, "env") == 0)
 		printf("I got an ENV baby\n");
 	else if (ft_strcmp(mini->command, "exit") == 0)
@@ -113,6 +112,8 @@ int		main(void)
 		if (ft_parse_input(&line, &mini) == -1)
 			return (0);
 	}
+    // system("leaks minshell");
+	
 	// printf("command = [%s] more = [%s]\n", mini->command, mini->more);
 	return (0);
 }

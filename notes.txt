@@ -9,6 +9,7 @@ git merge amberbranch
 git add .
 git commit -m"merging amber branch"
 git push origin master
+if conflicts checkout to my branch
 
 External functions allowed:
 - malloc

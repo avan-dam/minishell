@@ -6,55 +6,11 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/07 12:27:30 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/07 22:26:02 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static void	ft_find_command(char *line, t_mini *mini)
-// {
-// 	int i;
-// 	int j;
-// 	int k;
-// 	// int z;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (line[i] != '\n' && line[i] != '\0' && line[i] != ' ')
-// 		i++;
-// 	// z = 0;
-// 	// if (line[i])
-// 	// {
-// 	// 	while (line[i] != ' ')
-// 	// 	{
-// 	// 		printf("value line[%d]: %c", i, line[i]);
-// 	// 		z++;
-// 	// 		i++;
-// 	// 	}
-// 	// }
-// 	// printf("value of z: %d\n", z);
-// 	mini->command = (char *)malloc(sizeof(char) * (i + 1)); //free
-// 	while (j < i)
-// 	{
-// 		mini->command[j] = line[j];
-// 		j++;
-// 	}
-// 	mini->command[j] = '\0';
-// 	while (line[j] != '\0')
-// 		j++;
-// 	i++;
-// 	k = 0;
-// 	mini->more = (char *)malloc(sizeof(char) * (i + 1)); //free
-// 	while (k < j)
-// 	{
-// 		mini->more[k] = line[i];
-// 		i++;
-// 		k++;
-// 	}
-// 	mini->more[k] = '\0';
-// 	return ;
-// }
 
 static void	ft_find_command(char *line, t_mini *mini)
 {
@@ -64,13 +20,10 @@ static void	ft_find_command(char *line, t_mini *mini)
 
 	i = 0;
 	j = 0;
-	while (*line == ' ') // trims the spaces at the beginning
+	while (*line == ' ')
 		line++;
 	while (line[i] != '\n' && line[i] != '\0' && line[i] != ' ')
-	{
-		// printf("value of line[%d]: %c\n", i, line[i]);
 		i++;
-	}
 	// printf("value of i: %d\n", i);
 	mini->command = (char *)malloc(sizeof(char) * i + 1); //free
 	while (j < i)
@@ -83,7 +36,7 @@ static void	ft_find_command(char *line, t_mini *mini)
 	// printf("value mini->command: %s\n", mini->command);
 	if (line[j])
 	{
-		j++; // would skip the space after command
+		j++; // would skip the space after command > trim all spaces between or send to new function!!
 		while (line[j] != '\0')
 		{
 			// printf("value of line[%d]: %c\n", j, line[j]);

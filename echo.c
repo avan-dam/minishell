@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 11:40:20 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/07 18:21:20 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/08 17:28:50 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int    ft_echo_n(t_mini *mini)
 
 int    ft_echo(t_mini *mini)
 {
-    // printf("mini->more[%s], mini->command [%s]\n", mini->more, mini->command);
+    printf("mini->more[%s], mini->command [%s]\n", mini->more, mini->command);
     if (mini->more == NULL)
         return (0);
     if (ft_check_spaces(mini->more) == -1)

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/08 15:51:52 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/08 17:37:43 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,20 @@ static char	*ft_find_dolla(char *line, int i, t_mini *mini)
 char		*ft_check_dolla(char *line, t_mini *mini)
 {
 	int     i;
-    char    *temp;
+    // char    *temp;
 
     i = 1;
     if (line == NULL)
         return (line);
-    temp = ft_strdup(line);
+    // temp = ft_strdup(line);
 	while (line[i] != '\0')
 	{
         // printf("line[%s] line[i] %c\n", line, line[i]);
 		if (line[i] == '$')
         {
-			line = ft_find_dolla(temp, i, mini);
-            temp = ft_strdup(line);
+			line = ft_find_dolla(line, i, mini);
+			// line = ft_find_dolla(temp, i, mini);
+            // temp = ft_strdup(line);
             if (line[i] != '\0')
                 i++;
         }

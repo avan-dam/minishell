@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/08 11:58:56 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/08 15:52:20 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/08 17:17:04 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int ft_unset(t_mini *mini)
     char    *word;
 
     i = 0;
-    // printf("in unset fucntion mini->more%s\n", mini->more);
     if (mini->more == NULL)
 		return (0);
 	while(mini->more[i] != '\0')

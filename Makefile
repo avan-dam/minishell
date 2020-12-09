@@ -6,7 +6,7 @@
 #    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/06 12:33:02 by avan-dam      #+#    #+#                  #
-#    Updated: 2020/12/08 13:22:25 by ambervandam   ########   odam.nl          #
+#    Updated: 2020/12/09 20:01:48 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRCS =		parser.c \
 			cd.c \
 			replace_dolla.c \
 			unset.c \
-			pwd.c
+			pwd.c \
+			env.c
 
 FLAGS = 	-Wall -Werror -Wextra -g -fsanitize=address
 

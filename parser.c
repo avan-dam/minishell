@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/09 12:24:33 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/09 21:23:49 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int		ft_parse_input(char **line, t_mini *mini)
 		ft_pwd(mini);
 	else if (ft_strcmp(mini->command, "export") == 0)
 	{
-		printf("About to do into export with command = [%s] more = [%s]\n", mini->command, mini->more);
+		// printf("About to do into export with command = [%s] more = [%s]\n", mini->command, mini->more);
 		ft_export(mini);
 	}
 	else if (ft_strcmp(mini->command, "unset") == 0)
@@ -92,9 +92,20 @@ static int		ft_parse_input(char **line, t_mini *mini)
 	else
 		printf("bash: %s: command not found\n", mini->command);
 		// printf("I do not recgonise the input entered[%s]\n", *line);
-	// line = NULL;
+	line = NULL;
+	mini->command = NULL;
+	mini->more = NULL;
 	return (0);
 }
+
+// static int ft_free(t_mini *mini)
+// {
+// 	mini->command = NULL;
+// 	free(mini->command);
+// 	mini->more = NULL;
+// 	free(mini->more);
+// 	return(0);
+// }
 
 int		main(void)
 {
@@ -111,9 +122,9 @@ int		main(void)
 			ft_putstr("error");
 		if (ft_parse_input(&line, &mini) == -1)
 			return (0);
-	}
-    // system("leaks minshell");
-	
-	// printf("command = [%s] more = [%s]\n", mini->command, mini->more);
+		// free(line);
+		// system("leaks minishell");
+	}	
+	printf("here = [%s] more = [%s]\n", mini.command, mini.more);
 	return (0);
 }

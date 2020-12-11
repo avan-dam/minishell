@@ -11,6 +11,19 @@ git commit -m"merging amber branch"
 git push origin master
 if conflicts checkout to my branch
 
+Amber: To Fix
+echo 00\\\'pp ; echo 00\\\\\'pp
+echo $/
+echo $2$4
+echo -nn -nnnnnnn -n -nnnn -nnnh
+echo TEST_$u==hallo$log
+echo -n -n -n $potato$orange; unset 
+echo 123$us----$
+echo 123$us$
+echo $halllo### with and without hallo exported
+
+- free
+
 External functions allowed:
 - malloc
 - free

@@ -6,7 +6,7 @@
 #    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/06 12:33:02 by avan-dam      #+#    #+#                  #
-#    Updated: 2020/12/08 13:22:25 by ambervandam   ########   odam.nl          #
+#    Updated: 2020/12/09 20:03:19 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS =		parser.c \
 			unset.c \
 			pwd.c
 
-FLAGS = 	-Wall -Werror -Wextra -g -fsanitize=address
+FLAGS = 	-Wall -Werror -Wextra
+#  -g -fsanitize=address
 
 OFILES =	$(SRCS:.c=.o)
 

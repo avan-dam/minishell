@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/08 11:58:56 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/08 17:17:04 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/09 19:52:38 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ static void	ft_remove_from_tlist(char *word, t_mini *mini)
 	{
         if (ft_strcmp(tlist->var1, word) == 0)
         {
-			printf("Initial tlist is\n");
+			// printf("Initial tlist is\n");
             ft_lstprint(mini->tlist);
 			delete_node(mini->tlist, tlist, mini);
-			printf("after deleting [%s] tlist is\n", word);
+			// printf("after deleting [%s] tlist is\n", word);
             ft_lstprint(mini->tlist);
-    		printf("found word [%s] now need to remove from list\n", word);
+    		// printf("found word [%s] now need to remove from list\n", word);
     	    return ;    
         }
         tlist = tlist->next;

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/08 17:37:43 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/10 00:34:43 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static char *ft_check_var_tlist(t_mini *mini, char *oldvar)
     char    *newvar;
     t_list  *tlist;
     
+    // printf("in check var tlist\n");
     tlist = mini->tlist;
     while (tlist != NULL)
 	{
@@ -40,6 +41,8 @@ static char *ft_check_var_tlist(t_mini *mini, char *oldvar)
         }
         tlist = tlist->next;
 	}
+    // printf("out check var tlist\n");
+    mini->flag = 1;
     return (ft_strdup(" "));
 }
 
@@ -58,16 +61,16 @@ static char	*ft_find_dolla(char *line, int i, t_mini *mini)
     if (j == 0)
         start = ft_substr(line, 1, j);
     else
-        start = ft_substr(line, 0, j - 1);
+        start = ft_substr(line, 0, j);
     end = ft_substr(line, i + 1, ft_strlen(line) - i);
-    if (mini->tlist == NULL)
-    {
-        // printf("am i printing");
-    	return (line_replaced(start, ft_strdup(" "), end));   
-    }
+    // if (mini->tlist == NULL)
+    // {
+    //     // printf("am i printing");
+    // 	return (line_replaced(start, ft_strdup(" "), end));   
+    // }
     newvar = ft_check_var_tlist(mini, oldvar);
-    if (ft_strcmp(end, "") != 0)
-        newvar = ft_strjoin(newvar, " ");
+    // if (ft_strcmp(end, "") != 0)
+        // newvar = ft_strjoin(newvar, " ");
     // printf("newvar[%s]\n", newvar);
     return (line_replaced(start, newvar, end));
 }
@@ -75,25 +78,26 @@ static char	*ft_find_dolla(char *line, int i, t_mini *mini)
 char		*ft_check_dolla(char *line, t_mini *mini)
 {
 	int     i;
-    // char    *temp;
+    char    *temp;
 
-    i = 1;
+    i = 0;
     if (line == NULL)
         return (line);
-    // temp = ft_strdup(line);
-	while (line[i] != '\0')
+	while (line[i + 1] != '\0')
 	{
-        // printf("line[%s] line[i] %c\n", line, line[i]);
-		if (line[i] == '$')
+        if (line[i] == '$')
         {
-			line = ft_find_dolla(line, i, mini);
-			// line = ft_find_dolla(temp, i, mini);
-            // temp = ft_strdup(line);
-            if (line[i] != '\0')
-                i++;
+            if ((line[i + 1] != '/') || (line[i + 1] != 92))
+			{
+                temp = ft_find_dolla(line, i, mini);
+                line = ft_strdup(temp);
+            }
+            else
+                i = i + 2;
         }
-        if (line[i] != '\0')
+        if (line[i] != '\0' && line[i] != '$')
             i++;
 	}
+    // printf("line:[%s]\n", line);
     return (line);
 }

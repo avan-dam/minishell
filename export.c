@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 18:02:26 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/08 17:15:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/09 21:15:06 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,15 @@ int    ft_export(t_mini *mini)
     char    *word;
 
     i = 0;
-    // printf("in unset fucntion mini->more%s\n", mini->more);
     if (mini->more == NULL)
 		return (0);
+    if (mini->more[0] >= '0' && mini->more[0] <= '9')
+    {
+        ft_putstr("bash: export: '");
+        ft_putstr(mini->more);
+        ft_putstr("': not a valid identifier\n");
+        return (0);
+    }
 	while(mini->more[i] != '\0')
     {
         j = i;
@@ -129,7 +135,6 @@ int    ft_export(t_mini *mini)
 	        word = ft_substr(mini->more, j, i - j);
 		else
 	        word = ft_substr(mini->more, j, i - j - 1);
-        // printf("word:%s\n", word);
 		ft_export_more(mini, word);
     }
     ft_lstprint(mini->tlist);

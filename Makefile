@@ -17,12 +17,12 @@ SRCS =		parser.c \
 			utils.c \
 			export.c \
 			t_list.c \
-			t_list_more.c \
 			cd.c \
 			replace_dolla.c \
 			unset.c \
 			pwd.c \
 			env.c
+# unused_tlists.c
 
 FLAGS = 	-Wall -Werror -Wextra
 #  -g -fsanitize=address

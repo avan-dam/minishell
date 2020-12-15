@@ -12,24 +12,6 @@
 
 #include "minishell.h"
 
-// static int  ft_check_spaces(char *line)
-// {
-//     int i;
-//     int k;
-
-//     k = 0;
-//     i = 0;
-//     while (line[i])
-//     {
-//         if (' ' == line[i])
-//             k++;
-//         i++;
-//     }
-//     if (i == k)
-//         return (-1);
-//     return (0);
-// }
-
 static int ft_check_n(t_mini *mini)
 {
     int i;
@@ -106,6 +88,8 @@ static int  ft_check_empty(t_mini *mini)
 
 int    ft_echo(t_mini *mini)
 {
+	// ft_lstprint(mini->tlist);
+	// printf("mini->more = [%s]\n", mini->more);
     if (mini->more == NULL)
     {
         ft_putchar('\n');

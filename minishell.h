@@ -41,18 +41,15 @@ int	    			ft_strchr_numb(const char *s, int c);
 int				    ft_export(t_mini *mini);
 char				*ft_check_dolla(char *line, t_mini *mini);
 int 				ft_unset(t_mini *mini);
-
+int					unvalid_identifier(char *error);
+int 				ft_strrch_numb(char *line, char c);
+int  				ft_split_into_tlist(t_mini *mini, char *line, int j);
 t_list				*ft_lstnew(void *var1, void *var2);
-// void				ft_lstadd_front(t_list **alst, t_list *new);
-// int					ft_lstsize(t_list *lst);
-// t_list				*ft_lstlast(t_list *lst);
 void				ft_lstadd_back(t_list **alst, t_list *new);
-// void				ft_lstdelone(t_list *lst, void (*del)(void *));
-// void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstprint(t_list *lst);
 
-void	ft_cd(t_mini *mini);
-void	ft_pwd(t_mini *mini);
-void	ft_set_env(char **argv, char **envp, t_mini *mini);
+void				ft_cd(t_mini *mini);
+void				ft_pwd(t_mini *mini);
+void				ft_set_env(char **argv, char **envp, t_mini *mini);
 
 #endif

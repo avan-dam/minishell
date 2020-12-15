@@ -27,42 +27,16 @@ void	ft_lstadd_back(t_list **alst, t_list *new)
 	new->next = NULL;
 }
 
-// void	ft_lstadd_front(t_list **alst, t_list *new)
-// {
-// 	if (alst == NULL || new == NULL)
-// 		return ;
-// 	new->next = *alst;
-// 	*alst = new;
-// }
-
-// void	ft_lstclear(t_list **lst, void (*del)(void *))
-// {
-// 	t_list	*store;
-// 	t_list	*me;
-
-// 	if (del == NULL || lst == NULL)
-// 	{
-// 		return ;
-// 	}
-// 	store = *lst;
-// 	*lst = NULL;
-// 	while (store != NULL)
-// 	{
-// 		del(store->var1);
-// 		del(store->var2);
-// 		me = (store->next);
-// 		free(store);
-// 		store = me;
-// 	}
-// }
-
 void	ft_lstprint(t_list *lst)
 {
 	if (lst == NULL)
 		return ;
 	while (lst != NULL)
 	{
-		printf("var1 is [%s] and var2 is [%s]\n", lst->var1, lst->var2);
+		ft_putstr(lst->var1);
+		ft_putstr("=");
+		ft_putstr(lst->var2);
+		ft_putstr("\n");
 		lst = lst->next;
 	}
 }

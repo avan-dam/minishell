@@ -44,49 +44,23 @@ static void	delete_node(t_list *lst, t_list *target, t_mini *mini)
     return;  
 }
 
-static void	ft_remove_from_tlist(char *word, t_mini *mini)
+int ft_unset(t_mini *mini)
 {
     t_list  *tlist;
-    
+
+    if (mini->more == NULL)
+		return (0);
     tlist = mini->tlist;
     while (tlist != NULL)
 	{
-        if (ft_strcmp(tlist->var1, word) == 0)
+        if (ft_strcmp(tlist->var1, mini->more) == 0)
         {
-			// printf("Initial tlist is\n");
             ft_lstprint(mini->tlist);
 			delete_node(mini->tlist, tlist, mini);
-			// printf("after deleting [%s] tlist is\n", word);
             ft_lstprint(mini->tlist);
-    		// printf("found word [%s] now need to remove from list\n", word);
-    	    return ;    
+    	    return (0);    
         }
         tlist = tlist->next;
 	}
-}
-
-int ft_unset(t_mini *mini)
-{
-    int     i;
-    int     j;
-    char    *word;
-
-    i = 0;
-    if (mini->more == NULL)
-		return (0);
-	while(mini->more[i] != '\0')
-    {
-        j = i;
-        while(mini->more[i] != ' ' && mini->more[i] != '\0')
-			i++;
-		if (mini->more[i] != '\0')
-		i++;
-		if (i == (int)ft_strlen(mini->more))
-	        word = ft_substr(mini->more, j, i - j);
-		else
-	        word = ft_substr(mini->more, j, i - j - 1);
-        // printf("word:%s\n", word);
-		ft_remove_from_tlist(word, mini);
-    }
     return (0);
 }

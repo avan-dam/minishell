@@ -12,21 +12,36 @@
 
 #include "minishell.h"
 
-// static int ft_free(t_mini *mini)
-// {
-// 	mini->command = NULL;
-// 	free(mini->command);
-// 	mini->more = NULL;
-// 	free(mini->more);
-// 	// (void)mini;
-// 	return(0);
-// }
+static void		ft_find_more(char *line, t_mini *mini, int j, int i)
+{
+	int k;
+	
+	k = 0;
+	if (line[j])
+	{
+		j++; // would skip the space after command > trim all spaces between or send to new function!!
+		while (line[j] != '\0')
+			j++;
+	}
+	else
+		return;
+	i++;
+	k = 0;
+	mini->more = (char *)malloc(sizeof(char) * (j - i + 1)); //free
+	while (k < (j - i))
+	{
+		mini->more[k] = line[i + k];
+		k++;
+	}
+	mini->more[k] = '\0';
+	mini->more = ft_strtrim(mini->more, " ");
+	return ;
+}
 
 static void	ft_find_command(char *line, t_mini *mini)
 {
 	int i;
 	int j;
-	int k;
 
 	i = 0;
 	j = 0;
@@ -34,47 +49,20 @@ static void	ft_find_command(char *line, t_mini *mini)
 		line++;
 	while (line[i] != '\n' && line[i] != '\0' && line[i] != ' ')
 		i++;
-	// printf("value of i: %d\n", i);
 	mini->command = (char *)malloc(sizeof(char) * i + 1); //free
 	while (j < i)
 	{
 		mini->command[j] = line[j];
-		// printf("value of minicommand[%d]: %c\n", j, mini->command[j]);
 		j++;
 	}
 	mini->command[j] = '\0';
-	// printf("value mini->command: %s\n", mini->command);
-	if (line[j])
-	{
-		j++; // would skip the space after command > trim all spaces between or send to new function!!
-		while (line[j] != '\0')
-		{
-			// printf("value of line[%d]: %c\n", j, line[j]);
-			j++;
-		}
-	}
-	else
-		return;
-	i++;
-	// printf("value of i: %d\n", i);
-	// printf("value of j: %d\n", j);
-	k = 0;
-	mini->more = (char *)malloc(sizeof(char) * (j - i + 1)); //free
-	while (k < (j - i))
-	{
-		mini->more[k] = line[i + k];
-		// printf("value mini->more[%d]: %c\n", k, mini->more[k]);
-		// printf("value of line[%d]: %c\n", i, line[i + k]);
-		k++;
-	}
-	mini->more[k] = '\0';
-	// printf("value mini->more: %s\n", mini->more);
-	// free(line);
+	ft_find_more(line, mini, j, i);
 	return ;
 }
 
 static int		ft_parse_input(char **line, t_mini *mini)
 {
+	*line = ft_strtrim(*line, " ");
 	*line = ft_check_dolla(*line, mini);
 	ft_find_command(*line, mini);
 	if (ft_strcmp(mini->command, "echo") == 0)
@@ -88,7 +76,7 @@ static int		ft_parse_input(char **line, t_mini *mini)
 	else if (ft_strcmp(mini->command, "unset") == 0)
 		ft_unset(mini);
 	else if (ft_strcmp(mini->command, "env") == 0)
-		printf("I got an ENV baby\n");
+		ft_lstprint(mini->tlist);
 	else if (ft_strcmp(mini->command, "exit") == 0)
 	{
 		printf("I got an exit baby\n");

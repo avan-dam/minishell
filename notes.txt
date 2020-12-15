@@ -18,6 +18,8 @@ echo 123$us$
 echo $halllo### with and without hallo exported
 so needs to stop at '#' '$' '-' '='
 - free
+export k l=o
+export with no arguments
 
 External functions allowed:
 - malloc

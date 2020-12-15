@@ -20,6 +20,7 @@ static char *line_replaced(char *start, char *newvar, char *end)
     
     temp = ft_strjoin(start, newvar);
     newline = ft_strjoin(temp, end);
+    printf("newline is %s\n", newline);
     return (newline);
 }
 
@@ -50,22 +51,14 @@ static char	*ft_find_dolla(char *line, int i, t_mini *mini)
     char    *newvar;
     char    *end;
 
-	j = i;
-	while (line[i] != '\0' && line[i] != ' ')
-		i++;
-    int k = 0;
-    while ((line[i] != '\0') && (line[i] != '#') && (line[i] != '$') && (line[i] != '-')&& (line[i] != '='))
-    {
+	i++;
+    j = i;
+    while (line[i] != '\0' && line[i] != '#' && line[i] != '$' && line[i] != '-' && line[i] != '=' && line[i] != ' ')
         i++;
-        k++;
-    }
-    printf("j is %d and i is %d and k is %d", j, i, k);
-    oldvar = ft_substr(line, j + 1, k);
-    if (j == 0)
-        start = ft_substr(line, 1, j);
-    else
-        start = ft_substr(line, 0, j);
-    end = ft_substr(line, i + 1, ft_strlen(line) - i);
+    // printf("line is [%s] j is %d and i is %d \n", line, j, i);
+    oldvar = ft_substr(line, j, i - j);
+    start = ft_substr(line, 0, j - 2);
+    end = ft_substr(line, i, ft_strlen(line) - i);
     newvar = ft_check_var_tlist(mini, oldvar);
     printf("oldvar[%s] newvar[%s] start[%s] end[%s]\n", oldvar, newvar, start, end);
     return (line_replaced(start, newvar, end));

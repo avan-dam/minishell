@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+// static int ft_free(t_mini *mini)
+// {
+// 	mini->command = NULL;
+// 	free(mini->command);
+// 	mini->more = NULL;
+// 	free(mini->more);
+// 	// (void)mini;
+// 	return(0);
+// }
+
 static void	ft_find_command(char *line, t_mini *mini)
 {
 	int i;
@@ -59,6 +69,7 @@ static void	ft_find_command(char *line, t_mini *mini)
 	}
 	mini->more[k] = '\0';
 	// printf("value mini->more: %s\n", mini->more);
+	// free(line);
 	return ;
 }
 
@@ -66,8 +77,6 @@ static int		ft_parse_input(char **line, t_mini *mini)
 {
 	*line = ft_check_dolla(*line, mini);
 	ft_find_command(*line, mini);
-	// printf("before env function\n");
-	// printf("after env function\n");
 	if (ft_strcmp(mini->command, "echo") == 0)
 		ft_echo(mini);
 	else if (ft_strcmp(mini->command, "cd") == 0)
@@ -75,10 +84,7 @@ static int		ft_parse_input(char **line, t_mini *mini)
 	else if (ft_strcmp(mini->command, "pwd") == 0)
 		ft_pwd(mini);
 	else if (ft_strcmp(mini->command, "export") == 0)
-	{
-		// printf("About to do into export with command = [%s] more = [%s]\n", mini->command, mini->more);
 		ft_export(mini);
-	}
 	else if (ft_strcmp(mini->command, "unset") == 0)
 		ft_unset(mini);
 	else if (ft_strcmp(mini->command, "env") == 0)
@@ -91,21 +97,8 @@ static int		ft_parse_input(char **line, t_mini *mini)
 	}
 	else
 		printf("bash: %s: command not found\n", mini->command);
-		// printf("I do not recgonise the input entered[%s]\n", *line);
-	line = NULL;
-	mini->command = NULL;
-	mini->more = NULL;
 	return (0);
 }
-
-// static int ft_free(t_mini *mini)
-// {
-// 	mini->command = NULL;
-// 	free(mini->command);
-// 	mini->more = NULL;
-// 	free(mini->more);
-// 	return(0);
-// }
 
 int		main(void)
 {
@@ -122,9 +115,9 @@ int		main(void)
 			ft_putstr("error");
 		if (ft_parse_input(&line, &mini) == -1)
 			return (0);
-		// free(line);
+		// line = NULL;
+		free(line);
 		// system("leaks minishell");
 	}	
-	printf("here = [%s] more = [%s]\n", mini.command, mini.more);
 	return (0);
 }

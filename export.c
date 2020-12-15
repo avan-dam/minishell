@@ -117,7 +117,7 @@ int    ft_export(t_mini *mini)
     i = 0;
     if (mini->more == NULL)
 		return (0);
-    if (mini->more[0] >= '0' && mini->more[0] <= '9')
+    if ((mini->more[0] >= '0' && mini->more[0] <= '9') || (mini->more[0] == '/'))
     {
         ft_putstr("bash: export: '");
         ft_putstr(mini->more);

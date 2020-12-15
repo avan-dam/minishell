@@ -23,8 +23,16 @@ void	ft_putstr(char *s)
 	
 	if (s == NULL)
 		return ;
-	i = ft_strlen(s);
-	write(1, s, i);
+	i = 0;
+	while (i < (int)ft_strlen(s))
+	{
+		// so that if you type \ once nothing happens only 
+		// if twice in a row
+		if (s[i] == 92)
+			i++;
+		write(1, &s[i], 1);
+		i++;
+	}
 }
 
 // int		ft_strchr_numb(const char *s, int c)

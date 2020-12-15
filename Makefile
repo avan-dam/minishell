@@ -21,7 +21,8 @@ SRCS =		parser.c \
 			cd.c \
 			replace_dolla.c \
 			unset.c \
-			pwd.c
+			pwd.c \
+			env.c
 
 FLAGS = 	-Wall -Werror -Wextra
 #  -g -fsanitize=address
@@ -46,12 +47,14 @@ $(NAME):	$(OFILES) $(INCLUDES)
 clean:
 			/bin/rm -f $(OFILES)
 			make clean -C get_next_line/
+			make clean -C libft/
 
 fclean:		clean
 			/bin/rm -f gnl/libgnl.a
 			/bin/rm -f libgnl.a
 			/bin/rm -f $(NAME)
+			# doenst remove the lib in the libft and GNL
 
 re:			fclean all
 
-.PHONY: all clean fclean re
+.PHONY:		all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 07:20:21 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/08 15:52:01 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/09 20:59:27 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_lstprint(t_list *lst)
 		return ;
 	while (lst != NULL)
 	{
-		printf("var1 is[%s] and var2 is[%s]\n", lst->var1, lst->var2);
+		printf("var1 is [%s] and var2 is [%s]\n", lst->var1, lst->var2);
 		lst = lst->next;
 	}
 }

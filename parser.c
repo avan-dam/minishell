@@ -100,13 +100,16 @@ static int		ft_parse_input(char **line, t_mini *mini)
 	return (0);
 }
 
-int		main(void)
+int		main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	int		lineret;
 	t_mini	mini;
 
+	if (argc > 1)
+		return (-1); // are we implementing an error function?
 	ft_memset(&mini, 0, sizeof(t_mini));
+	ft_set_env(argv, envp, &mini);
 	while (1)
 	{
 		ft_putstr("> ");

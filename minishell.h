@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/09 12:30:04 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/09 20:40:39 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ typedef struct		s_mini
 }					t_mini;
 
 int					ft_echo(t_mini *mini);
-int					ft_strcmp(const char *s1, const char *s2);
-void				*ft_memset(void *b, int c, size_t len);
 void				ft_putchar(char c);
 void				ft_putstr(char *s);
 int	    			ft_strchr_numb(const char *s, int c);
@@ -55,5 +53,6 @@ void				ft_lstprint(t_list *lst);
 
 void	ft_cd(t_mini *mini);
 void	ft_pwd(t_mini *mini);
+void	ft_set_env(char **argv, char **envp, t_mini *mini);
 
 #endif

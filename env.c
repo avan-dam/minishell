@@ -12,18 +12,6 @@
 
 #include "minishell.h"
 
-// // rewrite getenv() setenv()
-
-// // gcc -o env env.c
-
-// int		main(int argc, char **argv, char **envp)
-// {
-// 	for (int i = 0; envp[i] != NULL; i++)
-// 	{
-// 		printf("%d: %s\n", i, envp[i]);
-// 	}
-// }
-
 static int  ft_find_start_var(char *more, int i, int position)
 {
     int j;

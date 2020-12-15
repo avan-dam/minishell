@@ -6,7 +6,7 @@
 #    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/06 12:33:02 by avan-dam      #+#    #+#                  #
-#    Updated: 2020/12/09 20:01:48 by salbregh      ########   odam.nl          #
+#    Updated: 2020/12/15 12:23:08 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,12 +46,14 @@ $(NAME):	$(OFILES) $(INCLUDES)
 clean:
 			/bin/rm -f $(OFILES)
 			make clean -C get_next_line/
+			make clean -C libft/
 
 fclean:		clean
 			/bin/rm -f gnl/libgnl.a
 			/bin/rm -f libgnl.a
 			/bin/rm -f $(NAME)
+			# doenst remove the lib in the libft and GNL
 
 re:			fclean all
 
-.PHONY: all clean fclean re
+.PHONY:		all clean fclean re

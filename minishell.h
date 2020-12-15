@@ -31,7 +31,7 @@ typedef struct		s_mini
 	int				flag;
 	char			*path;
 	int				cd;
-	t_list			*tlist;
+	t_list			*env;
 }					t_mini;
 
 int					ft_echo(t_mini *mini);

@@ -21,6 +21,10 @@ so needs to stop at '#' '$' '-' '='
 export k l=o
 export with no arguments
 
+pipe vs semi colon
+; execute one after the other
+| combine them
+
 External functions allowed:
 - malloc
 - free

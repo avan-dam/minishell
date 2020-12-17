@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/09 21:23:49 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/17 18:26:40 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	ft_find_command(char *line, t_mini *mini)
 {
 	int i;
 	int j;
+	t_list *newnode;
 
 	i = 0;
 	j = 0;
@@ -57,34 +58,66 @@ static void	ft_find_command(char *line, t_mini *mini)
 	}
 	mini->command[j] = '\0';
 	ft_find_more(line, mini, j, i);
+	newnode = ft_lstnew(mini->command, mini->more);
+	ft_lstadd_back(&mini->run2, newnode);
 	return ;
 }
 
-static int		ft_parse_input(char **line, t_mini *mini)
+static int		ft_parse_input(char *command, char *more, t_mini *mini)
 {
-	*line = ft_strtrim(*line, " ");
-	*line = ft_check_dolla(*line, mini);
-	ft_find_command(*line, mini);
-	if (ft_strcmp(mini->command, "echo") == 0)
-		ft_echo(mini);
-	else if (ft_strcmp(mini->command, "cd") == 0)
+	if (ft_strcmp(command, "echo") == 0)
+	{
+		// printf("in echo with %s\n", more);
+		ft_echo(more);
+	}
+	else if (ft_strcmp(command, "cd") == 0)
 		ft_cd(mini);
-	else if (ft_strcmp(mini->command, "pwd") == 0)
+	else if ((ft_strcmp(command, "pwd") == 0) || (ft_strcmp(command, "/bin/pwd") == 0))
 		ft_pwd(mini);
-	else if (ft_strcmp(mini->command, "export") == 0)
-		ft_export(mini);
-	else if (ft_strcmp(mini->command, "unset") == 0)
-		ft_unset(mini);
-	else if (ft_strcmp(mini->command, "env") == 0)
-		ft_lstprint(mini->tlist);
-	else if (ft_strcmp(mini->command, "exit") == 0)
+	else if (ft_strcmp(command, "export") == 0)
+	{
+		// printf("in export with %s\n", more);
+		ft_export(mini, more);
+	}
+	else if (ft_strcmp(command, "unset") == 0)
+		ft_unset(mini, more);
+	else if (ft_strcmp(command, "env") == 0)
+		ft_lstprint(mini->env1);
+	else if ((ft_strcmp(command, "ls") == 0) || (ft_strcmp(command, "/bin/ls") == 0))
+		ft_ls(mini, more);
+	else if (ft_strcmp(command, "exit") == 0)
 	{
 		printf("I got an exit baby\n");
-		line = NULL;
+		// line = NULL;
 		return (-1);
 	}
 	else
-		printf("bash: %s: command not found\n", mini->command);
+		printf("bash: %s: command not found\n", command);
+	return (0);
+}
+
+static int		ft_divide_command(char *line, t_mini *mini)
+{
+	int i;
+	char *current;
+
+	while ((ft_strcmp("", line) != 0))
+	{
+		line = ft_strtrim(line, " ");
+		i = ft_strlen(line);
+		if (ft_strrch_numb(line, '|') != -1)
+			i = ft_strrch_numb(line, '|');
+		if ((ft_strrch_numb(line, ';') < i) && (ft_strrch_numb(line, ';') != -1))
+			i = ft_strrch_numb(line, ';');
+		current = ft_substr(line, 0, i);
+		line = ft_substr(line, i + 2, ft_strlen(line) - i);
+		current = ft_check_dolla(current, mini);
+		ft_find_command(current, mini);
+		if (ft_parse_input(mini->command, mini->more, mini) == -1)
+			return (-1);
+		mini->command = NULL;
+		mini->more = NULL;
+	}
 	return (0);
 }
 
@@ -104,7 +137,7 @@ int		main(int argc, char **argv, char **envp)
 		lineret = get_next_line(1, &line);
 		if (lineret < 0)
 			ft_putstr("error");
-		if (ft_parse_input(&line, &mini) == -1)
+		if (ft_divide_command(line, &mini) == -1)
 			return (0);
 		// line = NULL;
 		free(line);

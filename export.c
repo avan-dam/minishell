@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-int    ft_export(t_mini *mini)
+int    ft_export(t_mini *mini, char *more)
 {
-    if (mini->more == NULL)
+    if (more == NULL)
 		return (0);
-    if ((mini->more[0] >= '0' && mini->more[0] <= '9') || (mini->more[0] == '/'))
-        return(unvalid_identifier(mini->more));
-    ft_split_into_tlist(mini, mini->more, 1);
+    if ((more[0] >= '0' && more[0] <= '9') || (more[0] == '/'))
+        return(unvalid_identifier(more));
+    ft_split_into_tlist(mini, more);
     return (0);
 }

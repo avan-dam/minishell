@@ -27,8 +27,10 @@ static char *ft_check_var_tlist(t_mini *mini, char *oldvar)
 {
     char    *newvar;
     t_list  *tlist;
-    
-    tlist = mini->env;
+
+    // looking through environmental variables to see if needs to be replace
+    // so only loop through env1 tlist not run tlist
+    tlist = mini->env1;
     while (tlist != NULL)
 	{
         if (ft_strcmp(tlist->var1, oldvar) == 0)
@@ -38,7 +40,6 @@ static char *ft_check_var_tlist(t_mini *mini, char *oldvar)
         }
         tlist = tlist->next;
 	}
-    mini->flag = 1;
     return (ft_strdup(""));
 }
 
@@ -69,6 +70,7 @@ char		*ft_check_dolla(char *line, t_mini *mini)
     i = 0;
     if (line == NULL)
         return (line);
+    // printf("line coming into ft_check_dola func [%s]\n", line);
 	while (line[i + 1] != '\0')
 	{
         if (line[i] == '$')
@@ -81,5 +83,6 @@ char		*ft_check_dolla(char *line, t_mini *mini)
         if (line[i] != '\0' && line[i] != '$')
             i++;
 	}
+    // printf("line coming OUT ft_check_dola func [%s]\n", line);
     return (line);
 }

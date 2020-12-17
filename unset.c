@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	delete_node(t_list *lst, t_list *target, t_mini *mini)
+void	delete_node(t_list *lst, t_list *target, t_mini *mini)
 {
     t_list *temp;
     temp = NULL;
@@ -23,7 +23,7 @@ static void	delete_node(t_list *lst, t_list *target, t_mini *mini)
 	    if (lst->next == NULL)
         {
             free(lst);
-            mini->tlist = temp;
+            mini->env1 = temp;
             return ;
         }
         lst->var1 = lst->next->var1; 
@@ -44,20 +44,22 @@ static void	delete_node(t_list *lst, t_list *target, t_mini *mini)
     return;  
 }
 
-int ft_unset(t_mini *mini)
+int ft_unset(t_mini *mini, char *unset)
 {
     t_list  *tlist;
 
-    if (mini->more == NULL)
+    if (unset == NULL)
 		return (0);
-    tlist = mini->tlist;
+    // looping through environmental variables only not run tlist
+    // to see if can delete any from list
+    tlist = mini->env1;
     while (tlist != NULL)
 	{
-        if (ft_strcmp(tlist->var1, mini->more) == 0)
+        if (ft_strcmp(tlist->var1, unset) == 0)
         {
-            ft_lstprint(mini->tlist);
-			delete_node(mini->tlist, tlist, mini);
-            ft_lstprint(mini->tlist);
+            // ft_lstprint(mini->env1);
+			delete_node(mini->env1, tlist, mini);
+            // ft_lstprint(mini->env1);
     	    return (0);    
         }
         tlist = tlist->next;

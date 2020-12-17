@@ -22,7 +22,7 @@ void	ft_set_env(char **argv, char **envp, t_mini *mini)
 	(void)argv; // check for correct name executable?
 	while (envp[i] != NULL)
 	{
-		ft_split_into_tlist(mini, envp[i], 0);
+		ft_split_into_tlist(mini, envp[i]);
 		i++;
 	}
 }

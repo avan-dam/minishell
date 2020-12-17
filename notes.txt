@@ -10,7 +10,15 @@ git add .
 git commit -m"merging amber branch"
 git push origin master
 if conflicts checkout to my branch
+AMBER:
+- evecve!!
+chmod
+ls
+ls -la
+ls -l
+awk
 
+- ls, cat -e, 
 Amber: To Fix
 echo TEST_$u==hallo$log
 echo -n -n -n $potato$orange; unset 

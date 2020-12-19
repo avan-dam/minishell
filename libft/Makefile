@@ -6,7 +6,7 @@
 #    By: sannealbreghs <sannealbreghs@student.co      +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/11/21 13:28:31 by sannealbreg   #+#    #+#                  #
-#    Updated: 2020/12/07 07:37:37 by salbregh      ########   odam.nl          #
+#    Updated: 2020/12/19 16:33:25 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS	=	./ft_memset.c \
 			./ft_strdup.c \
 			./ft_substr.c \
 			./ft_strjoin.c \
+			./ft_putchar.c \
 			./ft_putchar_fd.c \
 			./ft_putstr_fd.c \
 			./ft_putendl_fd.c \

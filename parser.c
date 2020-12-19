@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/17 18:26:40 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/19 17:55:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,31 +66,21 @@ static void	ft_find_command(char *line, t_mini *mini)
 static int		ft_parse_input(char *command, char *more, t_mini *mini)
 {
 	if (ft_strcmp(command, "echo") == 0)
-	{
-		// printf("in echo with %s\n", more);
 		ft_echo(more);
-	}
 	else if (ft_strcmp(command, "cd") == 0)
 		ft_cd(mini);
 	else if ((ft_strcmp(command, "pwd") == 0) || (ft_strcmp(command, "/bin/pwd") == 0))
 		ft_pwd(mini);
 	else if (ft_strcmp(command, "export") == 0)
-	{
-		// printf("in export with %s\n", more);
 		ft_export(mini, more);
-	}
 	else if (ft_strcmp(command, "unset") == 0)
 		ft_unset(mini, more);
 	else if (ft_strcmp(command, "env") == 0)
 		ft_lstprint(mini->env1);
 	else if ((ft_strcmp(command, "ls") == 0) || (ft_strcmp(command, "/bin/ls") == 0))
-		ft_ls(mini, more);
+			ft_execve(mini);
 	else if (ft_strcmp(command, "exit") == 0)
-	{
-		printf("I got an exit baby\n");
-		// line = NULL;
 		return (-1);
-	}
 	else
 		printf("bash: %s: command not found\n", command);
 	return (0);
@@ -127,21 +117,27 @@ int		main(int argc, char **argv, char **envp)
 	int		lineret;
 	t_mini	mini;
 
+	line = NULL;
+	lineret = 1;
 	if (argc > 1)
 		return (-1); // are we implementing an error function?
 	ft_memset(&mini, 0, sizeof(t_mini));
 	ft_set_env(argv, envp, &mini);
-	while (1)
+	while (lineret)
 	{
 		ft_putstr("> ");
 		lineret = get_next_line(1, &line);
 		if (lineret < 0)
-			ft_putstr("error");
+			ft_putstr("error THIS ONE"); // return (-1)?
 		if (ft_divide_command(line, &mini) == -1)
 			return (0);
-		// line = NULL;
+		ft_lstprint(mini.run2);
+		free(mini.run2); // free the list otherwise previous commands stay in
+		mini.run2 = NULL;
 		free(line);
-		// system("leaks minishell");
+		line = NULL;
 	}	
+	free(line);
+	line = NULL;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/17 14:26:49 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/19 17:55:55 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ typedef struct		s_mini
 	char			*path;
 	int				cd;
 	t_list			*env1;
+	// builtin and execve arrray need corresponding function array for this
+	char			*builtin[8];
+	char			*notbuiltin[5]; // ls mkdir touch cat
 }					t_mini;
 
 int					ft_echo(char *string);
-void				ft_putchar(char c);
 void				ft_putstr(char *s);
 int	    			ft_strchr_numb(const char *s, int c);
 int				    ft_export(t_mini *mini, char *more);
@@ -47,10 +49,11 @@ int  				ft_split_into_tlist(t_mini *mini, char *line);
 t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstprint(t_list *lst);
-int					ft_ls(t_mini *mini, char *more);
+int					ft_execve(t_mini *mini);
 
 void				ft_cd(t_mini *mini);
 void				ft_pwd(t_mini *mini);
 void				ft_set_env(char **argv, char **envp, t_mini *mini);
+void				ft_set_array(t_mini *mini);
 
 #endif

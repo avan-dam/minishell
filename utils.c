@@ -6,16 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/09 12:26:16 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/19 16:36:44 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
 
 void	ft_putstr(char *s)
 {
@@ -51,9 +46,7 @@ int ft_strrch_numb(char *line, char c)
     while (line[i] != '\0')
     {
         if (line[i] == c)
-        {
             return (i);
-        }
 		i++;
     }
     return (-1);
@@ -66,8 +59,8 @@ int  ft_split_into_tlist(t_mini *mini, char *line)
     char	*var1;
     char	*var2;
 
-// only for env and export commands because those are seperated by '='
-// so only looks at tlist env
+    // only for env and export commands because those are seperated by '='
+    // so only looks at tlist env
     if ((i = ft_strrch_numb(line, '=')) == -1)
         return (0);
     if (line[i - 1] == ' ' || line[i + 1] == ' ')

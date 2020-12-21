@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/10 00:34:43 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/21 11:19:41 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,27 @@ static char	*ft_find_dolla(char *line, int i, t_mini *mini)
     return (line_replaced(start, newvar, end));
 }
 
+// static int 	ft_quotes(char *line, int i)
+// {
+// 	printf("i to start with %i\n", i);
+// 	if (line[i - 1] == 39)
+// 	{
+// 		if (line[i] != '\0')
+// 			i++;
+// 		printf("printf line %s and char %c  i to start with %i\n", line, line[i], i);
+// 		while ((line[i] != 39) && (line[i] != '\0'))
+// 			i++;
+// 		printf("i to start with %i\n", i);
+// 		return (i);
+// 	}
+// 	printf("printf line %s and char %c  i to start with %i\n", line, line[i], i);
+// 	// if (line[i - 1] == '"')
+// 	// 	i--;
+// 	printf("printf line %s and char %c  i to start with %i\n", line, line[i], i);
+// 	return (i);
+	
+// }
+
 char		*ft_check_dolla(char *line, t_mini *mini)
 {
 	int     i;
@@ -73,6 +94,8 @@ char		*ft_check_dolla(char *line, t_mini *mini)
     // printf("line coming into ft_check_dola func [%s]\n", line);
 	while (line[i + 1] != '\0')
 	{
+        // if (line[i] == 39 || line[i] == '"')
+		// 	i = ft_quotes(line, i + 1);
         if (line[i] == '$')
         {
             if ((line[i + 1] != '/') && (line[i + 1] != 92) && (line[i + 1] != '\0'))

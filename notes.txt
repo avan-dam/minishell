@@ -18,6 +18,9 @@ ls -la
 ls -l
 awk
 
+for double vs single quotes 
+single quotes take literally so print even $
+double quotes replace the dollar
 - ls, cat -e, 
 Amber: To Fix
 echo TEST_$u==hallo$log

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/17 14:26:49 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/17 19:48:14 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int  				ft_split_into_tlist(t_mini *mini, char *line);
 t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstprint(t_list *lst);
-int					ft_ls(t_mini *mini, char *more);
+int					ft_builtin(t_mini *mini, char *command, char *more, char **envp);
 
 void				ft_cd(t_mini *mini);
 void				ft_pwd(t_mini *mini);

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/17 18:26:40 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/17 19:59:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,28 +63,37 @@ static void	ft_find_command(char *line, t_mini *mini)
 	return ;
 }
 
-static int		ft_parse_input(char *command, char *more, t_mini *mini)
+static int		ft_check_bultin(char *command)
+{
+	int i;
+	
+	i = 0;
+	char *builtins[4] = { "ls", "mkdir", "/bin/ls"};
+	while (builtins[i] != NULL)
+	{
+		if (ft_strcmp(command, builtins[i]) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 {
 	if (ft_strcmp(command, "echo") == 0)
-	{
-		// printf("in echo with %s\n", more);
 		ft_echo(more);
-	}
 	else if (ft_strcmp(command, "cd") == 0)
 		ft_cd(mini);
 	else if ((ft_strcmp(command, "pwd") == 0) || (ft_strcmp(command, "/bin/pwd") == 0))
 		ft_pwd(mini);
 	else if (ft_strcmp(command, "export") == 0)
-	{
-		// printf("in export with %s\n", more);
 		ft_export(mini, more);
-	}
 	else if (ft_strcmp(command, "unset") == 0)
 		ft_unset(mini, more);
 	else if (ft_strcmp(command, "env") == 0)
 		ft_lstprint(mini->env1);
-	else if ((ft_strcmp(command, "ls") == 0) || (ft_strcmp(command, "/bin/ls") == 0))
-		ft_ls(mini, more);
+	else if (ft_check_bultin(command) == 1)
+		ft_builtin(mini, command, more, envp);
 	else if (ft_strcmp(command, "exit") == 0)
 	{
 		printf("I got an exit baby\n");
@@ -96,7 +105,7 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini)
 	return (0);
 }
 
-static int		ft_divide_command(char *line, t_mini *mini)
+static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 {
 	int i;
 	char *current;
@@ -113,7 +122,7 @@ static int		ft_divide_command(char *line, t_mini *mini)
 		line = ft_substr(line, i + 2, ft_strlen(line) - i);
 		current = ft_check_dolla(current, mini);
 		ft_find_command(current, mini);
-		if (ft_parse_input(mini->command, mini->more, mini) == -1)
+		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
 			return (-1);
 		mini->command = NULL;
 		mini->more = NULL;
@@ -137,7 +146,7 @@ int		main(int argc, char **argv, char **envp)
 		lineret = get_next_line(1, &line);
 		if (lineret < 0)
 			ft_putstr("error");
-		if (ft_divide_command(line, &mini) == -1)
+		if (ft_divide_command(line, &mini, envp) == -1)
 			return (0);
 		// line = NULL;
 		free(line);

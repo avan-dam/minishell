@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/19 17:55:46 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/19 18:39:01 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini)
 	else if (ft_strcmp(command, "env") == 0)
 		ft_lstprint(mini->env1);
 	else if ((ft_strcmp(command, "ls") == 0) || (ft_strcmp(command, "/bin/ls") == 0))
-			ft_execve(mini);
+		ft_execve(mini);
 	else if (ft_strcmp(command, "exit") == 0)
 		return (-1);
 	else

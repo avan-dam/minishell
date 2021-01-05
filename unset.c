@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/08 11:58:56 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/09 19:52:38 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/02 11:02:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,18 @@ void	delete_node(t_list *lst, t_list *target, t_mini *mini)
 	}
     // if not first node, find previous node 
     t_list *prev = lst; 
-    while(prev->next != NULL && prev->next != target) 
-        prev = prev->next; 
+    while((prev->next != NULL) && (prev->next != target)) 
+    {
+      prev = prev->next;
+      lst = lst->next;  
+    }  
     // double check target in list
     if(prev->next == NULL) 
         return; 
     // Remove node from Linked List 
     prev->next = prev->next->next; 
     free(target); 
+    lst = prev;
     return;  
 }
 

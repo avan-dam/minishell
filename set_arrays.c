@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/19 11:12:11 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/19 16:32:18 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/21 20:40:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,25 @@ static void	set_builtin(t_mini *mini)
 	mini->builtin[7] = NULL;
 }
 
-// static void	set_command(t_mini *mini)
-// {
-// 	mini->command[0] = "ls";
-// 	mini->command[1] = "/bin/ls";
-// 	mini->command[2] = "/bin/chmod";
-// 	mini->command[3] = "chmod";
-// 	mini->command[4] = "wc";
-// 	mini->command[5] = "cat";
-// 	mini->command[6] = "awk";
-// 	mini->command[7] = "grep";
-// 	mini->command[8] = "mkdir";
-// 	mini->command[9] = "touch";
-// 	mini->command[10] = "rm -rf";
-// }
+static void	set_command(t_mini *mini)
+{
+	mini->notbuiltin[0] = "ls"; //works
+	mini->notbuiltin[1] = "/bin/ls"; //works
+	mini->notbuiltin[2] = "/bin/chmod";
+	mini->notbuiltin[3] = "chmod";
+	mini->notbuiltin[4] = "wc";
+	mini->notbuiltin[5] = "cat";
+	mini->notbuiltin[6] = "awk";
+	mini->notbuiltin[7] = "grep";
+	mini->notbuiltin[8] = "mkdir";
+	mini->notbuiltin[9] = "touch"; //doesnt work
+	mini->notbuiltin[10] = "rm -rf"; // doesnt work
+	mini->notbuiltin[11] = "cat"; // doesnt work
+	mini->notbuiltin[12] = NULL;
+}
 
 void		ft_set_array(t_mini *mini)
 {
 	set_builtin(mini);
-	// set_command(mini);
+	set_command(mini);
 }

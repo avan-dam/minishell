@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   t_list_more.c                                      :+:    :+:            */
+/*   unused_tlists.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 07:20:47 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/08 13:27:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/02 10:24:46 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,4 @@
 // 		return ;
 // 	new->next = *alst;
 // 	*alst = new;
-// }
-
-// void	ft_lstclear(t_list **lst, void (*del)(void *))
-// {
-// 	t_list	*store;
-// 	t_list	*me;
-
-// 	if (del == NULL || lst == NULL)
-// 	{
-// 		return ;
-// 	}
-// 	store = *lst;
-// 	*lst = NULL;
-// 	while (store != NULL)
-// 	{
-// 		del(store->var1);
-// 		del(store->var2);
-// 		me = (store->next);
-// 		free(store);
-// 		store = me;
-// 	}
 // }

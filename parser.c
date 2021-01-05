@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/21 11:43:08 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/05 15:55:23 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,14 @@ static void	ft_find_command(char *line, t_mini *mini)
 	return ;
 }
 
-static int		ft_check_bultin(char *command)
+static int		ft_check_notbultin(char *command, t_mini *mini)
 {
 	int i;
 	
 	i = 0;
-	char *builtins[4] = { "ls", "mkdir", "/bin/ls"};
-	while (builtins[i] != NULL)
+	while (mini->notbuiltin[i] != NULL)
 	{
-		if (ft_strcmp(command, builtins[i]) == 0)
+		if (ft_strcmp(command, mini->notbuiltin[i]) == 0)
 			return (1);
 		i++;
 	}
@@ -92,10 +91,8 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 		ft_unset(mini, more);
 	else if (ft_strcmp(command, "env") == 0)
 		ft_lstprint(mini->env1);
-	else if (ft_check_bultin(command) == 1)
-		ft_builtin(mini, command, more, envp);
-	// else if ((ft_strcmp(command, "ls") == 0) || (ft_strcmp(command, "/bin/ls") == 0))
-	// 	ft_execve(mini);
+	else if (ft_check_notbultin(command, mini) == 1)
+		ft_execve(mini, envp);
 	else if (ft_strcmp(command, "exit") == 0)
 		return (-1);
 	else
@@ -117,8 +114,8 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 		if ((ft_strrch_numb(line, ';') < i) && (ft_strrch_numb(line, ';') != -1))
 			i = ft_strrch_numb(line, ';');
 		current = ft_substr(line, 0, i);
-		line = ft_substr(line, i + 2, ft_strlen(line) - i);
-		current = ft_check_dolla(current, mini);
+		line = ft_substr(line, i + 1, ft_strlen(line) - i);
+		current = ft_check_dolla_quotes(current, mini, 0 , 0);
 		ft_find_command(current, mini);
 		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
 			return (-1);
@@ -139,6 +136,7 @@ int		main(int argc, char **argv, char **envp)
 	if (argc > 1)
 		return (-1); // are we implementing an error function?
 	ft_memset(&mini, 0, sizeof(t_mini));
+	ft_set_array(&mini);
 	ft_set_env(argv, envp, &mini);
 	while (lineret)
 	{
@@ -147,8 +145,11 @@ int		main(int argc, char **argv, char **envp)
 		if (lineret < 0)
 			return (-1);
 		if (ft_divide_command(line, &mini, envp) == -1)
+		{
+			ft_lstclear(&mini.env1); // is this freeing the list enough
+			ft_memset(&mini, 0, sizeof(t_mini));
 			return (-1);
-		ft_lstprint(mini.run2);
+		}
 		free(mini.run2); // free the list otherwise previous commands stay in
 		mini.run2 = NULL;
 		free(line);
@@ -158,3 +159,5 @@ int		main(int argc, char **argv, char **envp)
 	line = NULL;
 	return (0);
 }
+//if you do the up arrow in the shell it goes weird
+

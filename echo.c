@@ -6,13 +6,13 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 11:40:20 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/17 18:26:32 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/04 13:56:21 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int ft_check_n(char *string)
+static int ft_howmany_n(char *string)
 {
     int i;
     int j;
@@ -34,7 +34,6 @@ static int ft_check_n(char *string)
 			return (1);
         if (string[i] != ' ')
         {
-			// printf("j = %i so mini->more[j] is %c and length is %lu\n", j, string[j], ft_strlen(string) - j);
             string = ft_substr(string, j, ft_strlen(string) - j);
             return (2);
         }
@@ -50,16 +49,13 @@ static int    ft_echo_n(char *string)
 
     if(string == NULL)
         return (0);
-	j = ft_check_n(string);
-    if (j == 1)
-        return (j);
+    if ((j = ft_howmany_n(string)) == 2)
+        return (2);
 	if (j != 2)
 	{
-	    i = ft_len(string);
-    	i = i - 3;
+    	i = ft_len(string) - 3;
     	string = ft_substrr(string, 3, i);
 	}
-	j = 0;
     string = ft_strtrim(string, " ");
     ft_putstr(string);
     return(0);
@@ -88,26 +84,15 @@ static int  ft_check_empty(char *string)
 int    ft_echo(char *string)
 {
     if (string == NULL)
-    {
-        ft_putchar('\n');
-        return (0);
-    }
+        return(ft_putchar('\n'));
     if (ft_check_empty(string) == 1)
-        ft_putchar('\n');
+        return(ft_putchar('\n'));
     else if ((string[0] == '-') && (string[1] == 'n') && ((string[2] == ' ') || (string[2] == '\0') || (string[2] == 'n')))
     {
-        if (ft_echo_n(string) == 2)
-        {
-            string = ft_strtrim(string, " ");
-            ft_putstr(string) ;
-            ft_putchar('\n');
-        }
+        if (ft_echo_n(string) != 2)
+            return(0);
     }
-    else
-    {
-            string = ft_strtrim(string, " ");
-            ft_putstr(string);
-            ft_putchar('\n');
-    }
-    return (0);
+    string = ft_strtrim(string, " ");
+    ft_putstr(string);
+    return(ft_putchar('\n'));
 }

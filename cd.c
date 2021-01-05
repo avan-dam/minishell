@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/09 19:52:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2020/12/21 13:42:41 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ void	ft_cd(t_mini *mini)
 	}
 	printf("directory after cd : %s\n", getcwd(cwd, sizeof(cwd)));
 	// input befor minimore: cd
-	printf("value of mini->more: %s\n", mini->more);
+	// printf("value of mini->more: %s\n", mini->more);
 }

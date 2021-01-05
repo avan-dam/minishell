@@ -6,7 +6,7 @@
 #    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/06 12:33:02 by avan-dam      #+#    #+#                  #
-#    Updated: 2020/12/21 11:43:57 by ambervandam   ########   odam.nl          #
+#    Updated: 2020/12/21 12:28:38 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRCS =		parser.c \
 			unset.c \
 			pwd.c \
 			env.c \
-			builtin.c
+			exec.c \
+			set_arrays.c
 # unused_tlists.c
 
 FLAGS = 	-Wall -Werror -Wextra

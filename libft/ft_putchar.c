@@ -6,13 +6,14 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/19 16:30:20 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/19 16:30:42 by salbregh      ########   odam.nl         */
+/*   Updated: 2020/12/21 13:30:20 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar(char c)
+int	ft_putchar(char c)
 {
 	write(1, &c, 1);
+	return(0);
 }

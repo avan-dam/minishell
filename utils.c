@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/19 16:36:44 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/04 13:55:27 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	ft_putstr(char *s)
 	{
 		// so that if you type \ once nothing happens only 
 		// if twice in a row
-		if (s[i] == 92)
-			i++;
+		// if (s[i] == 92)
+		// 	i++;
 		write(1, &s[i], 1);
 		i++;
 	}

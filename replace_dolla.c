@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/21 11:19:41 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/05 15:55:31 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static char *line_replaced(char *start, char *newvar, char *end)
 
 static char *ft_check_var_tlist(t_mini *mini, char *oldvar)
 {
-    char    *newvar;
     t_list  *tlist;
 
     // looking through environmental variables to see if needs to be replace
@@ -34,10 +33,7 @@ static char *ft_check_var_tlist(t_mini *mini, char *oldvar)
     while (tlist != NULL)
 	{
         if (ft_strcmp(tlist->var1, oldvar) == 0)
-        {
-            newvar = ft_strjoin(" ", tlist->var2);
-    	    return (newvar);   
-        }
+			return (tlist->var2);
         tlist = tlist->next;
 	}
     return (ft_strdup(""));
@@ -53,59 +49,107 @@ static char	*ft_find_dolla(char *line, int i, t_mini *mini)
 
 	i++;
     j = i;
-    while (line[i] != '\0' && line[i] != '#' && line[i] != '$' && line[i] != '-' && line[i] != '=' && line[i] != ' ')
+	// printf("in ft_finddoll with [%s]\n", line);
+    while (line[i] != '\0' && line[i] != '#' && line[i] != '$' && line[i] != '-' && line[i] != '=' && line[i] != ' ' && line[i] != 39 && line[i] != '"')
         i++;
+	if (i != 0)
+	{
+		if (line[i - 1] == '"')
+			return (NULL);
+	}
     oldvar = ft_substr(line, j, i - j);
-    start = ft_substr(line, 0, j - 2);
+    start = ft_substr(line, 0, j - 1);
     end = ft_substr(line, i, ft_strlen(line) - i);
     newvar = ft_check_var_tlist(mini, oldvar);
     // printf("oldvar[%s] newvar[%s] start[%s] end[%s]\n", oldvar, newvar, start, end);
     return (line_replaced(start, newvar, end));
 }
 
-// static int 	ft_quotes(char *line, int i)
+// static int 	ft_check_double_quote(char **line, int i)
 // {
-// 	printf("i to start with %i\n", i);
-// 	if (line[i - 1] == 39)
-// 	{
-// 		if (line[i] != '\0')
-// 			i++;
-// 		printf("printf line %s and char %c  i to start with %i\n", line, line[i], i);
-// 		while ((line[i] != 39) && (line[i] != '\0'))
-// 			i++;
-// 		printf("i to start with %i\n", i);
-// 		return (i);
+// 	int j;
+// 	int k;
+// 	int orglen;
+
+// 	orglen = ft_strlen(*line);
+// 	printf("orglen %d", orglen);
+// 	k = 1;
+// 	j = i;
+// 	printf("here\n");
+
+// 	ft_memmove(line[i], line[i+1], orglen - k);
+// 	i--;
+// 	printf("here line %s\n", *line);
+// 	while((*line)[i] != '\0')
+//     {
+// 		printf("here1, (*line)[i][%c]\n", (*line)[i]);
+// 		printf("here line %s\n", *line);
+//         if ((*line)[i] == '"')
+// 		{
+// 			printf("here2 i is %d\n", i);
+// 			j++;
+// 			k++;
+// 			ft_memmove(line[i], line[i+1], orglen - k);
+//     	}
+// 		i++;
 // 	}
-// 	printf("printf line %s and char %c  i to start with %i\n", line, line[i], i);
-// 	// if (line[i - 1] == '"')
-// 	// 	i--;
-// 	printf("printf line %s and char %c  i to start with %i\n", line, line[i], i);
+//     i = j - k;
+// 	printf("ho\n");
 // 	return (i);
-	
 // }
 
-char		*ft_check_dolla(char *line, t_mini *mini)
+char		*ft_check_dolla_quotes(char *line, t_mini *mini, int o, int t)
 {
-	int     i;
-
-    i = 0;
+	int i;
+	int k;
+	int j;
+	
+	k = 1;
+	i = 0;
     if (line == NULL)
         return (line);
-    // printf("line coming into ft_check_dola func [%s]\n", line);
 	while (line[i + 1] != '\0')
 	{
-        // if (line[i] == 39 || line[i] == '"')
-		// 	i = ft_quotes(line, i + 1);
-        if (line[i] == '$')
-        {
-            if ((line[i + 1] != '/') && (line[i + 1] != 92) && (line[i + 1] != '\0'))
-                line = ft_find_dolla(line, i, mini);
-            else
-                i = i + 2;
-        }
-        if (line[i] != '\0' && line[i] != '$')
-            i++;
+		i++;
+		if ((line[i] == 92) && (line[i - 1] != '"'))
+		{
+			ft_memmove(&line[i], &line[i+1], ft_strlen(line) - 1);
+			i--;
+		}
+		if ((line[i] == 39) && (t % 2 == 0))
+		{
+			o++;	
+			ft_memmove(&line[i], &line[i+1], ft_strlen(line) - i);
+			i--;
+			if (line[i+ 1] == 92)
+				i++;
+		}		
+		else if ((line[i] == '"') && (o % 2 == 0))
+		{
+			t++;
+			j = i;
+			ft_memmove(&line[i], &line[i+1], ft_strlen(line) - 1);
+			i--;
+			while(line[i] != '\0')
+            {
+                if (line[i] == '"' && ((line[i + 1] == '"') || (line[i + 1] == '$')))
+				{
+					t++;
+					j++;
+					k++;
+					ft_memmove(&line[i], &line[i+1], ft_strlen(line) - 1);
+            	}
+				i++;
+			}
+			i = j - k;
+			if (line[i + 1] == 92)
+				i++;
+		}
+		else if((line[i] == '$') && ((o % 2 == 0) || (line[i - 1] == 39)))
+		{
+			if ((line[i + 1] != '/') && (line[i + 1] != 92) && (line[i + 1] != '\0') && ft_find_dolla(line, i, mini) != NULL)
+				line = ft_find_dolla(line, i, mini);
+		}
 	}
-    // printf("line coming OUT ft_check_dola func [%s]\n", line);
-    return (line);
+	return (line);
 }

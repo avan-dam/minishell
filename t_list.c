@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 07:20:21 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/09 20:59:27 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/02 10:26:41 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,25 @@ t_list	*ft_lstnew(void *var1, void *var2)
 		tmp->next = NULL;
 	}
 	return (tmp);
+}
+
+void	ft_lstclear(t_list **lst)
+{
+	t_list	*store;
+	t_list	*me;
+
+	if (lst == NULL)
+	{
+		return ;
+	}
+	store = *lst;
+	*lst = NULL;
+	while (store != NULL)
+	{
+		free(store->var1);
+		free(store->var2);
+		me = (store->next);
+		free(store);
+		store = me;
+	}
 }

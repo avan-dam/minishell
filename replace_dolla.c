@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/06 14:35:38 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/06 16:00:06 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,43 +60,13 @@ static char	*ft_find_dolla(char *line, int i, t_mini *mini)
     oldvar = ft_substr(line, j, i - j);
     start = ft_substr(line, 0, j - 1);
     end = ft_substr(line, i, ft_strlen(line) - i);
-    newvar = ft_check_var_tlist(mini, oldvar);
-    // printf("oldvar[%s] newvar[%s] start[%s] end[%s]\n", oldvar, newvar, start, end);
+	if (end[0] == '"')
+		ft_memmove(&end[0], &end[1], ft_strlen(end));
+		printf("end %s\n", end);
+	newvar = ft_check_var_tlist(mini, oldvar);
+    printf("oldvar[%s] newvar[%s] start[%s] end[%s]\n", oldvar, newvar, start, end);
     return (line_replaced(start, newvar, end));
 }
-
-// static int 	ft_check_double_quote(char **line, int i)
-// {
-// 	int j;
-// 	int k;
-// 	int orglen;
-
-// 	orglen = ft_strlen(*line);
-// 	printf("orglen %d", orglen);
-// 	k = 1;
-// 	j = i;
-// 	printf("here\n");
-
-// 	ft_memmove(line[i], line[i+1], orglen - k);
-// 	i--;
-// 	printf("here line %s\n", *line);
-// 	while((*line)[i] != '\0')
-//     {
-// 		printf("here1, (*line)[i][%c]\n", (*line)[i]);
-// 		printf("here line %s\n", *line);
-//         if ((*line)[i] == '"')
-// 		{
-// 			printf("here2 i is %d\n", i);
-// 			j++;
-// 			k++;
-// 			ft_memmove(line[i], line[i+1], orglen - k);
-//     	}
-// 		i++;
-// 	}
-//     i = j - k;
-// 	printf("ho\n");
-// 	return (i);
-// }
 
 char		*ft_check_dolla_quotes(char *line, t_mini *mini, int o, int t)
 {
@@ -121,7 +91,7 @@ char		*ft_check_dolla_quotes(char *line, t_mini *mini, int o, int t)
 			o++;	
 			ft_memmove(&line[i], &line[i+1], ft_strlen(line) - i);
 			i--;
-			if (line[i+ 1] == 92)
+			if (line[i + 1] == 92)
 				i++;
 		}		
 		else if ((line[i] == '"') && (o % 2 == 0))

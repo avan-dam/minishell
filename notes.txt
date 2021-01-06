@@ -10,6 +10,70 @@ git add .
 git commit -m"merging amber branch"
 git push origin master
 if conflicts checkout to my branch
+
+AMBER: REDIRECTION NOTES:
+https://catonmat.net/bash-one-liners-explained-part-three
+Operator > is the output redirection operator. Bash 
+first tries to open the file for writing and if it 
+succeeds it sends the stdout of command to the newly 
+opened file. If it fails opening the file, the whole 
+command fails.
+
+Writing command >file is the same as writing command 
+1>file. The number 1 stands for stdout, which is the 
+file descriptor number for standard output.
+Bash opens file and replaces file descriptor 1 with 
+the file descriptor that points to file. So all the 
+output that gets written to file descriptor 1 from 
+now on ends up being written to file
+
+In general you can write command n>file, which will 
+redirect the file descriptor n to file.
+e.g. $ ls > file_list
+redirects the stderr to file. 2 stands for stderr
+e.g. $ command 2> file
+This one-liner uses the &> operator to redirect 
+both output streams - stdout and stderr - from 
+command to file. 
+e.g. $ command &>file
+this has same output as: $ command >file 2>&1
+here  First stdout is redirected to file, and then 
+stderr is duplicated to be the same as stdout. So 
+both streams end up pointing to file.
+When bash sees several redirections it processes 
+them from left to right.
+
+$ 2>&1 : This one duplicates file descriptor 2 to be 
+a copy of file descriptor 1
+
+$ command &>file === $ command >&file
+
+Discard the standard output of a command
+$ command > /dev/null
+The special file /dev/null discards all data written to 
+it.
+discard both stdout and stderr by doing: 
+$ command >/dev/null 2>&1
+or also
+$ command &>/dev/null
+Suppose you want to read the first line of the file in 
+a variable. You can simply do this:
+$ read -r line < file
+Bash's built-in read command reads a single line from 
+standard input. By using the input redirection operator 
+< we set it up to read the line from the file.
+
+Redirect stderr of all commands to a file forever
+exec 2>file
+If you specify redirects after exec, then they will 
+last forever, meaning until you change them or exit 
+the script/shell.
+
+
+
+
+
+
 AMBER:
 - evecve!!
 chmod

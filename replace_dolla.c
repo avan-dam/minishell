@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/05 15:55:31 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/06 14:35:38 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ char		*ft_check_dolla_quotes(char *line, t_mini *mini, int o, int t)
 		}		
 		else if ((line[i] == '"') && (o % 2 == 0))
 		{
+			// into own function 
 			t++;
 			j = i;
 			ft_memmove(&line[i], &line[i+1], ft_strlen(line) - 1);

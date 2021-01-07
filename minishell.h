@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/06 15:49:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/06 16:09:49 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 # include "libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
+
+typedef struct		s_line
+{
+	int				o;
+	int				t;
+	int				k;
+	int				j;
+	char			*line;
+}					t_line;
 
 typedef struct		s_list
 {

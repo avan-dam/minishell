@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/17 14:10:52 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/21 20:40:02 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/06 17:01:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,5 @@ int				ft_execve(t_mini *mini, char **envp)
 		wait(NULL);
 		return (0);
 	}
-	(void)envp;
     return 0;
 }

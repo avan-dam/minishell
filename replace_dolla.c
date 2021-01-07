@@ -6,12 +6,11 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/06 14:35:38 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/06 16:43:37 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static char *line_replaced(char *start, char *newvar, char *end)
 {

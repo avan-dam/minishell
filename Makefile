@@ -6,22 +6,22 @@
 #    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/06 12:33:02 by avan-dam      #+#    #+#                  #
-#    Updated: 2020/12/21 12:28:38 by ambervandam   ########   odam.nl          #
+#    Updated: 2021/01/07 14:46:10 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =		minishell
 
-SRCS =		parser.c \
-			echo.c \
+SRCS =		builtins/echo.c \
+			builtins/unset.c \
+			builtins/pwd.c \
+			builtins/env.c \
+			builtins/export.c \
+			builtins/cd.c \
+			parser.c \
 			utils.c \
-			export.c \
 			t_list.c \
-			cd.c \
 			replace_dolla.c \
-			unset.c \
-			pwd.c \
-			env.c \
 			exec.c \
 			set_arrays.c
 # unused_tlists.c

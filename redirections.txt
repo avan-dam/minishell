@@ -1,6 +1,6 @@
 Redirections < > “>>” should work like in bash except for file descriptor aggregation
 
-efore a command is executed, its input and output may be redirected.
+Before a command is executed, its input and output may be redirected.
 Redirection allows commands file handles to be dublecated, openen, closed,
 made to refer to different files and can change the files the command
 reads from and writes to. The redirection commands may precede or appear

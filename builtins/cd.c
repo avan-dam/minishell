@@ -6,11 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/21 13:42:41 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/07 16:49:23 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 #include <sys/syslimits.h> // not sure if allowed?
 #include <string.h>
 
@@ -21,6 +21,11 @@
 **	Change the current working directory to directory, 
 **	if [directory] is not supplied, the value of HOME shell variable is used
 **	any additional arguments following [directory] are ignored
+**
+** cd ~ 		~ is short for home directory
+** cd .			. is short for current directory
+** cd ..		.. is short for parent directory
+** cd /			use to move to the root directory?
 */
 
 void	ft_cd(t_mini *mini)

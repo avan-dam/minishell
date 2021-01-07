@@ -6,11 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/05 17:59:29 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/14 11:27:23 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/07 14:44:51 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 #include <sys/syslimits.h>
 
 /*

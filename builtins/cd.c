@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/07 16:49:23 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/07 21:03:07 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 ** cd .			. is short for current directory
 ** cd ..		.. is short for parent directory
 ** cd /			use to move to the root directory?
+
+** everytime you change directory, change OLDPWD and PWD
 */
 
 void	ft_cd(t_mini *mini)
@@ -34,15 +36,13 @@ void	ft_cd(t_mini *mini)
 	int		i;
 	char	*line;
 
-	if (mini->cd == 0)
-		setenv("OLDPWD", "NULL", 1);
-	printf("VALUE OLDPWD: %s\n", getenv("OLDPWD"));
+	// printf("VALUE OLDPWD: %s\n", getenv("OLDPWD"));
 	mini->cd = 1;
 	// set OLDPWD to PWD when cd is used once
 	i = 0;
 	if (mini->more == NULL)
 	{
-		chdir(getenv("HOME"));
+		chdir(getenv("HOME")); // goes to environmental variable home
 		return ;
 	}
 	line = mini->more; // make sure to trim mini->more to only the first argument seeing the rest is ignored

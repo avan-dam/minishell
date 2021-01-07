@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/05 15:55:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/07 20:56:08 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int		main(int argc, char **argv, char **envp)
 			ft_memset(&mini, 0, sizeof(t_mini));
 			return (-1);
 		}
-		free(mini.run2); // free the list otherwise previous commands stay in
+		free(mini.run2); // free the list otherwise previous commands stays in
 		mini.run2 = NULL;
 		free(line);
 		line = NULL;

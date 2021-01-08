@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/07 20:59:52 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/08 10:29:56 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,4 @@ void	ft_set_env(char **argv, char **envp, t_mini *mini)
 		i++;
 	}
 	envp[i] = NULL;
-	// delete old pwd out of the environmental variables.
 }

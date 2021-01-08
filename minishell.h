@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/05 15:55:18 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/08 13:28:29 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ typedef struct		s_mini
 	char			*command;
 	char			*more;
 	t_list			*run2;
-	char			*path;
-	int				cd;
+	// char			*path;
+	// int			cd;
 	t_list			*env1;
 	// builtin and execve arrray need corresponding function array for this
 	char			*builtin[8];

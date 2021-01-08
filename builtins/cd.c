@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/07 21:03:07 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/08 19:50:50 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,49 +30,80 @@
 ** everytime you change directory, change OLDPWD and PWD
 */
 
+static void	ft_add_env(char *env, char *path, t_mini *mini)
+{
+	t_list	*lst;
+
+	lst = ft_lstnew(env, path);
+	ft_lstadd_back(&mini->env1, lst);
+}
+
+static char	*ft_get_env(char *env, t_mini *mini)
+{
+	t_list	*lst;
+	
+	lst = mini->env1;
+	while (lst != NULL)
+	{
+		if (ft_strcmp(lst->var1, env) == 0)
+			return (lst->var2);
+		lst = lst->next;
+	}
+	return (NULL);
+}
+
 void	ft_cd(t_mini *mini)
 {
 	char	cwd[PATH_MAX];
-	int		i;
-	char	*line;
+	char	*currentpwd;
 
-	// printf("VALUE OLDPWD: %s\n", getenv("OLDPWD"));
-	mini->cd = 1;
-	// set OLDPWD to PWD when cd is used once
-	i = 0;
-	if (mini->more == NULL)
+	currentpwd = ft_get_env("PWD", mini);
+	if (mini->more == NULL || ft_strcmp(mini->more, "~") == 0)
 	{
-		chdir(getenv("HOME")); // goes to environmental variable home
+		chdir(ft_get_env("HOME", mini));
+		ft_unset(mini, "PWD");
+		ft_add_env("PWD", ft_get_env("HOME", mini), mini);
+		ft_add_env("OLDPWD", currentpwd, mini);
 		return ;
 	}
-	line = mini->more; // make sure to trim mini->more to only the first argument seeing the rest is ignored
-	if (ft_strchr(line, '-') != NULL)
+	else if (ft_strcmp(mini->more, "-") == 0) // also prints where it goes back to?
 	{
-		if (ft_strcmp(getenv("OLDPWD"), "NULL") == 0)
-			chdir(getenv("OLDPWD"));
+		if (ft_get_env("OLDPWD", mini) != NULL)
+		{
+			chdir(ft_get_env("OLDPWD", mini));
+			ft_unset(mini, "OLDPWD"); // delete the existing oldpwd
+			ft_add_env("OLDPWD", currentpwd, mini); // add oldpwd
+			ft_unset(mini, "PWD");
+			ft_add_env("PWD", "find previous", mini);
+		}
 		else
 			ft_putstr("bash: cd: OLDPWD not set\n");
 		return ;
 	}
-	else if (chdir(mini->more) != 0)
+	else
 	{
-		while (line[i])
+		if (chdir(mini->more) < 0) // if chdir did not succeed fix this
 		{
-			if (line[i] != ' ')
-			{
-				ft_putstr("cd: ");
-				ft_putstr(mini->more);
-				ft_putstr(": No such file or directory\n");
-				return ;
-			}
-			i++;
+			ft_putstr("cd: ");
+			ft_putstr(mini->more);
+			ft_putstr(": No such file or directory\n");
+			return ;
 		}
-		// if mini->more consist of only withspace just return
-		// ft_putstr("cd: ");
-		// ft_putstr(mini->more);
-		// ft_putstr(": No such file or directory\n");
+		getcwd(cwd, sizeof(cwd));
+		// printf("CWD: %s\n", cwd);
+		ft_unset(mini, "PWD");
+		ft_add_env("PWD", cwd, mini);
+		ft_unset(mini, "OLDPWD");
+		ft_add_env("OLDPWD", currentpwd, mini);
 	}
-	printf("directory after cd : %s\n", getcwd(cwd, sizeof(cwd)));
-	// input befor minimore: cd
-	// printf("value of mini->more: %s\n", mini->more);
+	
+	// if (ft_strcmp(mini->more, "..") == 0) // go to parent class (one level up from current directory)
+	// if (ft_strcmp(mini->more, "../..")) // go to the parents parents class (two levels up from current directory)
+	// if (ft_strcmp(mini->more, ".") == 0) // change into current directory, do nothing, do you change/set oldpwd?
+	// cd ../filename (put in chdir?)
+	// if ((ft_strcmp(mini->more, ~) == 0 )) // go into home directory set by $HOME
+
+
+	// ft_set_env("OLDPWD", currentpwd, mini);
+	// printf("directory after cd : %s\n", getcwd(cwd, sizeof(cwd)));
 }

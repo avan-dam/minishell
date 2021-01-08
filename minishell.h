@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/06 16:09:49 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/08 11:39:55 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef struct		s_line
 	int				o;
 	int				t;
 	int				k;
-	int				j;
 	char			*line;
 }					t_line;
 
@@ -50,7 +49,7 @@ int					ft_echo(char *string);
 void				ft_putstr(char *s);
 int	    			ft_strchr_numb(const char *s, int c);
 int				    ft_export(t_mini *mini, char *more);
-char				*ft_check_dolla_quotes(char *line, t_mini *mini, int o, int t);
+char				*ft_check_dolla_quotes(char *line, t_mini *mini);
 int 				ft_unset(t_mini *mini, char *unset);
 int					unvalid_identifier(char *error);
 int 				ft_strrch_numb(char *line, char c);

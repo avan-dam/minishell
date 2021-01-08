@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/06 16:09:40 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/08 11:15:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 			i = ft_strrch_numb(line, ';');
 		current = ft_substr(line, 0, i);
 		line = ft_substr(line, i + 1, ft_strlen(line) - i);
-		current = ft_check_dolla_quotes(current, mini, 0, 0);
+		current = ft_check_dolla_quotes(current, mini);
 		ft_find_command(current, mini);
 		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
 			return (-1);

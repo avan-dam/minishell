@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/04 13:55:27 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/08 16:49:14 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,28 @@ int		unvalid_identifier(char *error)
 	return (0);
 }
 
-int ft_strrch_numb(char *line, char c)
+int ft_strchr_numb(char *line, char c, int i)
 {
-    int i;
-
-    i = 0;
+    if (i < 0)
+        return (-1);
     while (line[i] != '\0')
     {
         if (line[i] == c)
             return (i);
 		i++;
+    }
+    return (-1);
+}
+
+int ft_strrchr_numb(char *line, char c, int i)
+{
+    if (i > (int)ft_strlen(line))
+        return (-1);
+    while (i >= 0)
+    {
+        if (line[i] == c)
+            return (i);
+		i--;
     }
     return (-1);
 }
@@ -61,7 +73,7 @@ int  ft_split_into_tlist(t_mini *mini, char *line)
 
     // only for env and export commands because those are seperated by '='
     // so only looks at tlist env
-    if ((i = ft_strrch_numb(line, '=')) == -1)
+    if ((i = ft_strchr_numb(line, '=', 0)) == -1)
         return (0);
     if (line[i - 1] == ' ' || line[i + 1] == ' ')
         return (0);
@@ -75,4 +87,20 @@ int  ft_split_into_tlist(t_mini *mini, char *line)
 	// printf("now added to the list %s and %s node next we printf list\n", var1, var2);
 	// ft_lstprint(mini->env1);
     return (1);
+}
+
+int     numb_char(char *line, char c)
+{
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    while (line[i] != '\0')
+    {
+        if (line[i] == c)
+            j++;
+		i++;
+    }
+    return (j);
 }

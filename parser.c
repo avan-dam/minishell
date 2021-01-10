@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/08 11:15:13 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/10 17:19:34 by Amber         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,15 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 	{
 		line = ft_strtrim(line, " ");
 		i = ft_strlen(line);
-		if (ft_strrch_numb(line, '|') != -1)
-			i = ft_strrch_numb(line, '|');
-		if ((ft_strrch_numb(line, ';') < i) && (ft_strrch_numb(line, ';') != -1))
-			i = ft_strrch_numb(line, ';');
+		if (ft_strchr_numb(line, '|', 0) != -1)
+			i = ft_strchr_numb(line, '|', 0);
+		if ((ft_strchr_numb(line, ';', 0) < i) && (ft_strchr_numb(line, ';', 0) != -1))
+			i = ft_strchr_numb(line, ';', 0);
 		current = ft_substr(line, 0, i);
 		line = ft_substr(line, i + 1, ft_strlen(line) - i);
-		current = ft_check_dolla_quotes(current, mini);
+		current = ft_check_dolla_quotes(current, mini, 0);
+		if (current == NULL)
+			return (-2);
 		ft_find_command(current, mini);
 		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
 			return (-1);

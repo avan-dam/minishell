@@ -6,73 +6,69 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/08 12:08:08 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/10 17:35:45 by Amber         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-static char *line_replaced(char *start, char *newvar, char *end)
+static void		line_replaced(char *start, char *newvar, char *end, t_line *s)
 {
-    char *temp;
-    char *newline;
-    
-    temp = ft_strjoin(start, newvar);
-    newline = ft_strjoin(temp, end);
-    return (newline);
+	char	*temp;
+	char	*newline;
+
+	temp = ft_strjoin(start, newvar);
+	newline = ft_strjoin(temp, end);
+	s->line = newline;
+	s->k = ft_len(newvar) - 1;
+	return ;
 }
 
-static char *ft_check_var_tlist(t_mini *mini, char *oldvar)
+static char		*ft_check_var_tlist(t_mini *mini, char *oldvar)
 {
-    t_list  *tlist;
+	t_list	*tlist;
 
-    // looking through environmental variables to see if needs to be replace
-    // so only loop through env1 tlist not run tlist
-    tlist = mini->env1;
-    while (tlist != NULL)
+	// looking through environmental variables to see if needs to be replace
+	// so only loop through env1 tlist not run tlist
+	tlist = mini->env1;
+	while (tlist != NULL)
 	{
-        if (ft_strcmp(tlist->var1, oldvar) == 0)
+		if (ft_strcmp(tlist->var1, oldvar) == 0)
 			return (tlist->var2);
-        tlist = tlist->next;
+		tlist = tlist->next;
 	}
-    return (ft_strdup(""));
+	return (ft_strdup(""));
 }
 
-static t_line *ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
+static t_line	*ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 {
 	int		j;
-    char    *start;
+	char	*start;
 	char	*oldvar;
-    char    *newvar;
-    char    *end;
+	char	*newvar;
+	char	*end;
 
-	i++;
-    j = i;
-	// printf("in ft_finddoll with [%s]\n", line);
-    while (line[i] != '\0' && line[i] != '#' && line[i] != '$' && line[i] != '-' && line[i] != '=' && line[i] != ' ' && line[i] != 39 && line[i] != '"')
-        i++;
-	if (i != 0)
-	{
-		if (line[i - 1] == '"')
-			return (NULL);
-	}
-    oldvar = ft_substr(line, j, i - j);
-    start = ft_substr(line, 0, j - 1);
-    end = ft_substr(line, i, ft_strlen(line) - i);
-	if(start[ft_len(start) - 1] == 39 && end[0] == 39 && ft_len(end) > 1)
+	j = i;
+	while (line[i] != '\0' && line[i] != '#' && line[i] != '$' && \
+	line[i] != '-' && line[i] != '=' && line[i] != ' ' && line[i] != 39 \
+	&& line[i] != '"')
+		i++;
+	if (line[i - 1] == '"')
+		return (NULL);
+	oldvar = ft_substr(line, j, i - j);
+	start = ft_substr(line, 0, j - 1);
+	end = ft_substr(line, i, ft_strlen(line) - i);
+	if (start[ft_len(start) - 1] == 39 && end[0] == 39 && ft_len(end) > 1)
 	{
 		if (end[1] == '"')
 			ft_memmove(&end[1], &end[2], ft_strlen(end) - 1);
 	}
-    newvar = ft_check_var_tlist(mini, oldvar);
-    printf("oldvar[%s] newvar[%s] start[%s] end[%s]\n", oldvar, newvar, start, end);
-    s->line = line_replaced(start, newvar, end);
-	s->k = ft_len(newvar) - 1;
-	return(s);
+	newvar = ft_check_var_tlist(mini, oldvar);
+	line_replaced(start, newvar, end, s);
+	return (s);
 }
 
-static void		set_tline( t_line *s, char *line)
+static void		set_tline(t_line *s, char *line)
 {
 	s->line = ft_strdup(line);
 	// free line?
@@ -81,21 +77,27 @@ static void		set_tline( t_line *s, char *line)
 	s->k = 0;
 }
 
-static int	ft_double_quotes(t_line *s, int i)
+static int		ft_double_quotes(t_line *s, int i)
 {
-	printf("in double\n");
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - 1);
 	i--;
-	s->t++;
+	// if going wrong remove if statement here and just t++ always
+	if (s->o % 2 == 0)
+		s->t++;
 	return (i);
 }
 
-static int	ft_single_quotes(t_line *s, int i)
+static int		ft_single_quotes(t_line *s, int i)
 {
-	printf("in single\n");
+	// printf("in single with line %s and t %d\n", s->line, s->t);
 	// if inside double quotes we keep the single quotes and then covert
 	if (s->t % 2 == 1)
-		return(i+1);
+	{
+		// printf("i is %d an strlen is %zu ", i , ft_strlen(s->line));
+		if (i + 2 == (int)ft_strlen(s->line))
+			return (i);
+		return (i + 1);
+	}
 	// remove single quotes and print exactly what is inside without changing
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - 1);
 	i--;
@@ -108,61 +110,45 @@ static int	ft_single_quotes(t_line *s, int i)
 		i--;
 		s->o++;
 	}
-	i++;
 	return (i);
 }
 
-// static int ft_check_quotes_in_order(char *line)
-// {
-// 	int i;
-	
-// 	i = 0;
-// 	while(line[i] != '\0')
-// 	{
-// 		if (line[i] =='\'')
-// 		{
-// 			while(line)
-// 		}
-// 		//loop forward and backwards see if quotes even and in same order from back to from
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-char		*ft_check_dolla_quotes(char *line, t_mini *mini)
+static char		*ft_check_quotes_in_order(t_line *s)
 {
-	int i;
-	t_line s;
-	
-	i = 0;
-    if (line == NULL)
-        return (line);
+	// printf("Check is t is %d o is %d line is %s\n", s->t, s->o, s->line);
+	if (s->o % 2 != 0 || s->t % 2 != 0)
+	{
+		ft_putstr("minishell does not support multiline quotes\n");
+		return (NULL);
+	}
+	return (s->line);
+}
+
+char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
+{
+	t_line	s;
+
+	if (line == NULL)
+		return (NULL);
 	set_tline(&s, line);
-	// if (ft_check_quotes_in_order(line) == -1)
-	// error
 	while (s.line[i] != '\0')
 	{
-		printf("char %c t is %d o is %d line is %s\n", s.line[i], s.t, s.o, s.line);
-		if (s.line[i] == '\\' && (s.o % 2 == 0) && (s.t %2 == 0)) // ascii 92
+		if (s.line[i] == '\\' && (s.o % 2 == 0) && (s.t % 2 == 0))
 		{
 			ft_memmove(&s.line[i], &s.line[i+1], ft_strlen(s.line) - 1);
 			i--;
-		}	
+		}
 		if (s.line[i] == '\'')
 			i = ft_single_quotes(&s, i);
-		if (s.line[i] == '"')
+		else if (s.line[i] == '"')
 			i = ft_double_quotes(&s, i);
-		else if(s.line[i] == '$')
+		else if ((s.line[i] == '$') && (s.line[i + 1] != '/') && \
+		(s.line[i + 1] != '\\') && (s.line[i + 1] != '\0'))
 		{
-			printf("in replace dolla 1\n");
-			if ((s.line[i + 1] != '/') && (s.line[i + 1] != '\\') && (s.line[i + 1] != '\0'))
-			{
-				printf("in replace dolla 2\n");
-				ft_find_dolla(s.line, i, mini, &s);
-				i = i + s.k;
-			}
+			ft_find_dolla(s.line, i + 1, mini, &s);
+			i = i + s.k;
 		}
 		i++;
 	}
-	return (s.line);
+	return (ft_check_quotes_in_order(&s));
 }

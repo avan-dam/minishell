@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/10 17:35:45 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/11 18:16:34 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,13 @@ static int		ft_single_quotes(t_line *s, int i)
 	return (i);
 }
 
-static char		*ft_check_quotes_in_order(t_line *s)
+static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini)
 {
 	// printf("Check is t is %d o is %d line is %s\n", s->t, s->o, s->line);
 	if (s->o % 2 != 0 || s->t % 2 != 0)
 	{
-		ft_putstr("minishell does not support multiline quotes\n");
+		// is this stdout or stderror
+		ft_putstr_fd("minishell does not support multiline quotes\n", mini->stdout);
 		return (NULL);
 	}
 	return (s->line);
@@ -150,5 +151,5 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
 		}
 		i++;
 	}
-	return (ft_check_quotes_in_order(&s));
+	return (ft_check_quotes_in_order(&s, mini));
 }

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/08 16:49:14 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/11 19:29:40 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,18 @@ void	ft_putstr(char *s)
 	}
 }
 
-int		unvalid_identifier(char *error)
+int		unvalid_identifier(char *error, t_mini *mini)
 {
-    ft_putstr("bash: export: '");
-    ft_putstr(error);
-    ft_putstr("': not a valid identifier\n");
-	return (0);
+    // is this STDOUT OR STD ERROR
+    ft_putstr_fd("bash: export: '", mini->stderr);
+    ft_putstr_fd(error, mini->stderr);
+    ft_putstr_fd("': not a valid identifier\n", mini->stderr);
+    return (-1);
 }
 
 int ft_strchr_numb(char *line, char c, int i)
 {
-    if (i < 0)
+    if (line == NULL || i < 0)
         return (-1);
     while (line[i] != '\0')
     {
@@ -53,6 +54,8 @@ int ft_strchr_numb(char *line, char c, int i)
 
 int ft_strrchr_numb(char *line, char c, int i)
 {
+    if (line == NULL || i < 0)
+        return (-1);
     if (i > (int)ft_strlen(line))
         return (-1);
     while (i >= 0)
@@ -96,6 +99,8 @@ int     numb_char(char *line, char c)
 
     i = 0;
     j = 0;
+    if (line == NULL)
+        return (0);
     while (line[i] != '\0')
     {
         if (line[i] == c)

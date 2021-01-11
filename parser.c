@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/10 17:19:34 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/11 19:46:11 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static void	ft_find_command(char *line, t_mini *mini)
 	ft_find_more(line, mini, j, i);
 	newnode = ft_lstnew(mini->command, mini->more);
 	ft_lstadd_back(&mini->run2, newnode);
+	// printf("mini->command[%s], mini->more [%s]\n", mini->command, mini->more);
 	return ;
 }
 
@@ -80,7 +81,7 @@ static int		ft_check_notbultin(char *command, t_mini *mini)
 static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 {
 	if (ft_strcmp(command, "echo") == 0)
-		ft_echo(more);
+		ft_echo(more, mini);
 	else if (ft_strcmp(command, "cd") == 0)
 		ft_cd(mini);
 	else if ((ft_strcmp(command, "pwd") == 0) || (ft_strcmp(command, "/bin/pwd") == 0))
@@ -90,14 +91,40 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 	else if (ft_strcmp(command, "unset") == 0)
 		ft_unset(mini, more);
 	else if (ft_strcmp(command, "env") == 0)
-		ft_lstprint(mini->env1);
+		ft_lstprint(mini->env1, mini);
 	else if (ft_check_notbultin(command, mini) == 1)
 		ft_execve(mini, envp);
 	else if (ft_strcmp(command, "exit") == 0)
 		return (-1);
 	else
-		printf("bash: %s: command not found\n", command);
+		unvalid_identifier(command, mini);
 	return (0);
+}
+
+static void		ft_redir(t_mini *mini)
+{
+	char **split;
+	int fd;
+	printf("in redir with mini->more %s\n", mini->more);
+	if (numb_char(mini->more, '>') == 1)
+	{
+		// split the string
+		split = ft_split(mini->more, '>');
+		if (split[1] != NULL)
+		{
+			mini->more = split[0];
+			fd = open(split[1], O_RDWR|O_CREAT, 0666);
+		}
+		else
+			fd = open(split[0], O_RDWR|O_CREAT, 0666);
+		printf("one > split 0 [%s] and split 1 is [%s]\n", split[0], split[1]);
+		mini->stdout = fd;
+	}
+	else
+	{
+		// TAKE OUT OBVS MAKE INTO A WHILE LOOP
+		printf("more than one > \n");
+	}
 }
 
 static int		ft_divide_command(char *line, t_mini *mini, char **envp)
@@ -119,6 +146,8 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 		if (current == NULL)
 			return (-2);
 		ft_find_command(current, mini);
+		if (numb_char(mini->more, '>') != 0)
+			ft_redir(mini);
 		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
 			return (-1);
 		mini->command = NULL;
@@ -138,6 +167,8 @@ int		main(int argc, char **argv, char **envp)
 	if (argc > 1)
 		return (-1); // are we implementing an error function?
 	ft_memset(&mini, 0, sizeof(t_mini));
+	mini.stdout = 1;
+	mini.stderr = 2;
 	ft_set_array(&mini);
 	ft_set_env(argv, envp, &mini);
 	while (lineret)

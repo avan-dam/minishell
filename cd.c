@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/21 13:42:41 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/11 18:06:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_cd(t_mini *mini)
 		if (ft_strcmp(getenv("OLDPWD"), "NULL") == 0)
 			chdir(getenv("OLDPWD"));
 		else
-			ft_putstr("bash: cd: OLDPWD not set\n");
+			ft_putstr_fd("bash: cd: OLDPWD not set\n", mini->stdout);
 		return ;
 	}
 	else if (chdir(mini->more) != 0)
@@ -55,9 +55,9 @@ void	ft_cd(t_mini *mini)
 		{
 			if (line[i] != ' ')
 			{
-				ft_putstr("cd: ");
-				ft_putstr(mini->more);
-				ft_putstr(": No such file or directory\n");
+				ft_putstr_fd("cd: ", mini->stdout);
+				ft_putstr_fd(mini->more, mini->stdout);
+				ft_putstr_fd(": No such file or directory\n", mini->stdout);
 				return ;
 			}
 			i++;

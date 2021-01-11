@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/17 14:10:52 by ambervandam   #+#    #+#                 */
-/*   Updated: 2020/12/21 20:40:02 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/11 19:37:31 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int				ft_execve(t_mini *mini, char **envp)
 	ft_bin_command(mini);
 	if (pid == -1)
 	{
-		ft_putstr("error in forking\n");
+		ft_putstr_fd("error in forking\n", mini->stdout);
 		return (-1);
 	}
 	else if (pid == 0)

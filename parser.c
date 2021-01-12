@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/11 19:46:11 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/12 14:31:20 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	ft_find_command(char *line, t_mini *mini)
 	j = 0;
 	while (*line == ' ')
 		line++;
-	while (line[i] != '\n' && line[i] != '\0' && line[i] != ' ')
+	while (line[i] != '\n' && line[i] != '\0' && line[i] != ' '&& line[i] != '<' && line[i] != '>')
 		i++;
 	mini->command = (char *)malloc(sizeof(char) * i + 1); //free
 	while (j < i)
@@ -57,6 +57,8 @@ static void	ft_find_command(char *line, t_mini *mini)
 		j++;
 	}
 	mini->command[j] = '\0';
+	while(line[i] == '>' || line[i] == '<')
+		i--;
 	ft_find_more(line, mini, j, i);
 	newnode = ft_lstnew(mini->command, mini->more);
 	ft_lstadd_back(&mini->run2, newnode);
@@ -101,32 +103,6 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 	return (0);
 }
 
-static void		ft_redir(t_mini *mini)
-{
-	char **split;
-	int fd;
-	printf("in redir with mini->more %s\n", mini->more);
-	if (numb_char(mini->more, '>') == 1)
-	{
-		// split the string
-		split = ft_split(mini->more, '>');
-		if (split[1] != NULL)
-		{
-			mini->more = split[0];
-			fd = open(split[1], O_RDWR|O_CREAT, 0666);
-		}
-		else
-			fd = open(split[0], O_RDWR|O_CREAT, 0666);
-		printf("one > split 0 [%s] and split 1 is [%s]\n", split[0], split[1]);
-		mini->stdout = fd;
-	}
-	else
-	{
-		// TAKE OUT OBVS MAKE INTO A WHILE LOOP
-		printf("more than one > \n");
-	}
-}
-
 static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 {
 	int i;
@@ -147,11 +123,13 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 			return (-2);
 		ft_find_command(current, mini);
 		if (numb_char(mini->more, '>') != 0)
-			ft_redir(mini);
+			ft_redir(mini, 0);
 		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
 			return (-1);
 		mini->command = NULL;
 		mini->more = NULL;
+		if (mini->stdout != 1)
+			close(mini->stdout);
 	}
 	return (0);
 }

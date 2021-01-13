@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 13:52:12 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/12 14:36:17 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/13 23:57:18 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int		ft_redir(t_mini *mini, int d)
 	char *filename;
 	int i;
 
-	// printf("in redir with mini->more %s\n", mini->more);
+    // Below is only for '>' and '>>' not '<' implement function for that
+	printf("in redir with mini->more %s\n", mini->more);
 	while ((i = ft_strchr_numb(mini->more, '>', 0)) != -1)
 	{
 		filename = ft_substr(mini->more, i + 1, ft_strlen(mini->more) - i - 1);

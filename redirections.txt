@@ -1,0 +1,31 @@
+Redirections < > “>>” should work like in bash except for file descriptor aggregation
+
+efore a command is executed, its input and output may be redirected.
+Redirection allows commands file handles to be dublecated, openen, closed,
+made to refer to different files and can change the files the command
+reads from and writes to. The redirection commands may precede or appear
+anywhere within a simple command or may follow a command. Redirections are
+processed from left to right.
+
+Each redirection that may be preceded by a file descriptor number may instead
+be preceded by a wordt of the form {varname}. In this case for each redirection
+operator the shell wil allocate a file descriptor greater than 10 and assign it
+to {varname}.
+
+In the following descriptions, if the file descriptor number is omitted, and
+the first character of the redirection operator is '<', the redirection refers
+to the standard input (fd = 0). If the first character of the redirection operator
+is '>', the redirection refers to the standard output (fd = 1).
+
+Redirecting input:
+This cases the file whose name results from the expansion of word to be opened
+for reading on file descriptor n, or the standard input (fd = 0) if n is not
+specified.
+Syntax redirecting input: [n] < word
+
+Redirecting output:
+This cases the file whose name results from the expansion of word to be opened
+for writing on file descriptor n, or the standard input (fd = 0) if n is not
+specified. If the file does not exist, it is created. If the file does exist
+it is truncated to zero size.
+Syntax redirecting output: [n] > word

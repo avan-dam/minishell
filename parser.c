@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/13 23:56:41 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/14 19:19:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,10 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 		mini->command = NULL;
 		mini->more = NULL;
 		if (mini->stdout != 1)
+		{
 			close(mini->stdout);
+			mini->stdout = 1;
+		}
 	}
 	return (0);
 }

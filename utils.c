@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/11 19:29:40 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/14 15:13:23 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int  ft_split_into_tlist(t_mini *mini, char *line)
 	newnode = ft_lstnew(var1, var2);
     ft_lstadd_back(&mini->env1, newnode);
 	// printf("now added to the list %s and %s node next we printf list\n", var1, var2);
-	// ft_lstprint(mini->env1);
+	// ft_lstprint(mini->env1, mini);
     return (1);
 }
 

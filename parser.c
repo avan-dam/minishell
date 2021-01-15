@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/14 19:19:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/15 16:35:50 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,20 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 	return (0);
 }
 
+static void 		ft_close_fds(t_mini *mini)
+{
+	if (mini->stdout != 1)
+	{
+		close(mini->stdout);
+		mini->stdout = 1;
+	}
+	if (mini->stdin != 1)
+	{
+		close(mini->stdin);
+		mini->stdin = 0;
+	}
+}
+
 static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 {
 	int i;
@@ -123,16 +137,13 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 			return (-2);
 		ft_find_command(current, mini);
 		if (numb_char(mini->more, '>') != 0 || numb_char(mini->more, '<') != 0)
-            ft_redir(mini, 0);
+            ft_redir(mini);
+			// SOMETHING IF ftredir is -1
 		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
 			return (-1);
 		mini->command = NULL;
 		mini->more = NULL;
-		if (mini->stdout != 1)
-		{
-			close(mini->stdout);
-			mini->stdout = 1;
-		}
+		ft_close_fds(mini);
 	}
 	return (0);
 }

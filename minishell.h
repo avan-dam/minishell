@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/12 14:16:51 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/15 17:47:29 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ typedef struct		s_line
 	int				k;
 	char			*line;
 }					t_line;
+
+typedef struct		s_redir
+{
+	char *filename;
+	char *morefiles;
+	char *error;
+	int i;
+	int d;
+	int k;
+	int j;
+	int fd;
+	int	alpha;
+}					t_redir;
 
 typedef struct		s_list
 {
@@ -46,6 +59,7 @@ typedef struct		s_mini
 	char			*notbuiltin[13]; // ls mkdir touch cat
 	int				stdout;
 	int				stderr;
+	int				stdin;
 }					t_mini;
 
 int					ft_echo(char *string, t_mini *mini);
@@ -64,7 +78,7 @@ void				ft_lstprint(t_list *lst, t_mini *mini);
 // int					ft_builtin(t_mini *mini, char *command, char *more, char **envp);
 int					ft_execve(t_mini *mini, char **envp);
 void				ft_lstclear(t_list **lst);
-int					ft_redir(t_mini *mini, int d);
+int					ft_redir(t_mini *mini);
 
 void				ft_cd(t_mini *mini);
 void				ft_pwd(t_mini *mini);

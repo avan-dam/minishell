@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/17 14:10:52 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/14 19:17:11 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/15 15:40:21 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ static void		ft_bin_command(t_mini *mini)
 
 int				ft_execve(t_mini *mini, char **envp)
 {
-    // char *argv[] = {mini->command, NULL, NULL};
+    // char *argv[] = {mini->command, "cat", "test"};
     char *argv[] = {mini->command, mini->more, NULL};
-	// char *argv[] ={ "touch", "/tmp/file", NULL };
 	pid_t	pid;
 
 	pid = fork();
@@ -45,7 +44,9 @@ int				ft_execve(t_mini *mini, char **envp)
 	else if (pid == 0)
 	{
 		printf("Argv[0][%s] argv[1][%s]\n", argv[0], argv[1]);
+		dup2(mini->stdin, 0);
 		dup2(mini->stdout, 1);
+		// dup2(mini->stdin, 0);
 		if (execve(mini->command, argv, envp) < 0)
 			return (-1); 
 		exit(0);

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/15 17:47:29 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/16 21:04:50 by Amber         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct		s_line
 typedef struct		s_redir
 {
 	char *filename;
-	char *morefiles;
+	char *m_files;
 	char *error;
 	int i;
 	int d;

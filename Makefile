@@ -3,14 +3,10 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
+#    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2020/12/06 12:33:02 by avan-dam      #+#    #+#                  #
-<<<<<<< HEAD
-#    Updated: 2021/01/07 14:46:10 by salbregh      ########   odam.nl          #
-=======
-#    Updated: 2021/01/12 13:53:21 by ambervandam   ########   odam.nl          #
->>>>>>> master
+#    Created: 2021/01/17 22:18:02 by salbregh      #+#    #+#                  #
+#    Updated: 2021/01/17 22:18:04 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 

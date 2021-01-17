@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/08 10:49:12 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/14 22:13:02 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 
 static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 {
-	int i;
-	char *current;
+	int		i;
+	char	*current;
 
 	while ((ft_strcmp("", line) != 0))
 	{
@@ -117,11 +117,13 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 		line = ft_substr(line, i + 1, ft_strlen(line) - i);
 		current = ft_check_dolla_quotes(current, mini, 0 , 0);
 		ft_find_command(current, mini);
-		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
-			return (-1);
+		// if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
+		// 	return (-1);
+		(void)envp;
 		mini->command = NULL;
 		mini->more = NULL;
 	}
+	ft_lstprint(mini->run2);
 	return (0);
 }
 
@@ -134,7 +136,7 @@ int		main(int argc, char **argv, char **envp)
 	line = NULL;
 	lineret = 1;
 	if (argc > 1)
-		return (-1); // are we implementing an error function?
+		return (-1);
 	ft_memset(&mini, 0, sizeof(t_mini));
 	ft_set_array(&mini);
 	ft_set_env(argv, envp, &mini);

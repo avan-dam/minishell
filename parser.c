@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/14 22:13:02 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/17 22:14:38 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	ft_find_command(char *line, t_mini *mini)
 	j = 0;
 	while (*line == ' ')
 		line++;
-	while (line[i] != '\n' && line[i] != '\0' && line[i] != ' ')
+	while (line[i] != '\n' && line[i] != '\0' && line[i] != ' '&& line[i] != '<' && line[i] != '>')
 		i++;
 	mini->command = (char *)malloc(sizeof(char) * i + 1); //free
 	while (j < i)
@@ -57,9 +57,12 @@ static void	ft_find_command(char *line, t_mini *mini)
 		j++;
 	}
 	mini->command[j] = '\0';
+	while(line[i] == '>' || line[i] == '<')
+		i--;
 	ft_find_more(line, mini, j, i);
 	newnode = ft_lstnew(mini->command, mini->more);
 	ft_lstadd_back(&mini->run2, newnode);
+	// printf("mini->command[%s], mini->more [%s]\n", mini->command, mini->more);
 	return ;
 }
 
@@ -80,7 +83,7 @@ static int		ft_check_notbultin(char *command, t_mini *mini)
 static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 {
 	if (ft_strcmp(command, "echo") == 0)
-		ft_echo(more);
+		ft_echo(more, mini);
 	else if (ft_strcmp(command, "cd") == 0)
 		ft_cd(mini);
 	else if ((ft_strcmp(command, "pwd") == 0) || (ft_strcmp(command, "/bin/pwd") == 0))
@@ -90,13 +93,13 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 	else if (ft_strcmp(command, "unset") == 0)
 		ft_unset(mini, more);
 	else if (ft_strcmp(command, "env") == 0)
-		ft_lstprint(mini->env1);
+		ft_lstprint(mini->env1, mini);
 	else if (ft_check_notbultin(command, mini) == 1)
 		ft_execve(mini, envp);
 	else if (ft_strcmp(command, "exit") == 0)
 		return (-1);
 	else
-		printf("bash: %s: command not found\n", command);
+		unvalid_identifier(command, mini);
 	return (0);
 }
 
@@ -109,19 +112,30 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 	{
 		line = ft_strtrim(line, " ");
 		i = ft_strlen(line);
-		if (ft_strrch_numb(line, '|') != -1)
-			i = ft_strrch_numb(line, '|');
-		if ((ft_strrch_numb(line, ';') < i) && (ft_strrch_numb(line, ';') != -1))
-			i = ft_strrch_numb(line, ';');
+		if (ft_strchr_numb(line, '|', 0) != -1)
+			i = ft_strchr_numb(line, '|', 0);
+		if ((ft_strchr_numb(line, ';', 0) < i) && (ft_strchr_numb(line, ';', 0) != -1))
+			i = ft_strchr_numb(line, ';', 0);
 		current = ft_substr(line, 0, i);
 		line = ft_substr(line, i + 1, ft_strlen(line) - i);
-		current = ft_check_dolla_quotes(current, mini, 0 , 0);
+		current = ft_check_dolla_quotes(current, mini, 0);
+		if (current == NULL)
+			return (-2);
 		ft_find_command(current, mini);
+<<<<<<< HEAD
 		// if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
 		// 	return (-1);
 		(void)envp;
+=======
+		if (numb_char(mini->more, '>') != 0 || numb_char(mini->more, '<') != 0)
+            ft_redir(mini, 0);
+		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
+			return (-1);
+>>>>>>> master
 		mini->command = NULL;
 		mini->more = NULL;
+		if (mini->stdout != 1)
+			close(mini->stdout);
 	}
 	ft_lstprint(mini->run2);
 	return (0);
@@ -138,6 +152,8 @@ int		main(int argc, char **argv, char **envp)
 	if (argc > 1)
 		return (-1);
 	ft_memset(&mini, 0, sizeof(t_mini));
+	mini.stdout = 1;
+	mini.stderr = 2;
 	ft_set_array(&mini);
 	ft_set_env(argv, envp, &mini);
 	while (lineret)

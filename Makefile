@@ -6,7 +6,11 @@
 #    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/06 12:33:02 by avan-dam      #+#    #+#                  #
+<<<<<<< HEAD
 #    Updated: 2021/01/07 14:46:10 by salbregh      ########   odam.nl          #
+=======
+#    Updated: 2021/01/12 13:53:21 by ambervandam   ########   odam.nl          #
+>>>>>>> master
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +27,8 @@ SRCS =		builtins/echo.c \
 			t_list.c \
 			replace_dolla.c \
 			exec.c \
-			set_arrays.c
+			set_arrays.c \
+			redir.c
 # unused_tlists.c
 
 FLAGS = 	-Wall -Werror -Wextra

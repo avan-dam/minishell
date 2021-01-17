@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/14 15:24:36 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/17 22:14:10 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,39 @@ void	ft_putstr(char *s)
 	}
 }
 
-int		unvalid_identifier(char *error)
+int		unvalid_identifier(char *error, t_mini *mini)
 {
-    ft_putstr("bash: export: '");
-    ft_putstr(error);
-    ft_putstr("': not a valid identifier\n");
-	return (0);
+    // is this STDOUT OR STD ERROR
+    ft_putstr_fd("bash: export: '", mini->stderr);
+    ft_putstr_fd(error, mini->stderr);
+    ft_putstr_fd("': not a valid identifier\n", mini->stderr);
+    return (-1);
 }
 
-int ft_strrch_numb(char *line, char c)
+int ft_strchr_numb(char *line, char c, int i)
 {
-    int i;
-
-    i = 0;
+    if (line == NULL || i < 0)
+        return (-1);
     while (line[i] != '\0')
     {
         if (line[i] == c)
             return (i);
 		i++;
+    }
+    return (-1);
+}
+
+int ft_strrchr_numb(char *line, char c, int i)
+{
+    if (line == NULL || i < 0)
+        return (-1);
+    if (i > (int)ft_strlen(line))
+        return (-1);
+    while (i >= 0)
+    {
+        if (line[i] == c)
+            return (i);
+		i--;
     }
     return (-1);
 }
@@ -61,7 +76,7 @@ int  ft_split_into_tlist(t_mini *mini, char *line)
 
     // only for env and export commands because those are seperated by '='
     // so only looks at tlist env
-    if ((i = ft_strrch_numb(line, '=')) == -1)
+    if ((i = ft_strchr_numb(line, '=', 0)) == -1)
         return (0);
     if (line[i - 1] == ' ' || line[i + 1] == ' ')
         return (0);
@@ -75,4 +90,22 @@ int  ft_split_into_tlist(t_mini *mini, char *line)
 	// printf("now added to the list %s and %s node next we printf list\n\n", var1, var2);
 	// ft_lstprint(mini->env1);
     return (1);
+}
+
+int     numb_char(char *line, char c)
+{
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    if (line == NULL)
+        return (0);
+    while (line[i] != '\0')
+    {
+        if (line[i] == c)
+            j++;
+		i++;
+    }
+    return (j);
 }

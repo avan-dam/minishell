@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/14 21:56:18 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/17 23:03:22 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		ft_add_env(char *env, char *path, t_mini *mini)
 	t_list	*lst;
 
 	lst = ft_lstnew(env, path);
-	ft_lstprint(lst);
+	// ft_lstprint(lst, mini);
 	ft_lstadd_back(&mini->env1, lst); // mistake in add back maybe
 	// ft_lstprint(mini->env1);
 }
@@ -47,7 +47,7 @@ void		*ft_get_env(char *env, t_mini *mini)
 	{
 		if (ft_strcmp(lst->var1, env) == 0)
 		{
-			printf("%s\n", lst->var2); // waarde klopt
+			// printf("%s\n", lst->var2); // waarde klopt
 			return (lst->var2);
 		}
 		lst = lst->next;

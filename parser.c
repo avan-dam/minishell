@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/17 22:14:38 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/17 23:00:08 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,60 +122,29 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 		if (current == NULL)
 			return (-2);
 		ft_find_command(current, mini);
-<<<<<<< HEAD
 		// if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
 		// 	return (-1);
 		(void)envp;
-=======
 		if (numb_char(mini->more, '>') != 0 || numb_char(mini->more, '<') != 0)
             ft_redir(mini, 0);
 		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
 			return (-1);
->>>>>>> master
 		mini->command = NULL;
 		mini->more = NULL;
 		if (mini->stdout != 1)
 			close(mini->stdout);
 	}
-	ft_lstprint(mini->run2);
+	// ft_lstprint(mini->run2, mini);
 	return (0);
 }
 
-int		main(int argc, char **argv, char **envp)
+int		ft_start_parsing(char *line, t_mini *mini, char **envp)
 {
-	char	*line;
-	int		lineret;
-	t_mini	mini;
-
-	line = NULL;
-	lineret = 1;
-	if (argc > 1)
-		return (-1);
-	ft_memset(&mini, 0, sizeof(t_mini));
-	mini.stdout = 1;
-	mini.stderr = 2;
-	ft_set_array(&mini);
-	ft_set_env(argv, envp, &mini);
-	while (lineret)
+	if (ft_divide_command(line, mini, envp) == -1)
 	{
-		ft_putstr("> ");
-		lineret = get_next_line(1, &line);
-		if (lineret < 0)
-			return (-1);
-		if (ft_divide_command(line, &mini, envp) == -1)
-		{
-			ft_lstclear(&mini.env1); // is this freeing the list enough
-			ft_memset(&mini, 0, sizeof(t_mini));
-			return (-1);
-		}
-		free(mini.run2);
-		mini.run2 = NULL;
-		free(line);
-		line = NULL;
-	}	
-	free(line);
-	line = NULL;
+		ft_lstclear(&mini->env1);
+		ft_memset(&mini, 0, sizeof(mini));
+		return (-1);
+	}
 	return (0);
 }
-//if you do the up arrow in the shell it goes weird
-

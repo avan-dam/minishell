@@ -6,13 +6,14 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/17 22:18:02 by salbregh      #+#    #+#                  #
-#    Updated: 2021/01/17 22:18:04 by salbregh      ########   odam.nl          #
+#    Updated: 2021/01/17 22:56:43 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =		minishell
 
-SRCS =		builtins/echo.c \
+SRCS =		main.c \
+			builtins/echo.c \
 			builtins/unset.c \
 			builtins/pwd.c \
 			builtins/env.c \
@@ -27,8 +28,7 @@ SRCS =		builtins/echo.c \
 			redir.c
 # unused_tlists.c
 
-FLAGS = 	-Wall -Werror -Wextra
-#  -g -fsanitize=address
+FLAGS = 	-Wall -Werror -Wextra -g -fsanitize=address
 
 OFILES =	$(SRCS:.c=.o)
 

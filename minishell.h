@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/17 22:14:58 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/17 22:53:10 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct		s_mini
 	int				stderr;
 }					t_mini;
 
+int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
 int					ft_echo(char *string, t_mini *mini);
 void				ft_putstr(char *s);
 int				    ft_export(t_mini *mini, char *more);

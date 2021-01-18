@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/18 12:21:37 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/18 12:27:34 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct		s_pipe
 	int				check;
 	char			*write_side;
 	char			*read_side;
-}
+}					t_pipe;
 
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
 int					ft_echo(char *string, t_mini *mini);

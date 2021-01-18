@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/18 09:42:29 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/18 19:24:57 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@ int		main(int argc, char **argv, char **envp)
 			return (-1);
 		if (ft_start_parsing(line, &mini, envp) < 0)
 			return (-1);
-		// if (ft_divide_command(line, &mini, envp) == -1)
-		// {
-		// 	ft_lstclear(&mini.env1); // is this freeing the list enough
-		// 	ft_memset(&mini, 0, sizeof(t_mini));
-		// 	return (-1);
-		// }
 		ft_lstprintold(mini.run2);
 		free(mini.run2); // free the list of line
 		mini.run2 = NULL;

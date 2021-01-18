@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/18 14:54:49 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/18 18:49:57 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,7 @@ void		ft_add_env(char *env, char *path, t_mini *mini)
 	t_list	*lst;
 
 	lst = ft_lstnew(env, path);
-	// ft_lstprint(lst, mini);
-	ft_lstadd_back(&mini->env1, lst); // mistake in add back maybe
-	printf("IN ADD ENV:\nenv: %s\npath: %s\n", env, path);
-	// free(lst);
-	// ft_lstprint(mini->env1);
+	ft_lstadd_back(&mini->env1, lst);
 }
 
 char	*ft_get_env(char *env, t_mini *mini)
@@ -52,7 +48,6 @@ char	*ft_get_env(char *env, t_mini *mini)
 		if (ft_strcmp(lst->var1, env) == 0)
 		{
 			pathname = ft_strdup(lst->var2);
-			// free(lst);
 			return (pathname);
 		}
 		lst = lst->next;
@@ -94,7 +89,7 @@ void		ft_cd(t_mini *mini)
 	}
 	else if (mini->more != NULL)
 	{
-		if (chdir(mini->more) == -1) // when directory change fails
+		if (chdir(mini->more) == -1)
 		{
 			ft_putstr("cd: no such file or directory: ");
 			ft_putstr(mini->more);

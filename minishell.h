@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/18 14:53:03 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/18 19:50:33 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,16 @@ typedef struct		s_mini
 	int				stderr;
 }					t_mini;
 
-typedef struct		s_pipe
+typedef struct		s_piper
 {
 	int				check;
 	char			*write_side;
 	char			*read_side;
-}					t_pipe;
+	int				fd[2]; // fd[0] - read fd[1] - write made by pipe(fd);
+}					t_piper;
 
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
-int					ft_echo(char *string, t_mini *mini);
+int					ft_echo(char *string, t_mini *mini, t_piper *piper);
 void				ft_putstr(char *s);
 int				    ft_export(t_mini *mini, char *more);
 char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i);
@@ -71,7 +72,7 @@ t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstprint(t_list *lst, t_mini *mini);
 // int					ft_builtin(t_mini *mini, char *command, char *more, char **envp);
-int					ft_execve(t_mini *mini, char **envp);
+int					ft_execve(t_mini *mini, char **envp, t_piper *piper);
 void				ft_lstclear(t_list **lst);
 int					ft_redir(t_mini *mini, int d);
 

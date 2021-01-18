@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/18 09:42:55 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/18 19:51:47 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,16 @@ static int		ft_check_notbultin(char *command, t_mini *mini)
 	return (0);
 }
 
-static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
+static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp, t_piper *piper)
 {
-	if (ft_strcmp(command, "echo") == 0)
-		ft_echo(more, mini);
+	if (piper->check == 1)
+	{
+		printf("PIPE HERE\n");
+		if (pipe(piper->fd) == -1)
+			return (-1); // ERROR WITH PIPE
+	}
+	if (ft_strcmp(command, "echo") == 0 || (ft_strcmp(command, "/bin/echo") == 0))
+		ft_echo(more, mini, piper);
 	else if (ft_strcmp(command, "cd") == 0)
 		ft_cd(mini);
 	else if ((ft_strcmp(command, "pwd") == 0) || (ft_strcmp(command, "/bin/pwd") == 0))
@@ -95,7 +101,7 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 	else if (ft_strcmp(command, "env") == 0)
 		ft_lstprint(mini->env1, mini);
 	else if (ft_check_notbultin(command, mini) == 1)
-		ft_execve(mini, envp);
+		ft_execve(mini, envp, piper);
 	else if (ft_strcmp(command, "exit") == 0)
 		return (-1);
 	else
@@ -107,13 +113,20 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 {
 	int		i;
 	char	*current;
+	t_piper	piper;
 
+	ft_memset(&piper, 0, sizeof(piper));
 	while ((ft_strcmp("", line) != 0))
 	{
+		piper.check = 0;
 		line = ft_strtrim(line, " ");
+		// printf("line: %s\n", line);
 		i = ft_strlen(line);
 		if (ft_strchr_numb(line, '|', 0) != -1)
+		{
+			piper.check = 1;
 			i = ft_strchr_numb(line, '|', 0);
+		}
 		if ((ft_strchr_numb(line, ';', 0) < i) && (ft_strchr_numb(line, ';', 0) != -1))
 			i = ft_strchr_numb(line, ';', 0);
 		current = ft_substr(line, 0, i);
@@ -127,7 +140,7 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 		(void)envp;
 		if (numb_char(mini->more, '>') != 0 || numb_char(mini->more, '<') != 0)
             ft_redir(mini, 0);
-		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
+		if (ft_parse_input(mini->command, mini->more, mini, envp, &piper) == -1)
 			return (-1);
 		mini->command = NULL;
 		mini->more = NULL;
@@ -145,5 +158,6 @@ int		ft_start_parsing(char *line, t_mini *mini, char **envp)
 		ft_memset(&mini, 0, sizeof(mini));
 		return (-1);
 	}
+	// put ft_parse input here?
 	return (0);
 }

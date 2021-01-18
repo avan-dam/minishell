@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/17 22:18:02 by salbregh      #+#    #+#                  #
-#    Updated: 2021/01/18 14:49:40 by ambervandam   ########   odam.nl          #
+#    Updated: 2021/01/18 17:41:14 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,18 @@ SRCS =		main.c \
 			builtins/env.c \
 			builtins/export.c \
 			builtins/cd.c \
+			list_utils/ft_lst_addback.c \
+			list_utils/ft_lstclear.c \
+			list_utils/ft_lstnew.c \
+			list_utils/ft_lstprint.c \
+			list_utils/ft_split_into_list.c \
 			parser.c \
 			utils.c \
-			t_list.c \
 			replace_dolla.c \
 			exec.c \
 			set_arrays.c \
 			redir.c
-# unused_tlists.c
+			# delete unused_tlist.c
 
 FLAGS = 	-Wall -Werror -Wextra
 			#-g -fsanitize=address

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 11:40:20 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/17 22:53:21 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/18 10:07:29 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,5 @@ int    ft_echo(char *string, t_mini *mini)
     }
     string = ft_strtrim(string, " ");
     ft_putstr_fd(string, mini->stdout);
-    return(ft_putchar_fd('\n', mini->stdout));
+    return (ft_putchar_fd('\n', mini->stdout));
 }

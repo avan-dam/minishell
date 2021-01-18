@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/17 22:53:10 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/18 12:21:37 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ typedef struct		s_mini
 	int				stderr;
 }					t_mini;
 
+typedef struct		s_pipe
+{
+	int				check;
+	char			*write_side;
+	char			*read_side;
+}
+
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
 int					ft_echo(char *string, t_mini *mini);
 void				ft_putstr(char *s);
@@ -74,5 +81,7 @@ void				*ft_get_env(char *env, t_mini *mini); // of static
 void				ft_pwd(t_mini *mini);
 void				ft_set_env(char **argv, char **envp, t_mini *mini);
 void				ft_set_array(t_mini *mini);
+
+void				ft_lstprintold(t_list *lst);
 
 #endif

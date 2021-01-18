@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/17 22:18:02 by salbregh      #+#    #+#                  #
-#    Updated: 2021/01/17 22:56:43 by salbregh      ########   odam.nl          #
+#    Updated: 2021/01/18 14:49:40 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRCS =		main.c \
 			redir.c
 # unused_tlists.c
 
-FLAGS = 	-Wall -Werror -Wextra -g -fsanitize=address
+FLAGS = 	-Wall -Werror -Wextra
+			#-g -fsanitize=address
 
 OFILES =	$(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/18 12:27:34 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/18 14:53:03 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int					ft_redir(t_mini *mini, int d);
 
 void				ft_cd(t_mini *mini);
 void				ft_add_env(char *env, char *path, t_mini *mini); // or static
-void				*ft_get_env(char *env, t_mini *mini); // of static
+char				*ft_get_env(char *env, t_mini *mini); // of static
 void				ft_pwd(t_mini *mini);
 void				ft_set_env(char **argv, char **envp, t_mini *mini);
 void				ft_set_array(t_mini *mini);

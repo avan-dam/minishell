@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/16 21:04:50 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/19 12:15:53 by Amber         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@ typedef struct		s_line
 	char			*line;
 }					t_line;
 
+// Struct only used for redirection 
 typedef struct		s_redir
 {
-	char *filename;
-	char *m_files;
-	char *error;
-	int i;
-	int d;
-	int k;
-	int j;
-	int fd;
-	int	alpha;
+	char			*filename;
+	char			*m_files;
+	char			*error;
+	int				i;
+	int				d;
+	int 			k;
+	int 			j;
+	int 			fd;
+	int				alpha;
 }					t_redir;
 
 typedef struct		s_list

@@ -12,6 +12,10 @@ git push origin master
 if conflicts checkout to my branch
 
 AMBER: REDIRECTION NOTES:
+FIX 
+echo hello > file 2>&1
+echo hello 2>&1>file
+echo helloha &>filey
 trying to use dup2:
 		else if (d == 0)
 			fd = open(filename, O_RDWR|O_CREAT|O_TRUNC, 0666);

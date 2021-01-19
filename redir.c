@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 13:52:12 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/16 21:06:17 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/19 13:59:55 by Amber         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ static void	ft_check_values(t_redir *r, t_mini *mini)
 	}
 	if ((r->i = ft_strchr_numb(r->m_files, '>', 0)) != -1)
 	{
-		r->filename = ft_substr(r->m_files, 0 ,r->i);
-		r->m_files = ft_substr(r->m_files,r->i + 1, ft_strlen(r->m_files) -r->i - 1);
+		r->filename = ft_substr(r->m_files, 0, r->i);
+		r->m_files = ft_substr(r->m_files, r->i + 1, ft_strlen(r->m_files) - r->i - 1);
 	}
 	else
 		r->m_files = ft_strdup("");
-			// printf("r.ir.is %d r.m_files %s r.filename %s\n",r.i, r.m_files, r.filename);
 }
 
 static void	ft_check_alpha(t_redir *r, t_mini *mini)
 {
+	printf("in alpha function with && mini->more[%s] r->error[%s] and r->d[%d] and r->k[%d]\n", mini->more, r->error, r->d, r->k);
 	r->filename = ft_substr(r->filename, 1, ft_strlen(r->filename) - 1);
 	if (r->k == 0)
 	{
@@ -77,15 +77,18 @@ static void	ft_check_alpha(t_redir *r, t_mini *mini)
 
 static void	open_function(t_redir *r, t_mini *mini)
 {
+	printf("in open function with && mini->more[%s] r->error[%s] and r->d[%d] and r->k[%d]\n", mini->more, r->error, r->d, r->k);
 	if (r->error == NULL)
 	{
-		if (r->d == 0 && r->k == 0)
-			mini->stdout = open(r->filename, O_RDWR | O_CREAT|O_TRUNC, 0666);
+		if (r->d == 0 && r->k == 0 && (ft_strcmp(mini->more, "2") != 0))
+			mini->stdout = open(r->filename, O_RDWR | O_CREAT | O_TRUNC, 0666);
+		if (r->d == 0 && r->k == 0 && (ft_strcmp(mini->more, "2") == 0))
+			mini->stderr = open(r->filename, O_RDWR | O_CREAT | O_TRUNC, 0666);
 		if (r->d == 1 && r->k == 0)
-			mini->stdout = open(r->filename, O_RDWR | O_CREAT|O_APPEND, 0666);
+			mini->stdout = open(r->filename, O_RDWR | O_CREAT | O_APPEND, 0666);
 		if (r->k == 1)
 		{
-			printf("filename is [%s]\n", r->filename);
+			// printf("filename is [%s]\n", r->filename);
 			if ((r->fd = open(r->filename, O_RDWR, 0666)) == -1)
 			{
 				r->error = ft_strdup("No such file or directory");
@@ -112,20 +115,23 @@ int			ft_redir(t_mini *mini)
 	ft_memset(&r, 0, sizeof(r));
 	r.j = ft_strchr_numb(mini->more, '<', 0);
 	r.i = ft_strchr_numb(mini->more, '>', 0);
+	// printf("minicommand [%s] mini->more [%s] filename[%s], m_files[%s], error[%s], fd[%d], alpha[%d]\n", mini->command, mini->more, r.filename, r.m_files, r.error, r.fd, r.alpha);
 	while (r.j != -1 || r.i != -1)
 	{
 		ft_set_start(&r, mini);
+		// printf("minicommand [%s] mini->more[%s] filename[%s], m_files[%s], error[%s], fd[%d], alpha[%d]\n", mini->command, mini->more, r.filename, r.m_files, r.error, r.fd, r.alpha);
 		while (ft_strcmp(r.m_files, "") != 0)
 		{
+			// printf("stdin is now %d std out is now %d and stderror is now %d\n",mini->stdin, mini->stdout, mini->stderr);
 			ft_check_values(&r, mini);
 			if (r.filename[0] == '&' && r.error == NULL)
 				ft_check_alpha(&r, mini);
 			else
 				open_function(&r, mini);
+			// printf("minicommand [%s] mini->more[%s] filename[%s], m_files[%s], error[%s], fd[%d], alpha[%d]\n", mini->command, mini->more, r.filename, r.m_files, r.error, r.fd, r.alpha);
 			if (r.error != NULL)
 				return (unvalid_identifier(r.error, mini));
 			ft_reset_values(&r, mini);
-			// printf("d is %d k is %d stdin is now %d std out is now %d\n", d, k, mini->stdin, mini->stdout);
 		}
 		free(r.filename);
 		free(r.m_files);

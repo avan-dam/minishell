@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/19 12:15:53 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/20 17:23:05 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct		s_redir
 	int 			j;
 	int 			fd;
 	int				alpha;
+	int				fdtoredir;
 }					t_redir;
 
 typedef struct		s_list

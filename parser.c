@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/15 16:35:50 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/20 23:29:57 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,26 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 
 static void 		ft_close_fds(t_mini *mini)
 {
+	// printf("in close fds mini->stdout is %d mini->stdin is %d mini->stderr is %d\n", mini->stdout, mini->stdin, mini->stderr);
 	if (mini->stdout != 1)
 	{
-		close(mini->stdout);
+		if (mini->stdout != 2 && mini->stdout != 0)
+			close(mini->stdout);
 		mini->stdout = 1;
 	}
-	if (mini->stdin != 1)
+	if (mini->stdin != 0)
 	{
-		close(mini->stdin);
+		if (mini->stdin != 1 && mini->stdin != 2)
+			close(mini->stdin);
 		mini->stdin = 0;
 	}
+	if (mini->stderr != 2)
+	{
+		if (mini->stderr != 1 && mini->stderr != 0)
+			close(mini->stderr);
+		mini->stderr = 2;
+	}
+	// printf("going out of close fds\n");
 }
 
 static int		ft_divide_command(char *line, t_mini *mini, char **envp)

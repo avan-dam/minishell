@@ -13,6 +13,7 @@ if conflicts checkout to my branch
 
 AMBER: REDIRECTION NOTES:
 FIX 
+echo hello 1>&2>file
 echo hello > file 2>&1
 echo hello 2>&1>file
 echo helloha &>filey

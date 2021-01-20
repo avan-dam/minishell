@@ -6,14 +6,21 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 13:52:12 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/19 13:59:55 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/21 00:40:05 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//this function finds the first thing behind 
+// filenam canytt hsavespaceat start or end
 static void	ft_set_start(t_redir *r, t_mini *mini)
 {
+	int i;
+	char *fdtoredir;
+	
+	// printf("before changing in start mini->more is [%s]\n",mini->more);
+	r->fdtoredir = 0;
 	if ((r->j < r->i && r->j != -1) || (r->i == -1 && r->j != -1))
 	{
 		// printf("mini->more is [%s]in swap with r.j%d as and r.i%d as \n", mini->more, r.j, r.i);
@@ -22,7 +29,30 @@ static void	ft_set_start(t_redir *r, t_mini *mini)
 	}
 	r->filename = ft_substr(mini->more, r->i + 1, ft_strlen(mini->more) - r->i - 1);
 	mini->more = ft_substr(mini->more, 0, r->i);
+	r->filename = ft_strtrim(r->filename, " ");
+	mini->more = ft_strtrim(mini->more, " ");
 	r->m_files = ft_strdup(r->filename);
+	i = ft_strlen(mini->more) - 1;
+	// printf("i is %d and c there is [%c]\n", i, mini->more[i]);
+	while (i >= 0 && ((mini->more[i] == '&') || (mini->more[i] >= '0' && mini->more[i] <= '9')))
+		i--;
+	// printf("and i now is %d\n", i);
+	if (i != (int)ft_strlen(mini->more) - 1)
+	{
+		fdtoredir = ft_substr(mini->more, i + 1, ft_strlen(mini->more) - i + 1);
+		// printf("\n\nfdtoredir is [%s] mini->more[%s]", fdtoredir, mini->more);
+		if (ft_strcmp(fdtoredir, "&") == 0)
+			r->fdtoredir = -2;
+		else
+			r->fdtoredir = ft_atoi(fdtoredir);
+		mini->more = ft_substr(mini->more, 0, i);
+	}
+	if (r->filename[0] == '&')
+	{
+		r->fdtoredir = -2;
+		r->filename = ft_substr(r->filename, 1, ft_strlen(r->filename) - 1);
+	}
+	// printf("r->fdtoredir [%d] and mini->more[%s]\n", r->fdtoredir, mini->more);
 }
 
 static void	ft_check_values(t_redir *r, t_mini *mini)
@@ -49,20 +79,24 @@ static void	ft_check_values(t_redir *r, t_mini *mini)
 	}
 	else
 		r->m_files = ft_strdup("");
+	r->filename = ft_strtrim(r->filename, " ");
 }
 
 static void	ft_check_alpha(t_redir *r, t_mini *mini)
 {
-	printf("in alpha function with && mini->more[%s] r->error[%s] and r->d[%d] and r->k[%d]\n", mini->more, r->error, r->d, r->k);
+	// printf("\n\nin alpha function with && mini->more[%s] r->filename[%s], r->m_files[%s] r->error[%s] and r->d[%d] and r->k[%d] r->alpha[%d]\n", mini->more, r->filename, r->m_files, r->error, r->d, r->k, r->alpha);
 	r->filename = ft_substr(r->filename, 1, ft_strlen(r->filename) - 1);
+	// printf("now file name is %s\n", r->filename);
+	r->alpha = 1;
 	if (r->k == 0)
 	{
-		mini->stdout = ft_atoi(r->filename);
-		if (mini->stdout >= 3)
-		{
-			r->error = ft_strdup("Bad file descriptor");
-			return ;
-		}
+		// printf("before atoi mini->stdout is %d and stderr is %d\n", mini->stdout, mini->stderr);
+		// printf("before atoi r->fdtoredir%d\n", r->fdtoredir);
+		if ((r->fdtoredir == 2 || r->fdtoredir == -2) && ft_strcmp(r->filename, "1") == 0)
+			mini->stderr = mini->stdout;
+		else
+			mini->stdout = ft_atoi(r->filename);
+		// printf("after atoi mini->stdout is %d and stderr is %d\n", mini->stdout, mini->stderr);
 	}
 	if (r->k == 1)
 	{
@@ -73,39 +107,75 @@ static void	ft_check_alpha(t_redir *r, t_mini *mini)
 			return ;
 		}
 	}
+	//if breaking take out the r->filename = ""
+	r->filename = "";
+	r->fdtoredir = 0;
 }
 
 static void	open_function(t_redir *r, t_mini *mini)
 {
-	printf("in open function with && mini->more[%s] r->error[%s] and r->d[%d] and r->k[%d]\n", mini->more, r->error, r->d, r->k);
+	int		i;
+	char	*filename;
+	
+	filename = ft_strdup(r->filename);
+	if ((i = ft_strchr_numb(r->filename, ' ', 0)) != -1)
+		filename = ft_substr(r->filename, 0, i);
+	// printf("\nin open function with filename%s && mini->more[%s] r->error[%s] and r->d[%d] and r->k[%d] and r->alpha%d and r->fdtoredir%d && r->filename[%s]\n", filename, mini->more, r->error, r->d, r->k, r->alpha, r->fdtoredir, r->filename);
 	if (r->error == NULL)
 	{
-		if (r->d == 0 && r->k == 0 && (ft_strcmp(mini->more, "2") != 0))
-			mini->stdout = open(r->filename, O_RDWR | O_CREAT | O_TRUNC, 0666);
-		if (r->d == 0 && r->k == 0 && (ft_strcmp(mini->more, "2") == 0))
-			mini->stderr = open(r->filename, O_RDWR | O_CREAT | O_TRUNC, 0666);
+		if (r->d == 0 && r->k == 0 && r->fdtoredir != 2)
+		{
+			// printf("I am about to open filename[%s] for stdout is now %d\n", filename, mini->stdout);
+			mini->stdout = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0666);
+			// printf("stdout is now %d\n", mini->stdout);
+		}
+		if ((r->d == 0 && r->k == 0) && (r->fdtoredir == 2 || r->fdtoredir == -2))
+		{
+			// printf("I am about to open r->filename[%s] for stderr is now %d\n", r->filename, mini->stderr);
+			mini->stderr = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0666);
+			// printf("stderr is now %d\n", mini->stderr);
+		}
+		//for >> so i can append not truncate
 		if (r->d == 1 && r->k == 0)
-			mini->stdout = open(r->filename, O_RDWR | O_CREAT | O_APPEND, 0666);
+			mini->stdout = open(filename, O_RDWR | O_CREAT | O_APPEND, 0666);
 		if (r->k == 1)
 		{
-			// printf("filename is [%s]\n", r->filename);
-			if ((r->fd = open(r->filename, O_RDWR, 0666)) == -1)
+			if ((r->fd = open(filename, O_RDWR, 0666)) == -1)
 			{
 				r->error = ft_strdup("No such file or directory");
 				return ;
 			}
 			mini->stdin = r->fd;
 		}
+		// printf("\nopendone\n");
 	}
 }
 
 static void	ft_reset_values(t_redir *r, t_mini *mini)
 {
-	if (ft_strcmp("", mini->more) == 0)
-		mini->more = NULL;
+	int i;
+	
+	i = ft_strlen(r->filename) - 1;
+	while (i >= 0 && ((r->filename[i] == '&') || (r->filename[i] >= '0' && r->filename[i] <= '9')))
+		i--;
+	if (i != (int)ft_strlen(r->filename) - 1)
+	r->fdtoredir = ft_atoi(ft_substr(r->filename, i + 1, ft_strlen(r->filename) - i + 1));
+	if (mini->more != NULL)
+	{
+		if (ft_strcmp("", mini->more) == 0)
+			mini->more = NULL;
+	}
 	r->filename = ft_strdup(r->m_files);
-	r->j = ft_strchr_numb(mini->more, '<', 0);
-	r->i = ft_strchr_numb(mini->more, '>', 0);
+	if (mini->more == NULL)
+	{
+		r->j = -1;
+		r->i = -1;
+	}
+	else
+	{
+		r->j = ft_strchr_numb(mini->more, '<', 0);
+		r->i = ft_strchr_numb(mini->more, '>', 0);	
+	}
 }
 
 int			ft_redir(t_mini *mini)
@@ -115,15 +185,18 @@ int			ft_redir(t_mini *mini)
 	ft_memset(&r, 0, sizeof(r));
 	r.j = ft_strchr_numb(mini->more, '<', 0);
 	r.i = ft_strchr_numb(mini->more, '>', 0);
+	// printf("in redir with mini->stdout%d mini->stdin%d mini->stderr%d", mini->stdout, mini->stdin, mini->stderr);
 	// printf("minicommand [%s] mini->more [%s] filename[%s], m_files[%s], error[%s], fd[%d], alpha[%d]\n", mini->command, mini->more, r.filename, r.m_files, r.error, r.fd, r.alpha);
 	while (r.j != -1 || r.i != -1)
 	{
 		ft_set_start(&r, mini);
-		// printf("minicommand [%s] mini->more[%s] filename[%s], m_files[%s], error[%s], fd[%d], alpha[%d]\n", mini->command, mini->more, r.filename, r.m_files, r.error, r.fd, r.alpha);
+		// printf("\n\nafter set start minicommand [%s] mini->more[%s] filename[%s], m_files[%s], error[%s], fd[%d], alpha[%d]\n", mini->command, mini->more, r.filename, r.m_files, r.error, r.fd, r.alpha);
 		while (ft_strcmp(r.m_files, "") != 0)
 		{
-			// printf("stdin is now %d std out is now %d and stderror is now %d\n",mini->stdin, mini->stdout, mini->stderr);
+			// printf("stdin is now %d stdout is now %d and stderror is now %d",mini->stdin, mini->stdout, mini->stderr);
+			// printf("and  function with && mini->more[%s] r->filename[%s], r->m_files[%s] r->error[%s] and r->d[%d] and r->k[%d]\n", mini->more, r.filename, r.m_files, r.error, r.d, r.k);
 			ft_check_values(&r, mini);
+			// printf("now after check r->filename[%s], r->m_files[%s] values is now %d stdout is now %d and stderror is now %d",r.filename, r.m_files, mini->stdin, mini->stdout, mini->stderr);
 			if (r.filename[0] == '&' && r.error == NULL)
 				ft_check_alpha(&r, mini);
 			else
@@ -131,7 +204,9 @@ int			ft_redir(t_mini *mini)
 			// printf("minicommand [%s] mini->more[%s] filename[%s], m_files[%s], error[%s], fd[%d], alpha[%d]\n", mini->command, mini->more, r.filename, r.m_files, r.error, r.fd, r.alpha);
 			if (r.error != NULL)
 				return (unvalid_identifier(r.error, mini));
+			// printf("before reset after check r->filename[%s], r->m_files[%s] values is now %d stdout is now %d and stderror is now %d\n",r.filename, r.m_files, mini->stdin, mini->stdout, mini->stderr);
 			ft_reset_values(&r, mini);
+			// printf("after reset after check r->filename[%s], r->m_files[%s] values is now %d stdout is now %d and stderror is now %d\n",r.filename, r.m_files, mini->stdin, mini->stdout, mini->stderr);
 		}
 		free(r.filename);
 		free(r.m_files);
@@ -139,148 +214,3 @@ int			ft_redir(t_mini *mini)
 	ft_memset(&r, 0, sizeof(r));
 	return (0);
 }
-
-// int		ft_redir(t_mini *mini)
-// {
-// 	char *filename;
-// 	char *m_files;
-// 	int i;
-// 	int d;
-// 	int k;
-// 	int j;
-// 	int fd;
-
-// 	fd = 0;
-// 	d = 0;
-// 	k = 0;
-// 	j = 0;
-//     // Below is only for '>' and '>>' not '<' implement function for that
-// 	// printf("in redir with mini->more %s\n", mini->more);
-// 	while (((i = ft_strchr_numb(mini->more, '>', 0)) != -1) || ((j = ft_strchr_numb(mini->more, '<', 0)) != -1))
-// 	{
-// 		if ((j < i && j != -1) || (i == -1 && j != -1))
-// 		{
-// 			i = j;
-// 			k = 1;
-// 		}
-// 		filename = ft_substr(mini->more, i + 1, ft_strlen(mini->more) - i - 1);
-// 		mini->more = ft_substr(mini->more, 0, i);
-// 		m_files = ft_strdup(filename);
-// 		while (ft_strcmp(m_files, "") != 0)
-// 		{
-// 			if (filename == NULL)
-// 			{
-// 				filename = mini->more;
-// 				mini->more = NULL;
-// 			}
-// 			if (filename[0] == '>')
-// 			{
-// 				if (filename[1] == '&')
-// 					return (unvalid_identifier("unexpected token `&'", mini));
-// 				filename = ft_substr(filename, 1, ft_strlen(filename) - 1);
-// 				d = 1;
-// 			}
-// 			if ((i = ft_strchr_numb(m_files, '>', 0)) != -1)
-// 			{
-// 				filename = ft_substr(m_files, 0, i);
-// 				m_files = ft_substr(m_files, i + 1, ft_strlen(m_files) - i - 1);
-// 			}
-// 			else
-// 				m_files = ft_strdup("");
-// 			// printf(" i is %d m_files %s filename %s\n", i, m_files, filename);
-// 			if (filename[0] == '&')
-// 			{
-// 				filename = ft_substr(filename, 1, ft_strlen(filename) - 1);
-// 				if (k == 0)
-// 				{
-// 					mini->stdout = ft_atoi(filename);
-// 					if (mini->stdout >= 3)
-// 						return (unvalid_identifier("Bad file descriptor", mini));
-// 				}
-// 				if (k == 1)
-// 				{
-// 					mini->stdin = ft_atoi(filename);
-// 					if (mini->stdin >= 3)
-// 						return (unvalid_identifier("Bad file descriptor", mini));
-// 				}
-// 			}
-// 			else if (d == 0 && k == 0)
-// 				mini->stdout = open(filename, O_RDWR|O_CREAT|O_TRUNC, 0666);
-// 			else if (d == 1 && k == 0)
-// 				mini->stdout = open(filename, O_RDWR|O_CREAT|O_APPEND, 0666);
-// 			else if (k == 1)
-// 			{
-// 				if ((fd = open(filename, O_RDWR, 0666)) == -1)
-// 					return (unvalid_identifier("No such file or directory", mini));
-// 				mini->stdin = fd;
-// 				// printf("in d= 0 k is 1 and filename is %s and mini->stdin%d\n", filename, mini->stdin);
-// 			}
-// 			if (ft_strcmp("", mini->more) == 0)
-// 				mini->more = NULL;
-// 			filename = ft_strdup(m_files);
-// 			// printf("d is %d k is %d stdin is now %d std out is now %d\n", d, k, mini->stdin, mini->stdout);
-// 		}
-// 		free(filename);
-// 		free(m_files);
-// 	}
-// 	return (0);
-// }
-
-
-// int		ft_redir(t_mini *mini)
-// {
-// 	char *filename;
-// 	char *m_files;
-// 	int i;
-// 	int d;
-
-// 	d = 0;
-//     // Below is only for '>' and '>>' not '<' implement function for that
-// 	printf("in redir with mini->more %s\n", mini->more);
-// 	while ((i = ft_strchr_numb(mini->more, '>', 0)) != -1)
-// 	{
-// 		filename = ft_substr(mini->more, i + 1, ft_strlen(mini->more) - i - 1);
-// 		mini->more = ft_substr(mini->more, 0, i);
-// 		m_files = ft_strdup(filename);
-// 		while (ft_strcmp(m_files, "") != 0)
-// 		{
-// 			if (filename == NULL)
-// 			{
-// 				filename = mini->more;
-// 				mini->more = NULL;
-// 			}
-// 			if (filename[0] == '>')
-// 			{
-// 				if (filename[1] == '&')
-// 					return (unvalid_identifier("unexpected token `&'", mini));
-// 				filename = ft_substr(filename, 1, ft_strlen(filename) - 1);
-// 				d = 1;
-// 			}
-// 			if ((i = ft_strchr_numb(m_files, '>', 0)) != -1)
-// 			{
-// 				filename = ft_substr(m_files, 0, i);
-// 				m_files = ft_substr(m_files, i + 1, ft_strlen(m_files) - i - 1);
-// 			}
-// 			else
-// 				m_files = ft_strdup("");
-// 			printf(" i is %d m_files %s filename %s\n", i, m_files, filename);
-// 			if (filename[0] == '&')
-// 			{
-// 				filename = ft_substr(filename, 1, ft_strlen(filename) - 1);
-// 				mini->stdout = ft_atoi(filename);
-// 				if (mini->stdout >= 3)
-// 					return (unvalid_identifier("Bad file descriptor", mini));
-// 			}
-// 			else if (d == 0)
-// 				mini->stdout = open(filename, O_RDWR|O_CREAT|O_TRUNC, 0666);
-// 			else if (d == 1)
-// 				mini->stdout = open(filename, O_RDWR|O_CREAT|O_APPEND, 0666);
-// 			if (ft_strcmp("", mini->more) == 0)
-// 				mini->more = NULL;
-// 			filename = ft_strdup(m_files);
-// 		}
-// 		free(filename);
-// 		free(m_files);
-// 	}
-// 	return (0);
-// }

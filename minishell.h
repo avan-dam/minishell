@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/18 19:50:33 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/20 10:53:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 # include <stdlib.h>
 # include <sys/syslimits.h> // not sure if allowed?
 # include <fcntl.h>
+
+# define STDIN		0
+# define STDOUT		1
+# define STDERR		2
+# define TYPE_END	3
+# define TYPE_PIPE	4
+# define TYPE_BREAK	5
 
 typedef struct		s_line
 {

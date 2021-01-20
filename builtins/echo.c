@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 11:40:20 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/18 19:50:51 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/19 09:43:22 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,25 @@ int    ft_echo(char *string, t_mini *mini, t_piper *piper)
         return(ft_putchar('\n'));
     }
     if (ft_check_empty(string) == 1)
+    {
+        if (piper->check == 1)
+        {
+            piper->write_side = "\n";
+            return (0);
+        }
         return(ft_putchar_fd('\n', mini->stdout));
+    }
     else if ((string[0] == '-') && (string[1] == 'n') && ((string[2] == ' ') || (string[2] == '\0') || (string[2] == 'n')))
     {
         if (ft_echo_n(string, mini) != 2)
-            return(0);
+            return (0);
     }
     string = ft_strtrim(string, " ");
+    if (piper->check == 1)
+    {
+        piper->write_side = string;
+        return (0);
+    }
     ft_putstr_fd(string, mini->stdout);
     return (ft_putchar_fd('\n', mini->stdout));
 }

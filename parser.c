@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/18 19:51:47 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/19 09:50:43 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 	ft_memset(&piper, 0, sizeof(piper));
 	while ((ft_strcmp("", line) != 0))
 	{
-		piper.check = 0;
 		line = ft_strtrim(line, " ");
 		// printf("line: %s\n", line);
 		i = ft_strlen(line);

@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/17 22:18:02 by salbregh      #+#    #+#                  #
-#    Updated: 2021/01/18 17:41:14 by salbregh      ########   odam.nl          #
+#    Updated: 2021/01/20 10:53:00 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,9 @@ SRCS =		main.c \
 			redir.c
 			# delete unused_tlist.c
 
-FLAGS = 	-Wall -Werror -Wextra
-			#-g -fsanitize=address
+FLAGS = 	-Wall -Werror -Wextra 
+
+SEGFAULT =	-g -fsanitize=address
 
 OFILES =	$(SRCS:.c=.o)
 
@@ -47,7 +48,7 @@ $(NAME):	$(OFILES) $(INCLUDES)
 			cp get_next_line/libgnl.a .
 			make -C libft/
 			cp libft/libft.a .
-			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS)
+			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS) $(SEGFAULT)
 			
 %.o:		%.c
 			gcc -Ilibft -Ignl $(FLAGS) -c $< -o $@

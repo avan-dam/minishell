@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/17 14:10:52 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/18 19:51:59 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/19 10:11:20 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,37 @@ int				ft_execve(t_mini *mini, char **envp, t_piper *piper)
 
 	printf("value of pipe: %i\n", piper->check);
 
-	pid = fork();
-	printf("Value of pid: %d\n", pid);
 	ft_bin_command(mini);
-	if ((pid = fork() == -1))
+	if ((pid = fork()) == -1)
 	{
-		ft_putstr_fd("error in forking\n", mini->stdout);
+		ft_putstr("error in forking\n");
 		return (-1);
 	}
-	else if (pid == 0)
+	printf("Value of pid: %d\n", pid);
+	if (pid == 0) // this is the child process
 	{
-		if (execve(mini->command, argv, envp) < 0) // executes the function
-        	return (-1); 
-		exit(0);
+		printf("IN CHILD\n");
+		printf("value of fd[0] - %i and fd[1] - %i\n", piper->fd[0], piper->fd[1]);
+		close(piper->fd[0]); // close read side
+		write(piper->fd[1], &piper->write_side, ft_strlen(piper->write_side));
+		close(piper->fd[1]);
+		if (piper->check == 0)
+		{
+			if (execve(mini->command, argv, envp) < 0) // executes the function
+        		return (-1); 
+			exit(0);
+		}
 	}
 	else
 	{
-			wait(NULL);
+		printf("IN PARENT\n");
+		printf("value of fd[0] - %i and fd[1] - %i\n", piper->fd[0], piper->fd[1]);
+		close(piper->fd[1]); // close writing side
+		printf("value of write_side: %s\nvalue of read_side: %s\n", piper->write_side, piper->read_side);
+		read(piper->fd[0], &piper->read_side, ft_strlen(piper->read_side));
+		printf("value of write_side: %s\nvalue of read_side: %s\n", piper->write_side, piper->read_side);
+		execve(mini->command, argv, envp);
+		wait(NULL);
 		return (0);
 	}
     return 0;

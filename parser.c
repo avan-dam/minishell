@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/20 23:29:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/21 16:56:36 by Amber         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,10 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
             ft_redir(mini);
 			// SOMETHING IF ftredir is -1
 		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
+		{
+			ft_close_fds(mini);
 			return (-1);
+		}
 		mini->command = NULL;
 		mini->more = NULL;
 		ft_close_fds(mini);

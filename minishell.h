@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/20 18:51:25 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/21 14:10:58 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct		s_mini
 	int				stderr;
 	int				numb_cmds; // Command counter new struct
 	char 			*cmd_part;
+	int				type_end;
 }					t_mini;
 
 typedef struct		s_piper

@@ -6,11 +6,27 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/20 19:18:55 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/21 14:13:07 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	ft_lstadd_back_new(t_base **ptr, t_base *new)
+{
+	t_base	*tmp;
+
+	if (!(*ptr))
+		*ptr = new;
+	else
+	{
+		tmp = *ptr;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+		new->prev = tmp;
+	}
+}
 
 static int	number_of_commands(char *line, t_mini *mini)
 {
@@ -32,6 +48,10 @@ static int	number_of_commands(char *line, t_mini *mini)
 			{
 				mini->numb_cmds = numb;
 				mini->cmd_part = ft_substr(line, 0, i);
+				if (tmp[i] == '|')
+					mini->type_end = TYPE_PIPE;
+				else if (tmp[i] == ';')
+					mini->type_end = TYPE_BREAK;
 				return (i);
 			}
 			numb++;
@@ -39,8 +59,8 @@ static int	number_of_commands(char *line, t_mini *mini)
 		i++;
 	}
 	mini->numb_cmds = numb;
-	printf("value of line: %s\n", line);
 	mini->cmd_part = ft_substr(line, 0, i);
+	mini->type_end = TYPE_END;
 	return (i);
 }
 
@@ -54,31 +74,28 @@ static int	parse_this_shit(t_base **ptr, char *line, t_mini *mini)
 	i = number_of_commands(line, mini); // returns number of characters
 	size = mini->numb_cmds;
 	new = (t_base *)malloc(sizeof(t_base));
-	printf("value of size: %d\n", size);
 	new->argv = (char **)malloc(sizeof(char *) * (size + 1));
-	// number of arguments trim these before putting them in
 	if (new->argv == NULL)
 		return (-1); // should exit program
 	new->size = size;
 	new->prev = NULL;
 	new->next = NULL;
 	new->argv[size] = NULL;
-	printf("value of line for putting in arg: %s\n", mini->cmd_part); // save what is in the line that is counted on numb arguments
 	j = 0;
 	int l = 0;
-	while (l < size)
+	printf("value of mini->cmd_part befor while loop: %s\n", mini->cmd_part);
+	while (l < size && mini->cmd_part[j])
 	{
 		while (mini->cmd_part[j] == ' ')
 			j++;
 		int	k = j;
 		while (mini->cmd_part[j] != ' ')
 			j++;
-		new->argv[l] = ft_substr(mini->cmd_part, k, j);
-		printf("VALUE ARGUMENT: %s\n", new->argv[l]);
+		new->argv[l] = ft_substr(mini->cmd_part, k, j - k);
 		l++;
 	}
-	(void)new;
-	(void)ptr;
+	new->type = mini->type_end;
+	ft_lstadd_back_new(ptr, new);
 	return (i);
 }
 
@@ -95,15 +112,23 @@ static void	split_this_shit(char *line, t_mini *mini, char **envp)
 	line = ft_strtrim(line, " ");
 	while (line[i])
 	{
-		printf("VALUE OF LINE[i]: %s\n", &line[i]);
 		while (line[i] == ';' || line[i] == ' ') // go to next command if line begins with ;
 			i++;
 		i = i + parse_this_shit(&ptr, &line[i], mini); // ga naar locatie van eerste argument deel
-		printf("VALUE OF LINE[i] after parse this shit: %s\n", &line[i]);
 		if (!line[i]) // if end of line
 			break;
 		else
 			i++;
+	}
+	while(ptr)
+	{			
+		printf("=================\n");
+		for (i = 0; i < ptr->size; i++)
+			printf("the argument: %s\n", ptr->argv[i]);
+		printf("TYPE: %d\n", ptr->type);
+		printf("SIZE: %d\n", ptr->size);
+		printf("=================\n");
+		ptr = ptr->next;
 	}
 }
 

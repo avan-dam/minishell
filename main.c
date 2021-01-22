@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/21 14:13:07 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/22 13:34:07 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,12 @@ static int	parse_this_shit(t_base **ptr, char *line, t_mini *mini)
 	new->argv[size] = NULL;
 	j = 0;
 	int l = 0;
-	printf("value of mini->cmd_part befor while loop: %s\n", mini->cmd_part);
 	while (l < size && mini->cmd_part[j])
 	{
 		while (mini->cmd_part[j] == ' ')
 			j++;
 		int	k = j;
-		while (mini->cmd_part[j] != ' ')
+		while (mini->cmd_part[j] != ' ' && mini->cmd_part[j])
 			j++;
 		new->argv[l] = ft_substr(mini->cmd_part, k, j - k);
 		l++;
@@ -97,6 +96,49 @@ static int	parse_this_shit(t_base **ptr, char *line, t_mini *mini)
 	new->type = mini->type_end;
 	ft_lstadd_back_new(ptr, new);
 	return (i);
+}
+
+static int		ft_parse_input(t_base *ptr, char **envp, t_mini *mini)
+{
+	(void)envp;
+	if ((ft_strcmp(ptr->argv[0], "echo")) == 0 || (ft_strcmp(ptr->argv[0], "/bin/echo") == 0))
+		ft_echo(ptr);
+	else if (ft_strcmp(ptr->argv[0], "cd") == 0)
+		ft_cd(ptr, mini);
+	else if ((ft_strcmp(ptr->argv[0], "pwd") == 0) || (ft_strcmp(ptr->argv[0], "/bin/pwd") == 0))
+		ft_pwd(mini);
+	// else if (ft_strcmp(command, "export") == 0)
+	// 	ft_export(mini, more);
+	// else if (ft_strcmp(command, "unset") == 0)
+	// 	ft_unset(mini, more);
+	else if (ft_strcmp(ptr->argv[0], "env") == 0)
+		ft_lstprint(mini->env1, mini);
+	// else if (ft_check_notbultin(command, mini) == 1)
+	// 	ft_execve(mini, envp, piper);
+	// else if (ft_strcmp(command, "exit") == 0)
+	// 	return (-1);
+	// else
+		// unvalid_identifier(command, mini);
+	return (0);
+}
+
+static void	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
+{
+	t_base	*tmp;
+	(void)envp;
+
+	tmp = ptr;
+	while (tmp)
+	{
+		printf("******************\n");
+		for (int i = 0; i < ptr->size; i++)
+			printf("the argument: %s\n", ptr->argv[i]);
+		printf("TYPE: %d\n", ptr->type);
+		printf("SIZE: %d\n", ptr->size);
+		printf("******************\n");
+		ft_parse_input(tmp, envp, mini); // function out of parser.c
+		tmp = tmp->next;
+	}
 }
 
 static void	split_this_shit(char *line, t_mini *mini, char **envp)
@@ -112,24 +154,26 @@ static void	split_this_shit(char *line, t_mini *mini, char **envp)
 	line = ft_strtrim(line, " ");
 	while (line[i])
 	{
-		while (line[i] == ';' || line[i] == ' ') // go to next command if line begins with ;
+		while (line[i] == ';' || line[i] == ' ')
 			i++;
-		i = i + parse_this_shit(&ptr, &line[i], mini); // ga naar locatie van eerste argument deel
-		if (!line[i]) // if end of line
-			break;
+		i = i + parse_this_shit(&ptr, &line[i], mini);
+		if (!line[i])
+			break ;
 		else
 			i++;
 	}
-	while(ptr)
-	{			
-		printf("=================\n");
-		for (i = 0; i < ptr->size; i++)
-			printf("the argument: %s\n", ptr->argv[i]);
-		printf("TYPE: %d\n", ptr->type);
-		printf("SIZE: %d\n", ptr->size);
-		printf("=================\n");
-		ptr = ptr->next;
-	}
+	// while(ptr)
+	// {			
+	// 	printf("=================\n");
+	// 	for (i = 0; i < ptr->size; i++)
+	// 		printf("the argument: %s\n", ptr->argv[i]);
+	// 	printf("TYPE: %d\n", ptr->type);
+	// 	printf("SIZE: %d\n", ptr->size);
+	// 	printf("=================\n");
+	// 	ptr = ptr->next;
+	// }
+	if (ptr)
+		exec_cmds(ptr, envp, mini);
 }
 
 int		main(int argc, char **argv, char **envp)
@@ -151,11 +195,6 @@ int		main(int argc, char **argv, char **envp)
 		if ((lineret = get_next_line(1, &line)) < 0)
 			return (-1);
 		split_this_shit(line, &mini, envp);
-		// if (ft_start_parsing(line, &mini, envp) < 0)
-		// 	return (-1);
-		ft_lstprintold(mini.run2);
-		free(mini.run2); // free the list of line
-		mini.run2 = NULL;
 		free(line);
 		line = NULL;
 	}	

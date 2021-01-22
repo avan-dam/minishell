@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/21 14:10:58 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/22 13:31:43 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ typedef struct		s_piper
 }					t_piper;
 
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
-int					ft_echo(char *string, t_mini *mini, t_piper *piper);
+// int					ft_echo(char *string, t_mini *mini, t_piper *piper);
+int					ft_echo(t_base *ptr);
 void				ft_putstr(char *s);
 int				    ft_export(t_mini *mini, char *more);
 char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i);
@@ -96,7 +97,8 @@ int					ft_execve(t_mini *mini, char **envp, t_piper *piper);
 void				ft_lstclear(t_list **lst);
 int					ft_redir(t_mini *mini, int d);
 
-void				ft_cd(t_mini *mini);
+// void				ft_cd(t_mini *mini);
+void				ft_cd(t_base *ptr, t_mini *mini); // new
 void				ft_add_env(char *env, char *path, t_mini *mini); // or static
 char				*ft_get_env(char *env, t_mini *mini); // of static
 void				ft_pwd(t_mini *mini);

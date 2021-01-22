@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/18 18:49:57 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/22 13:33:01 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ char	*ft_get_env(char *env, t_mini *mini)
 	return (NULL);
 }
 
-void		ft_cd(t_mini *mini)
+void		ft_cd(t_base *ptr, t_mini *mini)
 {
 	char	cwd[PATH_MAX];
-
-	mini->oldpwd = getcwd(cwd, sizeof(cwd));
-	if (mini->more == NULL || ft_strcmp(mini->more, "~") == 0)
+	mini->oldpwd = getcwd(cwd, sizeof(cwd)); // delete this line?
+	if (ptr->argv[1] == NULL || ft_strcmp(ptr->argv[1], "~") == 0)
 	{
 		chdir(ft_get_env("HOME", mini));
 		ft_unset(mini, "OLDPWD");
@@ -69,7 +68,7 @@ void		ft_cd(t_mini *mini)
 		ft_unset(mini, "PWD");
 		ft_add_env("PWD", ft_get_env("HOME", mini), mini);
 	}
-	else if (ft_strcmp(mini->more, "-") == 0)
+	else if (ft_strcmp(ptr->argv[1], "-") == 0)
 	{
 		if (ft_get_env("OLDPWD", mini) != NULL)
 		{
@@ -77,9 +76,9 @@ void		ft_cd(t_mini *mini)
 			ft_putstr(ft_get_env("OLDPWD", mini));
 			ft_putstr("\n");
 			ft_unset(mini, "OLDPWD");
-			printf("pwd before add env: %s\n\n", ft_get_env("PWD", mini));
+			// printf("pwd before add env: %s\n\n", ft_get_env("PWD", mini));
 			ft_add_env("OLDPWD", ft_get_env("PWD", mini), mini);
-			printf("pwd after add env: %s\n\n", ft_get_env("PWD", mini));
+			// printf("pwd after add env: %s\n\n", ft_get_env("PWD", mini));
 			ft_unset(mini, "PWD");
 			ft_add_env("PWD", getcwd(cwd, sizeof(cwd)), mini);
 		}
@@ -87,12 +86,12 @@ void		ft_cd(t_mini *mini)
 			ft_putstr("bash: cd: OLDPWD not set\n");
 		return ;
 	}
-	else if (mini->more != NULL)
+	else if (ptr->argv[1] != NULL)
 	{
-		if (chdir(mini->more) == -1)
+		if (chdir(ptr->argv[1]) == -1)
 		{
 			ft_putstr("cd: no such file or directory: ");
-			ft_putstr(mini->more);
+			ft_putstr(ptr->argv[1]);
 			ft_putstr("\n");
 			return ;
 		}

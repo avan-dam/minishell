@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:46:57 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/07 16:47:19 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/23 22:02:02 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,7 @@ int			ft_unset(t_mini *mini, char *unset)
 	{
 		if (ft_strcmp(tlist->var1, unset) == 0)
 		{
-			// ft_lstprint(mini->env1);
 			delete_node(mini->env1, tlist, mini);
-			// ft_lstprint(mini->env1);
 			return (0);
 		}
 		tlist = tlist->next;

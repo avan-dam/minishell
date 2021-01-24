@@ -10,6 +10,10 @@ git add .
 git commit -m"merging amber branch"
 git push origin master
 if conflicts checkout to my branch
+AMBER:
+SIGNAL:
+https://linuxhint.com/signal_handlers_c_programming_language/
+
 
 AMBER: REDIRECTION NOTES:
 FIX 

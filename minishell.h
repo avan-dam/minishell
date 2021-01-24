@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/23 21:46:09 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/24 20:54:22 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct		s_mini
 	t_list			*env1;
 	// builtin and execve arrray need corresponding function array for this
 	char			*builtin[8];
-	char			*notbuiltin[13]; // ls mkdir touch cat
+	char			*notbuiltin[23]; // ls mkdir touch cat
 	int				stdout;
 	int				stderr;
 	int				numb_cmds; // Command counter new struct

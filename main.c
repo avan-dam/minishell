@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/23 22:50:44 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/24 21:10:09 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,25 +104,28 @@ static void		try_execve(t_base *ptr, char **envp)
 	int			status;
 	int			piped;
 
-	printf("GOES IN");
 	piped = 0;
-	if (ptr->type == TYPE_PIPE && (ptr->prev && ptr->prev->type == TYPE_PIPE))
+	if (ptr->type == TYPE_PIPE || (ptr->prev && ptr->prev->type == TYPE_PIPE))
 	{
 		piped = 1;
-		if (pipe(ptr->fd) == 1)
+		if (pipe(ptr->fd))
 			exit (0); // change
 	}
-	if ((pid = fork()) < 0 )
+	if ((pid = fork()) < 0)
 		exit (0); // change
 	if (pid == 0) // child process
 	{
+		printf("GOES IN CHILD PROCES\n");
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
-			exit (0); // change
+			printf("CASE 1\n");
+			// exit (0); // change
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE && dup2(ptr->prev->fd[0], STDIN) < 0)
-			exit (0); // change
+			printf("CASE 2\n");
+			// exit (0); // change
 		if ((execve(ptr->argv[0], ptr->argv, envp)) < 0)
-			exit (0); // change
-		exit (1); // closes process with succes // change
+			printf("CASE 3\n");
+			// exit (0); // change
+		exit (EXIT_SUCCESS); // closes process with succes // change
 	}
 	else // parent process
 	{
@@ -159,6 +162,7 @@ static void	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	tmp = ptr;
 	while (tmp)
 	{
+		// printf("the argument going in: %s\n", tmp->argv[0]);
 		if ((ft_strcmp(tmp->argv[0], "echo")) == 0 || (ft_strcmp(tmp->argv[0], "/bin/echo") == 0))
 			ft_echo(tmp);
 		else if (ft_strcmp(tmp->argv[0], "cd") == 0)
@@ -171,11 +175,10 @@ static void	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 			ft_unset(mini, tmp->argv[1]);
 		else if (ft_strcmp(tmp->argv[0], "env") == 0)
 			ft_lstprint(mini->env1, mini);
-		// else if (ft_check_notbultin(tmp->argv[0], mini) == 1)
-		else if (ft_check_notbultin(tmp->argv[0], mini) == 0)
+		else if (ft_check_notbultin(tmp->argv[0], mini) == 1)
 			try_execve(tmp, envp);
-		// else
-		// 	unvalid_identifier(tmp->argv[0], mini);
+		else
+			unvalid_identifier(tmp->argv[0], mini);
 		tmp = tmp->next;
 	}
 }
@@ -191,6 +194,7 @@ static void	split_this_shit(char *line, t_mini *mini, char **envp)
 	ptr = NULL;
 	i = 0;
 	line = ft_strtrim(line, " ");
+	ft_set_array(mini);
 	while (line[i])
 	{
 		while (line[i] == ';' || line[i] == ' ')
@@ -213,6 +217,7 @@ static void	split_this_shit(char *line, t_mini *mini, char **envp)
 	// }
 	if (ptr)
 		exec_cmds(ptr, envp, mini);
+	// fix leaks
 }
 
 int		main(int argc, char **argv, char **envp)
@@ -226,7 +231,7 @@ int		main(int argc, char **argv, char **envp)
 	if (argc > 1) // no argument should be added to the excutable
 		return (-1);
 	ft_memset(&mini, 0, sizeof(t_mini));
-	// ft_set_array(&mini); // check use of
+	ft_set_array(&mini); // check use of
 	ft_set_env(argv, envp, &mini);
 	while (lineret)
 	{

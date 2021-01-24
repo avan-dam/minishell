@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/21 17:14:15 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/24 19:46:45 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		unvalid_identifier(char *error, t_mini *mini)
     ft_putstr_fd("bash: export: '", mini->stderr);
     ft_putstr_fd(error, mini->stderr);
     ft_putstr_fd("': not a valid identifier\n", mini->stderr);
-    // mini->exit = 127;
+    mini->exit = 127;
     return (-1);
 }
 
@@ -109,4 +109,18 @@ int     numb_char(char *line, char c)
 		i++;
     }
     return (j);
+}
+
+char        *ft_string_insert(char *string, int i, char *middle)
+{
+    char	*start;
+    char 	*end;
+    char    *temp;
+	char	*newline;
+
+	start = ft_substr(string, 0, i + 1);
+	end = ft_substr(string, i + 1, ft_strlen(string) - i - 1);
+	temp = ft_strjoin(start, middle);
+	newline = ft_strjoin(temp, end);
+	return (ft_strjoin(temp, end));
 }

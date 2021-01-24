@@ -6,12 +6,13 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/11 18:16:34 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/24 19:46:25 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// use instead ft_string_insert function
 static void		line_replaced(char *start, char *newvar, char *end, t_line *s)
 {
 	char	*temp;
@@ -77,10 +78,18 @@ static void		set_tline(t_line *s, char *line)
 	s->k = 0;
 }
 
-static int		ft_double_quotes(t_line *s, int i)
+static int		ft_double_quotes(t_line *s, int i, t_mini *mini)
 {
-	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - 1);
+	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 	i--;
+	if (s->line[i] == '$' && s->line[i + 1] == '?')
+	{
+		ft_memmove(&s->line[i + 1], &s->line[i + 2], ft_strlen(s->line) - (i + 1));
+		i--;
+		ft_memmove(&s->line[i + 1], &s->line[i + 2], ft_strlen(s->line) - (i + 1));
+		i--;
+        s->line = ft_string_insert(s->line, i + 1, ft_itoa(mini->exit));	
+	}
 	// if going wrong remove if statement here and just t++ always
 	if (s->o % 2 == 0)
 		s->t++;
@@ -99,14 +108,14 @@ static int		ft_single_quotes(t_line *s, int i)
 		return (i + 1);
 	}
 	// remove single quotes and print exactly what is inside without changing
-	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - 1);
+	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 	i--;
 	s->o++;
 	while ((s->line[i] != '\'') && (s->line[i] != '\0'))
 		i++;
 	if (s->line[i] == '\'')
 	{
-		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - 1);
+		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 		i--;
 		s->o++;
 	}
@@ -137,17 +146,26 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
 		if (s.line[i] == '\\' && (s.o % 2 == 0) && (s.t % 2 == 0))
 		{
 			ft_memmove(&s.line[i], &s.line[i+1], ft_strlen(s.line) - 1);
+			// is it -1 or -i
 			i--;
 		}
 		if (s.line[i] == '\'')
 			i = ft_single_quotes(&s, i);
 		else if (s.line[i] == '"')
-			i = ft_double_quotes(&s, i);
+			i = ft_double_quotes(&s, i, mini);
 		else if ((s.line[i] == '$') && (s.line[i + 1] != '/') && \
-		(s.line[i + 1] != '\\') && (s.line[i + 1] != '\0'))
+		(s.line[i + 1] != '\\') && (s.line[i + 1] != '\0') && (s.line[i + 1] != '?'))
 		{
 			ft_find_dolla(s.line, i + 1, mini, &s);
 			i = i + s.k;
+		}
+		else if (s.line[i] == '$' && s.line[i + 1] == '?')
+		{
+			ft_memmove(&s.line[i + 1], &s.line[i + 2], ft_strlen(s.line) - (i + 1));
+			i--;
+			ft_memmove(&s.line[i + 1], &s.line[i + 2], ft_strlen(s.line) - (i + 1));
+			i--;
+            s.line = ft_string_insert(s.line, i + 1, ft_itoa(mini->exit));	
 		}
 		i++;
 	}

@@ -15,6 +15,11 @@ SIGNAL:
 https://linuxhint.com/signal_handlers_c_programming_language/
 
 
+
+EXIT STATUS:
+bash-3.2$ "$?"
+go through add in exit status for each thing
+make an exit function that clears all structs and closes all
 AMBER: REDIRECTION NOTES:
 FIX 
 echo hello 1>&2>file

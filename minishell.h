@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/21 17:13:59 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/24 19:34:45 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct		s_mini
 	int				stdout;
 	int				stderr;
 	int				stdin;
-	// int				exit;
+	int				exit;
 }					t_mini;
 
 int					ft_echo(char *string, t_mini *mini);
@@ -81,6 +81,8 @@ void				ft_lstprint(t_list *lst, t_mini *mini);
 int					ft_execve(t_mini *mini, char **envp);
 void				ft_lstclear(t_list **lst);
 int					ft_redir(t_mini *mini);
+void				ft_printf_exit_status(t_mini *mini);
+char				*ft_string_insert(char *string, int i, char *middle);
 
 void				ft_cd(t_mini *mini);
 void				ft_pwd(t_mini *mini);

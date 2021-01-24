@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/11 18:16:34 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/24 11:16:32 by Amber         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void		set_tline(t_line *s, char *line)
 
 static int		ft_double_quotes(t_line *s, int i)
 {
-	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - 1);
+	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 	i--;
 	// if going wrong remove if statement here and just t++ always
 	if (s->o % 2 == 0)
@@ -99,14 +99,14 @@ static int		ft_single_quotes(t_line *s, int i)
 		return (i + 1);
 	}
 	// remove single quotes and print exactly what is inside without changing
-	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - 1);
+	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 	i--;
 	s->o++;
 	while ((s->line[i] != '\'') && (s->line[i] != '\0'))
 		i++;
 	if (s->line[i] == '\'')
 	{
-		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - 1);
+		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 		i--;
 		s->o++;
 	}
@@ -144,7 +144,7 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
 		else if (s.line[i] == '"')
 			i = ft_double_quotes(&s, i);
 		else if ((s.line[i] == '$') && (s.line[i + 1] != '/') && \
-		(s.line[i + 1] != '\\') && (s.line[i + 1] != '\0'))
+		(s.line[i + 1] != '\\') && (s.line[i + 1] != '\0') && (s.line[i + 1] != '?'))
 		{
 			ft_find_dolla(s.line, i + 1, mini, &s);
 			i = i + s.k;

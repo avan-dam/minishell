@@ -11,6 +11,9 @@ git commit -m"merging amber branch"
 git push origin master
 if conflicts checkout to my branch
 
+
+EXIT STATUS:
+bash-3.2$ "$?"
 AMBER: REDIRECTION NOTES:
 FIX 
 echo hello 1>&2>file

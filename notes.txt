@@ -17,7 +17,6 @@ https://linuxhint.com/signal_handlers_c_programming_language/
 
 echo hello >$4
 "$?"
-^^DOESNT WORK
 EXIT STATUS:
 bash-3.2$ "$?"
 go through add in exit status for each thing

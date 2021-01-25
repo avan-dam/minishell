@@ -6,7 +6,7 @@
 /*   By: Amber <Amber@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/24 10:48:47 by Amber         #+#    #+#                 */
-/*   Updated: 2021/01/25 12:31:40 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 18:06:23 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void		ft_printf_exit_status(t_mini *mini)
 	mini->exit = 127;
 }
 
+// MAKE SURE ALL CLEARED
 void	ft_exit(t_mini *mini, char *line)
 {
 	ft_close_fds(mini);

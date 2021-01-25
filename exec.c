@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/17 14:10:52 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/15 15:40:21 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 18:05:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,17 @@ static void		ft_bin_command(t_mini *mini)
 int				ft_execve(t_mini *mini, char **envp)
 {
     // char *argv[] = {mini->command, "cat", "test"};
-    char *argv[] = {mini->command, mini->more, NULL};
+    char 	*argv[] = {mini->command, mini->more, NULL};
 	pid_t	pid;
+	int 	status; 
 
 	pid = fork();
 	printf("Value of pid: %d\n", pid);
 	ft_bin_command(mini);
+    waitpid(pid, &status, 0);
 	if (pid == -1)
 	{
-		ft_putstr_fd("error in forking\n", mini->stdout);
+		ft_putstr_fd("error in forking\n", mini->stderr);
 		return (-1);
 	}
 	else if (pid == 0)
@@ -48,14 +50,20 @@ int				ft_execve(t_mini *mini, char **envp)
 		dup2(mini->stdout, 1);
 		// dup2(mini->stdin, 0);
 		if (execve(mini->command, argv, envp) < 0)
+		{	
+			mini->exit = 1; //check if exit status can also be other
 			return (-1); 
-		exit(0);
-	}
+		}
+		// exit(0);
+	}      
+    else if (WIFEXITED(status)) 
+    { 
+        mini->exit = WEXITSTATUS(status);
+    }
 	else
 	{
 		wait(NULL);
 		return (0);
 	}
-	(void)envp;
     return 0;
 }

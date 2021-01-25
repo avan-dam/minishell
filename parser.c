@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/25 16:00:21 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 18:49:18 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ int		main(int argc, char **argv, char **envp)
 	while (lineret)
 	{
 		ft_putstr("> ");
+		signal(SIGINT, handle_sigint);
 		lineret = get_next_line(1, &line);
 		if (lineret < 0)
 			return (-1);

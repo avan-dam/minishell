@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/25 16:38:07 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 18:36:36 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <signal.h>
+
 
 typedef struct		s_line
 {
@@ -87,6 +89,7 @@ char				*ft_string_insert(char *string, int i, char *middle);
 void 				ft_close_fds(t_mini *mini);
 void				ft_exit(t_mini *mini, char *line);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
+void				handle_sigint(int sig);
 
 void				ft_cd(t_mini *mini);
 void				ft_pwd(t_mini *mini);

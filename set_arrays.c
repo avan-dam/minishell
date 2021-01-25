@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/19 11:12:11 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/21 20:40:33 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 17:04:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	set_command(t_mini *mini)
 	mini->notbuiltin[7] = "grep";
 	mini->notbuiltin[8] = "mkdir";
 	mini->notbuiltin[9] = "touch"; //doesnt work
-	mini->notbuiltin[10] = "rm -rf"; // doesnt work
-	mini->notbuiltin[11] = "cat"; // doesnt work
+	mini->notbuiltin[10] = "rm -rf"; // doesnt work BECAUSE SPACE IN COMMAND SO SET EDGE CASE FOR THIS
+	mini->notbuiltin[11] = "cat"; 
 	mini->notbuiltin[12] = NULL;
 }
 

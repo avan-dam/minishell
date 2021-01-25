@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/24 19:46:45 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 15:13:36 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		unvalid_identifier(char *error, t_mini *mini)
     // is this STDOUT OR STD ERROR
     ft_putstr_fd("bash: export: '", mini->stderr);
     ft_putstr_fd(error, mini->stderr);
-    ft_putstr_fd("': not a valid identifier\n", mini->stderr);
+    ft_putstr_fd("': command not found\n", mini->stderr);
     mini->exit = 127;
     return (-1);
 }

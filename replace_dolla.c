@@ -6,13 +6,12 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/25 14:36:30 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 15:07:50 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// use instead ft_string_insert function
 static void		line_replaced(char *start, char *newvar, char *end, t_line *s)
 {
 	char	*temp;
@@ -74,11 +73,6 @@ static t_line	*ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 	oldvar = ft_substr(line, j, i - j);
 	start = ft_substr(line, 0, j - 1);
 	end = ft_substr(line, i, ft_strlen(line) - i);
-	if (start[ft_len(start) - 1] == 39 && end[0] == 39 && ft_len(end) > 1)
-	{
-		if (end[1] == '"')
-			ft_memmove(&end[1], &end[2], ft_strlen(end) - 1);
-	}
 	newvar = ft_check_var_tlist(mini, oldvar);
 	if ((ft_redir_n_dolla(line, j - 1) != -1) || (ft_strcmp("", newvar) != 0))
 		line_replaced(start, newvar, end, s);

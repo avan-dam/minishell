@@ -6,56 +6,36 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 11:40:20 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/25 10:12:42 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 16:31:49 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int ft_howmany_n(char *string)
+static char *ft_howmany_n(char *string, int i, int j)
 {
-    int i;
-    int j;
-    int l;
-
-    i = 0;
-    j = 0;
-    l = 0;
     while (string[i] != '\0')
     {
-        l++;
         j = i;
         if (string[i] != '-')
-            return (-1);
+            return (ft_substr(string, j, ft_strlen(string) - j));
         i++;
         while (string[i] == 'n')
             i++;
 		if (string[i] == '\0')
-			return (1);
+			return (ft_substr(string, j, ft_strlen(string) - j));
         if (string[i] != ' ')
-        {
-            string = ft_substr(string, j, ft_strlen(string) - j);
-            return (2);
-        }
+            return (ft_substr(string, j, ft_strlen(string) - j));
         i++;
     }
-    return (0);
+    return (string);
 }
 
 static int    ft_echo_n(char *string, t_mini *mini)
 {
-    int     i;
-    int     j;
-
     if(string == NULL)
         return (0);
-    if ((j = ft_howmany_n(string)) == 2)
-        return (2);
-	if (j != 2)
-	{
-    	i = ft_len(string) - 3;
-    	string = ft_substrr(string, 3, i);
-	}
+    string = ft_howmany_n(string, 0, 0);
     string = ft_strtrim(string, " ");
     ft_putstr_fd(string, mini->stdout);
     mini->exit = 0;

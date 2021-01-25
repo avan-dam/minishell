@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 13:52:12 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/25 14:16:15 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 15:51:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	ft_set_start(t_redir *r, t_mini *mini)
 	r->m_files = ft_strdup(r->file);
 	i = ft_strlen(mini->more) - 1;
 	while (i >= 0 && ((mini->more[i] == '&') || (mini->more[i] >= '0' && mini->more[i] <= '9')))
+	// while (i >= 0 && (mini->more[i] >= '0' && mini->more[i] <= '9'))
 		i--;
 	if (i != (int)ft_strlen(mini->more) - 1)
 	{
@@ -44,6 +45,7 @@ static void	ft_set_start(t_redir *r, t_mini *mini)
 	if (r->file[0] == '&')
 	{
 		r->fd = -2;
+		r->alpha = 1;
 		r->file = ft_substr(r->file, 1, ft_strlen(r->file) - 1);
 	}
 	if (ft_strcmp(r->m_files, "") == 0)
@@ -64,15 +66,22 @@ static void	ft_check_values(t_redir *r, t_mini *mini)
 	{
 		if (r->file[1] == '&')
 		{
-			r->error = ft_strdup("unexpected token `&'");
+			r->error = ft_strdup("bash: syntax error near unexpected token `&'\n");
+			mini->exit = 258;
 			return ;
 		}
 		r->file = ft_substr(r->file, 1, ft_strlen(r->file) - 1);
 		r->d = 1;
 	}
+	if (r->file[0] == '&' && r->file[1] == '\0')
+	{
+		r->error = ft_strdup("bash: syntax error near unexpected token `newline'\n");
+		mini->exit = 258;
+		return ;
+	}
 	if (r->file[0] == '$')
 	{
-		r->error = ft_strdup("ambiguous redirect");
+		r->error = ft_strjoin(r->file, ": ambiguous redirect\n");
 		mini->exit = 1;
 		return ;
 	}
@@ -88,22 +97,28 @@ static void	ft_check_values(t_redir *r, t_mini *mini)
 
 static void	ft_check_alpha(t_redir *r, t_mini *mini)
 {
-	r->file = ft_substr(r->file, 1, ft_strlen(r->file) - 1);
 	r->alpha = 1;
+	if (ft_atoi(r->file) >= 3)
+	{
+			mini->exit = 1;
+			r->error = ft_strjoin("bash: ", r->file);
+			r->error = ft_strjoin(r->error, ": Bad file descriptor\n");
+			return ;
+	}
 	if (r->redirinput == 0)
 	{
 		if ((r->fd == 2 || r->fd == -2) && ft_strcmp(r->file, "1") == 0)
 			mini->stderr = mini->stdout;
-		else
+		else if (ft_atoi(r->file) < 3)
 			mini->stdout = ft_atoi(r->file);
 	}
 	if (r->redirinput == 1)
 	{
 		mini->stdin = ft_atoi(r->file);
-		if (mini->stdin >= 3)
+		if (r->file[0] == '<' && r->file[1] == '&')
 		{
-			printf("in this\n");
-			r->error = ft_strdup("Bad file descriptor");
+			mini->exit = 258;
+			r->error = ft_strdup("bash: syntax error near unexpected token `&'\n");
 			return ;
 		}
 	}
@@ -132,12 +147,12 @@ static void	open_function(t_redir *r, t_mini *mini)
 		{
 			if ((i = open(file, O_RDWR, 0666)) == -1)
 			{
-				r->error = ft_strdup("No such file or directory");
+				r->error = ft_strjoin(file, ": ambiguous redirect\n");
+				mini->exit = 1;
 				return ;
 			}
 			mini->stdin = i;
 		}
-		// printf("\nopendone\n");
 	}
 }
 
@@ -150,10 +165,6 @@ static void	ft_reset_values(t_redir *r, t_mini *mini)
 		i--;
 	if (i != (int)ft_strlen(r->file) - 1)
 		r->fd = ft_atoi(ft_substr(r->file, i + 1, ft_strlen(r->file) - i + 1));
-	// if (r->file[i + 1] == '&')
-	// {
-	// 	r->error = ft_strdup("symbol '&' badly placed");
-	// }
 	if (mini->more != NULL)
 	{
 		if (ft_strcmp("", mini->more) == 0)
@@ -186,18 +197,17 @@ int			ft_redir(t_mini *mini)
 		ft_set_start(&r, mini);
 		while (ft_strcmp(r.m_files, "") != 0)
 		{
-			// printf("first mini->more[%s] r.file[%s], r.m_files[%s], r.error[%s], r.i%d, r.d%d, r.redirinput%d, r.j%d, r.fd%d, r.alpha%d\n", mini->more, r.file, r.m_files, r.error, r.i, r.d, r.redirinput, r.j, r.fd, r.alpha);
 			ft_check_values(&r, mini);
-			// printf("after checck mini->more[%s] r.file[%s], r.m_files[%s], r.error[%s], r.i%d, r.d%d, r.redirinput%d, r.j%d, r.fd%d, r.alpha%d\n", mini->more, r.file, r.m_files, r.error, r.i, r.d, r.redirinput, r.j, r.fd, r.alpha);
-			if (r.file[0] == '&' && r.error == NULL)
+			if ((r.file[0] == '&' || r.alpha == 1 || (r.file[0] == '<' && r.file[1] == '&')) && r.error == NULL)
 				ft_check_alpha(&r, mini);
 			else
 				open_function(&r, mini);
-			// printf("after checck mini->more[%s] r.file[%s], r.m_files[%s], r.error[%s], r.i%d, r.d%d, r.redirinput%d, r.j%d, r.fd%d, r.alpha%d\n", mini->more, r.file, r.m_files, r.error, r.i, r.d, r.redirinput, r.j, r.fd, r.alpha);
 			if (r.error != NULL)
-				return (unvalid_identifier(r.error, mini));
+			{
+				ft_putstr_fd(r.error, mini->stderr);
+				return (-1);
+			}
 			ft_reset_values(&r, mini);
-			// printf("after checck mini->more[%s] r.file[%s], r.m_files[%s], r.error[%s], r.i%d, r.d%d, r.redirinput%d, r.j%d, r.fd%d, r.alpha%d\n", mini->more, r.file, r.m_files, r.error, r.i, r.d, r.redirinput, r.j, r.fd, r.alpha);
 		}
 		free(r.file);
 		free(r.m_files);

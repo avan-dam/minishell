@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 13:52:12 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/21 14:46:59 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/25 14:16:15 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@
 static void	ft_set_start(t_redir *r, t_mini *mini)
 {
 	int i;
-	int null;
 	char *fd;
-
-	null = 0;
+	
 	if ((r->j < r->i && r->j != -1) || (r->i == -1 && r->j != -1))
 	{
 		r->i = r->j;
@@ -48,6 +46,11 @@ static void	ft_set_start(t_redir *r, t_mini *mini)
 		r->fd = -2;
 		r->file = ft_substr(r->file, 1, ft_strlen(r->file) - 1);
 	}
+	if (ft_strcmp(r->m_files, "") == 0)
+	{
+		r->i = -1;
+		r->j = -1;
+	}
 }
 
 static void	ft_check_values(t_redir *r, t_mini *mini)
@@ -66,6 +69,12 @@ static void	ft_check_values(t_redir *r, t_mini *mini)
 		}
 		r->file = ft_substr(r->file, 1, ft_strlen(r->file) - 1);
 		r->d = 1;
+	}
+	if (r->file[0] == '$')
+	{
+		r->error = ft_strdup("ambiguous redirect");
+		mini->exit = 1;
+		return ;
 	}
 	if ((r->i = ft_strchr_numb(r->m_files, '>', 0)) != -1)
 	{
@@ -93,6 +102,7 @@ static void	ft_check_alpha(t_redir *r, t_mini *mini)
 		mini->stdin = ft_atoi(r->file);
 		if (mini->stdin >= 3)
 		{
+			printf("in this\n");
 			r->error = ft_strdup("Bad file descriptor");
 			return ;
 		}
@@ -172,17 +182,22 @@ int			ft_redir(t_mini *mini)
 	r.i = ft_strchr_numb(mini->more, '>', 0);
 	while (r.j != -1 || r.i != -1)
 	{
+		// printf("before set mini->more[%s] r.file[%s], r.m_files[%s], r.error[%s], r.i%d, r.d%d, r.redirinput%d, r.j%d, r.fd%d, r.alpha%d\n", mini->more, r.file, r.m_files, r.error, r.i, r.d, r.redirinput, r.j, r.fd, r.alpha);
 		ft_set_start(&r, mini);
 		while (ft_strcmp(r.m_files, "") != 0)
 		{
+			// printf("first mini->more[%s] r.file[%s], r.m_files[%s], r.error[%s], r.i%d, r.d%d, r.redirinput%d, r.j%d, r.fd%d, r.alpha%d\n", mini->more, r.file, r.m_files, r.error, r.i, r.d, r.redirinput, r.j, r.fd, r.alpha);
 			ft_check_values(&r, mini);
+			// printf("after checck mini->more[%s] r.file[%s], r.m_files[%s], r.error[%s], r.i%d, r.d%d, r.redirinput%d, r.j%d, r.fd%d, r.alpha%d\n", mini->more, r.file, r.m_files, r.error, r.i, r.d, r.redirinput, r.j, r.fd, r.alpha);
 			if (r.file[0] == '&' && r.error == NULL)
 				ft_check_alpha(&r, mini);
 			else
 				open_function(&r, mini);
+			// printf("after checck mini->more[%s] r.file[%s], r.m_files[%s], r.error[%s], r.i%d, r.d%d, r.redirinput%d, r.j%d, r.fd%d, r.alpha%d\n", mini->more, r.file, r.m_files, r.error, r.i, r.d, r.redirinput, r.j, r.fd, r.alpha);
 			if (r.error != NULL)
 				return (unvalid_identifier(r.error, mini));
 			ft_reset_values(&r, mini);
+			// printf("after checck mini->more[%s] r.file[%s], r.m_files[%s], r.error[%s], r.i%d, r.d%d, r.redirinput%d, r.j%d, r.fd%d, r.alpha%d\n", mini->more, r.file, r.m_files, r.error, r.i, r.d, r.redirinput, r.j, r.fd, r.alpha);
 		}
 		free(r.file);
 		free(r.m_files);

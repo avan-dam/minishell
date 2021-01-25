@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 11:40:20 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/24 19:37:52 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 10:12:42 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,6 @@ static int  ft_check_empty(char *string)
     if (i == j)
         return (1);
     return (0);
-}
-
-char    *ft_check_exit_status(char *string, t_mini *mini)
-{
-    int i;
-
-    i = 0;
-    if (string == NULL)
-        return(string);
-    if (ft_strlen(string) < 2)
-        return (string);
-    while (string[i + 1] != '\0')
-    {
-        if (string[i] == '$' && string[i + 1] == '?')
-        {
-			ft_memmove(&string[i], &string[i+1], ft_strlen(string) - i);
-			i--;
-			ft_memmove(&string[i + 1], &string[i+2], ft_strlen(string) - i);
-			i--;
-            string = ft_string_insert(string, i + 1, ft_itoa(mini->exit));
-        }
-        i++;
-    }
-    return (string);
 }
 
 int    ft_echo(char *string, t_mini *mini)

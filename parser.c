@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/24 10:54:46 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/25 13:23:55 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ static int		ft_check_notbultin(char *command, t_mini *mini)
 
 static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 {
-	// printf("command %s more %s\n", mini->command, mini->more);
 	if (ft_strcmp(command, "echo") == 0)
 		ft_echo(more, mini);
 	else if (ft_strcmp(command, "cd") == 0)
@@ -97,7 +96,7 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 		ft_lstprint(mini->env1, mini);
 	else if (ft_check_notbultin(command, mini) == 1)
 		ft_execve(mini, envp);
-	else if (ft_strcmp(command, "$?") == 0)
+	else if ((ft_strcmp(command, "$?") == 0) && ((mini->singlequote == 0) || (mini->singlequote % 2 == 1)))
 		ft_printf_exit_status(mini);
 	else if (ft_strcmp(command, "exit") == 0)
 		return (-1);
@@ -106,7 +105,7 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 	return (0);
 }
 
-static void 		ft_close_fds(t_mini *mini)
+void 		ft_close_fds(t_mini *mini)
 {
 	// printf("in close fds mini->stdout is %d mini->stdin is %d mini->stderr is %d\n", mini->stdout, mini->stdin, mini->stderr);
 	if (mini->stdout != 1)
@@ -150,13 +149,19 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 			return (-2);
 		ft_find_command(current, mini);
 		if (numb_char(mini->more, '>') != 0 || numb_char(mini->more, '<') != 0)
-            ft_redir(mini);
-			// SOMETHING IF ftredir is -1
-		if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
-		{
-			ft_close_fds(mini);
-			return (-1);
+        {    
+			if (ft_redir(mini) != -1)
+			{
+				if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
+					ft_exit(mini, line);
+			}
 		}
+		else
+		{
+			if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
+				ft_exit(mini, line);
+		}
+		
 		mini->command = NULL;
 		mini->more = NULL;
 		ft_close_fds(mini);
@@ -185,12 +190,7 @@ int		main(int argc, char **argv, char **envp)
 		lineret = get_next_line(1, &line);
 		if (lineret < 0)
 			return (-1);
-		if (ft_divide_command(line, &mini, envp) == -1)
-		{
-			ft_lstclear(&mini.env1); // is this freeing the list enough
-			ft_memset(&mini, 0, sizeof(t_mini));
-			return (-1);
-		}
+		ft_divide_command(line, &mini, envp);
 		free(mini.run2); // free the list otherwise previous commands stay in
 		mini.run2 = NULL;
 		free(line);

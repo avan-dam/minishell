@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 13:52:12 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/25 15:51:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 16:52:21 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	ft_check_values(t_redir *r, t_mini *mini)
 	}
 	if (r->file[0] == '$')
 	{
-		r->error = ft_strjoin(r->file, ": ambiguous redirect\n");
+		r->error = ft_strjoin_three("bash: ", r->file, ": ambiguous redirect\n");
 		mini->exit = 1;
 		return ;
 	}
@@ -101,8 +101,7 @@ static void	ft_check_alpha(t_redir *r, t_mini *mini)
 	if (ft_atoi(r->file) >= 3)
 	{
 			mini->exit = 1;
-			r->error = ft_strjoin("bash: ", r->file);
-			r->error = ft_strjoin(r->error, ": Bad file descriptor\n");
+			r->error = ft_strjoin_three("bash: ", r->file, ": Bad file descriptor\n");
 			return ;
 	}
 	if (r->redirinput == 0)
@@ -147,7 +146,7 @@ static void	open_function(t_redir *r, t_mini *mini)
 		{
 			if ((i = open(file, O_RDWR, 0666)) == -1)
 			{
-				r->error = ft_strjoin(file, ": ambiguous redirect\n");
+				r->error = ft_strjoin_three("bash: ", file, ": ambiguous redirect\n");
 				mini->exit = 1;
 				return ;
 			}

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 18:02:26 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/25 16:03:52 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 16:37:55 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int    ft_export(t_mini *mini, char *more)
 		return (0);
     if ((more[0] >= '0' && more[0] <= '9') || (more[0] == '/'))
     {    
-      error = ft_strjoin("bash: export: ", more);
-      error = ft_strjoin(error, " : not a valid identifier\n");
+      error = ft_strjoin_three("bash: export: ", more, " : not a valid identifier\n");
       ft_putstr_fd(error, mini->stderr);
       mini->exit = 1;
       return(-1);

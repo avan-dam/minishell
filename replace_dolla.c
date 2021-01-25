@@ -6,23 +6,11 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/25 15:07:50 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 16:57:18 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void		line_replaced(char *start, char *newvar, char *end, t_line *s)
-{
-	char	*temp;
-	char	*newline;
-
-	temp = ft_strjoin(start, newvar);
-	newline = ft_strjoin(temp, end);
-	s->line = newline;
-	s->k = ft_len(newvar) - 1;
-	return ;
-}
 
 static char		*ft_check_var_tlist(t_mini *mini, char *oldvar)
 {
@@ -40,6 +28,7 @@ static char		*ft_check_var_tlist(t_mini *mini, char *oldvar)
 	return (ft_strdup(""));
 }
 
+//if there is a $ whos value has not been set in a redir leave it as it is and deal with it in redir file
 static int		ft_redir_n_dolla(char *line, int i)
 {
 	i--;
@@ -75,14 +64,16 @@ static t_line	*ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 	end = ft_substr(line, i, ft_strlen(line) - i);
 	newvar = ft_check_var_tlist(mini, oldvar);
 	if ((ft_redir_n_dolla(line, j - 1) != -1) || (ft_strcmp("", newvar) != 0))
-		line_replaced(start, newvar, end, s);
+	{	
+		s->line = ft_strjoin_three(start, newvar, end);
+		s->k = ft_len(newvar) - 1;
+	}
 	return (s);
 }
 
 static void		set_tline(t_line *s, char *line)
 {
 	s->line = ft_strdup(line);
-	// free line?
 	s->o = 0;
 	s->t = 0;
 	s->k = 0;
@@ -92,7 +83,6 @@ static int		ft_double_quotes(t_line *s, int i)
 {
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 	i--;
-	// if going wrong remove if statement here and just t++ always
 	if (s->o % 2 == 0)
 		s->t++;
 	return (i);
@@ -133,11 +123,25 @@ static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini)
 	}
 	if (s->o % 2 != 0 || s->t % 2 != 0)
 	{
-		// is this stdout or stderror
-		ft_putstr_fd("minishell does not support multiline quotes\n", mini->stdout);
+		ft_putstr_fd("minishell does not support multiline quotes\n", mini->stderr);
 		return (NULL);
 	}
 	return (s->line);
+}
+
+void 	ft_exit_status_replace(t_line *s, int i, t_mini *mini)
+{
+	char	*start;
+    char 	*middle;
+	char 	*end;
+	
+	ft_memmove(&s->line[i + 1], &s->line[i + 2], ft_strlen(s->line) - (i + 1));
+	i--;
+	ft_memmove(&s->line[i + 1], &s->line[i + 2], ft_strlen(s->line) - (i + 1));
+	middle = ft_itoa(mini->exit);
+	start = ft_substr(s->line, 0, i + 1);
+	end = ft_substr(s->line, i + 1, ft_strlen(s->line) - i - 1);
+	s->line = ft_strjoin_three(start, middle, end);
 }
 
 char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
@@ -152,8 +156,7 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
 		// printf("Check is t is %d o is %d line is %s\n", s.t, s.o, s.line);
 		if (s.line[i] == '\\' && (s.o % 2 == 0) && (s.t % 2 == 0))
 		{
-			ft_memmove(&s.line[i], &s.line[i+1], ft_strlen(s.line) - 1);
-			// is it -1 or -i
+			ft_memmove(&s.line[i], &s.line[i+1], ft_strlen(s.line) - i);
 			i--;
 		}
 		if (s.line[i] == '\'')
@@ -167,13 +170,7 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
 			i = i + s.k;
 		}
 		else if (s.line[i] == '$' && s.line[i + 1] == '?' && (s.t == 0 || s.t % 2 == 1) && (s.o == 0 ||s.o % 2 == 0))
-		{
-			ft_memmove(&s.line[i + 1], &s.line[i + 2], ft_strlen(s.line) - (i + 1));
-			i--;
-			ft_memmove(&s.line[i + 1], &s.line[i + 2], ft_strlen(s.line) - (i + 1));
-			i--;
-            s.line = ft_string_insert(s.line, i + 1, ft_itoa(mini->exit));	
-		}
+			ft_exit_status_replace(&s, i, mini);	
 		i++;
 	}
 	mini->singlequote = s.o;

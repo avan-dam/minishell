@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/25 15:13:36 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/25 16:40:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,16 +111,22 @@ int     numb_char(char *line, char c)
     return (j);
 }
 
+char		*ft_strjoin_three(char *start, char *newvar, char *end)
+{
+	char	*temp;
+	char	*newline;
+
+	temp = ft_strjoin(start, newvar);
+	newline = ft_strjoin(temp, end);
+	return (newline);
+}
+
 char        *ft_string_insert(char *string, int i, char *middle)
 {
     char	*start;
     char 	*end;
-    char    *temp;
-	char	*newline;
 
 	start = ft_substr(string, 0, i + 1);
 	end = ft_substr(string, i + 1, ft_strlen(string) - i - 1);
-	temp = ft_strjoin(start, middle);
-	newline = ft_strjoin(temp, end);
-	return (ft_strjoin(temp, end));
+	return (ft_strjoin_three(start, middle, end));
 }

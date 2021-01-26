@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/26 07:26:56 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/26 08:18:29 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int		ft_check_notbultin(char *command, t_mini *mini)
 	return (0);
 }
 
-static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
+int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 {
 	if (ft_strcmp(command, "echo") == 0)
 		ft_echo(more, mini);
@@ -145,23 +145,23 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 		current = ft_substr(line, 0, i);
 		line = ft_substr(line, i + 1, ft_strlen(line) - i);
 		current = ft_check_dolla_quotes(current, mini, 0);
-		ft_find_command(current, mini);
-		if (numb_char(mini->more, '>') != 0 || numb_char(mini->more, '<') != 0)
-        {    
-			if (ft_redir(mini) != -1)
+		if (current != NULL)
+		{
+			ft_find_command(current, mini);
+			if (numb_char(mini->more, '>') != 0 || numb_char(mini->more, '<') != 0)
+			{	
+				if (ft_redir(mini, envp) == -1)
+					ft_exit(mini, line);
+			}
+			else
 			{
 				if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
 					ft_exit(mini, line);
 			}
+			mini->command = NULL;
+			mini->more = NULL;
+			ft_close_fds(mini);
 		}
-		else
-		{
-			if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
-				ft_exit(mini, line);
-		}
-		mini->command = NULL;
-		mini->more = NULL;
-		ft_close_fds(mini);
 	}
 	return (0);
 } 

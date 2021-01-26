@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 13:52:12 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/25 16:52:21 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/26 07:59:29 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ static void	ft_reset_values(t_redir *r, t_mini *mini)
 	r->fd = 0;
 }
 
-int			ft_redir(t_mini *mini)
+int			ft_redir(t_mini *mini, char **envp)
 {
 	t_redir r;
 
@@ -204,8 +204,10 @@ int			ft_redir(t_mini *mini)
 			if (r.error != NULL)
 			{
 				ft_putstr_fd(r.error, mini->stderr);
-				return (-1);
+				return (-2);
 			}
+			if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
+				return (-1);
 			ft_reset_values(&r, mini);
 		}
 		free(r.file);

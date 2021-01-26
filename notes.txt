@@ -11,8 +11,18 @@ git commit -m"merging amber branch"
 git push origin master
 if conflicts checkout to my branch
 AMBER:
+echo hallo 'ma\'ran'' siemons
 SIGNAL:
 https://linuxhint.com/signal_handlers_c_programming_language/
+
+
+NOT WORKING:
+ECHO:
+echo \$?
+echo $?\
+echo hallo 'ma\'ran'' siemons
+echo "\\$USER"
+echo "123\`456"
 
 
 echo hello >$4

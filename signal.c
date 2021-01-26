@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/25 18:35:10 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/25 18:39:56 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/26 07:27:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,26 @@
 
 void handle_sigint(int sig)
 {
-	// THIS IS FOR CRTL-C only
-    printf("Caught signal %d\n", sig);
+    if (sig == SIGINT) //THIS IS FOR CRTL-C only
+	{	
+		write(1, "\b\b  \b\b", 6);
+		ft_putstr_fd("\n> ", 1);
+	}
+	if(sig == SIGQUIT) //CTRL slash this overwrites the previous two chars
+		write(1, "\b\b  \b\b", 6);
 }
+
+void	ft_signals(t_mini *mini, char *line, int i)
+{
+	if (i == 0)
+	{
+		if (signal(SIGQUIT, &handle_sigint) == SIG_ERR)
+			ft_exit(mini, line);
+		if (signal(SIGINT, &handle_sigint) == SIG_ERR)
+			ft_exit(mini, line);
+	}
+	 if (i == 1) //CTRL D detected by EOF so handled differently
+		ft_putstr_fd("exit\n", 1);
+}
+//need to make sure these signals work with execve properly
+//maybe use WIFSIGNALED

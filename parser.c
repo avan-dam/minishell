@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/25 18:49:18 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/26 07:26:56 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 		ft_close_fds(mini);
 	}
 	return (0);
-}
+} 
 
 int		main(int argc, char **argv, char **envp)
 {
@@ -183,8 +183,9 @@ int		main(int argc, char **argv, char **envp)
 	ft_set_env(argv, envp, &mini);
 	while (lineret)
 	{
-		ft_putstr("> ");
-		signal(SIGINT, handle_sigint);
+		ft_putstr_fd("> ", mini.stdout);
+		ft_signals(&mini, line, 0);
+		// ignores the signal for ctrl c as bash does
 		lineret = get_next_line(1, &line);
 		if (lineret < 0)
 			return (-1);
@@ -193,10 +194,11 @@ int		main(int argc, char **argv, char **envp)
 		mini.run2 = NULL;
 		free(line);
 		line = NULL;
-	}	
+	}
+	if (lineret == 0)
+		ft_signals(&mini, line, 1);
 	free(line);
 	line = NULL;
 	return (0);
 }
-//if you do the up arrow in the shell it goes weird
 

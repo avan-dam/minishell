@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/25 18:36:36 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/26 07:25:54 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void 				ft_close_fds(t_mini *mini);
 void				ft_exit(t_mini *mini, char *line);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
 void				handle_sigint(int sig);
-
+void				ft_signals(t_mini *mini, char *line, int i);
 void				ft_cd(t_mini *mini);
 void				ft_pwd(t_mini *mini);
 void				ft_set_env(char **argv, char **envp, t_mini *mini);

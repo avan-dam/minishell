@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/05 17:59:29 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/17 22:51:24 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 13:46:00 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@
 **	TO DO: check for > pwd ; cd..
 */
 
-void		ft_pwd(t_mini *mini)
+void		ft_pwd(t_mini *mini) // change to ptr?
 {
 	char	cwd[PATH_MAX];
 
+	(void)mini;
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		ft_putstr(cwd);
-	ft_putstr_fd(cwd, mini->stdout); // amber heb jij dit toegevoegd?
+		ft_putstr_fd(cwd, STDOUT);
+	ft_putstr_fd(cwd, STDOUT);
+	// ft_putstr_fd(cwd, mini->stdout);
 	ft_putchar('\n');
 }

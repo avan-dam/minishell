@@ -5,34 +5,25 @@
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-<<<<<<< HEAD:export.c
-/*   Created: 2020/12/04 18:02:26 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/25 16:37:55 by ambervandam   ########   odam.nl         */
-=======
-/*   Created: 2021/01/07 16:31:42 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/17 22:15:51 by salbregh      ########   odam.nl         */
->>>>>>> master:builtins/export.c
+/*   Created: 2021/01/27 17:04:41 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/27 17:46:08 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		ft_export(t_mini *mini, char *more)
+int		ft_export(t_base *ptr, t_mini *mini)
 {
-<<<<<<< HEAD:export.c
-  char *error;
-    if (more == NULL)
-=======
-	if (more == NULL)
->>>>>>> master:builtins/export.c
+	char	*error;
+	if (ptr->argv[1] == NULL)
 		return (0);
-    if ((more[0] >= '0' && more[0] <= '9') || (more[0] == '/'))
-    {    
-      error = ft_strjoin_three("bash: export: ", more, " : not a valid identifier\n");
-      ft_putstr_fd(error, mini->stderr);
-      mini->exit = 1;
-      return(-1);
-    }
-    ft_split_into_tlist(mini, more);
-    return (0);
+	if ((ptr->argv[1][0] >= '0' && ptr->argv[1][0] <= '9') || (ptr->argv[1][0] == '/'))
+	{
+    	error = ft_strjoin_three("bash: export: ", ptr->argv[1], " : not a valid identifier\n");
+    	ft_putstr_fd(error, mini->stderr);
+    	mini->exit = 1;
+      	return (-1); // change
+	}
+	ft_split_into_tlist(mini, ptr->argv[1]);
+	return (0); //change
 }

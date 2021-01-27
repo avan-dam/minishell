@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
+/*   ft_lstnew.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 13:56:22 by salbregh      ########   odam.nl         */
+/*   Created: 2021/01/18 15:50:24 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/18 15:50:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-**	Function that adds all environmental variables in a list
-*/
-
-void	ft_set_env(char **argv, char **envp, t_mini *mini)
+t_list	*ft_lstnew(void *var1, void *var2)
 {
-	int		i;
-	t_list	*env;
+	t_list	*tmp;
 
-	i = 0;
-	env = NULL;
-	(void)argv;
-	while (envp[i] != NULL)
+	tmp = (t_list *)malloc(sizeof(t_list));
+	if (tmp == NULL)
+		return (NULL);
+	if (tmp)
 	{
-		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
-			i++;
-		ft_split_into_tlist(mini, envp[i]);
-		i++;
+		tmp->var1 = var1;
+		tmp->var2 = var2;
+		tmp->next = NULL;
 	}
-	envp[i] = NULL;
+	return (tmp);
 }

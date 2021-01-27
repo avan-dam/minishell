@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/18 14:54:49 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/27 17:18:12 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,7 @@ void		ft_add_env(char *env, char *path, t_mini *mini)
 	t_list	*lst;
 
 	lst = ft_lstnew(env, path);
-	// ft_lstprint(lst, mini);
-	ft_lstadd_back(&mini->env1, lst); // mistake in add back maybe
-	printf("IN ADD ENV:\nenv: %s\npath: %s\n", env, path);
-	// free(lst);
-	// ft_lstprint(mini->env1);
+	ft_lstadd_back(&mini->env1, lst);
 }
 
 char	*ft_get_env(char *env, t_mini *mini)
@@ -52,7 +48,6 @@ char	*ft_get_env(char *env, t_mini *mini)
 		if (ft_strcmp(lst->var1, env) == 0)
 		{
 			pathname = ft_strdup(lst->var2);
-			// free(lst);
 			return (pathname);
 		}
 		lst = lst->next;
@@ -61,12 +56,12 @@ char	*ft_get_env(char *env, t_mini *mini)
 	return (NULL);
 }
 
-void		ft_cd(t_mini *mini)
+void		ft_cd(t_base *ptr, t_mini *mini)
 {
 	char	cwd[PATH_MAX];
 
-	mini->oldpwd = getcwd(cwd, sizeof(cwd));
-	if (mini->more == NULL || ft_strcmp(mini->more, "~") == 0)
+	mini->oldpwd = getcwd(cwd, sizeof(cwd)); // delete this line?
+	if (ptr->argv[1] == NULL || ft_strcmp(ptr->argv[1], "~") == 0)
 	{
 		chdir(ft_get_env("HOME", mini));
 		ft_unset(mini, "OLDPWD");
@@ -74,31 +69,30 @@ void		ft_cd(t_mini *mini)
 		ft_unset(mini, "PWD");
 		ft_add_env("PWD", ft_get_env("HOME", mini), mini);
 	}
-	else if (ft_strcmp(mini->more, "-") == 0)
+	else if (ft_strcmp(ptr->argv[1], "-") == 0)
 	{
 		if (ft_get_env("OLDPWD", mini) != NULL)
 		{
 			chdir(ft_get_env("OLDPWD", mini));
-			ft_putstr(ft_get_env("OLDPWD", mini));
-			ft_putstr("\n");
+			ft_putstr_fd(ft_get_env("OLDPWD", mini), STDOUT);
+			ft_putstr_fd("\n", STDOUT);
 			ft_unset(mini, "OLDPWD");
-			printf("pwd before add env: %s\n\n", ft_get_env("PWD", mini));
 			ft_add_env("OLDPWD", ft_get_env("PWD", mini), mini);
-			printf("pwd after add env: %s\n\n", ft_get_env("PWD", mini));
 			ft_unset(mini, "PWD");
 			ft_add_env("PWD", getcwd(cwd, sizeof(cwd)), mini);
 		}
 		else
-			ft_putstr("bash: cd: OLDPWD not set\n");
+			ft_putstr_fd("bash: cd: OLDPWD not set\n", STDOUT);
 		return ;
 	}
-	else if (mini->more != NULL)
+	else if (ptr->argv[1] != NULL)
 	{
-		if (chdir(mini->more) == -1) // when directory change fails
+		if (chdir(ptr->argv[1]) == -1)
 		{
-			ft_putstr("cd: no such file or directory: ");
-			ft_putstr(mini->more);
-			ft_putstr("\n");
+			ft_putstr_fd("cd: no such file or directory: ", STDOUT);
+			ft_putstr_fd(ptr->argv[1], STDOUT);
+			ft_putstr_fd("\n", STDOUT);
+			mini->exit = 1; // check this
 			return ;
 		}
 		ft_unset(mini, "OLDPWD");

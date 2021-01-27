@@ -3,14 +3,10 @@
 /*                                                        ::::::::            */
 /*   echo.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ambervandam <ambervandam@student.codam.      +#+                     */
+/*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/04 11:40:20 by ambervandam   #+#    #+#                 */
-<<<<<<< HEAD:echo.c
-/*   Updated: 2021/01/27 15:54:07 by ambervandam   ########   odam.nl         */
-=======
-/*   Updated: 2021/01/18 10:07:29 by salbregh      ########   odam.nl         */
->>>>>>> master:builtins/echo.c
+/*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/27 17:45:17 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +33,11 @@ static char *ft_howmany_n(char *string, int i, int j)
 
 static int    ft_echo_n(char *string, t_mini *mini)
 {
-    if(string == NULL)
+    if (string == NULL)
         return (0);
     string = ft_howmany_n(string, 0, 0);
     string = ft_strtrim(string, " ");
+	// ft_putstr_fd(string, STDOUT);
     ft_putstr_fd(string, mini->stdout);
     mini->exit = 0;
     return(0);
@@ -84,24 +81,40 @@ static int  ft_check_empty(char *string)
 //     return(string);
 // }
 
-int    ft_echo(char *string, t_mini *mini)
+int    ft_echo(t_base *ptr, t_mini *mini)
 {
+    char	*string;
+	int		i;
+
+
+	i = 1;
+	string = ft_strdup("");
+	while (ptr->argv[i])
+	{
+		string = ft_strjoin(string, ptr->argv[i]);
+		if (ptr->argv[i + 1])
+			string = ft_strjoin(string, " ");
+		i++;
+	}
     if (string == NULL)
-        return(ft_putchar('\n'));
+        return (ft_putchar('\n'));
+    if (ft_check_empty(string) == 1)
+		// return (ft_putchar_fd('\n', STDOUT));
+        return (ft_putchar_fd('\n', mini->stdout));
+    else if ((string[0] == '-') && (string[1] == 'n') && ((string[2] == ' ') || (string[2] == '\0') || (string[2] == 'n')))
+        return (ft_putchar('\n'));
     // string = ft_extra_backslash_check(string);
     if (ft_check_empty(string) == 1)
-        return(ft_putchar_fd('\n', mini->stdout));
+        return (ft_putchar_fd('\n', mini->stdout));
     if ((string[0] == '-') && (string[1] == 'n') && ((string[2] == ' ') || (string[2] == '\0') || (string[2] == 'n')))
     {
+		// if (ft_echo_n(string) != 2)
         if (ft_echo_n(string, mini) != 2)
-            return(0);
+            return (0);
     }
     string = ft_strtrim(string, " ");
+	// ft_putstr_fd(string, STDOUT);
     ft_putstr_fd(string, mini->stdout);
-<<<<<<< HEAD:echo.c
     mini->exit = 0;
-    return(ft_putchar_fd('\n', mini->stdout));
-=======
     return (ft_putchar_fd('\n', mini->stdout));
->>>>>>> master:builtins/echo.c
 }

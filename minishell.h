@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minishell.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
+/*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/27 16:41:32 by ambervandam   ########   odam.nl         */
+/*   Created: 2021/01/27 17:20:58 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/27 17:38:33 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,29 @@
 # define MINISHELL_H
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
-# include <stdio.h>
+# include <stdio.h> // delete after
 # include <stdlib.h>
 # include <sys/syslimits.h> // not sure if allowed?
 # include <fcntl.h>
 # include <signal.h>
 
+
+# define STDIN		0
+# define STDOUT		1
+# define STDERR		2
+# define TYPE_END	3
+# define TYPE_PIPE	4
+# define TYPE_BREAK	5
+
+typedef struct		s_base
+{
+	char			**argv;
+	int				size;
+	int				type;
+	int				fd[2];
+	struct s_base	*prev;
+	struct s_base	*next;
+}					t_base;
 
 typedef struct		s_line
 {
@@ -60,31 +77,60 @@ typedef struct		s_mini
 	t_list			*env1;
 	// builtin and execve arrray need corresponding function array for this
 	char			*builtin[8];
-	char			*notbuiltin[13]; // ls mkdir touch cat
+	char			*notbuiltin[23]; // ls mkdir touch cat
 	int				stdout;
 	int				stderr;
+	int				numb_cmds; // Command counter new struct
+	char 			*cmd_part;
+	int				type_end;
 	int				stdin;
 	int				exit;
 	int				singlequote;
 }					t_mini;
 
-typedef struct		s_pipe
+typedef struct		s_piper
 {
 	int				check;
 	char			*write_side;
 	char			*read_side;
-}					t_pipe;
+	int				fd[2]; // fd[0] - read fd[1] - write made by pipe(fd);
+}					t_piper;
+
+/* LIST FUNCTIONS */
+t_list				*ft_lstnew(void *var1, void *var2);
+void				ft_lstadd_back(t_list **alst, t_list *new);
+void				ft_lstadd_back_new(t_base **ptr, t_base *new); // new replace this one or old one
+void				ft_lstprint(t_list *lst, t_mini *mini);
+void				ft_lstclear(t_list **lst);
+int  				ft_split_into_tlist(t_mini *mini, char *line);
+void				ft_lstprintold(t_list *lst);
+
+/* BUILTIN FUNCTION */
+int 			  	ft_echo(t_base *ptr, t_mini *mini);
+int					ft_export(t_base *ptr, t_mini *mini);
+int					ft_unset(t_mini *mini, char *unset);
+void				ft_cd(t_base *ptr, t_mini *mini); // new
+void				ft_pwd(t_mini *mini);
+
+/* PARSER FUNCTIONS */
+void				parse_input_string(char *line, t_mini *mini, char **envp);
+
 
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
-int					ft_echo(char *string, t_mini *mini);
-void				ft_putstr(char *s);
-int				    ft_export(t_mini *mini, char *more);
+// int				ft_echo(char *string, t_mini *mini, t_piper *piper);
+// void				ft_putstr(char *s);
 char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i);
-int 				ft_unset(t_mini *mini, char *unset);
 int					unvalid_identifier(char *error, t_mini *mini);
 int 				ft_strchr_numb(char *line, char c, int i);
 int					ft_strrchr_numb(char *line, char c, int i);
 int  				numb_char(char *line, char c);
+
+// int				ft_execve(t_mini *mini, char **envp, t_piper *piper);
+void				exec_cmds(t_base *ptr, char **envp, t_mini *mini);
+
+// int					ft_redir(t_mini *mini, int d);
+
+
 int  				ft_split_into_tlist(t_mini *mini, char *line);
 t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_back(t_list **alst, t_list *new);
@@ -101,13 +147,11 @@ void				ft_exit(t_mini *mini, char *line, int exitstatus);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
 void				handle_sigint(int sig);
 void				ft_signals(t_mini *mini, char *line, int i);
-void				ft_cd(t_mini *mini);
 void				ft_add_env(char *env, char *path, t_mini *mini); // or static
 char				*ft_get_env(char *env, t_mini *mini); // of static
-void				ft_pwd(t_mini *mini);
+
 void				ft_set_env(char **argv, char **envp, t_mini *mini);
 void				ft_set_array(t_mini *mini);
 
-void				ft_lstprintold(t_list *lst);
 
 #endif

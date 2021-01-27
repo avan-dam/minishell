@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 13:52:12 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/26 07:59:29 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/27 17:42:51 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,8 +206,9 @@ int			ft_redir(t_mini *mini, char **envp)
 				ft_putstr_fd(r.error, mini->stderr);
 				return (-2);
 			}
-			if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
-				return (-1);
+			(void)envp; // SAME CHANGE
+			// if (ft_parse_input(mini->command, mini->more, mini, envp) == -1) // NEED THIS TO BE ADDED IN AGAIN
+			// 	return (-1);
 			ft_reset_values(&r, mini);
 		}
 		free(r.file);

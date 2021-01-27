@@ -5,8 +5,8 @@
 #                                                      +:+                     #
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2020/12/06 12:33:02 by avan-dam      #+#    #+#                  #
-#    Updated: 2021/01/27 16:41:36 by ambervandam   ########   odam.nl          #
+#    Created: 2021/01/27 17:37:19 by salbregh      #+#    #+#                  #
+#    Updated: 2021/01/27 17:37:21 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,19 +19,27 @@ SRCS =		main.c \
 			builtins/env.c \
 			builtins/export.c \
 			builtins/cd.c \
-			parser.c \
+			list_utils/ft_lst_addback.c \
+			list_utils/ft_lstclear.c \
+			list_utils/ft_lstnew.c \
+			list_utils/ft_lstprint.c \
+			list_utils/ft_split_into_list.c \
 			utils.c \
-			t_list.c \
 			replace_dolla.c \
-			exec.c \
 			set_arrays.c \
 			redir.c \
+			newparser.c \
+			execve.c \
 			exit_status.c \
 			signal.c
-# unused_tlists.c
+			# exec.c \
+			# parser.c \
+			# delete unused_tlist.c
+			# unused_tlists.c
 
-FLAGS = 	-Wall -Werror -Wextra
-			#-g -fsanitize=address
+FLAGS = 	-Wall -Werror -Wextra 
+
+SEGFAULT =	-g -fsanitize=address
 
 OFILES =	$(SRCS:.c=.o)
 
@@ -45,7 +53,7 @@ $(NAME):	$(OFILES) $(INCLUDES)
 			cp get_next_line/libgnl.a .
 			make -C libft/
 			cp libft/libft.a .
-			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS)
+			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS) $(SEGFAULT)
 			
 %.o:		%.c
 			gcc -Ilibft -Ignl $(FLAGS) -c $< -o $@

@@ -3,14 +3,10 @@
 /*                                                        ::::::::            */
 /*   exec.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ambervandam <ambervandam@student.codam.      +#+                     */
+/*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/17 14:10:52 by ambervandam   #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2021/01/25 18:05:37 by ambervandam   ########   odam.nl         */
-=======
-/*   Updated: 2021/01/18 12:28:44 by salbregh      ########   odam.nl         */
->>>>>>> master
+/*   Created: 2021/01/27 17:12:03 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/27 17:14:39 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +27,38 @@ static void		ft_bin_command(t_mini *mini)
 	free(end);
 }
 
-int				ft_execve(t_mini *mini, char **envp)
+int				ft_execve(t_mini *mini, char **envp, t_piper *piper)
 {
-	t_pipe pipe;
-    char *argv[] = {mini->command, mini->more, NULL};
-	// char *argv[] ={ "touch", "/tmp/file", NULL };
+    char *argv[] = {mini->command, mini->more, NULL}; // maybe have to add pipe to this
 	pid_t	pid;
 	int 	status; 
 
-	pipe.check = 0;
-	pid = fork();
-	printf("Value of pid: %d\n", pid);
+	printf("value of pipe: %i\n", piper->check);
+
 	ft_bin_command(mini);
-    waitpid(pid, &status, 0);
+	if ((pid = fork()) == -1)
+	{
+		ft_putstr_fd("error in forking\n", STDOUT);
 	if (pid == -1)
 	{
 		ft_putstr_fd("error in forking\n", mini->stderr);
 		return (-1);
 	}
-	else if (pid == 0)
+	printf("Value of pid: %d\n", pid);
+	if (pid == 0) // this is the child process
 	{
+		printf("IN CHILD\n");
+		printf("value of fd[0] - %i and fd[1] - %i\n", piper->fd[0], piper->fd[1]);
+		close(piper->fd[0]); // close read side
+		write(piper->fd[1], &piper->write_side, ft_strlen(piper->write_side));
+		close(piper->fd[1]);
+		if (piper->check == 0)
+		{
+			if (execve(mini->command, argv, envp) < 0) // executes the function
+        		return (-1); 
+			exit(0);
+		}
+	}
 		printf("Argv[0][%s] argv[1][%s]\n", argv[0], argv[1]);
 		dup2(mini->stdin, 0);
 		dup2(mini->stdout, 1);
@@ -68,8 +76,14 @@ int				ft_execve(t_mini *mini, char **envp)
     }
 	else
 	{
-		if (pipe.check == 1)
-			wait(NULL);
+		printf("IN PARENT\n");
+		printf("value of fd[0] - %i and fd[1] - %i\n", piper->fd[0], piper->fd[1]);
+		close(piper->fd[1]); // close writing side
+		printf("value of write_side: %s\nvalue of read_side: %s\n", piper->write_side, piper->read_side);
+		read(piper->fd[0], &piper->read_side, ft_strlen(piper->read_side));
+		printf("value of write_side: %s\nvalue of read_side: %s\n", piper->write_side, piper->read_side);
+		execve(mini->command, argv, envp);
+		wait(NULL);
 		return (0);
 	}
     return 0;

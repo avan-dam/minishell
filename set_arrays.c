@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/19 11:12:11 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 16:40:26 by ambervandam   ########   odam.nl         */
+/*   Created: 2021/01/27 17:39:41 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/27 17:39:42 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,24 @@ static void	set_command(t_mini *mini)
 	mini->notbuiltin[2] = "/bin/chmod";
 	mini->notbuiltin[3] = "chmod";
 	mini->notbuiltin[4] = "wc";
-	mini->notbuiltin[5] = "cat";
+	mini->notbuiltin[5] = "/bin/wc";
 	mini->notbuiltin[6] = "awk";
-	mini->notbuiltin[7] = "grep";
-	mini->notbuiltin[8] = "mkdir";
-	mini->notbuiltin[9] = "touch"; //doesnt work
-	mini->notbuiltin[10] = "rm -rf"; // doesnt work BECAUSE SPACE IN COMMAND SO SET EDGE CASE FOR THIS
-	mini->notbuiltin[11] = "cat"; 
-	mini->notbuiltin[12] = NULL;
+	mini->notbuiltin[7] = "/bin/awk";
+	mini->notbuiltin[8] = "grep";
+	mini->notbuiltin[9] = "/bin/grep";
+	mini->notbuiltin[10] = "mkdir";
+	mini->notbuiltin[11] = "/bin/mkdir"; // works
+	mini->notbuiltin[12] = "touch"; //doesnt work
+	mini->notbuiltin[13] = "/bin/touch";
+	mini->notbuiltin[14] = "rm"; // was rm -rf // doesnt work
+	mini->notbuiltin[15] = "/bin/rm"; // works
+	mini->notbuiltin[16] = "cat"; // doesnt work
+	mini->notbuiltin[17] = "/bin/cat";
+	mini->notbuiltin[18] = "cal";
+	mini->notbuiltin[19] = "/bin/cal";
+	mini->notbuiltin[20] = "date";
+	mini->notbuiltin[21] = "/bin/date";
+	mini->notbuiltin[22] = NULL;
 }
 
 void		ft_set_array(t_mini *mini)

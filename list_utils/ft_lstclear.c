@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
+/*   ft_lstclear.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 13:56:22 by salbregh      ########   odam.nl         */
+/*   Created: 2021/01/18 15:50:58 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/18 15:51:14 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-**	Function that adds all environmental variables in a list
-*/
-
-void	ft_set_env(char **argv, char **envp, t_mini *mini)
+void	ft_lstclear(t_list **lst)
 {
-	int		i;
-	t_list	*env;
+	t_list	*store;
+	t_list	*me;
 
-	i = 0;
-	env = NULL;
-	(void)argv;
-	while (envp[i] != NULL)
+	if (lst == NULL)
+		return ;
+	store = *lst;
+	*lst = NULL;
+	while (store != NULL)
 	{
-		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
-			i++;
-		ft_split_into_tlist(mini, envp[i]);
-		i++;
+		free(store->var1);
+		free(store->var2);
+		me = (store->next);
+		free(store);
+		store = me;
 	}
-	envp[i] = NULL;
 }

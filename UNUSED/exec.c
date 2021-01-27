@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   exec.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ambervandam <ambervandam@student.codam.      +#+                     */
+/*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/17 14:10:52 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/27 13:45:22 by salbregh      ########   odam.nl         */
+/*   Created: 2021/01/27 17:12:03 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/27 17:14:39 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int				ft_execve(t_mini *mini, char **envp, t_piper *piper)
 {
     char *argv[] = {mini->command, mini->more, NULL}; // maybe have to add pipe to this
 	pid_t	pid;
+	int 	status; 
 
 	printf("value of pipe: %i\n", piper->check);
 
@@ -38,6 +39,9 @@ int				ft_execve(t_mini *mini, char **envp, t_piper *piper)
 	if ((pid = fork()) == -1)
 	{
 		ft_putstr_fd("error in forking\n", STDOUT);
+	if (pid == -1)
+	{
+		ft_putstr_fd("error in forking\n", mini->stderr);
 		return (-1);
 	}
 	printf("Value of pid: %d\n", pid);
@@ -55,6 +59,21 @@ int				ft_execve(t_mini *mini, char **envp, t_piper *piper)
 			exit(0);
 		}
 	}
+		printf("Argv[0][%s] argv[1][%s]\n", argv[0], argv[1]);
+		dup2(mini->stdin, 0);
+		dup2(mini->stdout, 1);
+		// dup2(mini->stdin, 0);
+		if (execve(mini->command, argv, envp) < 0)
+		{	
+			mini->exit = 1; //check if exit status can also be other
+			return (-1); 
+		}
+		// exit(0);
+	}      
+    else if (WIFEXITED(status)) 
+    { 
+        mini->exit = WEXITSTATUS(status);
+    }
 	else
 	{
 		printf("IN PARENT\n");

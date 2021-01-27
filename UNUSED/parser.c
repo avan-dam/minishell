@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parser.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
+/*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/20 12:41:50 by salbregh      ########   odam.nl         */
+/*   Created: 2021/01/27 17:14:53 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/27 17:43:34 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static int		ft_check_notbultin(char *command, t_mini *mini)
 }
 
 static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp, t_piper *piper)
+int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 {
 	if (piper->check == 1)
 	{
@@ -102,12 +103,17 @@ static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp,
 		ft_lstprint(mini->env1, mini);
 	else if (ft_check_notbultin(command, mini) == 1)
 		ft_execve(mini, envp, piper);
+		ft_execve(mini, envp);
+	else if ((ft_strcmp(command, "$?") == 0) && ((mini->singlequote == 0) || (mini->singlequote % 2 == 1)))
+		ft_printf_exit_status(mini);
 	else if (ft_strcmp(command, "exit") == 0)
 		return (-1);
 	else
 		unvalid_identifier(command, mini);
 	return (0);
 }
+
+
 
 static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 {
@@ -145,18 +151,65 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 		mini->more = NULL;
 		if (mini->stdout != 1)
 			close(mini->stdout);
+		if (current != NULL)
+		{
+			ft_find_command(current, mini);
+			if (numb_char(mini->more, '>') != 0 || numb_char(mini->more, '<') != 0)
+			{	
+				printf("will go in redir\n");
+				if (ft_redir(mini, envp) == -1)
+					ft_exit(mini, line, mini->exit);
+			}
+			else
+			{
+				if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
+					ft_exit(mini, line, mini->exit);
+			}
+			mini->command = NULL;
+			mini->more = NULL;
+			ft_close_fds(mini);
+		}
 	}
 	return (0);
-}
+} 
 
 int		ft_start_parsing(char *line, t_mini *mini, char **envp)
 {
-	if (ft_divide_command(line, mini, envp) == -1)
+	char	*line;
+	int		lineret;
+	t_mini	mini;
+
+	line = NULL;
+	lineret = 1;
+	if (argc > 1)
+		return (-1); // are we implementing an error function? also are we saying if more than one argument can still work?
+	ft_memset(&mini, 0, sizeof(t_mini));
+	mini.stdout = 1;
+	mini.stderr = 2;
+	ft_set_array(&mini);
+	ft_set_env(argv, envp, &mini);
+	while (lineret)
 	{
-		ft_lstclear(&mini->env1);
-		ft_memset(&mini, 0, sizeof(mini));
-		return (-1);
+		ft_putstr_fd("> ", STDERR_FILENO);
+		ft_signals(&mini, line, 0);
+		// ignores the signal for ctrl c as bash does
+		lineret = get_next_line(1, &line);
+		if (lineret < 0)
+			return (-1);
+		ft_divide_command(line, &mini, envp);
+		free(mini.run2); // free the list otherwise previous commands stay in
+		mini.run2 = NULL;
+		free(line);
+		line = NULL;
 	}
+<<<<<<< HEAD:UNUSED/parser.c
 	// put ft_parse input here?
+=======
+	if (lineret == 0)
+		ft_signals(&mini, line, 1);
+	free(line);
+	line = NULL;
+>>>>>>> master:parser.c
 	return (0);
 }
+

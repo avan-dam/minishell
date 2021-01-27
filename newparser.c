@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 16:45:38 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 17:49:57 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void			parse_input_string(char *line, t_mini *mini, char **envp)
 	ft_set_array(mini);
 	while (line[i])
 	{
-		while (line[i] == ';' || line[i] == ' ')
+		// bash: syntax error near unexpected token `;'
+		while (line[i] == ' ') // deleted ;
 			i++;
 		i = i + put_commands_in_list(&ptr, &line[i], mini);
 		if (!line[i])
@@ -102,15 +103,16 @@ void			parse_input_string(char *line, t_mini *mini, char **envp)
 		else
 			i++;
 	}
-	// while(ptr)
+	// t_base *tmp = ptr;
+	// while(tmp)
 	// {
-	// printf("Argument in list: \n")
-	// 	for (i = 0; i < ptr->size; i++)
-	// 		printf("the argument: %s\n", ptr->argv[i]);
-	// 	printf("TYPE: %d\n", ptr->type);
-	// 	printf("SIZE: %d\n", ptr->size);
-	//	printf("end of argument in list\n\n");
-	// 	ptr = ptr->next;
+	// 	printf("Argument in list: \n");
+	// 	for (i = 0; i < tmp->size; i++)
+	// 		printf("the argument: %s\n", tmp->argv[i]);
+	// 	printf("TYPE: %d\n", tmp->type);
+	// 	printf("SIZE: %d\n", tmp->size);
+	// 	printf("end of argument in list\n\n");
+	// 	tmp = tmp->next;
 	// }
 	if (ptr)
 		exec_cmds(ptr, envp, mini);

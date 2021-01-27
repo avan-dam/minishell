@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/01/07 16:31:42 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/23 16:58:27 by salbregh      ########   odam.nl         */
+/*   Created: 2021/01/27 17:04:41 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/27 17:46:08 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 int		ft_export(t_base *ptr, t_mini *mini)
 {
+	char	*error;
 	if (ptr->argv[1] == NULL)
 		return (0);
 	if ((ptr->argv[1][0] >= '0' && ptr->argv[1][0] <= '9') || (ptr->argv[1][0] == '/'))
-		return (unvalid_identifier(ptr->argv[1], mini));
+	{
+    	error = ft_strjoin_three("bash: export: ", ptr->argv[1], " : not a valid identifier\n");
+    	ft_putstr_fd(error, mini->stderr);
+    	mini->exit = 1;
+      	return (-1); // change
+	}
 	ft_split_into_tlist(mini, ptr->argv[1]);
-	return (0);
+	return (0); //change
 }

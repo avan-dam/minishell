@@ -5,8 +5,8 @@
 #                                                      +:+                     #
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2021/01/17 22:18:02 by salbregh      #+#    #+#                  #
-#    Updated: 2021/01/27 16:42:35 by salbregh      ########   odam.nl          #
+#    Created: 2021/01/27 17:37:19 by salbregh      #+#    #+#                  #
+#    Updated: 2021/01/27 17:37:21 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,10 +29,13 @@ SRCS =		main.c \
 			set_arrays.c \
 			redir.c \
 			newparser.c \
-			execve.c
+			execve.c \
+			exit_status.c \
+			signal.c
 			# exec.c \
 			# parser.c \
 			# delete unused_tlist.c
+			# unused_tlists.c
 
 FLAGS = 	-Wall -Werror -Wextra 
 

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 13:46:18 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 17:18:12 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*ft_get_env(char *env, t_mini *mini)
 void		ft_cd(t_base *ptr, t_mini *mini)
 {
 	char	cwd[PATH_MAX];
+
 	mini->oldpwd = getcwd(cwd, sizeof(cwd)); // delete this line?
 	if (ptr->argv[1] == NULL || ft_strcmp(ptr->argv[1], "~") == 0)
 	{
@@ -91,6 +92,7 @@ void		ft_cd(t_base *ptr, t_mini *mini)
 			ft_putstr_fd("cd: no such file or directory: ", STDOUT);
 			ft_putstr_fd(ptr->argv[1], STDOUT);
 			ft_putstr_fd("\n", STDOUT);
+			mini->exit = 1; // check this
 			return ;
 		}
 		ft_unset(mini, "OLDPWD");

@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/27 13:41:54 by salbregh      ########   odam.nl         */
+/*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/27 17:39:31 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int		unvalid_identifier(char *error, t_mini *mini)
     // ft_putstr_fd("bash: export: '", mini->stderr);
     ft_putstr_fd("bash: ", mini->stderr);
     ft_putstr_fd(error, mini->stderr);
-    // ft_putstr_fd("': not a valid identifier\n", mini->stderr);
-    ft_putstr_fd(": command not found\n", mini->stderr);
+    ft_putstr_fd("': command not found\n", mini->stderr);
+    mini->exit = 127;
     return (-1);
 }
 
@@ -51,7 +51,12 @@ int ft_strchr_numb(char *line, char c, int i)
     while (line[i] != '\0')
     {
         if (line[i] == c)
-            return (i);
+        {
+			if ((c != '>' && c != '<' )|| i == 0)    
+				return (i);
+			if (line[i - 1] != '\\')
+				return (i);
+		}
 		i++;
     }
     return (-1);
@@ -66,7 +71,12 @@ int ft_strrchr_numb(char *line, char c, int i)
     while (i >= 0)
     {
         if (line[i] == c)
-            return (i);
+        {
+			if ((c != '>' && c != '<' )|| i == 0)    
+				return (i);
+			if (line[i - 1] != '\\')
+				return (i);
+		}
 		i--;
     }
     return (-1);
@@ -83,9 +93,36 @@ int     numb_char(char *line, char c)
         return (0);
     while (line[i] != '\0')
     {
-        if (line[i] == c)
-            j++;
+		//because do not count a > or < as a redir if backslash ebfore it
+		if (line[i] == c)
+		{
+			if ((c != '>' && c != '<' )|| i == 0)    
+				j++;
+			else if (line[i - 1] != '\\')
+				j++;
+		}
 		i++;
     }
+	printf("j returns as %d\n", j);
     return (j);
+}
+
+char		*ft_strjoin_three(char *start, char *newvar, char *end)
+{
+	char	*temp;
+	char	*newline;
+
+	temp = ft_strjoin(start, newvar);
+	newline = ft_strjoin(temp, end);
+	return (newline);
+}
+
+char        *ft_string_insert(char *string, int i, char *middle)
+{
+    char	*start;
+    char 	*end;
+
+	start = ft_substr(string, 0, i + 1);
+	end = ft_substr(string, i + 1, ft_strlen(string) - i - 1);
+	return (ft_strjoin_three(start, middle, end));
 }

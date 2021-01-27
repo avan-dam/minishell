@@ -10,8 +10,43 @@ git add .
 git commit -m"merging amber branch"
 git push origin master
 if conflicts checkout to my branch
+AMBER:
+echo hallo 'ma\'ran'' siemons
+SIGNAL:
+https://linuxhint.com/signal_handlers_c_programming_language/
 
+
+NOT WORKING:
+ECHO:
+echo \$?
+echo $?\
+echo hallo 'ma\'ran'' siemons
+echo "\\$USER"
+echo "1234" \; echo hoi
+echo \; -- need to implement so it doesnt recognise a semicolon as a semi colon if after a backslash
+echo \< -- same with redirection both ways
+echo \\
+echo "\;"
+echo "\<"
+
+echo hello >$4
+"$?"
+EXIT STATUS:
+bash-3.2$ "$?"
+go through add in exit status for each thing
+make an exit function that clears all structs and closes all
 AMBER: REDIRECTION NOTES:
+FIX 
+echo hello 1>&2>file
+echo hello > file 2>&1
+echo hello 2>&1>file
+echo helloha &>filey
+trying to use dup2:
+		else if (d == 0)
+			fd = open(filename, O_RDWR|O_CREAT|O_TRUNC, 0666);
+		else if (d == 1)
+			fd = open(filename, O_RDWR|O_CREAT|O_APPEND, 0666);
+		dup2(fd, 1);   // make stdout go to file
 https://catonmat.net/bash-one-liners-explained-part-three
 Operator > is the output redirection operator. Bash 
 first tries to open the file for writing and if it 

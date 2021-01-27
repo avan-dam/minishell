@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 16:42:11 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 17:40:37 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void		execve_commands(t_base *ptr, char **envp)
 	else // parent process
 	{
 		waitpid(pid, &status, 0);
+		// mini->exit = WEXITSTATUS(status); // check this
 		if (piped)
 		{
 			close(ptr->fd[1]);
@@ -80,7 +81,7 @@ void		exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	while (tmp)
 	{
 		if ((ft_strcmp(tmp->argv[0], "echo")) == 0 || (ft_strcmp(tmp->argv[0], "/bin/echo") == 0))
-			ft_echo(tmp);
+			ft_echo(tmp, mini);
 		else if (ft_strcmp(tmp->argv[0], "cd") == 0)
 			ft_cd(tmp, mini);
 		else if ((ft_strcmp(tmp->argv[0], "pwd") == 0) || (ft_strcmp(tmp->argv[0], "/bin/pwd") == 0))

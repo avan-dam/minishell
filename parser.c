@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/26 08:18:29 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/27 10:05:20 by Amber         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,12 +151,12 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 			if (numb_char(mini->more, '>') != 0 || numb_char(mini->more, '<') != 0)
 			{	
 				if (ft_redir(mini, envp) == -1)
-					ft_exit(mini, line);
+					ft_exit(mini, line, mini->exit);
 			}
 			else
 			{
 				if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
-					ft_exit(mini, line);
+					ft_exit(mini, line, mini->exit);
 			}
 			mini->command = NULL;
 			mini->more = NULL;
@@ -175,7 +175,7 @@ int		main(int argc, char **argv, char **envp)
 	line = NULL;
 	lineret = 1;
 	if (argc > 1)
-		return (-1); // are we implementing an error function?
+		return (-1); // are we implementing an error function? also are we saying if more than one argument can still work?
 	ft_memset(&mini, 0, sizeof(t_mini));
 	mini.stdout = 1;
 	mini.stderr = 2;
@@ -183,7 +183,7 @@ int		main(int argc, char **argv, char **envp)
 	ft_set_env(argv, envp, &mini);
 	while (lineret)
 	{
-		ft_putstr_fd("> ", mini.stdout);
+		ft_putstr_fd("> ", STDERR_FILENO);
 		ft_signals(&mini, line, 0);
 		// ignores the signal for ctrl c as bash does
 		lineret = get_next_line(1, &line);

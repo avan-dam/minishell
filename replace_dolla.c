@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/26 11:38:22 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/26 18:59:05 by Amber         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,12 +158,12 @@ static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini)
 	return (s->line);
 }
 
-void 	ft_exit_status_replace(t_line *s, int i, t_mini *mini)
+void		ft_exit_status_replace(t_line *s, int i, t_mini *mini)
 {
 	char	*start;
-    char 	*middle;
-	char 	*end;
-	
+	char	*middle;
+	char	*end;
+
 	ft_memmove(&s->line[i + 1], &s->line[i + 2], ft_strlen(s->line) - (i + 1));
 	i--;
 	ft_memmove(&s->line[i + 1], &s->line[i + 2], ft_strlen(s->line) - (i + 1));
@@ -183,7 +183,7 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
 	set_tline(&s, line);
 	while (s.line[i] != '\0')
 	{
-		printf("Check char %c is t is %d o is %d line is %s\n", s.line[i], s.t, s.o, s.line);
+		// printf("Check char %c is t is %d o is %d line is %s\n", s.line[i], s.t, s.o, s.line);
 		if (s.line[i] == '\\')
 			i = ft_check_backslash(&s, i);
 		if (s.line[i] == '\'')
@@ -197,7 +197,7 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
 			i = i + s.k;
 		}
 		else if (s.line[i] == '$' && s.line[i + 1] == '?' && (s.t == 0 || s.t % 2 == 1) && (s.o == 0 ||s.o % 2 == 0))
-			ft_exit_status_replace(&s, i, mini);	
+			ft_exit_status_replace(&s, i, mini);
 		i++;
 	}
 	mini->singlequote = s.o;

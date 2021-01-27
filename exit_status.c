@@ -6,7 +6,7 @@
 /*   By: Amber <Amber@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/24 10:48:47 by Amber         #+#    #+#                 */
-/*   Updated: 2021/01/25 18:06:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/27 09:39:05 by Amber         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ void		ft_printf_exit_status(t_mini *mini)
 }
 
 // MAKE SURE ALL CLEARED
-void	ft_exit(t_mini *mini, char *line)
+void	ft_exit(t_mini *mini, char *line, int exitstatus)
 {
 	ft_close_fds(mini);
 	ft_lstclear(&mini->env1); // is this freeing the list enough
-	ft_memset(&mini, 0, sizeof(t_mini));
+	ft_memset(&mini, 0, sizeof(t_mini)); // but not mini->exit
 	free(line);
-	exit(0);
+	// printf("exit status is %d\n", mini->exit);
+	exit(exitstatus);
 }

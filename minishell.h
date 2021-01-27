@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/24 20:54:22 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 16:11:50 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
-# include <stdio.h>
+# include <stdio.h> // delete after
 # include <stdlib.h>
 # include <sys/syslimits.h> // not sure if allowed?
 # include <fcntl.h>
@@ -77,32 +77,46 @@ typedef struct		s_piper
 	int				fd[2]; // fd[0] - read fd[1] - write made by pipe(fd);
 }					t_piper;
 
+/* LIST FUNCTIONS */
+t_list				*ft_lstnew(void *var1, void *var2);
+void				ft_lstadd_back(t_list **alst, t_list *new);
+void				ft_lstadd_back_new(t_base **ptr, t_base *new); // new replace this one or old one
+void				ft_lstprint(t_list *lst, t_mini *mini);
+void				ft_lstclear(t_list **lst);
+int  				ft_split_into_tlist(t_mini *mini, char *line);
+void				ft_lstprintold(t_list *lst);
+
+/* BUILTIN FUNCTION */
+int					ft_echo(t_base *ptr);
+int					ft_export(t_base *ptr, t_mini *mini);
+int					ft_unset(t_mini *mini, char *unset);
+void				ft_cd(t_base *ptr, t_mini *mini); // new
+void				ft_pwd(t_mini *mini);
+
+/* PARSER FUNCTIONS */
+void				parse_input_string(char *line, t_mini *mini, char **envp);
+
+
+
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
 // int					ft_echo(char *string, t_mini *mini, t_piper *piper);
-int					ft_echo(t_base *ptr);
-void				ft_putstr(char *s);
-int					ft_export(t_base *ptr, t_mini *mini);
+// void				ft_putstr(char *s);
 char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i);
-int					ft_unset(t_mini *mini, char *unset);
 int					unvalid_identifier(char *error, t_mini *mini);
 int 				ft_strchr_numb(char *line, char c, int i);
 int					ft_strrchr_numb(char *line, char c, int i);
 int  				numb_char(char *line, char c);
-int  				ft_split_into_tlist(t_mini *mini, char *line);
-t_list				*ft_lstnew(void *var1, void *var2);
-void				ft_lstadd_back(t_list **alst, t_list *new);
-void				ft_lstprint(t_list *lst, t_mini *mini);
-int					ft_execve(t_mini *mini, char **envp, t_piper *piper);
-void				ft_lstclear(t_list **lst);
+
+// int					ft_execve(t_mini *mini, char **envp, t_piper *piper);
+
 int					ft_redir(t_mini *mini, int d);
 
-void				ft_cd(t_base *ptr, t_mini *mini); // new
+
 void				ft_add_env(char *env, char *path, t_mini *mini); // or static
 char				*ft_get_env(char *env, t_mini *mini); // of static
-void				ft_pwd(t_mini *mini);
+
 void				ft_set_env(char **argv, char **envp, t_mini *mini);
 void				ft_set_array(t_mini *mini);
 
-void				ft_lstprintold(t_list *lst);
 
 #endif

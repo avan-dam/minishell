@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/22 13:33:01 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 13:46:18 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,26 +73,24 @@ void		ft_cd(t_base *ptr, t_mini *mini)
 		if (ft_get_env("OLDPWD", mini) != NULL)
 		{
 			chdir(ft_get_env("OLDPWD", mini));
-			ft_putstr(ft_get_env("OLDPWD", mini));
-			ft_putstr("\n");
+			ft_putstr_fd(ft_get_env("OLDPWD", mini), STDOUT);
+			ft_putstr_fd("\n", STDOUT);
 			ft_unset(mini, "OLDPWD");
-			// printf("pwd before add env: %s\n\n", ft_get_env("PWD", mini));
 			ft_add_env("OLDPWD", ft_get_env("PWD", mini), mini);
-			// printf("pwd after add env: %s\n\n", ft_get_env("PWD", mini));
 			ft_unset(mini, "PWD");
 			ft_add_env("PWD", getcwd(cwd, sizeof(cwd)), mini);
 		}
 		else
-			ft_putstr("bash: cd: OLDPWD not set\n");
+			ft_putstr_fd("bash: cd: OLDPWD not set\n", STDOUT);
 		return ;
 	}
 	else if (ptr->argv[1] != NULL)
 	{
 		if (chdir(ptr->argv[1]) == -1)
 		{
-			ft_putstr("cd: no such file or directory: ");
-			ft_putstr(ptr->argv[1]);
-			ft_putstr("\n");
+			ft_putstr_fd("cd: no such file or directory: ", STDOUT);
+			ft_putstr_fd(ptr->argv[1], STDOUT);
+			ft_putstr_fd("\n", STDOUT);
 			return ;
 		}
 		ft_unset(mini, "OLDPWD");

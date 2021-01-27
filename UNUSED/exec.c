@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/17 14:10:52 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/21 14:11:57 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 13:45:22 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int				ft_execve(t_mini *mini, char **envp, t_piper *piper)
 	ft_bin_command(mini);
 	if ((pid = fork()) == -1)
 	{
-		ft_putstr("error in forking\n");
+		ft_putstr_fd("error in forking\n", STDOUT);
 		return (-1);
 	}
 	printf("Value of pid: %d\n", pid);

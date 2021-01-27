@@ -6,29 +6,32 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 12:06:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/24 18:53:37 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 13:41:54 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_putstr(char *s)
-{
-	int i;
+// why dont we use putstr from libft? this is a double function
+// void	ft_putstr(char *s)
+// {
+// 	int i;
 	
-	if (s == NULL)
-		return ;
-	i = 0;
-	while (i < (int)ft_strlen(s))
-	{
-		// so that if you type \ once nothing happens only 
-		// if twice in a row
-		// if (s[i] == 92)
-		// 	i++;
-		write(1, &s[i], 1);
-		i++;
-	}
-}
+// 	if (s == NULL)
+// 		return ;
+// 	i = 0;
+// 	while (i < (int)ft_strlen(s))
+// 	{
+// 		// so that if you type \ once nothing happens only 
+// 		// if twice in a row
+// 		// if (s[i] == 92)
+// 		// 	i++;
+// 		write(1, &s[i], 1);
+// 		i++;
+// 	}
+// }
+
+/* put in file for error handling? */
 
 int		unvalid_identifier(char *error, t_mini *mini)
 {

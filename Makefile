@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/17 22:18:02 by salbregh      #+#    #+#                  #
-#    Updated: 2021/01/27 16:03:52 by salbregh      ########   odam.nl          #
+#    Updated: 2021/01/27 16:42:35 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRCS =		main.c \
 			replace_dolla.c \
 			set_arrays.c \
 			redir.c \
-			newparser.c
+			newparser.c \
+			execve.c
 			# exec.c \
 			# parser.c \
 			# delete unused_tlist.c

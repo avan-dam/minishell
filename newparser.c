@@ -6,9 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 16:29:25 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 16:45:38 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 static int	number_of_commands(char *line, t_mini *mini)
 {
@@ -78,7 +80,7 @@ static int	put_commands_in_list(t_base **ptr, char *line, t_mini *mini)
 	}
 	new->type = mini->type_end;
 	ft_lstadd_back_new(ptr, new);
-	return (i);
+	return (numb_characters);
 }
 
 void			parse_input_string(char *line, t_mini *mini, char **envp)

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/27 16:11:50 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 16:43:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,8 @@ void				ft_pwd(t_mini *mini);
 void				parse_input_string(char *line, t_mini *mini, char **envp);
 
 
-
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
-// int					ft_echo(char *string, t_mini *mini, t_piper *piper);
+// int				ft_echo(char *string, t_mini *mini, t_piper *piper);
 // void				ft_putstr(char *s);
 char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i);
 int					unvalid_identifier(char *error, t_mini *mini);
@@ -107,7 +106,8 @@ int 				ft_strchr_numb(char *line, char c, int i);
 int					ft_strrchr_numb(char *line, char c, int i);
 int  				numb_char(char *line, char c);
 
-// int					ft_execve(t_mini *mini, char **envp, t_piper *piper);
+// int				ft_execve(t_mini *mini, char **envp, t_piper *piper);
+void				exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 
 int					ft_redir(t_mini *mini, int d);
 

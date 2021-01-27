@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/19 11:12:11 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/25 17:04:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/27 16:40:26 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,6 @@ void		ft_set_array(t_mini *mini)
 {
 	set_builtin(mini);
 	set_command(mini);
+	mini->stdout = 1;
+	mini->stderr = 2;
 }

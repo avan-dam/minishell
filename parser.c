@@ -6,7 +6,11 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2021/01/27 15:34:55 by ambervandam   ########   odam.nl         */
+=======
+/*   Updated: 2021/01/18 09:42:55 by salbregh      ########   odam.nl         */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +135,8 @@ void 		ft_close_fds(t_mini *mini)
 
 static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 {
-	int i;
-	char *current;
+	int		i;
+	char	*current;
 
 	while ((ft_strcmp("", line) != 0))
 	{
@@ -167,7 +171,7 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 	return (0);
 } 
 
-int		main(int argc, char **argv, char **envp)
+int		ft_start_parsing(char *line, t_mini *mini, char **envp)
 {
 	char	*line;
 	int		lineret;

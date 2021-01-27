@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:50:50 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/27 09:39:13 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/27 16:41:32 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/syslimits.h> // not sure if allowed?
 # include <fcntl.h>
 # include <signal.h>
 
@@ -54,8 +55,8 @@ typedef struct		s_mini
 	char			*command;
 	char			*more;
 	t_list			*run2;
-	char			*path;
-	int				cd;
+	char			*currentpwd;
+	char			*oldpwd;
 	t_list			*env1;
 	// builtin and execve arrray need corresponding function array for this
 	char			*builtin[8];
@@ -67,6 +68,14 @@ typedef struct		s_mini
 	int				singlequote;
 }					t_mini;
 
+typedef struct		s_pipe
+{
+	int				check;
+	char			*write_side;
+	char			*read_side;
+}					t_pipe;
+
+int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
 int					ft_echo(char *string, t_mini *mini);
 void				ft_putstr(char *s);
 int				    ft_export(t_mini *mini, char *more);
@@ -93,8 +102,12 @@ char				*ft_strjoin_three(char *start, char *newvar, char *end);
 void				handle_sigint(int sig);
 void				ft_signals(t_mini *mini, char *line, int i);
 void				ft_cd(t_mini *mini);
+void				ft_add_env(char *env, char *path, t_mini *mini); // or static
+char				*ft_get_env(char *env, t_mini *mini); // of static
 void				ft_pwd(t_mini *mini);
 void				ft_set_env(char **argv, char **envp, t_mini *mini);
 void				ft_set_array(t_mini *mini);
+
+void				ft_lstprintold(t_list *lst);
 
 #endif

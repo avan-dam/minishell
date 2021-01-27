@@ -3,25 +3,26 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: avan-dam <avan-dam@student.codam.nl>         +#+                      #
+#    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/06 12:33:02 by avan-dam      #+#    #+#                  #
-#    Updated: 2021/01/25 18:36:44 by ambervandam   ########   odam.nl          #
+#    Updated: 2021/01/27 16:41:36 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =		minishell
 
-SRCS =		parser.c \
-			echo.c \
+SRCS =		main.c \
+			builtins/echo.c \
+			builtins/unset.c \
+			builtins/pwd.c \
+			builtins/env.c \
+			builtins/export.c \
+			builtins/cd.c \
+			parser.c \
 			utils.c \
-			export.c \
 			t_list.c \
-			cd.c \
 			replace_dolla.c \
-			unset.c \
-			pwd.c \
-			env.c \
 			exec.c \
 			set_arrays.c \
 			redir.c \
@@ -30,7 +31,7 @@ SRCS =		parser.c \
 # unused_tlists.c
 
 FLAGS = 	-Wall -Werror -Wextra
-#  -g -fsanitize=address
+			#-g -fsanitize=address
 
 OFILES =	$(SRCS:.c=.o)
 

@@ -6,11 +6,15 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 11:40:20 by ambervandam   #+#    #+#                 */
+<<<<<<< HEAD:echo.c
 /*   Updated: 2021/01/27 15:54:07 by ambervandam   ########   odam.nl         */
+=======
+/*   Updated: 2021/01/18 10:07:29 by salbregh      ########   odam.nl         */
+>>>>>>> master:builtins/echo.c
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static char *ft_howmany_n(char *string, int i, int j)
 {
@@ -94,6 +98,10 @@ int    ft_echo(char *string, t_mini *mini)
     }
     string = ft_strtrim(string, " ");
     ft_putstr_fd(string, mini->stdout);
+<<<<<<< HEAD:echo.c
     mini->exit = 0;
     return(ft_putchar_fd('\n', mini->stdout));
+=======
+    return (ft_putchar_fd('\n', mini->stdout));
+>>>>>>> master:builtins/echo.c
 }

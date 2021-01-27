@@ -6,7 +6,11 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/17 14:10:52 by ambervandam   #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2021/01/25 18:05:37 by ambervandam   ########   odam.nl         */
+=======
+/*   Updated: 2021/01/18 12:28:44 by salbregh      ########   odam.nl         */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +33,13 @@ static void		ft_bin_command(t_mini *mini)
 
 int				ft_execve(t_mini *mini, char **envp)
 {
-    // char *argv[] = {mini->command, "cat", "test"};
-    char 	*argv[] = {mini->command, mini->more, NULL};
+	t_pipe pipe;
+    char *argv[] = {mini->command, mini->more, NULL};
+	// char *argv[] ={ "touch", "/tmp/file", NULL };
 	pid_t	pid;
 	int 	status; 
 
+	pipe.check = 0;
 	pid = fork();
 	printf("Value of pid: %d\n", pid);
 	ft_bin_command(mini);
@@ -62,7 +68,8 @@ int				ft_execve(t_mini *mini, char **envp)
     }
 	else
 	{
-		wait(NULL);
+		if (pipe.check == 1)
+			wait(NULL);
 		return (0);
 	}
     return 0;

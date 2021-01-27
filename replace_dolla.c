@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/26 18:59:05 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/27 15:55:03 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,19 @@ static void		set_tline(t_line *s, char *line)
 }
 static int 			ft_check_backslash(t_line *s, int i)
 {
-	if ((s->line[i + 1] == '"') || ((s->line[i + 1] == '\'') && (s->t % 2 == 0))|| s->line[i + 1] == '$')
+	// removed for edge case echo "123\`456"
+	// printf("in backslash with line %s and t %d s->line[i + 1]%c\n", s->line, s->t, s->line[i + 1]);
+	if (s->line[i+1] == '>' || s->line[i+1] == '<') //maybe also ;
+		return (i + 1);
+	if ((s->line[i + 1] == '`') || (s->line[i + 1] == '"') || ((s->line[i + 1] == '\'') && (s->t % 2 == 0))|| s->line[i + 1] == '$')
 	{
+		printf("in this one\n");
 		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 		i++;
 	}
 	else if ((s->o % 2 == 0) && (s->t % 2 == 0))
 	{
+		printf("in this two\n");
 		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 		if (s->line[i] == '\\')
 			ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
@@ -104,6 +110,8 @@ static int 			ft_check_backslash(t_line *s, int i)
 }
 static int		ft_double_quotes(t_line *s, int i)
 {
+	// printf("in double with line %s and t %d\n", s->line, s->t);
+
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 	i--;
 	if (s->o % 2 == 0)
@@ -113,7 +121,7 @@ static int		ft_double_quotes(t_line *s, int i)
 
 static int		ft_single_quotes(t_line *s, int i)
 {
-	printf("in single with line %s and t %d\n", s->line, s->t);
+	// printf("in single with line %s and t %d\n", s->line, s->t);
 	// if inside double quotes we keep the single quotes and then covert
 	if (s->t % 2 == 1)
 	{
@@ -198,8 +206,10 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
 		}
 		else if (s.line[i] == '$' && s.line[i + 1] == '?' && (s.t == 0 || s.t % 2 == 1) && (s.o == 0 ||s.o % 2 == 0))
 			ft_exit_status_replace(&s, i, mini);
+				// printf("ending  char %c is t is %d o is %d line is %s\n", s.line[i], s.t, s.o, s.line);
 		i++;
 	}
 	mini->singlequote = s.o;
+	printf("last s.line is [%s]\n", s.line);
 	return (ft_check_quotes_in_order(&s, mini));
 }

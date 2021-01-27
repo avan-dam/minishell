@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/27 10:05:20 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/27 15:34:55 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 			ft_find_command(current, mini);
 			if (numb_char(mini->more, '>') != 0 || numb_char(mini->more, '<') != 0)
 			{	
+				printf("will go in redir\n");
 				if (ft_redir(mini, envp) == -1)
 					ft_exit(mini, line, mini->exit);
 			}

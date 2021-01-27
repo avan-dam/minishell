@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/04 11:40:20 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/25 16:31:49 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/27 15:54:07 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,29 @@ static int  ft_check_empty(char *string)
     return (0);
 }
 
+// static char *ft_extra_backslash_check(char *string)
+// {
+//     int i;
+    
+//     i = 0;
+//     printf("string before backslash check[%s]\n", string);
+//     while(string[i] != '\0')
+//     {
+//         if (string[i] == '\\' && ((string[i+1] == '>') || (string[i+1] == '<')))
+//         {
+//         ft_memmove(&string[i], &string[i+1], ft_strlen(string) - i);
+//         i++;
+//         }
+//     }
+//     printf("string after backslash check[%s]\n", string);
+//     return(string);
+// }
+
 int    ft_echo(char *string, t_mini *mini)
 {
     if (string == NULL)
         return(ft_putchar('\n'));
+    // string = ft_extra_backslash_check(string);
     if (ft_check_empty(string) == 1)
         return(ft_putchar_fd('\n', mini->stdout));
     if ((string[0] == '-') && (string[1] == 'n') && ((string[2] == ' ') || (string[2] == '\0') || (string[2] == 'n')))

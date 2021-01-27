@@ -22,8 +22,12 @@ echo \$?
 echo $?\
 echo hallo 'ma\'ran'' siemons
 echo "\\$USER"
-echo "123\`456"
-
+echo "1234" \; echo hoi
+echo \; -- need to implement so it doesnt recognise a semicolon as a semi colon if after a backslash
+echo \< -- same with redirection both ways
+echo \\
+echo "\;"
+echo "\<"
 
 echo hello >$4
 "$?"

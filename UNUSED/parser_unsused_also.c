@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parser.c                                           :+:    :+:            */
+/*   parser_unsused_also.c                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
+/*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/01/27 17:14:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:59:39 by ambervandam   ########   odam.nl         */
+/*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
+/*   Updated: 2021/01/27 19:28:15 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,10 @@ static int		ft_check_notbultin(char *command, t_mini *mini)
 	return (0);
 }
 
-static int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp, t_piper *piper)
 int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 {
-	if (piper->check == 1)
-	{
-		printf("PIPE HERE\n");
-		if (pipe(piper->fd) == -1)
-			return (-1); // ERROR WITH PIPE
-	}
-	if (ft_strcmp(command, "echo") == 0 || (ft_strcmp(command, "/bin/echo") == 0))
-		ft_echo(more, mini, piper);
+	if (ft_strcmp(command, "echo") == 0)
+		ft_echo(more, mini);
 	else if (ft_strcmp(command, "cd") == 0)
 		ft_cd(mini);
 	else if ((ft_strcmp(command, "pwd") == 0) || (ft_strcmp(command, "/bin/pwd") == 0))
@@ -112,44 +105,46 @@ int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 	return (0);
 }
 
-
+void 		ft_close_fds(t_mini *mini)
+{
+	// printf("in close fds mini->stdout is %d mini->stdin is %d mini->stderr is %d\n", mini->stdout, mini->stdin, mini->stderr);
+	if (mini->stdout != 1)
+	{
+		if (mini->stdout != 2 && mini->stdout != 0)
+			close(mini->stdout);
+		mini->stdout = 1;
+	}
+	if (mini->stdin != 0)
+	{
+		if (mini->stdin != 1 && mini->stdin != 2)
+			close(mini->stdin);
+		mini->stdin = 0;
+	}
+	if (mini->stderr != 2)
+	{
+		if (mini->stderr != 1 && mini->stderr != 0)
+			close(mini->stderr);
+		mini->stderr = 2;
+	}
+	// printf("going out of close fds\n");
+}
 
 static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 {
 	int		i;
 	char	*current;
-	t_piper	piper;
 
-	ft_memset(&piper, 0, sizeof(piper));
 	while ((ft_strcmp("", line) != 0))
 	{
 		line = ft_strtrim(line, " ");
-		// printf("line: %s\n", line);
 		i = ft_strlen(line);
 		if (ft_strchr_numb(line, '|', 0) != -1)
-		{
-			piper.check = 1;
 			i = ft_strchr_numb(line, '|', 0);
-		}
 		if ((ft_strchr_numb(line, ';', 0) < i) && (ft_strchr_numb(line, ';', 0) != -1))
 			i = ft_strchr_numb(line, ';', 0);
 		current = ft_substr(line, 0, i);
 		line = ft_substr(line, i + 1, ft_strlen(line) - i);
 		current = ft_check_dolla_quotes(current, mini, 0);
-		if (current == NULL)
-			return (-2);
-		ft_find_command(current, mini);
-		// if (ft_parse_input(mini->command, mini->more, mini, envp) == -1)
-		// 	return (-1);
-		(void)envp;
-		if (numb_char(mini->more, '>') != 0 || numb_char(mini->more, '<') != 0)
-            ft_redir(mini, 0);
-		if (ft_parse_input(mini->command, mini->more, mini, envp, &piper) == -1)
-			return (-1);
-		mini->command = NULL;
-		mini->more = NULL;
-		if (mini->stdout != 1)
-			close(mini->stdout);
 		if (current != NULL)
 		{
 			ft_find_command(current, mini);
@@ -172,6 +167,21 @@ static int		ft_divide_command(char *line, t_mini *mini, char **envp)
 	return (0);
 } 
 
+		// if (current != NULL)
+		// {
+		// 	ft_find_command(current, mini);
+		// 	int k = ft_redir(mini, envp)
+		// 	if (k == -1)
+		// 		ft_exit(mini, line, mini->exit);
+		// 	if (k == -3)//i.e. no redirections
+		// 		ft_parse_input(mini->command, mini->more, mini, envp)
+
+		// 	}
+		// 	mini->command = NULL;
+		// 	mini->more = NULL;
+		// 	ft_close_fds(mini);
+		// }
+
 int		ft_start_parsing(char *line, t_mini *mini, char **envp)
 {
 	char	*line;
@@ -190,7 +200,7 @@ int		ft_start_parsing(char *line, t_mini *mini, char **envp)
 	while (lineret)
 	{
 		ft_putstr_fd("> ", STDERR_FILENO);
-		ft_signals(&mini, line, 0);
+		ft_signals(&mini, 0);
 		// ignores the signal for ctrl c as bash does
 		lineret = get_next_line(1, &line);
 		if (lineret < 0)
@@ -201,14 +211,10 @@ int		ft_start_parsing(char *line, t_mini *mini, char **envp)
 		free(line);
 		line = NULL;
 	}
-<<<<<<< HEAD:UNUSED/parser.c
-	// put ft_parse input here?
-=======
 	if (lineret == 0)
-		ft_signals(&mini, line, 1);
+		ft_signals(&mini, 1);
 	free(line);
 	line = NULL;
->>>>>>> master:parser.c
 	return (0);
 }
 

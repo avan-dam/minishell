@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 13:52:12 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/27 17:42:51 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 19:17:06 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,8 @@ int			ft_redir(t_mini *mini, char **envp)
 	ft_memset(&r, 0, sizeof(r));
 	r.j = ft_strchr_numb(mini->more, '<', 0);
 	r.i = ft_strchr_numb(mini->more, '>', 0);
+	if (r.i == -1 && r.j == -1)
+		return (-3);
 	while (r.j != -1 || r.i != -1)
 	{
 		// printf("before set mini->more[%s] r.file[%s], r.m_files[%s], r.error[%s], r.i%d, r.d%d, r.redirinput%d, r.j%d, r.fd%d, r.alpha%d\n", mini->more, r.file, r.m_files, r.error, r.i, r.d, r.redirinput, r.j, r.fd, r.alpha);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:40:37 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 20:25:17 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void		exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 			ft_unset(mini, tmp->argv[1]);
 		else if (ft_strcmp(tmp->argv[0], "env") == 0)
 			ft_lstprint(mini->env1, mini);
+		else if (ft_strcmp(tmp->argv[0], "exit") == 0)
+			ft_exit(mini, mini->exit);
 		else if (ft_check_notbultin(tmp->argv[0], mini) == 1) // also builtins should go into execve
 			execve_commands(tmp, envp);
 		else

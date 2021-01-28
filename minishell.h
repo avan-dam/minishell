@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:20:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:38:33 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/28 09:23:47 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void				parse_input_string(char *line, t_mini *mini, char **envp);
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
 // int				ft_echo(char *string, t_mini *mini, t_piper *piper);
 // void				ft_putstr(char *s);
-char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i);
+char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j);
 int					unvalid_identifier(char *error, t_mini *mini);
 int 				ft_strchr_numb(char *line, char c, int i);
 int					ft_strrchr_numb(char *line, char c, int i);
@@ -143,10 +143,10 @@ int					ft_parse_input(char *command, char *more, t_mini *mini, char **envp);
 void				ft_printf_exit_status(t_mini *mini);
 char				*ft_string_insert(char *string, int i, char *middle);
 void 				ft_close_fds(t_mini *mini);
-void				ft_exit(t_mini *mini, char *line, int exitstatus);
+void				ft_exit(t_mini *mini, int exitstatus);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
 void				handle_sigint(int sig);
-void				ft_signals(t_mini *mini, char *line, int i);
+void				ft_signals(t_mini *mini, int i);
 void				ft_add_env(char *env, char *path, t_mini *mini); // or static
 char				*ft_get_env(char *env, t_mini *mini); // of static
 

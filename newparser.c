@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:49:57 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/28 09:24:17 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@ static int	number_of_commands(char *line, t_mini *mini)
 	tmp = line;
 	mini->numb_cmds = 0;
 	numb = 1;
-	// in here quotes should be checked, so echo "hello this is one command" will not be split on spaces
-	while (tmp[i] && tmp[i] != '|' && tmp[i] != ';')
+	while (tmp[i] && ((tmp[i] != '|' && tmp[i] != ';') || (ft_check_dolla_quotes(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
 	{
 		if (tmp[i] == ' ')
 		{
 			while (tmp[i] == ' ')
 				i++;
-			if (tmp[i] == '|' || tmp[i] == ';')
+			if ((tmp[i] == '|' || tmp[i] == ';') && (ft_check_dolla_quotes(ft_substr(line, 0, i), mini, 0, 1) != NULL))
 			{
 				mini->numb_cmds = numb;
 				mini->cmd_part = ft_substr(line, 0, i);
@@ -58,6 +57,7 @@ static int	put_commands_in_list(t_base **ptr, char *line, t_mini *mini)
 
 	numb_characters = number_of_commands(line, mini); // i is the number of characters
 	size = mini->numb_cmds;
+	mini->cmd_part = ft_check_dolla_quotes(mini->cmd_part, mini, 0, 0); //FIXXXXXX!!!
 	new = (t_base *)malloc(sizeof(t_base));
 	new->argv = (char **)malloc(sizeof(char *) * (size + 1));
 	if (new->argv == NULL)
@@ -92,6 +92,9 @@ void			parse_input_string(char *line, t_mini *mini, char **envp)
 	i = 0;
 	line = ft_strtrim(line, " ");
 	ft_set_array(mini);
+	if (ft_check_dolla_quotes(line, mini, 0, 0) == NULL)
+	{
+			return ; }// if u remove this need to add in if line ==NULL return
 	while (line[i])
 	{
 		// bash: syntax error near unexpected token `;'
@@ -115,7 +118,9 @@ void			parse_input_string(char *line, t_mini *mini, char **envp)
 	// 	tmp = tmp->next;
 	// }
 	if (ptr)
+	{	
 		exec_cmds(ptr, envp, mini);
+	}
 	// fix leaks
 }
 

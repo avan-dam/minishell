@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:39:31 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/27 20:55:45 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,7 @@ int ft_strchr_numb(char *line, char c, int i)
     while (line[i] != '\0')
     {
         if (line[i] == c)
-        {
-			if ((c != '>' && c != '<' )|| i == 0)    
-				return (i);
-			if (line[i - 1] != '\\')
-				return (i);
-		}
+			return (i);
 		i++;
     }
     return (-1);
@@ -71,12 +66,7 @@ int ft_strrchr_numb(char *line, char c, int i)
     while (i >= 0)
     {
         if (line[i] == c)
-        {
-			if ((c != '>' && c != '<' )|| i == 0)    
-				return (i);
-			if (line[i - 1] != '\\')
-				return (i);
-		}
+			return (i);
 		i--;
     }
     return (-1);
@@ -94,16 +84,11 @@ int     numb_char(char *line, char c)
     while (line[i] != '\0')
     {
 		//because do not count a > or < as a redir if backslash ebfore it
-		if (line[i] == c)
-		{
-			if ((c != '>' && c != '<' )|| i == 0)    
-				j++;
-			else if (line[i - 1] != '\\')
-				j++;
-		}
+		//look at this again
+        if (line[i] == c)
+			j++;
 		i++;
     }
-	printf("j returns as %d\n", j);
     return (j);
 }
 

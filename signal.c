@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/25 18:35:10 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/27 09:38:37 by Amber         ########   odam.nl         */
+/*   Updated: 2021/01/27 19:36:29 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void handle_sigint(int sig)
 		write(1, "\b\b  \b\b", 6);
 }
 
-void	ft_signals(t_mini *mini, char *line, int i)
+void	ft_signals(t_mini *mini, int i)
 {
 	if (i == 0)
 	{
 		if (signal(SIGQUIT, &handle_sigint) == SIG_ERR)
-			ft_exit(mini, line, mini->exit);
+			ft_exit(mini, mini->exit);
 		if (signal(SIGINT, &handle_sigint) == SIG_ERR)
-			ft_exit(mini, line, mini->exit);
+			ft_exit(mini, mini->exit);
 	}
-	 if (i == 1) //CTRL D detected by EOF so handled differently
-		ft_putstr_fd("exit\n", 1);
+	if (i == 1) //CTRL D detected by EOF so handled differently when lineret ==0
+		ft_putstr_fd("exit\n", 1); // ALSO FREE ALL IF GET THERE
 }
 //need to make sure these signals work with execve properly
 //maybe use WIFSIGNALED

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:41 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:39:42 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/28 11:15:13 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void	set_builtin(t_mini *mini)
 	mini->builtin[7] = NULL;
 }
 
+
+// change to function that looks if command is in /bin or /usr/bin
 static void	set_command(t_mini *mini)
 {
 	mini->notbuiltin[0] = "ls"; //works
@@ -39,13 +41,13 @@ static void	set_command(t_mini *mini)
 	mini->notbuiltin[10] = "mkdir";
 	mini->notbuiltin[11] = "/bin/mkdir"; // works
 	mini->notbuiltin[12] = "touch"; //doesnt work
-	mini->notbuiltin[13] = "/bin/touch";
+	mini->notbuiltin[13] = "/usr/bin/touch"; // check this
 	mini->notbuiltin[14] = "rm"; // was rm -rf // doesnt work
 	mini->notbuiltin[15] = "/bin/rm"; // works
 	mini->notbuiltin[16] = "cat"; // doesnt work
 	mini->notbuiltin[17] = "/bin/cat";
 	mini->notbuiltin[18] = "cal";
-	mini->notbuiltin[19] = "/bin/cal";
+	mini->notbuiltin[19] = "/usr/bin/cal";
 	mini->notbuiltin[20] = "date";
 	mini->notbuiltin[21] = "/bin/date";
 	mini->notbuiltin[22] = NULL;

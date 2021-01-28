@@ -6,11 +6,13 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:40:37 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/28 10:56:49 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
 
 static void		execve_commands(t_base *ptr, char **envp)
 {
@@ -35,13 +37,21 @@ static void		execve_commands(t_base *ptr, char **envp)
 	}
 	if (pid == 0) // child process
 	{
-		printf("GOES IN CHILD PROCES\n");
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
-			printf("CASE 1\n");
+		{
+			printf("Type is pipe, and dup 2 failed.\n");
+			exit (0); // change
+		}
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE && dup2(ptr->prev->fd[0], STDIN) < 0)
-			printf("CASE 2\n");
+		{
+			printf("Type of previous is pipe, and dup 2 failed.\n");
+			exit (0);
+		}
 		if ((execve(ptr->argv[0], ptr->argv, envp)) < 0)
-			printf("CASE 3\n");
+		{
+			printf("Execve failed.\n");
+			exit (0);
+		}
 		exit (EXIT_SUCCESS); // closes process with succes // change
 	}
 	else // parent process

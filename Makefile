@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/27 17:37:19 by salbregh      #+#    #+#                  #
-#    Updated: 2021/01/27 17:37:21 by salbregh      ########   odam.nl          #
+#    Updated: 2021/01/28 10:01:47 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,10 +64,11 @@ clean:
 			make clean -C libft/
 
 fclean:		clean
-			/bin/rm -f gnl/libgnl.a
+			/bin/rm -f get_next_line/libgnl.a
 			/bin/rm -f libgnl.a
+			/bin/rm -f libft/libft.a
+			/bin/rm -f libft.a
 			/bin/rm -f $(NAME)
-			# doenst remove the lib in the libft and GNL
 
 re:			fclean all
 

@@ -405,3 +405,79 @@ Redirection of output in this fashion causes the file whose name results from th
 for appending on file descriptor n, or the standard output (file descriptor 1) if n is not specified. If the file 
 does not exist it is created.
 e.g. [n]>>word
+
+
+ENVIRONMENTAL VARIABLES
+
+The variables that come up when env is typed in:
+TERM_PROGRAM=
+    TERM_PROGRAM is used in /etc/zshrc and /etc/bashrc to run commands that are specific
+    to the terminal program you are using when they open a shell. By default, macOS 
+    supplies /etc/zshrc_Apple_Terminal and /etc/bashrc_Apple_Terminal which do some extra 
+    work to manage the current working directory and support suspending and resuming the terminal. 
+    If you use another terminal program, you can place a file at /etc/zshrc_$TERM_PROGRAM 
+    or /etc/bashrc_$TERM_PROGRAM and it will be executed when your terminal program opens a shell.
+    You have to ensure that your terminal program sets a value for $TERM_PROGRAM of course.
+
+SHELL=
+    This environment variable expands to the full pathname to the shell. If it is 
+    not set when the shell starts, Bash assigns to it the full pathname of the current 
+    user’s login shell.
+
+TERM=
+    This specifies the type of terminal to emulate when running the shell. Different
+    hardware terminals can be emulated for different operating requirements.
+    You usually won’t need to worry about this though.
+
+TMPDIR=
+    If set, Bash uses its value as the name of a directory in which Bash creates
+    temporary files for the shell’s use.
+
+TERM_PROGRAM_FUNCTION=
+    cant find
+
+TERM_SESSION_ID=
+    cant find
+
+USER=
+    The current logged in user.
+
+SSH_AUTH_SOCK=
+    contains the path of the unix file socket that the agent uses for
+    communication with other processes. This is essential for ssh-add.
+
+PATH=
+    A colon-separated list of directories in which the shell looks for commands.
+    A zero-length (null) directory name in the value of PATH indicates the current
+    directory. A null directory name may appear as two adjacent colons,
+    or as an initial or trailing colon.
+
+_=
+    The most recent previously executed command. When 
+    env has been run it should show: /usr/bin/env
+
+PWD=
+    The current working directory as set by the cd builtin.
+
+XPC_FLAGS=
+XPC_SERVICE_NAME=
+SHLVL=
+    environment variable holds the number of shell levels the current shell is running on top of.
+
+HOME=
+    The current user’s home directory; the default for the cd builtin command.
+    The value of this variable is also used by tilde expansion 
+    (see Section 3.5.2 [Tilde Expansion], page 24).
+
+LOGNAME=
+LC_CTYPE=
+    This variable determines the interpretation of characters and the behavior of
+    character classes within filename expansion and pattern matching 
+    (see Section 3.5.8 [Filename Expansion], page 33).
+
+
+Other values that need to be done:
+
+OLDPWD=
+    The previous working directory. This is kept by the shell in order to switch back
+    to your previous directory by running cd -.

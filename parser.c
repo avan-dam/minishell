@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   newparser.c                                        :+:    :+:            */
+/*   parser.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/29 22:56:53 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/29 23:28:09 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int			parse_input_string(char *line, t_mini *mini, char **envp)
 	ptr = NULL;
 	i = 0;
 	line = ft_strtrim(line, " ");
-	ft_set_array(mini);
 	if (ft_check_dolla_quotes(line, mini, 0, 0) == NULL)// if u remove this need to add in if line ==NULL return
 			return (-2); // -1 is to exit whole thing this just goes to next promt and tells u you entered a multiline
 	while (line[i])

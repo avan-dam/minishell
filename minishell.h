@@ -5,10 +5,11 @@
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/01/27 17:20:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/29 21:53:51 by ambervandam   ########   odam.nl         */
+/*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/29 23:30:08 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -125,6 +126,9 @@ int  				numb_char(char *line, char c);
 
 // int				ft_execve(t_mini *mini, char **envp, t_piper *piper);
 int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
+int					look_for_non_builtin(t_base *ptr);
+
+// int					ft_redir(t_mini *mini, int d);
 
 int  				ft_split_into_tlist(t_mini *mini, char *line);
 t_list				*ft_lstnew(void *var1, void *var2);
@@ -147,7 +151,6 @@ void				ft_add_env(char *env, char *path, t_mini *mini); // or static
 char				*ft_get_env(char *env, t_mini *mini); // of static
 
 void				ft_set_env(char **argv, char **envp, t_mini *mini);
-void				ft_set_array(t_mini *mini);
 
 
 #endif

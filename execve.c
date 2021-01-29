@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/29 22:39:39 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/29 23:30:29 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,23 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 	}
 	if (pid == 0) // child process
 	{
-		printf("GOES IN CHILD PROCES\n");
+		// printf("GOES IN CHILD PROCES\n");
 		dup2(mini->stdin, STDIN);
 		dup2(mini->stdout, STDOUT);
-		printf("std in is %d stdout is %d type is %d", mini->stdin, mini->stdout, ptr->type);
+		// printf("std in is %d stdout is %d type is %d", mini->stdin, mini->stdout, ptr->type);
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
-			printf("CASE 1\n");
+		{
+			printf("Type is pipe, and dup 2 failed.\n");
+			exit (0); // change
+		}
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE && dup2(ptr->prev->fd[0], STDIN) < 0)
-			printf("CASE 2\n");
+		{
+			printf("Type of previous is pipe, and dup 2 failed.\n");
+			exit (0);
+		}
 		if ((execve(ptr->argv[0], ptr->argv, envp)) < 0)
 		{
+			printf("Execve failed.\n");
 			printf("CASE 3\n");
 			exit (0);
 		}
@@ -71,21 +78,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 	}
 }
 
-static int		ft_check_notbultin(char *command, t_mini *mini)
-{
-	int i;
-	
-	i = 0;
-	while (mini->notbuiltin[i] != NULL)
-	{
-		if (ft_strcmp(command, mini->notbuiltin[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int		exec_cmds(t_base *ptr, char **envp, t_mini *mini)
+int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
 	t_base	*tmp;
 
@@ -107,12 +100,15 @@ int		exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 			ft_unset(mini, tmp->argv[1]);
 		else if (ft_strcmp(tmp->argv[0], "env") == 0)
 			ft_lstprint(mini->env1, mini);
+		else if (look_for_non_builtin(tmp) == 0)
+		{
+			printf("goes in non builtin\n");
+			execve_commands(tmp, envp, mini);
+		}
 		else if (ft_strcmp(tmp->argv[0], "$?") == 0)
 			ft_printf_exit_status(mini);
 		else if (ft_strcmp(tmp->argv[0], "exit") == 0)
 			return (-1);
-		else if (ft_check_notbultin(tmp->argv[0], mini) == 1) // also builtins should go into execve
-			execve_commands(tmp, envp, mini);
 		else
 			unvalid_identifier(tmp->argv[0], mini);
 		ft_reset_fds(mini);

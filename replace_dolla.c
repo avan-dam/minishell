@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/27 16:40:33 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/29 22:51:50 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,7 @@ static char		*ft_check_var_tlist(t_mini *mini, char *oldvar)
 	return (ft_strdup(""));
 }
 
-//if there is a $ whos value has not been set in a redir leave it as it is and deal with it in redir file
-static int		ft_redir_n_dolla(char *line, int i)
-{
-	i--;
-	while (i >=0)
-	{
-		if (line[i] == ' ')
-			i--;
-		else if (line[i] == '>' || line[i] == '<')
-			return (-1);
-		else
-			return (1);
-	}
-	return (1);
-}
-
-static t_line	*ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
+static int	ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 {
 	int		j;
 	char	*start;
@@ -58,7 +42,7 @@ static t_line	*ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 	&& line[i] != '"' && line[i] != '\\' && line[i] != '/')
 		i++;
 	if (line[i - 1] == '"')
-		return (NULL);
+		return (0);
 	oldvar = ft_substr(line, j, i - j);
 	start = ft_substr(line, 0, j - 1);
 	end = ft_substr(line, i, ft_strlen(line) - i);
@@ -70,77 +54,55 @@ static t_line	*ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 	newvar = ft_check_var_tlist(mini, oldvar);
 	if (ft_strcmp(oldvar, "") == 0)
 		newvar = ft_strdup("$");
-	if ((ft_redir_n_dolla(line, j - 1) != -1) || (ft_strcmp("", newvar) != 0))
+	if (ft_strcmp("", newvar) != 0)
 	{	
 		s->line = ft_strjoin_three(start, newvar, end);
-		s->k = ft_len(newvar) - 1;
+		return (ft_len(newvar) - 1);
 	}
-	return (s);
+	return (0);
 }
 
-static void		set_tline(t_line *s, char *line)
-{
-	s->line = ft_strdup(line);
-	s->o = 0;
-	s->t = 0;
-	s->k = 0;
-}
 static int 			ft_check_backslash(t_line *s, int i)
 {
-	// removed for edge case echo "123\`456"
-	// printf("in backslash with line %s and t %d s->line[i + 1]%c\n", s->line, s->t, s->line[i + 1]);
-	if (s->line[i+1] == '>' || s->line[i+1] == '<') //maybe also ;
-		return (i + 1);
-	if ((s->line[i + 1] == '`') || (s->line[i + 1] == '"') || ((s->line[i + 1] == '\'') && (s->t % 2 == 0))|| s->line[i + 1] == '$')
+	if ((s->line[i + 1] == '`') || (s->line[i + 1] == '"') || ((s->line[i + 1] == '\'') && (s->d % 2 == 0))|| s->line[i + 1] == '$')
 	{
-		printf("in this one\n");
 		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
-		i++;
+		if (s->line[i] == '$' && ((i == 0) || ((i >0) && (s->line[i - 1] != '\\'))))
+			i++;
 	}
-	else if ((s->o % 2 == 0) && (s->t % 2 == 0))
-	{
-		printf("in this two\n");
-		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
-		if (s->line[i] == '\\')
-			ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
-	}
-	else if (s->line[i+1] == '\\')
+	else if ((s->s % 2 == 0) && (s->d % 2 == 0))
 		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 	return (i);
 }
+
 static int		ft_double_quotes(t_line *s, int i)
 {
-	// printf("in double with line %s and t %d\n", s->line, s->t);
-
+	// printf("in double with line %s and t %d\n", s->line, s->d);
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 	i--;
-	if (s->o % 2 == 0)
-		s->t++;
+	if (s->s % 2 == 0)
+		s->d++;
 	return (i);
 }
 
 static int		ft_single_quotes(t_line *s, int i)
 {
-	// printf("in single with line %s and t %d\n", s->line, s->t);
+	// printf("in single with line %s and t %d i is %d and char is %c \n", s->line, s->d, i, s->line[i]);
 	// if inside double quotes we keep the single quotes and then covert
-	if (s->t % 2 == 1)
+	if (s->d % 2 == 1)
 	{
-		if (s->line[i + 1] == '\\')
-			return (i);
-		// printf("i is %d an strlen is %zu ", i , ft_strlen(s->line));
-		if (i + 2 == (int)ft_strlen(s->line))
+		if ((s->line[i + 1] == '\\') || (i + 2 == (int)ft_strlen(s->line)))
 			return (i);
 		return (i + 1);
 	}
 	// remove single quotes and print exactly what is inside without changing
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 	i--;
-	s->o++;
-	if (s->line[i] == '\\' && s->t % 2 == 0)
+	s->s++;
+	if (s->line[i] == '\\' && s->d % 2 == 0)
 	{
 		if (s->line[i + 1] == '$')
 		{
-			printf("in this\n");
 			ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 			i++;
 		}
@@ -151,16 +113,40 @@ static int		ft_single_quotes(t_line *s, int i)
 	{
 		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 		i--;
-		s->o++;
+		s->s++;
 	}
 	return (i);
 }
 
-static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini)
+static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini, int j, char *line)
 {
-	if (s->o % 2 != 0 || s->t % 2 != 0)
+	int i;
+	int backslash; //number of backslash at end
+
+	backslash = 0;
+	i = (int)ft_strlen(line) - 1;
+	if (line[i] == '\\')
 	{
-		ft_putstr_fd("minishell does not support multiline quotes\n", mini->stderr);
+		while (i >= 0)
+		{
+			if (line[i] == '\\')
+				backslash++;
+			i--;
+		}
+	}
+	if (((line[i] == '<') || (line[i] == '>') )&& (j == 0))
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", mini->stderr);
+		mini->exit = 258;
+		return (NULL);
+	}
+	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
+	{
+		if (j == 0)
+		{
+			ft_putstr_fd("minishell does not support multiline quotes\n", mini->stderr);
+			mini->exit = 2;
+		}
 		return (NULL);
 	}
 	return (s->line);
@@ -182,16 +168,17 @@ void		ft_exit_status_replace(t_line *s, int i, t_mini *mini)
 }
 
 // CANNOT DIVIDE ON SEMI COLON IF THE THE SEMICOLON IS WITHIN QUOTES!!
-char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
+char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j)
 {
 	t_line	s;
 
 	if (line == NULL)
 		return (NULL);
-	set_tline(&s, line);
+	ft_memset(&s, 0, sizeof(t_line));
+	s.line = ft_strdup(line);
 	while (s.line[i] != '\0')
 	{
-		// printf("Check char %c is t is %d o is %d line is %s\n", s.line[i], s.t, s.o, s.line);
+		// printf("line [%s] char is line->i[%c]\n", s.line, s.line[i]);
 		if (s.line[i] == '\\')
 			i = ft_check_backslash(&s, i);
 		if (s.line[i] == '\'')
@@ -200,16 +187,10 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i)
 			i = ft_double_quotes(&s, i);
 		else if ((s.line[i] == '$') && (s.line[i + 1] != '/') && \
 		(s.line[i + 1] != '\\') && (s.line[i + 1] != '\0') && (s.line[i + 1] != '?'))
-		{
-			ft_find_dolla(s.line, i + 1, mini, &s);
-			i = i + s.k;
-		}
-		else if (s.line[i] == '$' && s.line[i + 1] == '?' && (s.t == 0 || s.t % 2 == 1) && (s.o == 0 ||s.o % 2 == 0))
+			i = i + ft_find_dolla(s.line, i + 1, mini, &s);
+		else if (s.line[i] == '$' && s.line[i + 1] == '?' && (s.d == 0 || s.d % 2 == 1) && (s.s == 0 ||s.s % 2 == 0))
 			ft_exit_status_replace(&s, i, mini);
-				// printf("ending  char %c is t is %d o is %d line is %s\n", s.line[i], s.t, s.o, s.line);
 		i++;
 	}
-	mini->singlequote = s.o;
-	printf("last s.line is [%s]\n", s.line);
-	return (ft_check_quotes_in_order(&s, mini));
+	return (ft_check_quotes_in_order(&s, mini, j, line));
 }

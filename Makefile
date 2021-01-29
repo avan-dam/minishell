@@ -6,7 +6,11 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/27 17:37:19 by salbregh      #+#    #+#                  #
+<<<<<<< HEAD
 #    Updated: 2021/01/29 17:10:52 by salbregh      ########   odam.nl          #
+=======
+#    Updated: 2021/01/29 17:02:21 by ambervandam   ########   odam.nl          #
+>>>>>>> master
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +23,7 @@ SRCS =		main.c \
 			builtins/env.c \
 			builtins/export.c \
 			builtins/cd.c \
+			builtins/exit.c \
 			list_utils/ft_lst_addback.c \
 			list_utils/ft_lstclear.c \
 			list_utils/ft_lstnew.c \
@@ -29,10 +34,15 @@ SRCS =		main.c \
 			redir.c \
 			parser.c \
 			execve.c \
+<<<<<<< HEAD
 			exit_status.c \
 			signal.c \
 			non_builtins.c
+=======
+			signal.c
+>>>>>>> master
 			# exec.c \
+			# exit_status.c \
 			# parser.c \
 			# delete unused_tlist.c
 			# unused_tlists.c

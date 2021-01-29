@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:18:12 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/29 23:47:32 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void		ft_cd(t_base *ptr, t_mini *mini)
 			ft_putstr_fd("cd: no such file or directory: ", STDOUT);
 			ft_putstr_fd(ptr->argv[1], STDOUT);
 			ft_putstr_fd("\n", STDOUT);
-			mini->exit = 1; // check this
+			mini->exit = 1;
 			return ;
 		}
 		ft_unset(mini, "OLDPWD");

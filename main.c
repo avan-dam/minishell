@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/28 09:56:08 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/29 23:02:17 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ int		main(int argc, char **argv, char **envp)
 	if (argc == 1)
 	{
 		ft_memset(&mini, 0, sizeof(t_mini));
-		ft_set_array(&mini); // check use of
 		ft_set_env(argv, envp, &mini);
 		while (lineret)
 		{
 			ft_putstr_fd("> ", mini.stdout); // the bash prompt
-			if ((lineret = get_next_line(1, &line)) < 0)
+			if ((lineret = get_next_line(mini.stdin, &line)) < 0)
 				return (-1);
 			parse_input_string(line, &mini, envp);
 			free(line);

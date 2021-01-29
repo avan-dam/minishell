@@ -29,7 +29,7 @@ static int		ft_check_in_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 		if (ft_strcmp(dit->d_name, tmp->argv[0]) == 0)
 		{
 			tmp->argv[0] = ft_strjoin("/usr/bin/", tmp->argv[0]);
-			ptr->argv[0] = tmp->argv[0];
+			ptr->argv[0] = tmp->argv[0]; // free ptr->argv?
 			closedir(dirp);
 			return (0);
 		}

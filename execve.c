@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/28 17:19:53 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/29 22:57:31 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,6 @@ static void		execve_commands(t_base *ptr, char **envp)
 	}
 }
 
-// static int		ft_check_notbultin(char *command, t_mini *mini)
-// {
-// 	int i;
-	
-// 	i = 0;
-// 	while (mini->notbuiltin[i] != NULL)
-// 	{
-// 		if (ft_strcmp(command, mini->notbuiltin[i]) == 0)
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
 void		exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
 	t_base	*tmp;
@@ -103,9 +89,10 @@ void		exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		else if (ft_strcmp(tmp->argv[0], "env") == 0)
 			ft_lstprint(mini->env1, mini);
 		else if (look_for_non_builtin(tmp) == 0)
+		{
+			printf("goes in non builtin\n");
 			execve_commands(tmp, envp);
-		// else if (ft_check_notbultin(tmp->argv[0], mini) == 1) // also builtins should go into execve
-		// 	execve_commands(tmp, envp);
+		}
 		else
 			unvalid_identifier(tmp->argv[0], mini);
 		tmp = tmp->next;

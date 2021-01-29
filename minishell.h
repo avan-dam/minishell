@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:20:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/28 17:11:32 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/28 17:45:24 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ void				ft_add_env(char *env, char *path, t_mini *mini); // or static
 char				*ft_get_env(char *env, t_mini *mini); // of static
 
 void				ft_set_env(char **argv, char **envp, t_mini *mini);
-void				ft_set_array(t_mini *mini);
 
 
 #endif

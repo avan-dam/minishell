@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:49:57 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/28 17:45:38 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void			parse_input_string(char *line, t_mini *mini, char **envp)
 	ptr = NULL;
 	i = 0;
 	line = ft_strtrim(line, " ");
-	ft_set_array(mini);
 	while (line[i])
 	{
 		// bash: syntax error near unexpected token `;'

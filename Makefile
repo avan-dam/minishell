@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/27 17:37:19 by salbregh      #+#    #+#                  #
-#    Updated: 2021/01/28 17:11:57 by salbregh      ########   odam.nl          #
+#    Updated: 2021/01/29 17:10:52 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,8 @@ SRCS =		main.c \
 			list_utils/ft_split_into_list.c \
 			utils.c \
 			replace_dolla.c \
-			set_arrays.c \
 			redir.c \
-			newparser.c \
+			parser.c \
 			execve.c \
 			exit_status.c \
 			signal.c \

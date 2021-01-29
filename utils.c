@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:39:31 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/28 17:46:43 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		unvalid_identifier(char *error, t_mini *mini)
     // ft_putstr_fd("bash: export: '", mini->stderr);
     ft_putstr_fd("bash: ", mini->stderr);
     ft_putstr_fd(error, mini->stderr);
-    ft_putstr_fd("': command not found\n", mini->stderr);
+    ft_putstr_fd(": command not found\n", mini->stderr);
     mini->exit = 127;
     return (-1);
 }

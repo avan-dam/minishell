@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 13:52:12 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/29 22:05:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/30 00:28:54 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,12 @@ t_base		*ft_redir(t_mini *mini, t_base *ptr)
 		return (ptr);
 	while (i < ptr->size)
 	{
+		printf("checking ptr->argv[i] [%s]\n", ptr->argv[i]);
 		if ((ft_strcmp(">", ptr->argv[i]) == 0) || (ft_strcmp(">>", ptr->argv[i]) == 0) || (ft_strcmp("<", ptr->argv[i]) == 0))
 		{
 			if (ft_open_file(ptr, i, mini) ==  -1)
 				return (NULL);
+			i--;
 		}
 		i++;
 	}

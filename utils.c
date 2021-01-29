@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/29 23:25:40 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/30 00:35:55 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 int		unvalid_identifier(char *error, t_mini *mini)
 {
     // is this STDOUT OR STD ERROR
-    // ft_putstr_fd("bash: export: '", mini->stderr);
     ft_putstr_fd("bash: ", mini->stderr);
     ft_putstr_fd(error, mini->stderr);
     ft_putstr_fd(": command not found\n", mini->stderr);

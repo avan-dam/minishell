@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/29 23:30:29 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/30 00:29:16 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 	int			piped;
 
 	piped = 0;
-	printf("Argument in list: \n");
-	for (int j = 0; j < ptr->size; j++)
-		printf("redir the argument: {%s}\n", ptr->argv[j]);
-	printf("TYPE: %d\n", ptr->type);
-	printf("SIZE: %d\n", ptr->size);
-	printf("end of argument in list\n\n");
+	// printf("Argument in list: \n");
+	// for (int j = 0; j < ptr->size; j++)
+	// 	printf("redir the argument: {%s}\n", ptr->argv[j]);
+	// printf("TYPE: %d\n", ptr->type);
+	// printf("SIZE: %d\n", ptr->size);
+	// printf("end of argument in list\n\n");
 	if (ptr->type == TYPE_PIPE || (ptr->prev && ptr->prev->type == TYPE_PIPE))
 	{
 		piped = 1;
@@ -83,6 +83,7 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	t_base	*tmp;
 
 	tmp = ptr;
+	(void)envp;
 	while (tmp)
 	{
 		tmp = ft_redir(mini, tmp);

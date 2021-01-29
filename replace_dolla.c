@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/29 22:51:50 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/29 23:36:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static int	ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 			ft_memmove(&end[1], &end[2], ft_strlen(end) - 1);
 	}
 	newvar = ft_check_var_tlist(mini, oldvar);
-	if (ft_strcmp(oldvar, "") == 0)
+	if (ft_strcmp(oldvar, "") == 0 && end[0] != '\'' && end[0] != '"')
 		newvar = ft_strdup("$");
-	if (ft_strcmp("", newvar) != 0)
+	if (ft_strcmp("", newvar) != 0 || end[0] == '\'' || end[0] == '"')
 	{	
 		s->line = ft_strjoin_three(start, newvar, end);
 		return (ft_len(newvar) - 1);

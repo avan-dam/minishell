@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/30 00:32:01 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/30 00:47:22 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	t_base	*tmp;
 
 	tmp = ptr;
+	(void)envp;
 	while (tmp)
 	{
 		tmp = ft_redir(mini, tmp);

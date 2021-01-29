@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/29 23:36:58 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/30 00:33:42 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static int 			ft_check_backslash(t_line *s, int i)
 	if ((s->line[i + 1] == '`') || (s->line[i + 1] == '"') || ((s->line[i + 1] == '\'') && (s->d % 2 == 0))|| s->line[i + 1] == '$')
 	{
 		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
-		if (s->line[i] == '$' && ((i == 0) || ((i >0) && (s->line[i - 1] != '\\'))))
-			i++;
+		if ((s->line[i] == '$' && ((i == 0) || ((i >0) && (s->line[i - 1] != '\\')))) || (s->line[i] == '"') || s->line[i] == '\'')
+		i++;
 	}
 	else if ((s->s % 2 == 0) && (s->d % 2 == 0))
 		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);

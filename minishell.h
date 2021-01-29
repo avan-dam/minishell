@@ -5,14 +5,11 @@
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/01/27 17:20:58 by salbregh      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2021/01/28 17:45:24 by salbregh      ########   odam.nl         */
-=======
-/*   Updated: 2021/01/29 21:53:51 by ambervandam   ########   odam.nl         */
->>>>>>> master
+/*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/01/29 23:30:08 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -128,16 +125,10 @@ int					ft_strrchr_numb(char *line, char c, int i);
 int  				numb_char(char *line, char c);
 
 // int				ft_execve(t_mini *mini, char **envp, t_piper *piper);
-<<<<<<< HEAD
-void				exec_cmds(t_base *ptr, char **envp, t_mini *mini);
-
+int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 int					look_for_non_builtin(t_base *ptr);
 
 // int					ft_redir(t_mini *mini, int d);
-
-=======
-int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
->>>>>>> master
 
 int  				ft_split_into_tlist(t_mini *mini, char *line);
 t_list				*ft_lstnew(void *var1, void *var2);

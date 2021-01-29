@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/29 23:22:43 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/29 23:30:29 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 	}
 }
 
-void		exec_cmds(t_base *ptr, char **envp, t_mini *mini)
+int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
 	t_base	*tmp;
 
@@ -103,7 +103,7 @@ void		exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		else if (look_for_non_builtin(tmp) == 0)
 		{
 			printf("goes in non builtin\n");
-			execve_commands(tmp, envp);
+			execve_commands(tmp, envp, mini);
 		}
 		else if (ft_strcmp(tmp->argv[0], "$?") == 0)
 			ft_printf_exit_status(mini);

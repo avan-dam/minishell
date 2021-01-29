@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:14:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:59:39 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/29 22:28:23 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 		if (pipe(piper->fd) == -1)
 			return (-1); // ERROR WITH PIPE
 	}
-	if (ft_strcmp(command, "echo") == 0 || (ft_strcmp(command, "/bin/echo") == 0))
+	if (ft_strcmp(command, "echo") == 0) //|| (ft_strcmp(command, "/bin/echo") == 0))
 		ft_echo(more, mini, piper);
 	else if (ft_strcmp(command, "cd") == 0)
 		ft_cd(mini);

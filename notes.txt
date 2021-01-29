@@ -11,22 +11,15 @@ git commit -m"merging amber branch"
 git push origin master
 if conflicts checkout to my branch
 AMBER:
-echo hallo 'ma\'ran'' siemons
 SIGNAL:
 https://linuxhint.com/signal_handlers_c_programming_language/
 
 
 NOT WORKING:
 ECHO:
-echo 00\\\'pp ; echo 00\\\\\'pp
-echo $?\
-echo hallo 'ma\'ran'' siemons
+Echo ; echo \n ' \n this is the; "first line"' ; echo "and right here;;; 'We have the second'" ; echo and" a fe"'w 'here'; with some slash and quotes   .'   '\' ; echo '\\' ; echo "\\" ; echo    "\"" ; echo   \\ ; echo   \' ; echo   \" "\\"    "\""   \\   \'   \"
 echo "\\$USER"
-echo "1234" \; echo hoi
-echo \; -- need to implement so it doesnt recognise a semicolon as a semi colon if after a backslash
 echo \< -- same with redirection both ways
-echo \\
-echo "\;"
 echo "\<"
 
 echo hello >$4
@@ -110,6 +103,7 @@ the script/shell.
 
 
 AMBER:
+echo "\""
 - evecve!!
 chmod
 ls

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/28 09:24:17 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/29 22:56:53 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	put_commands_in_list(t_base **ptr, char *line, t_mini *mini)
 	return (numb_characters);
 }
 
-void			parse_input_string(char *line, t_mini *mini, char **envp)
+int			parse_input_string(char *line, t_mini *mini, char **envp)
 {
 	t_base		*ptr;
 	int			i;
@@ -92,12 +92,10 @@ void			parse_input_string(char *line, t_mini *mini, char **envp)
 	i = 0;
 	line = ft_strtrim(line, " ");
 	ft_set_array(mini);
-	if (ft_check_dolla_quotes(line, mini, 0, 0) == NULL)
-	{
-			return ; }// if u remove this need to add in if line ==NULL return
+	if (ft_check_dolla_quotes(line, mini, 0, 0) == NULL)// if u remove this need to add in if line ==NULL return
+			return (-2); // -1 is to exit whole thing this just goes to next promt and tells u you entered a multiline
 	while (line[i])
 	{
-		// bash: syntax error near unexpected token `;'
 		while (line[i] == ' ') // deleted ;
 			i++;
 		i = i + put_commands_in_list(&ptr, &line[i], mini);
@@ -118,9 +116,9 @@ void			parse_input_string(char *line, t_mini *mini, char **envp)
 	// 	tmp = tmp->next;
 	// }
 	if (ptr)
-	{	
-		exec_cmds(ptr, envp, mini);
-	}
+		if (exec_cmds(ptr, envp, mini) == -1)
+			return (-1);
+	return (0);
 	// fix leaks
 }
 

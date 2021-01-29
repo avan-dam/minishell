@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:20:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/28 09:23:47 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/29 21:53:51 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ typedef struct		s_base
 
 typedef struct		s_line
 {
-	int				o;
-	int				t;
-	int				k;
+	int				s;//number of single quotes that are registered as such
+	int				d;//number of double quotes that are registered as such
 	char			*line;
 }					t_line;
 
@@ -85,7 +84,6 @@ typedef struct		s_mini
 	int				type_end;
 	int				stdin;
 	int				exit;
-	int				singlequote;
 }					t_mini;
 
 typedef struct		s_piper
@@ -113,7 +111,7 @@ void				ft_cd(t_base *ptr, t_mini *mini); // new
 void				ft_pwd(t_mini *mini);
 
 /* PARSER FUNCTIONS */
-void				parse_input_string(char *line, t_mini *mini, char **envp);
+int					parse_input_string(char *line, t_mini *mini, char **envp);
 
 
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
@@ -126,10 +124,7 @@ int					ft_strrchr_numb(char *line, char c, int i);
 int  				numb_char(char *line, char c);
 
 // int				ft_execve(t_mini *mini, char **envp, t_piper *piper);
-void				exec_cmds(t_base *ptr, char **envp, t_mini *mini);
-
-// int					ft_redir(t_mini *mini, int d);
-
+int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 
 int  				ft_split_into_tlist(t_mini *mini, char *line);
 t_list				*ft_lstnew(void *var1, void *var2);
@@ -138,11 +133,12 @@ void				ft_lstprint(t_list *lst, t_mini *mini);
 // int					ft_builtin(t_mini *mini, char *command, char *more, char **envp);
 int					ft_execve(t_mini *mini, char **envp);
 void				ft_lstclear(t_list **lst);
-int					ft_redir(t_mini *mini, char **envp);
+t_base				*ft_redir(t_mini *mini, t_base *ptr);
+// int					ft_redir(t_mini *mini, t_base *ptr);
 int					ft_parse_input(char *command, char *more, t_mini *mini, char **envp);
 void				ft_printf_exit_status(t_mini *mini);
 char				*ft_string_insert(char *string, int i, char *middle);
-void 				ft_close_fds(t_mini *mini);
+void 				ft_reset_fds(t_mini *mini);
 void				ft_exit(t_mini *mini, int exitstatus);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
 void				handle_sigint(int sig);

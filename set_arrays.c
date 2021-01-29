@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:41 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:39:42 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/29 22:38:46 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	set_command(t_mini *mini)
 {
 	mini->notbuiltin[0] = "ls"; //works
 	mini->notbuiltin[1] = "/bin/ls"; //works
-	mini->notbuiltin[2] = "/bin/chmod";
+	mini->notbuiltin[2] = "/bin/echo";
 	mini->notbuiltin[3] = "chmod";
 	mini->notbuiltin[4] = "wc";
 	mini->notbuiltin[5] = "/bin/wc";

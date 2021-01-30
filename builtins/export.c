@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:04:41 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 17:46:08 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/01/30 12:31:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		ft_export(t_base *ptr, t_mini *mini)
 {
 	char	*error;
+	printf("in export with ptr->argv[0][%s] and ptr->1 is [%s]\n", ptr->argv[0], ptr->argv[1]);
 	if (ptr->argv[1] == NULL)
 		return (0);
 	if ((ptr->argv[1][0] >= '0' && ptr->argv[1][0] <= '9') || (ptr->argv[1][0] == '/'))

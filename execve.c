@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/30 00:41:41 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/30 12:38:05 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,37 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 			exit (0);
 		}
 		// in here check commands;
-		if ((ft_strcmp(ptr->argv[0], "echo")) == 0) //|| (ft_strcmp(tmp->argv[0], "/bin/echo") == 0))
+		if ((ft_strcmp(ptr->argv[0], "echo") == 0) || (ft_strcmp(ptr->argv[0], "/bin/echo") == 0))
 			ft_echo(ptr, mini);
 		else if (ft_strcmp(ptr->argv[0], "cd") == 0)
 			ft_cd(ptr, mini);
 		else if ((ft_strcmp(ptr->argv[0], "pwd") == 0) || (ft_strcmp(ptr->argv[0], "/bin/pwd") == 0))
 			ft_pwd(mini);
 		else if (ft_strcmp(ptr->argv[0], "export") == 0)
+		{
+			// printf("about to do into export\n");
 			ft_export(ptr, mini);
+			// printf("after lst added:\n");
+			// ft_lstprint(mini->env1, mini);
+			// printf("listprint done\n");
+		}
 		else if (ft_strcmp(ptr->argv[0],"unset") == 0)
 			ft_unset(mini, ptr->argv[1]);
 		else if (ft_strcmp(ptr->argv[0], "env") == 0)
+		{
+			// printf("about to lst print env\n");	
 			ft_lstprint(mini->env1, mini);
+		}
+		else if (ft_strcmp(ptr->argv[0], "$?") == 0)
+			ft_printf_exit_status(mini);
 		else if ((execve(ptr->argv[0], ptr->argv, envp)) < 0)
 		{
 			printf("Execve failed.\n");
 			printf("CASE 3\n");
 			exit (0);
 		}
+		else
+			unvalid_identifier(ptr->argv[0], mini);
 		exit (EXIT_SUCCESS); // closes process with succes // change
 	}
 	else // parent process
@@ -100,14 +113,11 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		// 	ft_unset(mini, tmp->argv[1]);
 		// else if (ft_strcmp(tmp->argv[0], "env") == 0)
 		// 	ft_lstprint(mini->env1, mini);
-		else if (look_for_non_builtin(tmp) == 0)
-			execve_commands(tmp, envp, mini);
-		else if (ft_strcmp(tmp->argv[0], "$?") == 0)
-			ft_printf_exit_status(mini);
-		else if (ft_strcmp(tmp->argv[0], "exit") == 0)
+		// else if (look_for_non_builtin(tmp) == 0)
+		if (ft_strcmp(tmp->argv[0], "exit") == 0)
 			return (-1);
 		else
-			unvalid_identifier(tmp->argv[0], mini);
+			execve_commands(tmp, envp, mini);
 		ft_reset_fds(mini);
 		tmp = tmp->next;
 	}

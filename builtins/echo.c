@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/30 00:42:32 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/30 12:10:41 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int    ft_echo(t_base *ptr, t_mini *mini)
 
 	i = 1;
 
-
+    printf("in echo mine!!\n");
 	string = ft_strdup("");
 	while (ptr->argv[i])
 	{

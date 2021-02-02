@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/29 21:46:18 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/01 10:09:10 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void		ft_printf_exit_status(t_mini *mini)
 {
 	char	*exitstatus;
 
-	printf("in exit status command\n");
 	exitstatus = ft_itoa(mini->exit);
 	ft_putstr_fd(exitstatus, mini->stdout);
 	ft_putstr_fd("\n", mini->stdout);
@@ -48,7 +47,7 @@ void		ft_printf_exit_status(t_mini *mini)
 }
 
 // MAKE SURE ALL CLEARED
-void	ft_exit(t_mini *mini, int exitstatus)
+void	ft_exit(t_mini *mini, int exitstatus) // exit with 0 or exit statment??
 {
 	ft_reset_fds(mini);
 	ft_memset(&mini, 0, sizeof(t_mini)); // but not mini->exit

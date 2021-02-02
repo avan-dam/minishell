@@ -6,27 +6,15 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 13:52:12 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/30 00:28:54 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/02 12:15:31 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			number_of_redirections(t_base *ptr)
-{
-	int	i;
-	int ret;
-
-	i = 0;
-	ret = 0;
-	while (i < ptr->size)
-	{
-		if ((ft_strcmp(">", ptr->argv[i]) == 0) || (ft_strcmp(">>", ptr->argv[i]) == 0) || ((ft_strcmp("<", ptr->argv[i]) == 0)))
-			ret++;
-		i++;
-	}
-	return (ret);
-}
+// CLEAN UP THIS FILE 
+// WRITE PARSER SO IT WORKS WITH REDIR
+// SO LOOK AT ALL > < and BACKSLASH
 
 static int	ft_remove_redir_argv(t_base *ptr, int i)
 {
@@ -72,7 +60,9 @@ static int		error_opening(char *error, t_mini *mini)
 static int 		ft_open_file(t_base *ptr, int i, t_mini *mini)
 {
 	int fd;
-	printf("opening file [%s]\n", ptr->argv[i + 1]);
+
+	if (ptr->redir == 0)
+		return (0);
 	if (ft_strcmp(">", ptr->argv[i]) == 0)
 	{
 		if ((fd = open(ptr->argv[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0666)) == -1)
@@ -96,23 +86,115 @@ static int 		ft_open_file(t_base *ptr, int i, t_mini *mini)
 	return (0);
 }
 
+static char		**add_tmp_tolist(char *tmp, t_base *ptr, int i)
+{
+	int j;
+	char **new;
+
+	j = 0;
+	ptr->size = ptr->size + 1;
+	new = (char **)malloc(sizeof(char *) * (ptr->size + 1));
+	if (new == NULL)
+		return (NULL);
+	while (j < i)
+	{
+		new[j] = ft_strdup(ptr->argv[j]); 
+		j++;
+	}
+	new[j] = ft_strdup(tmp);
+	j++;
+	while (j < ptr->size)
+	{
+		new[j] = ft_strdup(ptr->argv[j - 1]); 
+		j++;
+	}
+	new[j] = NULL;
+	j = 0;
+	while (j < ptr->size - 1)
+	{
+		free(ptr->argv[j]);
+		ptr->argv[j] = NULL;
+		j++;
+	}
+	return (new);
+}
+
+static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini)
+{
+	int j;
+	char *tmp;
+
+	tmp = NULL;
+	j = 0;
+	while(ptr->argv[i][j] == '\\')
+		j++;
+	if (j % 2 == 0)
+		ptr->redir = 1;
+	j = 0;
+	while(ptr->argv[i][j] == '\\')
+	{
+		if (ptr->argv[i][j + 1] == '\\')
+			ft_memmove(&ptr->argv[i][j], &ptr->argv[i][j + 1], ft_strlen(ptr->argv[i]) - j);
+		j++;
+	}
+	j = 0;
+	while(ptr->argv[i][j] == '\\')
+		j++;
+	if (j <= 0)
+	{
+		if (ptr->redir == 1)
+		{
+			if (ft_open_file(ptr, i, mini) ==  -1)
+				return (-1);
+			return (0);
+		}
+	}
+	if (j > 0)
+	{	
+		ptr->argv[i] = ft_substr(ptr->argv[i], j, ft_strlen(ptr->argv[i]) - j);
+	}
+	j--;
+	tmp = (char *)malloc(sizeof(char) * (j + 1));
+	if (tmp == NULL)
+		return (i);
+	tmp[j] = '\0';
+	j--;
+	while(j >= 0)
+	{
+		tmp[j] = '\\';
+		j--;
+	}
+	if (ptr->redir == 1)
+		tmp = ft_strjoin(tmp, "\\");
+	if (i > 0)
+	{	
+		if ((ptr->argv = add_tmp_tolist(tmp, ptr, i)) == NULL)
+			return (i + 1);
+	}
+	if (ptr->redir == 1)
+	{
+		i++;
+		if (ft_open_file(ptr, i, mini) ==  -1)
+			return (-1);
+	}
+	return (i);
+}
+
 t_base		*ft_redir(t_mini *mini, t_base *ptr)
 {	
-	int		no_redirs;
 	int		i;
 
 	i = 0;
-	if ((no_redirs = number_of_redirections(ptr)) == 0)
-		return (ptr);
-	while (i < ptr->size)
+	ptr->redir = 0;
+	while (i < ptr->size - 1)
 	{
-		printf("checking ptr->argv[i] [%s]\n", ptr->argv[i]);
-		if ((ft_strcmp(">", ptr->argv[i]) == 0) || (ft_strcmp(">>", ptr->argv[i]) == 0) || (ft_strcmp("<", ptr->argv[i]) == 0))
-		{
-			if (ft_open_file(ptr, i, mini) ==  -1)
-				return (NULL);
-			i--;
+		if ((ft_strchr_numb(ptr->argv[i], '>', 0) != -1) || (ft_strchr_numb(ptr->argv[i], '<', 0) != -1))
+		{	
+			ft_backslash_redir(ptr, i, mini);
+			if (ptr->redir == 0)
+				i++;
 		}
+		ptr->redir = 0;
 		i++;
 	}
 	return (ptr);
@@ -125,7 +207,6 @@ t_base		*ft_redir(t_mini *mini, t_base *ptr)
 	// printf("TYPE: %d\n", ptr->type);
 	// printf("SIZE: %d\n", ptr->size);
 	// printf("end of argument in list\n\n");
-
 
 //this function finds the first thing behind 
 // filenam canytt hsavespaceat start or end

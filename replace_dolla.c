@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/01/30 00:33:42 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/01 17:19:10 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,32 +52,35 @@ static int	ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 			ft_memmove(&end[1], &end[2], ft_strlen(end) - 1);
 	}
 	newvar = ft_check_var_tlist(mini, oldvar);
+	// printf("start[%s] end[%s] oldbvar[%s] newvar[%s]\n", start, end, oldvar, newvar);
 	if (ft_strcmp(oldvar, "") == 0 && end[0] != '\'' && end[0] != '"')
-		newvar = ft_strdup("$");
-	if (ft_strcmp("", newvar) != 0 || end[0] == '\'' || end[0] == '"')
-	{	
+			newvar = ft_strdup("$");
+			// condition out for $radnom
+	// if (ft_strcmp("", newvar) != 0 || end[0] == '\'' || end[0] == '"')
+	// {	
 		s->line = ft_strjoin_three(start, newvar, end);
 		return (ft_len(newvar) - 1);
-	}
+	// }
 	return (0);
 }
 
 static int 			ft_check_backslash(t_line *s, int i)
 {
-	if ((s->line[i + 1] == '`') || (s->line[i + 1] == '"') || ((s->line[i + 1] == '\'') && (s->d % 2 == 0))|| s->line[i + 1] == '$')
+	// printf("in backslash function with s->line[i]%c s->line[i + 1]%c s->s%d s->d%d\n", s->line[i], s->line[i + 1], s->s, s->d);
+	if (((s->line[i + 1] == '`') || (s->line[i + 1] == '"') || ((s->line[i + 1] == '\'') && (s->d % 2 == 0))|| s->line[i + 1] == '$'|| s->line[i + 1] == '\\') && s->line[i + 1] != '>' && s->line[i + 1] != '<')
 	{
 		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
-		if ((s->line[i] == '$' && ((i == 0) || ((i >0) && (s->line[i - 1] != '\\')))) || (s->line[i] == '"') || s->line[i] == '\'')
-		i++;
+		if (s->line[i] != '\0' && ((s->line[i] == '$' && ((i == 0) || ((i >0) && (s->line[i - 1] != '\\')))) || s->line[i] == '\''||(s->line[i] == '\\')|| s->line[i] == '"'))
+				i++;
 	}
-	else if ((s->s % 2 == 0) && (s->d % 2 == 0))
+	else if ((s->s % 2 == 0) && (s->d % 2 == 0) && (s->line[i + 1] != '>') && (s->line[i + 1] != '<'))
 		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 	return (i);
 }
 
 static int		ft_double_quotes(t_line *s, int i)
 {
-	// printf("in double with line %s and t %d\n", s->line, s->d);
+	// printf("in double wxith line %s and t %d\n", s->line, s->d);
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
 	i--;
 	if (s->s % 2 == 0)
@@ -134,12 +137,14 @@ static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini, int j, char *lin
 			i--;
 		}
 	}
-	if (((line[i] == '<') || (line[i] == '>') )&& (j == 0))
+	// printf("line at checker is [%s] line[i] is %cline[i-1] is %c\n", line, line[i], line[i-1]);
+	if ((((line[i] == '<') || (line[i] == '>') )&& line[i - 1] != '\\')&& (j == 0))
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", mini->stderr);
 		mini->exit = 258;
 		return (NULL);
 	}
+	// printf("in checker s->s is %d s->d is %d and line is %s and s->line is %s\n", s->s, s->d, line, s->line);
 	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
 	{
 		if (j == 0)
@@ -178,8 +183,8 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j)
 	s.line = ft_strdup(line);
 	while (s.line[i] != '\0')
 	{
-		// printf("line [%s] char is line->i[%c]\n", s.line, s.line[i]);
-		if (s.line[i] == '\\')
+		// printf("line [%s] char is line->i[%c] s.d%d s.s%d\n", s.line, s.line[i], s.d, s.s);
+		if (s.line[i] == '\\' && numb_char(s.line, '>') == 0 && numb_char(s.line, '<') == 0)
 			i = ft_check_backslash(&s, i);
 		if (s.line[i] == '\'')
 			i = ft_single_quotes(&s, i);
@@ -190,7 +195,9 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j)
 			i = i + ft_find_dolla(s.line, i + 1, mini, &s);
 		else if (s.line[i] == '$' && s.line[i + 1] == '?' && (s.d == 0 || s.d % 2 == 1) && (s.s == 0 ||s.s % 2 == 0))
 			ft_exit_status_replace(&s, i, mini);
-		i++;
+		if (s.line[i] != '\0')
+			i++;
 	}
+	// printf("ending woo if no error leaving with [%s]\n", s.line);
 	return (ft_check_quotes_in_order(&s, mini, j, line));
 }

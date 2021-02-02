@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/30 12:10:41 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/02 12:06:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,11 @@ static char *ft_howmany_n(char *string, int i, int j)
         i++;
         while (string[i] == 'n')
             i++;
-		if (string[i] == '\0')
-			return (ft_substr(string, j, ft_strlen(string) - j));
         if (string[i] != ' ')
             return (ft_substr(string, j, ft_strlen(string) - j));
         i++;
     }
-    return (string);
+    return (ft_strdup(""));
 }
 
 static int    ft_echo_n(char *string, t_mini *mini)
@@ -71,12 +69,11 @@ int    ft_echo(t_base *ptr, t_mini *mini)
 
 	i = 1;
 
-    printf("in echo mine!!\n");
 	string = ft_strdup("");
 	while (ptr->argv[i])
 	{
 		string = ft_strjoin(string, ptr->argv[i]);
-		if (ptr->argv[i + 1])
+		if (ptr->argv[i + 1] && ptr->argv[i + 1][0] !='>' && ptr->argv[i + 1][0] !='<')
 			string = ft_strjoin(string, " ");
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/30 12:38:05 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/02 12:15:54 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,47 +33,38 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		dup2(mini->stdout, STDOUT);
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 		{
-			printf("Type is pipe, and dup 2 failed.\n");
+			// printf("Type is pipe, and dup 2 failed.\n");
 			exit (0); // change
 		}
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE && dup2(ptr->prev->fd[0], STDIN) < 0)
 		{
-			printf("Type of previous is pipe, and dup 2 failed.\n");
+			// printf("Type of previous is pipe, and dup 2 failed.\n");
 			exit (0);
 		}
 		// in here check commands;
-		if ((ft_strcmp(ptr->argv[0], "echo") == 0) || (ft_strcmp(ptr->argv[0], "/bin/echo") == 0))
-			ft_echo(ptr, mini);
-		else if (ft_strcmp(ptr->argv[0], "cd") == 0)
-			ft_cd(ptr, mini);
-		else if ((ft_strcmp(ptr->argv[0], "pwd") == 0) || (ft_strcmp(ptr->argv[0], "/bin/pwd") == 0))
-			ft_pwd(mini);
-		else if (ft_strcmp(ptr->argv[0], "export") == 0)
-		{
-			// printf("about to do into export\n");
-			ft_export(ptr, mini);
-			// printf("after lst added:\n");
-			// ft_lstprint(mini->env1, mini);
-			// printf("listprint done\n");
-		}
-		else if (ft_strcmp(ptr->argv[0],"unset") == 0)
-			ft_unset(mini, ptr->argv[1]);
-		else if (ft_strcmp(ptr->argv[0], "env") == 0)
-		{
-			// printf("about to lst print env\n");	
-			ft_lstprint(mini->env1, mini);
-		}
-		else if (ft_strcmp(ptr->argv[0], "$?") == 0)
-			ft_printf_exit_status(mini);
-		else if ((execve(ptr->argv[0], ptr->argv, envp)) < 0)
-		{
-			printf("Execve failed.\n");
-			printf("CASE 3\n");
+		// if ((ft_strcmp(ptr->argv[0], "echo") == 0) || (ft_strcmp(ptr->argv[0], "/bin/echo") == 0))
+		// 	ft_echo(ptr, mini);
+		// else if (ft_strcmp(ptr->argv[0], "cd") == 0)
+		// 	ft_cd(ptr, mini);
+		// else if ((ft_strcmp(ptr->argv[0], "pwd") == 0) || (ft_strcmp(ptr->argv[0], "/bin/pwd") == 0))
+		// 	ft_pwd(mini);
+		// else if (ft_strcmp(ptr->argv[0], "export") == 0)
+		// 	ft_export(ptr, mini);
+		// else if (ft_strcmp(ptr->argv[0],"unset") == 0)
+		// 	ft_unset(mini, ptr->argv[1]);
+		// else if (ft_strcmp(ptr->argv[0], "env") == 0)
+		// 	ft_lstprint(mini->env1, mini);
+		// else if (ft_strcmp(ptr->argv[0], "$?") == 0)
+		// 	ft_printf_exit_status(mini);
+		// else if ((execve(ptr->argv[0], ptr->argv, envp)) < 0)
+		// {
+			printf("Execve failed.\nCASE 3\n");
 			exit (0);
-		}
-		else
-			unvalid_identifier(ptr->argv[0], mini);
-		exit (EXIT_SUCCESS); // closes process with succes // change
+			(void)envp;
+		// }
+		// else
+		// 	unvalid_identifier(ptr->argv[0], mini, 127);
+		// exit (EXIT_SUCCESS); // closes process with succes // change // REMOVED THIS THIS MAKES ENV AND EXPORT AND UNSET WORK
 	}
 	else // parent process
 	{
@@ -101,23 +92,26 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		tmp = ft_redir(mini, tmp);
 		if (tmp == NULL)
 			break ;
-		// if ((ft_strcmp(tmp->argv[0], "echo")) == 0) //|| (ft_strcmp(tmp->argv[0], "/bin/echo") == 0))
-		// 	ft_echo(tmp, mini);
-		// else if (ft_strcmp(tmp->argv[0], "cd") == 0)
-		// 	ft_cd(tmp, mini);
-		// else if ((ft_strcmp(tmp->argv[0], "pwd") == 0) || (ft_strcmp(tmp->argv[0], "/bin/pwd") == 0))
-		// 	ft_pwd(mini);
-		// else if (ft_strcmp(tmp->argv[0], "export") == 0)
-		// 	ft_export(tmp, mini);
-		// else if (ft_strcmp(tmp->argv[0],"unset") == 0)
-		// 	ft_unset(mini, tmp->argv[1]);
-		// else if (ft_strcmp(tmp->argv[0], "env") == 0)
-		// 	ft_lstprint(mini->env1, mini);
-		// else if (look_for_non_builtin(tmp) == 0)
-		if (ft_strcmp(tmp->argv[0], "exit") == 0)
+		if ((ft_strcmp(tmp->argv[0], "echo")) == 0) //|| (ft_strcmp(tmp->argv[0], "/bin/echo") == 0))
+			ft_echo(tmp, mini);
+		else if (ft_strcmp(tmp->argv[0], "cd") == 0)
+			ft_cd(tmp, mini);
+		else if ((ft_strcmp(tmp->argv[0], "pwd") == 0) || (ft_strcmp(tmp->argv[0], "/bin/pwd") == 0))
+			ft_pwd(mini);
+		else if (ft_strcmp(tmp->argv[0], "export") == 0)
+			ft_export(tmp, mini);
+		else if (ft_strcmp(tmp->argv[0],"unset") == 0)
+			ft_unset(mini, tmp->argv[1]);
+		else if (ft_strcmp(tmp->argv[0], "env") == 0)
+			ft_lstprint(mini->env1, mini);
+		else if (ft_strcmp(tmp->argv[0], "$?") == 0)
+			ft_printf_exit_status(mini);
+		else if (ft_strcmp(tmp->argv[0], "exit") == 0)
 			return (-1);
-		else
+		else if (look_for_non_builtin(tmp) == 0) // change obvs
 			execve_commands(tmp, envp, mini);
+		else 		
+			unvalid_identifier(tmp->argv[0], mini, 127);
 		ft_reset_fds(mini);
 		tmp = tmp->next;
 	}

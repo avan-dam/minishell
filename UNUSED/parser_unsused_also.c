@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/03 17:24:36 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/01/28 12:15:26 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/01/31 09:54:47 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		ft_parse_input(char *command, char *more, t_mini *mini, char **envp)
 	else if (ft_strcmp(command, "exit") == 0)
 		return (-1);
 	else
-		unvalid_identifier(command, mini);
+		unvalid_identifier(command, mini, 127);
 	return (0);
 }
 

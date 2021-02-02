@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/01 14:00:06 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/02 18:25:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static int	number_of_commands(char *line, t_mini *mini)
 		{
 			while (tmp[i] == ' ')
 				i++;
+			if ((tmp[i] == '>' || tmp[i] == '<') && tmp[i + 1] != ' ')
+				numb++;
 			if ((tmp[i] == '|' || tmp[i] == ';') && (ft_check_dolla_quotes(ft_substr(line, 0, i), mini, 0, 1) != NULL))
 			{
 				mini->numb_cmds = numb;
@@ -68,14 +70,25 @@ static int	put_commands_in_list(t_base **ptr, char *line, t_mini *mini)
 	new->argv[size] = NULL;
 	j = 0;
 	int l = 0;
-	while (l < size && mini->cmd_part[j])
+	while (mini->cmd_part[j])
 	{
+		// printf("mini->cmdpart is [%s] mini->cmdpart[j]%cmini->cmdpart[j + 1]%c is and j is %d\n", mini->cmd_part, mini->cmd_part[j], mini->cmd_part[j + 1], j);
 		while (mini->cmd_part[j] == ' ')
 			j++;
 		int	k = j;
 		while (mini->cmd_part[j] != ' ' && mini->cmd_part[j])
+		{
+			if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<') && mini->cmd_part[j + 1] != ' ' && mini->cmd_part[j + 1] != '>')
+				break ;
 			j++;
-		new->argv[l] = ft_substr(mini->cmd_part, k, j - k);
+		}
+		if (mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
+		{
+			new->argv[l] = ft_substr(mini->cmd_part, k, j - k + 1);
+			j++;
+		}
+		else 
+			new->argv[l] = ft_substr(mini->cmd_part, k, j - k);
 		l++;
 	}
 	new->type = mini->type_end;
@@ -106,7 +119,7 @@ int			parse_input_string(char *line, t_mini *mini, char **envp)
 	// t_base *tmp = ptr;
 	// while(tmp)
 	// {
-	// 	printf("Argument in list: \n");
+	// 	printf("Argument HERE in list: \n");
 	// 	for (i = 0; i < tmp->size; i++)
 	// 		printf("the argument: %s\n", tmp->argv[i]);
 	// 	printf("TYPE: %d\n", tmp->type);

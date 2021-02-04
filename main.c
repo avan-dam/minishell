@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 11:55:42 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/04 12:45:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		main(int argc, char **argv, char **envp)
 		while (lineret)
 		{
 			// ft_putstr_fd("> ", mini.stdout); // the bash prompt
+			// ft_putstr_fd("> ", STDOUT); // the bash prompt
 			ft_signals(&mini, 0);
 			if ((lineret = get_next_line(mini.stdin, &line)) < 0)
 				return (-1);

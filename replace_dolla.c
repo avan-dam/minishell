@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/04 11:59:51 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/04 14:18:38 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ static int	ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 	if (ft_strcmp(oldvar, "") == 0 && (start[ft_strlen(start)] == '"' || s->d % 2 == 1) && end[0] == '"')
 		newvar = ft_strdup("$");
 	s->line = ft_strjoin_three(start, newvar, end);
+	free(oldvar);
 	return (ft_len(newvar) - 1);
 }
 
@@ -222,7 +223,7 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j)
 		if (s.line[i] != '\0')
 			i++;
 	}
-	s.line = ft_strtrim(s.line, " ");
+	// s.line = ft_strtrim(s.line, " ");
 	// printf("ending woo if no error leaving with [%s]\n", s.line);
 	return (ft_check_quotes_in_order(&s, mini, j, line));
 }

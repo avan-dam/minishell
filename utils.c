@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/03 22:35:42 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/04 14:11:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ char		*ft_strjoin_three(char *start, char *newvar, char *end)
 
 	temp = ft_strjoin(start, newvar);
 	newline = ft_strjoin(temp, end);
+    free(start);
+    free(newvar);
+    free(end);
+    free(temp);
 	return (newline);
 }
 

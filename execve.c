@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 12:50:25 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/04 14:30:10 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 			printf("CASE 3\n");
 			exit (0);
 			(void)envp;
-		}
+		 }
 		// else
 		// 	unvalid_identifier(ptr->argv[0], mini, 127);
 		// exit (EXIT_SUCCESS); // closes process with succes // change // REMOVED THIS THIS MAKES ENV AND EXPORT AND UNSET WORK
@@ -107,7 +107,7 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		// else if (ft_strcmp(tmp->argv[0], "env") == 0)
 		// 	ft_lstprint(mini->env1, mini);
 		// else if (look_for_non_builtin(tmp) == 0)
-		execve_commands(tmp, envp, mini);
+		// execve_commands(tmp, envp, mini);
 		if (ft_strcmp(tmp->argv[0], "$?") == 0)
 			ft_printf_exit_status(mini);
 		else if (ft_strcmp(tmp->argv[0], "") == 0)

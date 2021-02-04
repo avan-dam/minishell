@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/04 12:37:04 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/04 14:23:26 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,27 +110,34 @@ static char		**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
 
 static char		*add_new_backslash_into_list(int j, t_base *ptr, int i)
 {
-	char	*tmp;
+	char	*newchar;
+	char	*temp;
 
-	tmp = (char *)malloc(sizeof(char) * (j + 1));
-	if (tmp == NULL)
+	newchar = (char *)malloc(sizeof(char) * (j + 1));
+	if (newchar == NULL)
 		return (NULL);
-	tmp[j] = '\0';
+	newchar[j] = '\0';
 	j--;
 	while (j >= 0)
 	{
-		tmp[j] = '\\';
+		newchar[j] = '\\';
 		j--;
 	}
 	if (ptr->redir == 1)
-		tmp = ft_strjoin(tmp, "\\");
+	{	
+		temp = newchar;
+		newchar = ft_strjoin(temp, "\\");
+		free(temp);
+		// newchar = temp;
+		// newchar = ft_strjoin(newchar, "\\");
+	}
 	if (i > 0)
 	{
 		ptr->size = ptr->size + 1;
-		if ((ptr->argv = add_tmp_tolist(tmp, ptr, i, 0)) == NULL)
+		if ((ptr->argv = add_tmp_tolist(newchar, ptr, i, 0)) == NULL)
 			return (NULL);
 	}
-	return (tmp);
+	return (newchar);
 }
 
 static void	remove_extra_backslash_check_redir(t_base *ptr, int i)
@@ -180,6 +187,7 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini)
 		ptr->argv[i] = ft_substr(ptr->argv[i], j, ft_strlen(ptr->argv[i]) - j);
 	if ((tmp = add_new_backslash_into_list(j - 1, ptr, i)) == NULL)
 		return (-1);
+	free(tmp);
 	return (i);
 }
 

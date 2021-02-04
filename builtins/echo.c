@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 12:44:56 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/04 12:56:46 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int    ft_echo(t_base *ptr, t_mini *mini)
     char	*string;
 	int		i;
 
-    // printf("in echo\n");
 	// t_base *tmp = ptr;
 	// while(tmp)
 	// {
@@ -120,6 +119,7 @@ int    ft_echo(t_base *ptr, t_mini *mini)
     if (ft_check_empty(string) == 1)
 		// return (ft_putchar_fd('\n', STDOUT));
         return (ft_putchar_fd('\n', mini->stdout));
+    // printf("2here echo\n");
     if ((string[0] == '-') && (string[1] == 'n') && ((string[2] == ' ') || (string[2] == '\0') || (string[2] == 'n')))
     {
         if (ft_echo_n(string, mini) != 2)
@@ -127,7 +127,7 @@ int    ft_echo(t_base *ptr, t_mini *mini)
     }
     string = ft_strtrim(string, " ");
 	// ft_putstr_fd(string, STDOUT);
-    ft_putstr_fd(string, mini->stdout);
+    // ft_putstr_fd(string, mini->stdout);
     // return (ft_putchar_fd('\n', STDOUT));
     return (ft_putchar_fd('\n', mini->stdout));
 }

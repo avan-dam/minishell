@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 12:46:16 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/04 12:50:25 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		// in here check commands;
 		if ((ft_strcmp(ptr->argv[0], "echo")) == 0) // || (ft_strcmp(ptr->argv[0], "/bin/echo") == 0))
 		{
-			printf("goes in echo with ptr->argv[1]: %s\n", ptr->argv[1]);
+			// printf("goes in echo with ptr->argv[1]: %s\n", ptr->argv[1]);
 			ft_echo(ptr, mini);
 		}
 		else if (ft_strcmp(ptr->argv[0], "cd") == 0)
@@ -63,7 +63,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 			printf("CASE 3\n");
 			exit (0);
 			(void)envp;
-		// }
+		}
 		// else
 		// 	unvalid_identifier(ptr->argv[0], mini, 127);
 		// exit (EXIT_SUCCESS); // closes process with succes // change // REMOVED THIS THIS MAKES ENV AND EXPORT AND UNSET WORK

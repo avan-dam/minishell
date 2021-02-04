@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 15:42:18 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/04 16:24:11 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,17 +114,4 @@ char        *ft_string_insert(char *string, int i, char *middle)
 	start = ft_substr(string, 0, i + 1);
 	end = ft_substr(string, i + 1, ft_strlen(string) - i - 1);
 	return (ft_strjoin_three(start, middle, end));
-}
-
-int         ft_is_builtin_command(char *str)
-{
-    if ((ft_strcmp(str, "echo") == 0 || ft_strcmp(str, "/bin/echo") == 0 ||
-		ft_strcmp(str, "cd") == 0) || ft_strcmp(str, "/usr/bin/cd") == 0 ||
-		ft_strcmp(str, "env") == 0 || ft_strcmp(str, "/usr/bin/env") == 0 ||
-		ft_strcmp(str, "exit") == 0 ||
-		ft_strcmp(str, "export") == 0 || 
-		ft_strcmp(str, "pwd") == 0 || ft_strcmp(str, "/bin/pwd") == 0 ||
-		ft_strcmp(str, "unset") == 0)
-		return (1);
-	return (0);
 }

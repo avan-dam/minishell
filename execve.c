@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 15:21:40 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/04 16:32:04 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		exit (0); // change
 	if (pid == 0) // child process
 	{
-		// dup2(mini->stdin, STDIN);
-		// dup2(mini->stdout, STDOUT);
-		printf("GOES IN CHILD PROCESS, argv: %s\n", ptr->argv[0]);
+		dup2(mini->stdin, STDIN);
+		dup2(mini->stdout, STDOUT);
+		// printf("GOES IN CHILD PROCESS, argv: %s\n", ptr->argv[0]);
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 		{
 			// printf("Type is pipe, and dup 2 failed.\n");
@@ -56,8 +56,8 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 			ft_lstprint(mini->env1, mini);
 		else if (execve(ptr->argv[0], ptr->argv, envp) < 0)
 		{
-			printf("Execve failed.\n");
-			printf("CASE 3\n");
+			// printf("Execve failed.\n");
+			// printf("CASE 3\n");
 			exit (0);
 		}
 		else
@@ -72,7 +72,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		{
 			close(ptr->fd[1]);
 			if (!ptr->next || ptr->next->type == TYPE_BREAK)
-				close(ptr->fd[1]);
+				close(ptr->fd[0]);
 		}
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE)
 			close(ptr->prev->fd[0]);
@@ -86,9 +86,7 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	tmp = ptr;
 	while (tmp)
 	{
-		printf("Goes in with argv: %s\n", tmp->argv[0]);
-		look_for_non_builtin(tmp);
-		printf("Goes in with argv: %s\n", tmp->argv[0]);
+		look_for_non_builtin(tmp); // changes the execve commands i.e. ls to /bin/ls
 		tmp = ft_redir(mini, tmp);
 		if (tmp == NULL)
 			break ;
@@ -101,7 +99,7 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		else if (ft_strcmp(ptr->argv[0], "unset") == 0)
 			ft_unset(mini, ptr->argv[1]);
 		else if (ft_strcmp(tmp->argv[0], "exit") == 0)
-		{	
+		{
 			if (tmp->argv[1] != NULL)
 			{	
 				mini->exit = ft_atoi(tmp->argv[1]);

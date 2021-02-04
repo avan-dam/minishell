@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 14:45:25 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/04 15:21:40 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		// 	ft_unset(mini, ptr->argv[1]);
 		else if (ft_strcmp(ptr->argv[0], "env") == 0)
 			ft_lstprint(mini->env1, mini);
-		else if (look_for_non_builtin(ptr) == 0 && (execve(ptr->argv[0], ptr->argv, envp)) < 0)
+		else if (execve(ptr->argv[0], ptr->argv, envp) < 0)
 		{
 			printf("Execve failed.\n");
 			printf("CASE 3\n");
@@ -87,6 +87,8 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	while (tmp)
 	{
 		printf("Goes in with argv: %s\n", tmp->argv[0]);
+		look_for_non_builtin(tmp);
+		printf("Goes in with argv: %s\n", tmp->argv[0]);
 		tmp = ft_redir(mini, tmp);
 		if (tmp == NULL)
 			break ;
@@ -110,7 +112,6 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		}
 		else
 			execve_commands(tmp, envp, mini);
-		
 		ft_reset_fds(mini);
 		// system("leaks minishell");
 		tmp = tmp->next;

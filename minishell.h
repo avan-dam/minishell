@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 14:42:52 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/04 15:42:32 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int  				numb_char(char *line, char c);
 // int				ft_execve(t_mini *mini, char **envp, t_piper *piper);
 int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 int					look_for_non_builtin(t_base *ptr);
+int         		ft_is_builtin_command(char *str);
 
 // int					ft_redir(t_mini *mini, int d);
 

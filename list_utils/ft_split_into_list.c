@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 17:32:41 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/18 17:43:19 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/04 12:27:25 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,8 @@ int  ft_split_into_tlist(t_mini *mini, char *line)
 	ft_unset(mini, var1);
 	newnode = ft_lstnew(var1, var2);
 	ft_lstadd_back(&mini->env1, newnode);
+	free(var1);
+	free(var2);
+	// free(newnode);
 	return (1);
 }

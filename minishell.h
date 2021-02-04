@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/29 23:30:08 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/03 18:34:15 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,6 @@ typedef struct		s_mini
 	char			*currentpwd;
 	char			*oldpwd;
 	t_list			*env1;
-	// builtin and execve arrray need corresponding function array for this
-	char			*builtin[8];
-	char			*notbuiltin[23]; // ls mkdir touch cat
 	int				stdout;
 	int				stderr;
 	int				numb_cmds; // Command counter new struct

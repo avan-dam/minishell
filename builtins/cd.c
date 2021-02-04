@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/29 23:47:32 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/03 23:13:24 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void		ft_cd(t_base *ptr, t_mini *mini)
 {
 	char	cwd[PATH_MAX];
 
-	mini->oldpwd = getcwd(cwd, sizeof(cwd)); // delete this line?
 	if (ptr->argv[1] == NULL || ft_strcmp(ptr->argv[1], "~") == 0)
 	{
 		chdir(ft_get_env("HOME", mini));
@@ -100,4 +99,5 @@ void		ft_cd(t_base *ptr, t_mini *mini)
 		ft_unset(mini, "PWD");
 		ft_add_env("PWD", getcwd(cwd, sizeof(cwd)), mini);
 	}
+	// printf("value of pwd end: %s\nvalue of oldpwd end: %s\n", ft_get_env("PWD", mini), ft_get_env("OLDPWD", mini));
 }

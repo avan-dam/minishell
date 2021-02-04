@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/02 12:15:54 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/04 11:33:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	(void)envp;
 	while (tmp)
 	{
-		tmp = ft_redir(mini, tmp);
+		ft_redir(mini, tmp);
 		if (tmp == NULL)
 			break ;
-		if ((ft_strcmp(tmp->argv[0], "echo")) == 0) //|| (ft_strcmp(tmp->argv[0], "/bin/echo") == 0))
+		if ((ft_strcmp(tmp->argv[0], "echo") == 0) || (ft_strcmp(tmp->argv[0], "") == 0)) //|| (ft_strcmp(tmp->argv[0], "/bin/echo") == 0))
 			ft_echo(tmp, mini);
 		else if (ft_strcmp(tmp->argv[0], "cd") == 0)
 			ft_cd(tmp, mini);
@@ -106,8 +106,21 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 			ft_lstprint(mini->env1, mini);
 		else if (ft_strcmp(tmp->argv[0], "$?") == 0)
 			ft_printf_exit_status(mini);
+		else if (ft_strcmp(tmp->argv[0], "") == 0)
+		{
+			ft_putstr_fd(tmp->argv[0], mini->stdout);
+			mini->exit = 0;
+		}
 		else if (ft_strcmp(tmp->argv[0], "exit") == 0)
+		{	
+			if (tmp->argv[1] != NULL)
+			{	
+				mini->exit = ft_atoi(tmp->argv[1]);
+				if (tmp->argv[2] != NULL)
+					mini->exit = 1;
+			}
 			return (-1);
+		}
 		else if (look_for_non_builtin(tmp) == 0) // change obvs
 			execve_commands(tmp, envp, mini);
 		else 		

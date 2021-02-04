@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/29 23:47:32 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/02 22:44:10 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,5 @@ void		ft_cd(t_base *ptr, t_mini *mini)
 		ft_unset(mini, "PWD");
 		ft_add_env("PWD", getcwd(cwd, sizeof(cwd)), mini);
 	}
+	mini->exit = 0;
 }

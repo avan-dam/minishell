@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/02 14:45:26 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/04 12:37:04 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,12 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini)
 	tmp = NULL;
 	j = 0;
 	remove_extra_backslash_check_redir(ptr, i);
+	if (numb_char(ptr->argv[i], '\'') > 0 || numb_char(ptr->argv[i], '"') > 0)
+	{
+		ptr->argv[i] = ft_check_dolla_quotes(ptr->argv[i], mini, 0, 2);
+		ptr->redir = 3;
+		return (i);
+	}
 	while (ptr->argv[i][j] == '\\')
 		j++;
 	if (j <= 0)
@@ -183,7 +189,7 @@ t_base		*ft_redir(t_mini *mini, t_base *ptr)
 
 	i = 0;
 	ptr->redir = 0;
-	while (i < ptr->size - 1)
+	while (i < ptr->size && ptr->argv[i])
 	{
 		if ((ft_strchr_numb(ptr->argv[i], '>', 0) != -1) || (ft_strchr_numb(ptr->argv[i], '<', 0) != -1))
 		{

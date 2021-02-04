@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/27 13:56:22 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/02 22:44:26 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void	ft_set_env(char **argv, char **envp, t_mini *mini)
 		i++;
 	}
 	envp[i] = NULL;
+	mini->exit = 0;
 }

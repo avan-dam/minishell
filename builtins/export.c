@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:04:41 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/01 10:08:22 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/02 22:44:40 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int		ft_export(t_base *ptr, t_mini *mini)
       	return (-1); // change
 	} //check this
 	ft_split_into_tlist(mini, ptr->argv[1]);
+	mini->exit = 0;
 	return (0); //change
 }

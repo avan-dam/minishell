@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/01 10:09:10 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/02 18:31:17 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void 		ft_reset_fds(t_mini *mini)
 			close(mini->stderr);
 		mini->stderr = 2;
 	}
-	// printf("going out of close fds\n");
 }
 
 void		ft_printf_exit_status(t_mini *mini)

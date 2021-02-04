@@ -116,6 +116,7 @@ single quotes take literally so print even $
 double quotes replace the dollar
 - ls, cat -e, 
 Amber: To Fix
+echo meee > a > p \\ k
 echo TEST_$u==hallo$log
 echo -n -n -n $potato$orange; unset 
 echo 123$us$

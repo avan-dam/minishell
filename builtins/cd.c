@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/03 23:13:24 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/04 14:34:58 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,5 @@ void		ft_cd(t_base *ptr, t_mini *mini)
 		ft_add_env("PWD", getcwd(cwd, sizeof(cwd)), mini);
 	}
 	// printf("value of pwd end: %s\nvalue of oldpwd end: %s\n", ft_get_env("PWD", mini), ft_get_env("OLDPWD", mini));
+	mini->exit = 0;
 }

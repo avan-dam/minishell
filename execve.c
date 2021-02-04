@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/03 19:00:53 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/04 14:45:25 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		printf("GOES IN CHILD PROCESS, argv: %s\n", ptr->argv[0]);
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 		{
-			printf("Type is pipe, and dup 2 failed.\n");
+			// printf("Type is pipe, and dup 2 failed.\n");
 			exit (0); // change
 		}
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE && dup2(ptr->prev->fd[0], STDIN) < 0)
 		{
-			printf("Type of previous is pipe, and dup 2 failed.\n");
+			// printf("Type of previous is pipe, and dup 2 failed.\n");
 			exit (0);
 		}
 		if ((ft_strcmp(ptr->argv[0], "echo")) == 0 || (ft_strcmp(ptr->argv[0], "/bin/echo") == 0))
@@ -61,7 +61,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 			exit (0);
 		}
 		else
-			unvalid_identifier(ptr->argv[0], mini);
+			unvalid_identifier(ptr->argv[0], mini, 127);
 		exit (EXIT_SUCCESS); // closes process with succes // change
 	}
 	else // parent process
@@ -99,11 +99,20 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		else if (ft_strcmp(ptr->argv[0], "unset") == 0)
 			ft_unset(mini, ptr->argv[1]);
 		else if (ft_strcmp(tmp->argv[0], "exit") == 0)
+		{	
+			if (tmp->argv[1] != NULL)
+			{	
+				mini->exit = ft_atoi(tmp->argv[1]);
+				if (tmp->argv[2] != NULL)
+					mini->exit = 1;
+			}
 			return (-1);
+		}
 		else
 			execve_commands(tmp, envp, mini);
+		
 		ft_reset_fds(mini);
-		system("leaks minishell");
+		// system("leaks minishell");
 		tmp = tmp->next;
 	}
 	return (0);

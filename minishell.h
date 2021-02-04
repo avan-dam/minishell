@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/03 18:34:15 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/04 14:42:52 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct		s_base
 	int				fd[2];
 	struct s_base	*prev;
 	struct s_base	*next;
+	int				redir;
 }					t_base;
 
 typedef struct		s_line
@@ -116,7 +117,7 @@ int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
 // int				ft_echo(char *string, t_mini *mini, t_piper *piper);
 // void				ft_putstr(char *s);
 char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j);
-int					unvalid_identifier(char *error, t_mini *mini);
+int					unvalid_identifier(char *error, t_mini *mini, int exitstatus);
 int 				ft_strchr_numb(char *line, char c, int i);
 int					ft_strrchr_numb(char *line, char c, int i);
 int  				numb_char(char *line, char c);

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/05 10:38:32 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/05 16:08:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,20 @@ static int	ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 	char	*newvar;
 	char	*end;
 	int		k;
+	int 	retval;
 
 	j = i;
 	while (line[i] != '\0' && line[i] != '$' && \
 	line[i] != '-' && line[i] != '=' && line[i] != ' ' && line[i] != '\'' \
-	&& line[i] != '"' && line[i] != '\\' && line[i] != '/' && line[i] != '%' ) // took out && '*" for echo "$2$*""
+	&& line[i] != '"' && line[i] != '\\' && line[i] != '/' && line[i] != '%' && line[i] != '*')// took out && '*" for echo "$2$*""
 	{	
-		if (line[i] == '@' || line[i] == '#')
+		if (line[i] == '@' || line[j] == '#')
 		{
 			i++;
 			break ;
 		}
+		if (line[i] == '#')
+			break ;
 		if (line[i] >= '0' && line[i] <= '9' && line[j + 1] >= '0' && line[i] <= '9')
 		{
 			k = i;
@@ -63,6 +66,8 @@ static int	ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 		}
 		i++;
 	}
+	if (line[j] == '*')
+		i++;
 	if (line[i - 1] == '"')
 		return (0);
 	oldvar = ft_substr(line, j, i - j);
@@ -76,14 +81,15 @@ static int	ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 	newvar = ft_check_var_tlist(mini, oldvar);
 	if (ft_strcmp(oldvar, "#") == 0)
 		newvar = ft_strdup("0");
-	// printf("start[%s] end[%s] oldbvar[%s] newvar[%s]\n", start, end, oldvar, newvar);
 	if (ft_strcmp(oldvar, "") == 0 && end[0] != '\'' && end[0] != '"')
 		newvar = ft_strdup("$");
 	if (ft_strcmp(oldvar, "") == 0 && (start[ft_strlen(start)] == '"' || s->d % 2 == 1) && end[0] == '"')
 		newvar = ft_strdup("$");
+	// printf("start[%s] end[%s] oldbvar[%s] newvar[%s]\n", start, end, oldvar, newvar);
+	retval = ft_len(newvar) - 1;
 	s->line = ft_strjoin_three(start, newvar, end);
 	free(oldvar);
-	return (ft_len(newvar) - 1);
+	return (retval);
 }
 
 static int 			ft_check_backslash(t_line *s, int i)
@@ -102,12 +108,13 @@ static int 			ft_check_backslash(t_line *s, int i)
 
 static int		ft_double_quotes(t_line *s, int i)
 {
-	// printf("in double wxith line %s and t %d\n", s->line, s->d);
+	// printf("in double wxith line %s and t %d i is %d\n", s->line, s->d, i);
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
-	i--;
+	if (i != 0)
+		i--;
 	if (s->s % 2 == 0)
 		s->d++;
-	// printf("out double wxith line %s and t %d line[i]\n", s->line, s->d);
+	// printf("out double wxith line %s and t %d line[i] i is %d \n", s->line, s->d, i);
 	return (i);
 }
 
@@ -177,7 +184,11 @@ static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini, int j, char *lin
 		if (j != 2)
 			return (NULL);
 	}
-	return (s->line);
+	s.s = 0;
+	s.d = 0;
+	free(line);
+	line = s->line;
+	return (line);
 }
 
 void		ft_exit_status_replace(t_line *s, int i, t_mini *mini)

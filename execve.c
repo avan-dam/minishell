@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 18:10:18 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/05 16:04:36 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		exit (0); // change
 	if (pid == 0) // child process
 	{
-		printf("value of argv: %s\n", ptr->argv[0]);
+		// printf("value of argv: %s\n", ptr->argv[0]);
 		// dup2(mini->stdin, STDIN);
 		// dup2(mini->stdout, STDOUT);
 		// printf("GOES IN CHILD PROCESS, argv: %s\n", ptr->argv[0]);
@@ -52,7 +52,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		// add in exit?
 		else if (execve(ptr->argv[0], ptr->argv, envp) < 0)
 		{
-			printf("GOES IN HERE execve\n");
+			// printf("GOES IN HERE execve\n");
 			exit (0);
 		}
 		else
@@ -79,33 +79,34 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	t_base	*tmp;
 
 	tmp = ptr;
+	    // printf("Goes in echo funct\n");
 	while (tmp)
 	{
-		printf("value of arg: %s\n", tmp->argv[0]);
+		// printf("value of arg[0]: %s  arg[1]: %s\n", tmp->argv[0], tmp->argv[1]);
 		look_for_non_builtin(tmp); // changes the execve commands i.e. ls to /bin/ls
 		tmp = ft_redir(mini, tmp);
 		if (tmp == NULL)
-			break ;
+			break ; // this is if error opening file
 		if ((tmp->type == TYPE_PIPE  || (tmp->prev && tmp->prev->type == TYPE_PIPE)) && ft_is_builtin_command(ptr->argv[0]) == 1)
 		{
-			printf("goes in here ");
+			// printf("goes in here ");
 			execve_commands(tmp, envp, mini);
 		}
 		else if (ft_strcmp(tmp->argv[0], "$?") == 0)
 		{
-			printf("GOES IN HERE");
+			// printf("GOES IN HERE");
 			ft_printf_exit_status(mini);
 		}
 		else if (ft_strcmp(tmp->argv[0], "export") == 0)
-			ft_export(ptr, mini);
+			ft_export(tmp, mini);
 		else if (ft_strcmp(tmp->argv[0], "echo") == 0 || ft_strcmp(tmp->argv[0], "/bin/echo") == 0)
-			ft_echo(ptr, mini);
+			ft_echo(tmp, mini);
 		else if ((ft_strcmp(tmp->argv[0], "pwd") == 0) || (ft_strcmp(tmp->argv[0], "/bin/pwd") == 0))
 			ft_pwd(mini);
-		else if (ft_strcmp(ptr->argv[0], "cd") == 0 || ft_strcmp(ptr->argv[0], "/usr/bin/cd") == 0)
-			ft_cd(ptr, mini);
-		else if (ft_strcmp(ptr->argv[0], "unset") == 0)
-			ft_unset(mini, ptr->argv[1]);
+		else if (ft_strcmp(tmp->argv[0], "cd") == 0 || ft_strcmp(tmp->argv[0], "/usr/bin/cd") == 0)
+			ft_cd(tmp, mini);
+		else if (ft_strcmp(tmp->argv[0], "unset") == 0)
+			ft_unset(mini, tmp->argv[1]);
 		else if (ft_strcmp(tmp->argv[0], "exit") == 0)
 		{
 			if (tmp->argv[1] != NULL)
@@ -114,7 +115,8 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 				if (tmp->argv[2] != NULL)
 					mini->exit = 1;
 			}
-			return (-1);
+			// ft_t_baseclear(&ptr); // check this is only place needed 
+			return (-1); // maybe tmp can also
 		}
 		else
 			execve_commands(tmp, envp, mini);
@@ -122,5 +124,8 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		// free(tmp->argv[i]);
 		tmp = tmp->next;
 	}
+	// ft_t_baseclear(&ptr); // if i add this in it makes exit status 134 everytime on griffins tester
 	return (0);
 }
+
+//UNVALID IDENTIFIER NOT WORKING properly

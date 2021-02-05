@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 16:36:11 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/05 15:46:19 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,38 @@ int    ft_echo(t_base *ptr, t_mini *mini)
     char	*string;
 	int		i;
 
+	i = 1;
+    mini->exit = 0;
+    if (ft_strcmp("", ptr->argv[0]) == 0)
+    {
+        ft_putstr_fd("", mini->stdout);
+        return (0);
+    }
+	string = ft_strdup("");
+    while (ptr->argv[i])
+	{
+		string = ft_strjoin(string, ptr->argv[i]);
+		if (i + 1 != ptr->size)
+        {
+            if (ptr->argv[i + 1] && ptr->argv[i + 1][0] != '>' && ptr->argv[i + 1][0] != '<')
+			    string = ft_strjoin(string, " ");
+        }
+		i++;
+	}
+    if (string == NULL)
+        return (ft_putchar_fd('\n', mini->stdout));
+    if (ft_check_empty(string) == 1)
+        return (ft_putchar_fd('\n', mini->stdout));
+    if ((string[0] == '-') && (string[1] == 'n') && ((string[2] == ' ') || (string[2] == '\0') || (string[2] == 'n')))
+    {
+        if (ft_echo_n(string, mini) != 2)
+            return (0);
+    }
+    string = ft_strtrim(string, " ");
+    ft_putstr_fd(string, mini->stdout);
+    return (ft_putchar_fd('\n', mini->stdout));
+}
+
     // printf("Goes in echo funct\n");
 	// t_base *tmp = ptr;
 	// while(tmp)
@@ -78,14 +110,6 @@ int    ft_echo(t_base *ptr, t_mini *mini)
 	// 	printf("end of argument in list\n\n");
 	// 	tmp = tmp->next;
 	// }
-	i = 1;
-    mini->exit = 0;
-    if (ft_strcmp("", ptr->argv[0]) == 0)
-    {
-        ft_putstr_fd("", mini->stdout);
-        return (0);
-    }
-	string = ft_strdup("");
 	// t_base *tmp = ptr;
 	// while(tmp)
 	// {
@@ -105,28 +129,3 @@ int    ft_echo(t_base *ptr, t_mini *mini)
 	// 		string = ft_strjoin(string, " ");
 	// 	i++;
 	// }
-    while (ptr->argv[i])
-	{
-		string = ft_strjoin(string, ptr->argv[i]);
-		if (i + 1 != ptr->size)
-        {
-            if (ptr->argv[i + 1] && ptr->argv[i + 1][0] != '>' && ptr->argv[i + 1][0] != '<')
-			    string = ft_strjoin(string, " ");
-        }
-		i++;
-	}
-    if (string == NULL)
-        return (ft_putchar_fd('\n', mini->stdout));
-    if (ft_check_empty(string) == 1)
-		// return (ft_putchar_fd('\n', STDOUT));
-        return (ft_putchar_fd('\n', mini->stdout));
-    // printf("2here echo\n");
-    if ((string[0] == '-') && (string[1] == 'n') && ((string[2] == ' ') || (string[2] == '\0') || (string[2] == 'n')))
-    {
-        if (ft_echo_n(string, mini) != 2)
-            return (0);
-    }
-    string = ft_strtrim(string, " ");
-    ft_putstr_fd(string, mini->stdout);
-    return (ft_putchar_fd('\n', mini->stdout));
-}

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 14:42:58 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/05 16:06:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	number_of_commands(char *line, t_mini *mini, int i, int numb)
 			}
 			numb++;
 		}
-		if ((line[i] == '>' || line[i] == '<') && line[i + 1] != ' ' && line[i + 1] != '"' && line[i + 1] != '\'' && line[i + 1] != '\0')
+		if ((line[i] == '>' || line[i] == '<') && line[i + 1] != ' ' && line[i + 1] != '"' && line[i + 1] != '\'' && line[i + 1] != '>' && line[i + 1] != '\0')
 			numb++;
 		i++;
 	}
@@ -55,11 +55,11 @@ static void	fill_argv_list(t_base *new, t_mini *mini, int j, int l, int k)
 			k = j;
 			while (mini->cmd_part[j] != ' ' && mini->cmd_part[j])
 			{
-				if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<') && mini->cmd_part[j + 1] != '\'' && mini->cmd_part[j +  1] != '"')
+				if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<') && mini->cmd_part[j + 1] != '\'' && mini->cmd_part[j + 1] != '>' && mini->cmd_part[j +  1] != '"')
 					break ;
 				j++;
 			}
-			if (mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
+			if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<') && mini->cmd_part[j + 1] != '>')
 			{
 				new->argv[l] = ft_substr(mini->cmd_part, k, j - k + 1);
 				j++;
@@ -116,8 +116,20 @@ int			parse_input_string(char *line, t_mini *mini, char **envp)
 		else
 			i++;
 	}
+	// t_base *tmpp = ptr;
+	// while(tmpp)
+	// {
+	// 	printf("AFTEr REDIR Argument HERE in list: tmpp->size%d\n", tmpp->size);
+	// 	for (int k = 0; k < tmpp->size; k++)
+	// 		printf("the argument: %s\n", tmpp->argv[k]);
+	// 	printf("TYPE: %d\n", tmpp->type);
+	// 	printf("SIZE: %d\n", tmpp->size);
+	// 	printf("end of argument in list\n\n");
+	// 	tmpp = tmpp->next;
+	// }
 	if (ptr)
 		if (exec_cmds(ptr, envp, mini) == -1)
 			return (-1);
+	ft_t_baseclear(&ptr);
 	return (0);
 }

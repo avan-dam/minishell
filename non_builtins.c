@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 16:31:51 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/05 10:10:16 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int		ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 			return (0);
 		}
 	}
-	system("leaks minishell");
+	// system("leaks minishell");
 	return (1);
 }
 
@@ -63,7 +63,8 @@ int         ft_is_builtin_command(char *str)
 		ft_strcmp(str, "exit") == 0 ||
 		ft_strcmp(str, "export") == 0 || 
 		ft_strcmp(str, "pwd") == 0 || ft_strcmp(str, "/bin/pwd") == 0 ||
-		ft_strcmp(str, "unset") == 0)
+		ft_strcmp(str, "unset") == 0 ||
+		ft_strcmp(str, "$?") == 0)
 		return (1);
 	return (0);
 }

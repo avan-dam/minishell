@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/04 14:18:38 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/05 10:38:32 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char		*ft_check_var_tlist(t_mini *mini, char *oldvar)
 	while (tlist != NULL)
 	{
 		if (ft_strcmp(tlist->var1, oldvar) == 0)
-			return (tlist->var2);
+			return (ft_strdup(tlist->var2));
 		tlist = tlist->next;
 	}
 	return (ft_strdup(""));
@@ -113,7 +113,7 @@ static int		ft_double_quotes(t_line *s, int i)
 
 static int		ft_single_quotes(t_line *s, int i)
 {
-	// printf("in single with line %s and t %d i is %d and char is %c \n", s->line, s->d, i, s->line[i]);
+	// printf("in single with line %s and t %d i is %d and char is %c i is %d \n", s->line, s->d, i, s->line[i], i);
 	// if inside double quotes we keep the single quotes and then covert
 	if (s->d % 2 == 1)
 	{
@@ -123,7 +123,8 @@ static int		ft_single_quotes(t_line *s, int i)
 	}
 	// remove single quotes and print exactly what is inside without changing
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
-	i--;
+	if (i != 0)
+		i--;
 	s->s++;
 	if (s->line[i] == '\\' && s->d % 2 == 0)
 	{

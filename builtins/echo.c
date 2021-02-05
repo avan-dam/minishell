@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 16:30:20 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/04 16:36:11 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int    ft_echo(t_base *ptr, t_mini *mini)
     char	*string;
 	int		i;
 
-    printf("Goes in echo funct\n");
+    // printf("Goes in echo funct\n");
 	// t_base *tmp = ptr;
 	// while(tmp)
 	// {

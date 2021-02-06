@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/05 16:08:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/06 12:17:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,8 @@ static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini, int j, char *lin
 		if (j != 2)
 			return (NULL);
 	}
-	s.s = 0;
-	s.d = 0;
+	s->s = 0;
+	s->d = 0;
 	free(line);
 	line = s->line;
 	return (line);

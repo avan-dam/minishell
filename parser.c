@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/05 16:06:08 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/06 14:53:02 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 	int		size;
 	t_base	*new;
 
-	numb_characters = number_of_commands(ft_strtrim(line, " "), mini, 0, 1); // i is the number of characters
+	line = ft_strtrim(line, " ");
+	numb_characters = number_of_commands(line, mini, 0, 1); // i is the number of characters
 	size = mini->numb_cmds;
 	mini->cmd_part = ft_check_dolla_quotes(mini->cmd_part, mini, 0, 0); //FIXXXXXX!!!
 	new = (t_base *)malloc(sizeof(t_base));
@@ -90,6 +91,11 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 	new->argv[size] = NULL;
 	fill_argv_list(new, mini, 0, 0, 0);
 	new->type = mini->type_end;
+	if (mini->cmd_part)
+	{
+		free(mini->cmd_part);
+		mini->cmd_part = NULL;
+	}
 	ft_lstadd_back_new(ptr, new);
 	return (numb_characters);
 }
@@ -102,7 +108,6 @@ int			parse_input_string(char *line, t_mini *mini, char **envp)
 
 	ptr = NULL;
 	i = 0;
-	line = ft_strtrim(line, " ");
 	if (ft_check_dolla_quotes(line, mini, 0, 0) == NULL)
 		return (-2); // IF MULTILINE THIS LINE WILL STOP BEING CHECKED - but will not exit the whole program
 	while (line[i])
@@ -116,6 +121,14 @@ int			parse_input_string(char *line, t_mini *mini, char **envp)
 		else
 			i++;
 	}
+	if (ptr)
+		if (exec_cmds(ptr, envp, mini) == -1)
+			return (-1);
+	ft_t_baseclear(&ptr); // if i add this in it makes exit status 134 everytime on griffins tester
+	free(ptr);
+	return (0);
+}
+
 	// t_base *tmpp = ptr;
 	// while(tmpp)
 	// {
@@ -127,9 +140,3 @@ int			parse_input_string(char *line, t_mini *mini, char **envp)
 	// 	printf("end of argument in list\n\n");
 	// 	tmpp = tmpp->next;
 	// }
-	if (ptr)
-		if (exec_cmds(ptr, envp, mini) == -1)
-			return (-1);
-	ft_t_baseclear(&ptr);
-	return (0);
-}

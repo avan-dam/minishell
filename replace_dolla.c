@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/06 12:17:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/06 13:05:40 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j)
 		else if ((s.line[i] == '$') && (s.line[i + 1] != '/') && \
 		(s.line[i + 1] != '\\') && (s.line[i + 1] != '\0') && (s.line[i + 1] != '?'))
 			i = i + ft_find_dolla(s.line, i + 1, mini, &s);
-		else if (s.line[i] == '$' && s.line[i + 1] == '?' && (s.d == 0 || s.d % 2 == 1) && (s.s == 0 ||s.s % 2 == 0))
+		else if (s.line[i] == '$' && s.line[i + 1] == '?' && i != 0 && (s.d == 0 || s.d % 2 == 1) && (s.s == 0 ||s.s % 2 == 0))
 			ft_exit_status_replace(&s, i, mini);
 		if (s.line[i] != '\0')
 			i++;

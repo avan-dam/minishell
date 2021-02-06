@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/05 10:38:18 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/06 14:51:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 int		unvalid_identifier(char *error, t_mini *mini, int exitstatus)
 {
-    // printf("VALUE OR ERROR: %s\n", error);
+    printf("VALUE OR ERROR: %s\n", error);
     // is this STDOUT OR STD ERROR
     ft_putstr_fd("bash: ", mini->stderr);
     ft_putstr_fd(error, mini->stderr);

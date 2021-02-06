@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/05 16:04:36 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/06 14:52:01 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		else if (ft_strcmp(ptr->argv[0], "env") == 0 || ft_strcmp(ptr->argv[0], "/usr/bin/env") == 0)
 			ft_lstprint(mini->env1, mini);
 		// add in exit?
-		else if (execve(ptr->argv[0], ptr->argv, envp) < 0)
-		{
+		else if (execve(ptr->argv[0], ptr->argv, envp) < 0) // I THINK WE NEED A CALL TO LOOK FOR BUILTIN FUNCTION CALL OR 
+		{													// SOMETHING OTHERWISE NEVER GOES INTO Unvalid_identifiers below
 			// printf("GOES IN HERE execve\n");
 			exit (0);
 		}
@@ -79,14 +79,13 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	t_base	*tmp;
 
 	tmp = ptr;
-	    // printf("Goes in echo funct\n");
 	while (tmp)
 	{
 		// printf("value of arg[0]: %s  arg[1]: %s\n", tmp->argv[0], tmp->argv[1]);
 		look_for_non_builtin(tmp); // changes the execve commands i.e. ls to /bin/ls
 		tmp = ft_redir(mini, tmp);
 		if (tmp == NULL)
-			break ; // this is if error opening file
+			break ; // this is if error opening file										// should below be ptr or tmp?
 		if ((tmp->type == TYPE_PIPE  || (tmp->prev && tmp->prev->type == TYPE_PIPE)) && ft_is_builtin_command(ptr->argv[0]) == 1)
 		{
 			// printf("goes in here ");
@@ -94,7 +93,7 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		}
 		else if (ft_strcmp(tmp->argv[0], "$?") == 0)
 		{
-			// printf("GOES IN HERE");
+			// printf("GOES IN HERE\n");
 			ft_printf_exit_status(mini);
 		}
 		else if (ft_strcmp(tmp->argv[0], "export") == 0)
@@ -119,12 +118,14 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 			return (-1); // maybe tmp can also
 		}
 		else
-			execve_commands(tmp, envp, mini);
+		{	
+			// printf("in here tmp->argv[0][%s]\n", tmp->argv[0]); // HERE value of tmp->argv[0] is wrong because of first call
+			execve_commands(tmp, envp, mini);					// to execve_commands not sure why tho
+		}
 		ft_reset_fds(mini);
-		// free(tmp->argv[i]);
 		tmp = tmp->next;
 	}
-	// ft_t_baseclear(&ptr); // if i add this in it makes exit status 134 everytime on griffins tester
+	// free(ptr);
 	return (0);
 }
 

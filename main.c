@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/05 15:27:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/06 14:56:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,12 @@ int		main(int argc, char **argv, char **envp)
 				line = NULL;
 				ft_exit(&mini, mini.exit);
 			}
+			clear_mini(&mini, 1);
 			free(line);
 			line = NULL;
 		}
 		if (lineret == 0)
 			ft_signals(&mini, 1);
 	}
-	free(line);
-	line = NULL;
 	return (0);
 }

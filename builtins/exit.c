@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/05 16:07:40 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/06 13:35:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	clear_mini(t_mini *mini, int i)
 		free(mini->cmd_part);
 		mini->cmd_part = NULL;
 	}
-	ft_t_lstclear(&mini->env1);
 	mini->type_end = 0;
 	mini->numb_cmds = 0;
 	ft_reset_fds(mini);
@@ -60,7 +59,10 @@ void	clear_mini(t_mini *mini, int i)
 	// mini->stderr = 0;
 	// mini->stdout = 0;
 	if (i == 0)
+	{	
 		mini->exit = 0;	
+		ft_t_lstclear(&mini->env1);
+	}
 }
 
 void	ft_exit(t_mini *mini, int exitstatus) // exit with 0 or exit statment??

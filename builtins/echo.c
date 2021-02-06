@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/05 15:46:19 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/06 14:57:09 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,17 @@ static char *ft_howmany_n(char *string, int i, int j)
 
 static int    ft_echo_n(char *string, t_mini *mini)
 {
+	char	*tmp;
     if (string == NULL)
         return (0);
     string = ft_howmany_n(string, 0, 0);
-    string = ft_strtrim(string, " ");
+	tmp = ft_strdup(string);
+	free(string);
+    string = ft_strtrim(tmp, " ");
+	free(tmp);
 	// ft_putstr_fd(string, STDOUT);
     ft_putstr_fd(string, mini->stdout);
+	free(string);
     mini->exit = 0;
     return(0);
 }
@@ -57,33 +62,56 @@ static int  ft_check_empty(char *string)
         i++;
     }
     if (i == j)
-        return (1);
+    {   
+		free(string); 
+		return (1);
+	}
     return (0);
+}
+
+static char *ft_argvs_into_string(t_base *ptr)
+{
+	char	*tmp;
+	char	*string;
+	int		i;
+
+	i = 1;
+	tmp = ft_strdup("");
+	string = NULL;
+    while (ptr->argv[i])
+	{
+		if (string)
+			free(string);
+		string = ft_strjoin(tmp, ptr->argv[i]);
+		free(tmp);
+		if (i + 1 != ptr->size)
+        {
+            if (ptr->argv[i + 1] && ptr->argv[i + 1][0] != '>' && ptr->argv[i + 1][0] != '<')
+			{    
+				tmp = ft_strdup(string);
+				free(string);
+				string = ft_strjoin(tmp, " ");
+				free(tmp);
+			}
+        }
+		tmp = ft_strdup(string);
+		i++;
+	}
+	return (string);
 }
 
 int    ft_echo(t_base *ptr, t_mini *mini)
 {
     char	*string;
-	int		i;
+	char	*tmp;
 
-	i = 1;
     mini->exit = 0;
     if (ft_strcmp("", ptr->argv[0]) == 0)
     {
         ft_putstr_fd("", mini->stdout);
         return (0);
     }
-	string = ft_strdup("");
-    while (ptr->argv[i])
-	{
-		string = ft_strjoin(string, ptr->argv[i]);
-		if (i + 1 != ptr->size)
-        {
-            if (ptr->argv[i + 1] && ptr->argv[i + 1][0] != '>' && ptr->argv[i + 1][0] != '<')
-			    string = ft_strjoin(string, " ");
-        }
-		i++;
-	}
+	string = ft_argvs_into_string(ptr);
     if (string == NULL)
         return (ft_putchar_fd('\n', mini->stdout));
     if (ft_check_empty(string) == 1)
@@ -93,8 +121,12 @@ int    ft_echo(t_base *ptr, t_mini *mini)
         if (ft_echo_n(string, mini) != 2)
             return (0);
     }
-    string = ft_strtrim(string, " ");
+	tmp = ft_strdup(string);
+	free(string);
+    string = ft_strtrim(tmp, " ");
+	free(tmp);
     ft_putstr_fd(string, mini->stdout);
+	free(string);
     return (ft_putchar_fd('\n', mini->stdout));
 }
 

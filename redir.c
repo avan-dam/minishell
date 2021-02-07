@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/05 14:18:13 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/07 13:18:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 	{
 		if ((mini->stdout = open(ptr->argv[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0666)) == -1)
 			return (error_opening(ptr->argv[i + 1], mini));
+		// printf("did open\n");
 	}
 	if (ft_strcmp(">>", ptr->argv[i]) == 0)
 	{
@@ -74,6 +75,7 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 	{
 		if ((mini->stdin = open(ptr->argv[i + 1], O_RDWR, 0666)) == -1)
 			return (error_opening(ptr->argv[i + 1], mini));
+		// printf("did open\n");
 	}
 	if (ft_remove_redir_argv(ptr, i, 0) == -1)
 		return (-1);
@@ -169,6 +171,7 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 		{
 			if (ft_open_file(ptr, i, mini) == -1)
 				return (-1);
+			// printf("here return i %d\n", i);
 			return (i);
 		}
 	}
@@ -180,25 +183,42 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 t_base		*ft_redir(t_mini *mini, t_base *ptr)
 {
 	int		i;
+	t_base	*tmp;
 
+	tmp = ptr;
 	i = 0;
-	ptr->redir = 0;
-	while (i < ptr->size && ptr->argv[i])
+	tmp->redir = 0;
+	// t_base *tmpp = ptr;
+	// while(tmpp)
+	// {
+	// 	printf("AFTEr REDIR Argument HERE in list: tmpp->size%d\n", tmpp->size);
+	// 	for (int k = 0; k < tmpp->size; k++)
+	// 		printf("the argument: %s\n", tmpp->argv[k]);
+	// 	printf("TYPE: %d\n", tmpp->type);
+	// 	printf("SIZE: %d\n", tmpp->size);
+	// 	printf("end of argument in list\n\n");
+	// 	tmpp = tmpp->next;
+	// }
+	while (i < tmp->size && tmp->argv[i])
 	{
-		if ((ft_strchr_numb(ptr->argv[i], '>', 0) != -1) ||
-		(ft_strchr_numb(ptr->argv[i], '<', 0) != -1))
+		// printf("i is %d tmp->size is %d\n", i, tmp->size);
+		// printf("tmp->argv[i][%s]\n", tmp->argv[i]);
+		if ((ft_strchr_numb(tmp->argv[i], '>', 0) != -1) ||
+		(ft_strchr_numb(tmp->argv[i], '<', 0) != -1))
 		{
-			if (ft_backslash_redir(ptr, i, mini, 0) == -1)
+			if (ft_backslash_redir(tmp, i, mini, 0) == -1)
 				return (NULL);
-			if (ptr->redir == 1)
+			if (tmp->redir == 1 && i != 0)
 				i--;
-			if (ptr->redir == 0)
+			if (tmp->redir == 0)
 				i++;
 		}
-		ptr->redir = 0;
+		tmp->redir = 0;
+		// printf("i is %d and tmp->size is%d \n", i, tmp->size);
 		i++;
 	}
-	return (ptr);
+	// printf("tmp->argv[0] is [%s]\n", tmp->argv[0]);
+	return (tmp);
 }
 
 	// t_base *tmpp = ptr;

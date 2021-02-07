@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/06 14:57:09 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/07 10:41:00 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int    ft_echo(t_base *ptr, t_mini *mini)
     string = ft_strtrim(tmp, " ");
 	free(tmp);
     ft_putstr_fd(string, mini->stdout);
+	// printf("ending echo with string [%s]\n", string);
 	free(string);
     return (ft_putchar_fd('\n', mini->stdout));
 }

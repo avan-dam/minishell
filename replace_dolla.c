@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/06 13:05:40 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/07 10:40:03 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,20 @@ static int 			ft_check_backslash(t_line *s, int i)
 	// printf("in backslash function with s->line[i]%c s->line[i + 1]%c s->s%d s->d%d\n", s->line[i], s->line[i + 1], s->s, s->d);
 	if (((s->line[i + 1] == '`') || (s->line[i + 1] == '"') || ((s->line[i + 1] == '\'') && (s->d % 2 == 0))|| s->line[i + 1] == '$'|| s->line[i + 1] == '\\') && s->line[i + 1] != '>' && s->line[i + 1] != '<')
 	{
+		// printf("in this s->line [%s] s->line[i][%c]\n", s->line, s->line[i]);
 		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
-		if (s->line[i] != '\0' && ((s->line[i] == '$' && ((i == 0) || ((i >0) && (s->line[i - 1] != '\\')))) || s->line[i] == '\''||(s->line[i] == '\\')|| s->line[i] == '"'))
-				i++;
+		// printf("in this s->line [%s] s->line[i][%c]\n", s->line, s->line[i]);
+		if (s->line[i] != '\0' && ((s->line[i] == '$' && ((i == 0) || ((i >0) && (s->line[i - 1] != '\\')))) || s->line[i] == '\''|| s->line[i] == '"')) // ||(s->line[i] == '\\')
+		{
+			// printf("and i++ in this s->line [%s] s->line[i][%c]\n", s->line, s->line[i]);
+			i++;
+		}
 	}
 	else if ((s->s % 2 == 0) && (s->d % 2 == 0) && (s->line[i + 1] != '>') && (s->line[i + 1] != '<'))
+	{	
+		// printf("and dis\n");
 		ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
+	}	
 	return (i);
 }
 
@@ -124,7 +132,7 @@ static int		ft_single_quotes(t_line *s, int i)
 	// if inside double quotes we keep the single quotes and then covert
 	if (s->d % 2 == 1)
 	{
-		if ((s->line[i + 1] == '\\') || (i + 2 == (int)ft_strlen(s->line)))
+		if ((s->line[i + 1] == '\\') || ((s->line[i + 1] == '"') && (s->d %2 == 1)) || (i + 2 == (int)ft_strlen(s->line)))
 			return (i);
 		return (i + 1);
 	}
@@ -174,6 +182,7 @@ static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini, int j, char *lin
 		mini->exit = 258;
 		return (NULL);
 	}
+	// printf("ON ENDINGs->s is %d, s->d is %d backsl;ash is %d\n", s->s, s->d, backslash);
 	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
 	{
 		if (j == 0)
@@ -186,7 +195,7 @@ static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini, int j, char *lin
 	}
 	s->s = 0;
 	s->d = 0;
-	free(line);
+	// free(line); // breaks it with Echo ; echo \n ' \n this is the; "first line"' ; echo "and right here;;; 'We have the second'" ; echo and" a fe"'w 'here'; with some slash and quotes .' '\' ; echo '\\' ; echo "\\" ; echo "\"" ; echo \\ ; echo \' ; echo \" "\\" "\"" \\ \' \" 
 	line = s->line;
 	return (line);
 }

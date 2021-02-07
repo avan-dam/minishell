@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/05 10:10:16 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/07 12:19:54 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int		ft_check_in_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 			return (0);
 		}
 	}
-	free(command);
+	// free(command);
 	return (1);
 }
 
@@ -57,7 +57,7 @@ static int		ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 
 int         ft_is_builtin_command(char *str)
 {
-    if ((ft_strcmp(str, "echo") == 0 || ft_strcmp(str, "/bin/echo") == 0 ||
+    if ((ft_strcmp(str, "echo") == 0 || ft_strcmp(str, "/bin/echo") == 0 || ft_strcmp(str, "Echo") == 0 ||
 		ft_strcmp(str, "cd") == 0) || ft_strcmp(str, "/usr/bin/cd") == 0 ||
 		ft_strcmp(str, "env") == 0 || ft_strcmp(str, "/usr/bin/env") == 0 ||
 		ft_strcmp(str, "exit") == 0 ||
@@ -76,15 +76,19 @@ int         ft_is_builtin_command(char *str)
 
 int				look_for_non_builtin(t_base *ptr)
 {
+	t_base			*tmp;
 	DIR				*dirp; // dir pointer
 	struct dirent	*dit;
 
-	if (ft_is_builtin_command(ptr->argv[0]) == 1)
+	tmp = ptr; // so < notworking.txt can work
+	if (ft_is_builtin_command(tmp->argv[0]) == 1)
+	// if (ft_is_builtin_command(ptr->argv[0]) == 1)
 		return (1);
 	dit = NULL;
 	if ((dirp = opendir("/bin")) == NULL)
 		exit(0);
-	if (ft_check_in_bin(ptr, dit, dirp) == 0)
+	if (ft_check_in_bin(tmp, dit, dirp) == 0)
+	// if (ft_check_in_bin(ptr, dit, dirp) == 0)
 	{
 		// system("leaks minishell");
 		return (0);
@@ -92,7 +96,8 @@ int				look_for_non_builtin(t_base *ptr)
 	closedir(dirp);
 	if ((dirp = opendir("/usr/bin")) == NULL)
 		exit (0);
-	if (ft_check_in_usr_bin(ptr, dit, dirp) == 0)
+	if (ft_check_in_usr_bin(tmp, dit, dirp) == 0)
+	// if (ft_check_in_usr_bin(ptr, dit, dirp) == 0)
 		return (0);
 	if (closedir(dirp) == -1)
 		exit (0);

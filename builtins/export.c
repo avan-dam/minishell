@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:04:41 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 12:45:00 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/07 12:39:07 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int		ft_export(t_base *ptr, t_mini *mini)
 	}
 	if (ptr->argv[2] != NULL)
 	{
-		if (ft_strcmp("=", ptr->argv[2]) != 0)
+		if ((ft_strcmp("=", ptr->argv[2]) != 0) && numb_char(ptr->argv[1], '=') == 0)
+		{	
 			return (unvalid_identifier(ptr->argv[1], mini, 1));	
+		}
 		return (0);
 	}
 	if ((ptr->argv[1][0] >= '0' && ptr->argv[1][0] <= '9') || (ptr->argv[1][0] == '/'))

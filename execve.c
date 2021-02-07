@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/06 14:52:01 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/07 13:21:53 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 	if (pid == 0) // child process
 	{
 		// printf("value of argv: %s\n", ptr->argv[0]);
-		// dup2(mini->stdin, STDIN);
-		// dup2(mini->stdout, STDOUT);
+		dup2(mini->stdin, STDIN);
+		dup2(mini->stdout, STDOUT);
 		// printf("GOES IN CHILD PROCESS, argv: %s\n", ptr->argv[0]);
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 			exit (0); // change
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE && dup2(ptr->prev->fd[0], STDIN) < 0)
 			exit (0);
-		if ((ft_strcmp(ptr->argv[0], "echo")) == 0 || (ft_strcmp(ptr->argv[0], "/bin/echo") == 0))
+		if ((ft_strcmp(ptr->argv[0], "echo")) == 0 || (ft_strcmp(ptr->argv[0], "/bin/echo") == 0) || (ft_strcmp(ptr->argv[0], "Echo") == 0))
 			ft_echo(ptr, mini);
 		else if ((ft_strcmp(ptr->argv[0], "pwd") == 0) || (ft_strcmp(ptr->argv[0], "/bin/pwd") == 0))
 			ft_pwd(mini);
@@ -79,13 +79,21 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	t_base	*tmp;
 
 	tmp = ptr;
+	// printf("in exc_smds\n");
 	while (tmp)
 	{
-		// printf("value of arg[0]: %s  arg[1]: %s\n", tmp->argv[0], tmp->argv[1]);
-		look_for_non_builtin(tmp); // changes the execve commands i.e. ls to /bin/ls
 		tmp = ft_redir(mini, tmp);
 		if (tmp == NULL)
-			break ; // this is if error opening file										// should below be ptr or tmp?
+			return (0) ; // OR RETURN? // this is if error opening file										// should below be ptr or tmp?
+		while (tmp->size == 0)
+		{	
+			tmp = tmp->next;
+			if (tmp == NULL)
+				return (0) ;
+			tmp = ft_redir(mini, tmp);
+		}
+		// I COMMENTED OUT LOOK FOR NON_BUILTIN FUNCTIONS BECUASE WHEN IT IS NOT COMMENTED OUT GRIFFINS TESTER STOPS IN THE MIDDLE
+		// look_for_non_builtin(tmp); // changes the execve commands i.e. ls to /bin/ls
 		if ((tmp->type == TYPE_PIPE  || (tmp->prev && tmp->prev->type == TYPE_PIPE)) && ft_is_builtin_command(ptr->argv[0]) == 1)
 		{
 			// printf("goes in here ");
@@ -125,8 +133,21 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		ft_reset_fds(mini);
 		tmp = tmp->next;
 	}
+	// printf("out of excves\n");
 	// free(ptr);
 	return (0);
 }
 
 //UNVALID IDENTIFIER NOT WORKING properly
+
+	// 	t_base *tmpp = ptr;
+	// while(tmpp)
+	// {
+	// 	printf("AFTEr REDIR Argument HERE in list: tmpp->size%d\n", tmpp->size);
+	// 	for (int k = 0; k < tmpp->size; k++)
+	// 		printf("the argument: %s\n", tmpp->argv[k]);
+	// 	printf("TYPE: %d\n", tmpp->type);
+	// 	printf("SIZE: %d\n", tmpp->size);
+	// 	printf("end of argument in list\n\n");
+	// 	tmpp = tmpp->next;
+	// }

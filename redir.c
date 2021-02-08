@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/07 13:18:58 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 22:00:12 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,54 @@ static int	error_opening(char *error, t_mini *mini)
 
 static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 {
-	// printf("in open file funtion with ptr->argv[i][%s]ptr->argv[i + 1][%s] will try open\n,", ptr->argv[i], ptr->argv[i + 1]);
+	// int k;
+
+	// k = i;
+	// printf("ptr->argv[i][%s]ptr->argv[i + 1][%s] will try open\n,", ptr->argv[i], ptr->argv[i + 1]);
 	// ptr->argv[i + 1] = ft_check_dolla_quotes(ptr->argv[i + 1], mini, 0, 0); //FIXXXXXX!!!
+	if (ptr->argv[i + 1] == NULL || ft_strcmp(ptr->argv[i + 1], ">") == 0)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", mini->stderr);
+		ft_reset_fds(mini);
+		mini->exit = 258; // check because this is what bash does but also exit code should not be above 255??
+		// k = -1;
+		return(-1);
+	}
 	if (ptr->redir == 0)
 		return (i);
 	if (ft_strcmp(">", ptr->argv[i]) == 0)
 	{
 		if ((mini->stdout = open(ptr->argv[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0666)) == -1)
-			return (error_opening(ptr->argv[i + 1], mini));
+		{	
+			return(error_opening(ptr->argv[i + 1], mini));
+			// error_opening(ptr->argv[i + 1], mini);
+			// k = -1;
+		}
 		// printf("did open\n");
 	}
 	if (ft_strcmp(">>", ptr->argv[i]) == 0)
 	{
 		if ((mini->stdout = open(ptr->argv[i + 1], O_RDWR | O_CREAT | O_APPEND, 0666)) == -1)
-			return (error_opening(ptr->argv[i + 1], mini));
+		{
+			return(error_opening(ptr->argv[i + 1], mini));
+			// error_opening(ptr->argv[i + 1], mini);
+			// k = -1;
+		}
 	}
 	if (ft_strcmp("<", ptr->argv[i]) == 0)
 	{
 		if ((mini->stdin = open(ptr->argv[i + 1], O_RDWR, 0666)) == -1)
-			return (error_opening(ptr->argv[i + 1], mini));
+		{	
+			return(error_opening(ptr->argv[i + 1], mini));
+			// error_opening(ptr->argv[i + 1], mini);
+			// k = -1;
+		}
 		// printf("did open\n");
 	}
 	if (ft_remove_redir_argv(ptr, i, 0) == -1)
 		return (-1);
 	return (i);
+	// return (k);
 }
 
 static char	**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
@@ -188,17 +212,6 @@ t_base		*ft_redir(t_mini *mini, t_base *ptr)
 	tmp = ptr;
 	i = 0;
 	tmp->redir = 0;
-	// t_base *tmpp = ptr;
-	// while(tmpp)
-	// {
-	// 	printf("AFTEr REDIR Argument HERE in list: tmpp->size%d\n", tmpp->size);
-	// 	for (int k = 0; k < tmpp->size; k++)
-	// 		printf("the argument: %s\n", tmpp->argv[k]);
-	// 	printf("TYPE: %d\n", tmpp->type);
-	// 	printf("SIZE: %d\n", tmpp->size);
-	// 	printf("end of argument in list\n\n");
-	// 	tmpp = tmpp->next;
-	// }
 	while (i < tmp->size && tmp->argv[i])
 	{
 		// printf("i is %d tmp->size is %d\n", i, tmp->size);

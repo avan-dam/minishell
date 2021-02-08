@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 19:13:43 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 22:17:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		exit (0); // change
 	if (pid == 0) // child process
 	{
+		// printf("in with [%s]\n", ptr->argv[0]);
 		dup2(mini->stdin, STDIN);
 		dup2(mini->stdout, STDOUT);
-		if (ft_is_builtin_command(ptr->argv[0]) == 0  && look_for_non_builtin(ptr) == 2)
+		if (ft_is_builtin_command(ptr->argv[0]) == 0 && look_for_non_builtin(ptr) == 2)
 			unvalid_identifier(ptr->argv[0], mini, 127);
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 			exit (0); // change
@@ -61,9 +62,9 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		// mini->exit = WEXITSTATUS(status); // check this
 		if (piped)
 		{
-			close(ptr->fd[1]);
-			if (!ptr->next || ptr->next->type == TYPE_BREAK)
-				close(ptr->fd[0]);
+			close(ptr->fd[1]); // COMMENTING THE BELOW OUT IS WHAT FIXED GRIFFINS TESTER
+			// if (!ptr->next || ptr->next->type == TYPE_BREAK)
+			// 	close(ptr->fd[0]);
 		}
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE)
 			close(ptr->prev->fd[0]);
@@ -115,10 +116,11 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		}
 		else
 		{	
-			if (look_for_non_builtin(ptr) == 2) // RIGHT NOW DOES TO RECOGNISE CAT AND GREP
+			if (look_for_non_builtin(tmp) == 2) // RIGHT NOW DOES TO RECOGNISE CAT AND GREP
 			{
 				if (ft_strcmp("", tmp->argv[0]) == 0)
 					break ;
+				// printf("tmp->argv[0][%s]\n", tmp->argv[0]);
 				unvalid_identifier(tmp->argv[0], mini, 127);
 			}
 			else

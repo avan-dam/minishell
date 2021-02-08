@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 14:08:12 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 22:14:09 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void		ft_cd(t_base *ptr, t_mini *mini)
 
 	if (ptr->argv[1] == NULL || ft_strcmp(ptr->argv[1], "~") == 0)
 	{
-		printf("in this\n");
 		chdir(ft_get_env("HOME", mini));
 		ft_unset(mini, "OLDPWD");
 		ft_add_env("OLDPWD", ft_get_env("PWD", mini), mini);

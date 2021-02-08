@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/25 18:35:10 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/08 12:56:41 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/08 19:22:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void handle_sigint(int sig)
     if (sig == SIGINT) //THIS IS FOR CRTL-C only
 	{	
 		write(1, "\b\b  \b\b", 6);
-		// ft_putstr_fd("\n> ", 1); // comment out for tester
+		ft_putstr_fd("\n> ", 1); // comment out for tester
 	}
 	if (sig == SIGQUIT) //CTRL slash this overwrites the previous two chars
 		write(1, "\b\b  \b\b", 6);

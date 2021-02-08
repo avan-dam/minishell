@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 16:28:40 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/08 19:08:59 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static int		ft_check_in_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 	command = ptr->argv[0];
 	tmp = command;
 	if (ft_strcmp(ft_substr(command, 0, 9), "/usr/bin/") == 0)
-		command = ft_substr(command, 9, ft_strlen(command));
+		tmp = ft_substr(command, 9, ft_strlen(command));
 	while ((dit = readdir(dirp)) != NULL)
 	{
-		if (ft_strcmp(dit->d_name, command) == 0)
+		if (ft_strcmp(dit->d_name, tmp) == 0)
 		{
-			ptr->argv[0] = ft_strjoin("/usr/bin/", ptr->argv[0]);
+			ptr->argv[0] = ft_strjoin("/usr/bin/", tmp);
 			closedir(dirp);
 			return (0);
 		}
@@ -80,25 +80,18 @@ int				look_for_non_builtin(t_base *ptr)
 	DIR				*dirp; // dir pointer
 	struct dirent	*dit;
 
-	tmp = ptr; // so < notworking.txt can work
+	tmp = ptr;
 	if (ft_is_builtin_command(tmp->argv[0]) == 1)
-	// if (ft_is_builtin_command(ptr->argv[0]) == 1)
 		return (1);
 	dit = NULL;
 	if ((dirp = opendir("/bin")) == NULL)
 		exit(0);
 	if (ft_check_in_bin(tmp, dit, dirp) == 0)
-	// if (ft_check_in_bin(ptr, dit, dirp) == 0)
-	{
-		// printf("GOES IN\n");
-		// system("leaks minishell");
 		return (0);
-	}
 	closedir(dirp);
 	if ((dirp = opendir("/usr/bin")) == NULL)
 		exit (0);
 	if (ft_check_in_usr_bin(tmp, dit, dirp) == 0)
-	// if (ft_check_in_usr_bin(ptr, dit, dirp) == 0)
 		return (0);
 	if (closedir(dirp) == -1)
 		exit (0);

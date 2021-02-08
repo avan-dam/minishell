@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 16:29:48 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/08 19:03:12 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	t_base	*tmp;
 
 	tmp = ptr;
-	// printf("in exc_smds\n");
 	while (tmp)
 	{
 		if ((tmp == NULL) || (tmp->size == 0))
@@ -90,10 +89,7 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 				return (0) ;
 			tmp = ft_redir(mini, tmp);
 		}
-		// printf("tmp->argv[0][%s]\n",tmp->argv[0]);
-					// if ft_export = -1--
-
-		if ((tmp->type == TYPE_PIPE  || (tmp->prev && tmp->prev->type == TYPE_PIPE)) && ft_is_builtin_command(ptr->argv[0]) == 1)
+		if ((tmp->type == TYPE_PIPE  || (tmp->prev && tmp->prev->type == TYPE_PIPE)) && ft_is_builtin_command(tmp->argv[0]) == 1)
 			execve_commands(tmp, envp, mini);
 		else if (ft_strcmp(tmp->argv[0], "$?") == 0)
 			ft_printf_exit_status(mini);
@@ -120,7 +116,7 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		else
 		{	
 			if (look_for_non_builtin(ptr) == 2) // RIGHT NOW DOES TO RECOGNISE CAT AND GREP
-			{	
+			{
 				if (ft_strcmp("", tmp->argv[0]) == 0)
 					break ;
 				unvalid_identifier(tmp->argv[0], mini, 127);

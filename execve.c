@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 15:09:47 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/08 16:29:48 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		exit (0); // change
 	if (pid == 0) // child process
 	{
-		// printf("value of argv: %s\n", ptr->argv[0]);
 		dup2(mini->stdin, STDIN);
 		dup2(mini->stdout, STDOUT);
-		// printf("GOES IN CHILD PROCESS, argv: %s\n", ptr->argv[0]);
+		if (ft_is_builtin_command(ptr->argv[0]) == 0  && look_for_non_builtin(ptr) == 2)
+			unvalid_identifier(ptr->argv[0], mini, 127);
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 			exit (0); // change
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE && dup2(ptr->prev->fd[0], STDIN) < 0)
@@ -49,12 +49,8 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 			ft_unset(mini, ptr->argv[1]);
 		else if (ft_strcmp(ptr->argv[0], "env") == 0 || ft_strcmp(ptr->argv[0], "/usr/bin/env") == 0)
 			ft_lstprint(mini->env1, mini, 0);
-		// add in exit?
-		else if (look_for_non_builtin(ptr) == 2 && execve(ptr->argv[0], ptr->argv, envp) < 0) // I THINK WE NEED A CALL TO LOOK FOR BUILTIN FUNCTION CALL OR 
-		{													// SOMETHING OTHERWISE NEVER GOES INTO Unvalid_identifiers below
-			// printf("GOES IN HERE execve\n");
+		else if (execve(ptr->argv[0], ptr->argv, envp) < 0)
 			exit (0);
-		}
 		else
 			unvalid_identifier(ptr->argv[0], mini, 127);
 		exit (EXIT_SUCCESS); // closes process with succes // change

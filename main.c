@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/07 14:54:20 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 12:48:07 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int		main(int argc, char **argv, char **envp)
 
 	line = NULL;
 	lineret = 1;
-		// system("leaks minishell");
 	if (argc == 1)
 	{
 		ft_memset(&mini, 0, sizeof(t_mini));
@@ -51,5 +50,7 @@ int		main(int argc, char **argv, char **envp)
 		if (lineret == 0)
 			ft_signals(&mini, 1);
 	}
+	else
+		ft_putstr_fd("No argument needed.\nUsage: ./minishell\n", STDERR);
 	return (0);
 }

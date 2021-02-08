@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 11:06:11 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 15:09:47 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		else if (ft_strcmp(ptr->argv[0], "env") == 0 || ft_strcmp(ptr->argv[0], "/usr/bin/env") == 0)
 			ft_lstprint(mini->env1, mini, 0);
 		// add in exit?
-		else if (execve(ptr->argv[0], ptr->argv, envp) < 0) // I THINK WE NEED A CALL TO LOOK FOR BUILTIN FUNCTION CALL OR 
+		else if (look_for_non_builtin(ptr) == 2 && execve(ptr->argv[0], ptr->argv, envp) < 0) // I THINK WE NEED A CALL TO LOOK FOR BUILTIN FUNCTION CALL OR 
 		{													// SOMETHING OTHERWISE NEVER GOES INTO Unvalid_identifiers below
 			// printf("GOES IN HERE execve\n");
 			exit (0);

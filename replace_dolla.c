@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/07 10:40:03 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 11:33:27 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini, int j, char *lin
 	s->s = 0;
 	s->d = 0;
 	// free(line); // breaks it with Echo ; echo \n ' \n this is the; "first line"' ; echo "and right here;;; 'We have the second'" ; echo and" a fe"'w 'here'; with some slash and quotes .' '\' ; echo '\\' ; echo "\\" ; echo "\"" ; echo \\ ; echo \' ; echo \" "\\" "\"" \\ \' \" 
+	// printf("line return is [%s]\n", line);
 	line = s->line;
 	return (line);
 }
@@ -241,8 +242,11 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j)
 			i = i + ft_find_dolla(s.line, i + 1, mini, &s);
 		else if (s.line[i] == '$' && s.line[i + 1] == '?' && i != 0 && (s.d == 0 || s.d % 2 == 1) && (s.s == 0 ||s.s % 2 == 0))
 			ft_exit_status_replace(&s, i, mini);
-		if (s.line[i] != '\0')
+		if (i == -1)
 			i++;
+		else if (s.line[i] != '\0')
+			i++;
+		// printf("end of loop i is %d and s.line[i is [%c]\n", i, s.line[i]);
 	}
 	// s.line = ft_strtrim(s.line, " ");
 	// printf("ending woo if no error leaving with [%s]\n", s.line);

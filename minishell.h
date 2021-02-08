@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/06 13:22:14 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 10:50:39 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct		s_piper
 t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstadd_back_new(t_base **ptr, t_base *new); // new replace this one or old one
-void				ft_lstprint(t_list *lst, t_mini *mini);
+void				ft_lstprint(t_list *lst, t_mini *mini, int i);
 void				ft_t_lstclear(t_list **lst);
 int  				ft_split_into_tlist(t_mini *mini, char *line);
 void				ft_lstprintold(t_list *lst);
@@ -120,7 +120,6 @@ void				clear_mini(t_mini *mini, int i);
 int  				ft_split_into_tlist(t_mini *mini, char *line);
 t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_back(t_list **alst, t_list *new);
-void				ft_lstprint(t_list *lst, t_mini *mini);
 // int					ft_builtin(t_mini *mini, char *command, char *more, char **envp);
 int					ft_execve(t_mini *mini, char **envp);
 t_base				*ft_redir(t_mini *mini, t_base *ptr);

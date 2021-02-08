@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/07 12:19:54 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 10:12:27 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ static int		ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 	// free(tmp);
 	while ((dit = readdir(dirp)) != NULL)
 	{
-		if (ft_strcmp(dit->d_name, command) == 0)
+		if (ft_strcmp(dit->d_name, tmp) == 0)
 		{
-			ptr->argv[0] = ft_strjoin("/bin/", ptr->argv[0]);
+			ptr->argv[0] = ft_strjoin("/bin/", tmp);
 			closedir(dirp);
 			return (0);
 		}
@@ -90,6 +90,7 @@ int				look_for_non_builtin(t_base *ptr)
 	if (ft_check_in_bin(tmp, dit, dirp) == 0)
 	// if (ft_check_in_bin(ptr, dit, dirp) == 0)
 	{
+		// printf("GOES IN\n");
 		// system("leaks minishell");
 		return (0);
 	}
@@ -101,5 +102,5 @@ int				look_for_non_builtin(t_base *ptr)
 		return (0);
 	if (closedir(dirp) == -1)
 		exit (0);
-	return (1);
+	return (2);
 }

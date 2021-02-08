@@ -6,12 +6,15 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/07 12:30:14 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/07 14:54:20 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+// WE SHOULD IMPLEMET SO CAPS DOESNT MATTER in COMMAND
+// echo or Echo or ECHO or ECHo
 int		main(int argc, char **argv, char **envp)
 {
 	char	*line;

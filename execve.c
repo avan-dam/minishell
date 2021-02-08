@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/07 13:21:53 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 11:06:11 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		else if (ft_strcmp(ptr->argv[0], "unset") == 0)
 			ft_unset(mini, ptr->argv[1]);
 		else if (ft_strcmp(ptr->argv[0], "env") == 0 || ft_strcmp(ptr->argv[0], "/usr/bin/env") == 0)
-			ft_lstprint(mini->env1, mini);
+			ft_lstprint(mini->env1, mini, 0);
 		// add in exit?
 		else if (execve(ptr->argv[0], ptr->argv, envp) < 0) // I THINK WE NEED A CALL TO LOOK FOR BUILTIN FUNCTION CALL OR 
 		{													// SOMETHING OTHERWISE NEVER GOES INTO Unvalid_identifiers below
@@ -82,6 +82,8 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	// printf("in exc_smds\n");
 	while (tmp)
 	{
+		if ((tmp == NULL) || (tmp->size == 0))
+			return (0) ;
 		tmp = ft_redir(mini, tmp);
 		if (tmp == NULL)
 			return (0) ; // OR RETURN? // this is if error opening file										// should below be ptr or tmp?
@@ -92,18 +94,13 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 				return (0) ;
 			tmp = ft_redir(mini, tmp);
 		}
-		// I COMMENTED OUT LOOK FOR NON_BUILTIN FUNCTIONS BECUASE WHEN IT IS NOT COMMENTED OUT GRIFFINS TESTER STOPS IN THE MIDDLE
-		// look_for_non_builtin(tmp); // changes the execve commands i.e. ls to /bin/ls
+		// printf("tmp->argv[0][%s]\n",tmp->argv[0]);
+					// if ft_export = -1--
+
 		if ((tmp->type == TYPE_PIPE  || (tmp->prev && tmp->prev->type == TYPE_PIPE)) && ft_is_builtin_command(ptr->argv[0]) == 1)
-		{
-			// printf("goes in here ");
 			execve_commands(tmp, envp, mini);
-		}
 		else if (ft_strcmp(tmp->argv[0], "$?") == 0)
-		{
-			// printf("GOES IN HERE\n");
 			ft_printf_exit_status(mini);
-		}
 		else if (ft_strcmp(tmp->argv[0], "export") == 0)
 			ft_export(tmp, mini);
 		else if (ft_strcmp(tmp->argv[0], "echo") == 0 || ft_strcmp(tmp->argv[0], "/bin/echo") == 0)
@@ -122,19 +119,23 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 				if (tmp->argv[2] != NULL)
 					mini->exit = 1;
 			}
-			// ft_t_baseclear(&ptr); // check this is only place needed 
 			return (-1); // maybe tmp can also
 		}
 		else
 		{	
-			// printf("in here tmp->argv[0][%s]\n", tmp->argv[0]); // HERE value of tmp->argv[0] is wrong because of first call
-			execve_commands(tmp, envp, mini);					// to execve_commands not sure why tho
+			if (look_for_non_builtin(ptr) == 2) // RIGHT NOW DOES TO RECOGNISE CAT AND GREP
+			{	
+				if (ft_strcmp("", tmp->argv[0]) == 0)
+					break ;
+				unvalid_identifier(tmp->argv[0], mini, 127);
+			}
+			// look_for_non_builtin(ptr); // ONLY WORKS WHEN THIS IS PTR BUT SHOULD BE TMP
+			else
+				execve_commands(tmp, envp, mini);
 		}
 		ft_reset_fds(mini);
 		tmp = tmp->next;
 	}
-	// printf("out of excves\n");
-	// free(ptr);
 	return (0);
 }
 

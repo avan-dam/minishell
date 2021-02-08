@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/25 17:14:22 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/07 15:00:40 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_cd(t_mini *mini)
 		{
 			if (line[i] != ' ')
 			{
-				ft_putstr_fd("cd: ", mini->stdout);
+				ft_putstr_fd("bash: cd: ", mini->stdout);
 				ft_putstr_fd(mini->more, mini->stdout);
 				ft_putstr_fd(": No such file or directory\n", mini->stdout);
 				mini->exit = 1;

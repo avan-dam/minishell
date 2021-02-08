@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 14:34:58 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/08 11:34:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ void		ft_cd(t_base *ptr, t_mini *mini)
 	{
 		if (chdir(ptr->argv[1]) == -1)
 		{
-			ft_putstr_fd("cd: no such file or directory: ", STDOUT);
+			ft_putstr_fd("bash: cd: ", STDOUT);
 			ft_putstr_fd(ptr->argv[1], STDOUT);
-			ft_putstr_fd("\n", STDOUT);
+			ft_putstr_fd(": No such file or directory\n", STDOUT);
 			mini->exit = 1;
 			return ;
 		}

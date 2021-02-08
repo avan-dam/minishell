@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/07 13:11:43 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 11:29:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,11 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 	line = ft_strtrim(line, " ");
 	numb_characters = number_of_commands(line, mini, 0, 1); // i is the number of characters
 	size = mini->numb_cmds;
+	// printf("mini->cmd_part[%s]\n", mini->cmd_part);
 	mini->cmd_part = ft_check_dolla_quotes(mini->cmd_part, mini, 0, 0); //FIXXXXXX!!!
+	if (mini->cmd_part == NULL)
+		return (1);
+	// printf("mini->cmd_part[%s]\n", mini->cmd_part);
 	new = (t_base *)malloc(sizeof(t_base));
 	new->argv = (char **)malloc(sizeof(char *) * (size + 1));
 	if (new->argv == NULL)

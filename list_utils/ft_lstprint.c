@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:49:11 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/01/30 12:32:13 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 10:50:23 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_lstprintold(t_list *lst)
 	}
 }
 
-void	ft_lstprint(t_list *lst, t_mini *mini)
+void	ft_lstprint(t_list *lst, t_mini *mini, int i)
 {
 	t_list *tmp;
 	tmp = lst;
@@ -34,6 +34,8 @@ void	ft_lstprint(t_list *lst, t_mini *mini)
 		return ;
 	while (tmp != NULL)
 	{
+		if (i == 1)
+			ft_putstr_fd("declare -x ", mini->stdout);
 		ft_putstr_fd(tmp->var1, mini->stdout);
 		ft_putstr_fd("=", mini->stdout);
 		ft_putstr_fd(tmp->var2, mini->stdout);

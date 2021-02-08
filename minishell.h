@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 15:42:32 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/06 13:22:14 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,10 @@ typedef struct		s_base
 
 typedef struct		s_line
 {
-	int				s;//number of single quotes that are registered as such
-	int				d;//number of double quotes that are registered as such
+	int				s;		//number of single quotes that are registered as such
+	int				d;		//number of double quotes that are registered as such
 	char			*line;
 }					t_line;
-
-// Struct only used for redirection 
-typedef struct		s_redir
-{
-	char			*file;
-	char			*m_files;
-	char			*error;
-	int				i;
-	int				d;
-	int 			redirinput;
-	int 			j;
-	int 			fd;
-	int				alpha;
-}					t_redir;
 
 typedef struct		s_list
 {
@@ -70,11 +56,6 @@ typedef struct		s_list
 
 typedef struct		s_mini
 {
-	char			*command;
-	char			*more;
-	t_list			*run2;
-	char			*currentpwd;
-	char			*oldpwd;
 	t_list			*env1;
 	int				stdout;
 	int				stderr;
@@ -83,6 +64,11 @@ typedef struct		s_mini
 	int				type_end;
 	int				stdin;
 	int				exit;
+	// char			*command;
+	// char			*more;
+	// t_list		*run2;
+	// char			*currentpwd;
+	// char			*oldpwd;
 }					t_mini;
 
 typedef struct		s_piper
@@ -98,9 +84,10 @@ t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstadd_back_new(t_base **ptr, t_base *new); // new replace this one or old one
 void				ft_lstprint(t_list *lst, t_mini *mini);
-void				ft_lstclear(t_list **lst);
+void				ft_t_lstclear(t_list **lst);
 int  				ft_split_into_tlist(t_mini *mini, char *line);
 void				ft_lstprintold(t_list *lst);
+void				ft_t_baseclear(t_base **lst);
 
 /* BUILTIN FUNCTION */
 int 			  	ft_echo(t_base *ptr, t_mini *mini);
@@ -126,6 +113,7 @@ int  				numb_char(char *line, char c);
 int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 int					look_for_non_builtin(t_base *ptr);
 int         		ft_is_builtin_command(char *str);
+void				clear_mini(t_mini *mini, int i);
 
 // int					ft_redir(t_mini *mini, int d);
 
@@ -135,7 +123,6 @@ void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstprint(t_list *lst, t_mini *mini);
 // int					ft_builtin(t_mini *mini, char *command, char *more, char **envp);
 int					ft_execve(t_mini *mini, char **envp);
-void				ft_lstclear(t_list **lst);
 t_base				*ft_redir(t_mini *mini, t_base *ptr);
 // int					ft_redir(t_mini *mini, t_base *ptr);
 int					ft_parse_input(char *command, char *more, t_mini *mini, char **envp);

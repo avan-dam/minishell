@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 14:42:46 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/06 14:56:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		main(int argc, char **argv, char **envp)
 		ft_set_env(argv, envp, &mini);
 		while (lineret)
 		{
-			ft_putstr_fd("> ", mini.stdout); // the bash prompt
+			// ft_putstr_fd("> ", mini.stdout); // the bash prompt
 			// ft_putstr_fd("> ", STDOUT); // the bash prompt
 			ft_signals(&mini, 0);
 			if ((lineret = get_next_line(mini.stdin, &line)) < 0)
@@ -40,15 +40,13 @@ int		main(int argc, char **argv, char **envp)
 				free(line);
 				line = NULL;
 				ft_exit(&mini, mini.exit);
-				// return (-1);
 			}
+			clear_mini(&mini, 1);
 			free(line);
 			line = NULL;
 		}
 		if (lineret == 0)
 			ft_signals(&mini, 1);
 	}
-	free(line);
-	line = NULL;
 	return (0);
 }

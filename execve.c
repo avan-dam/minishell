@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 11:06:11 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/08 14:04:39 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 					break ;
 				unvalid_identifier(tmp->argv[0], mini, 127);
 			}
-			// look_for_non_builtin(ptr); // ONLY WORKS WHEN THIS IS PTR BUT SHOULD BE TMP
 			else
 				execve_commands(tmp, envp, mini);
 		}

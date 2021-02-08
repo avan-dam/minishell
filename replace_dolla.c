@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/04 14:18:38 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/06 13:05:40 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char		*ft_check_var_tlist(t_mini *mini, char *oldvar)
 	while (tlist != NULL)
 	{
 		if (ft_strcmp(tlist->var1, oldvar) == 0)
-			return (tlist->var2);
+			return (ft_strdup(tlist->var2));
 		tlist = tlist->next;
 	}
 	return (ft_strdup(""));
@@ -36,17 +36,20 @@ static int	ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 	char	*newvar;
 	char	*end;
 	int		k;
+	int 	retval;
 
 	j = i;
 	while (line[i] != '\0' && line[i] != '$' && \
 	line[i] != '-' && line[i] != '=' && line[i] != ' ' && line[i] != '\'' \
-	&& line[i] != '"' && line[i] != '\\' && line[i] != '/' && line[i] != '%' ) // took out && '*" for echo "$2$*""
+	&& line[i] != '"' && line[i] != '\\' && line[i] != '/' && line[i] != '%' && line[i] != '*')// took out && '*" for echo "$2$*""
 	{	
-		if (line[i] == '@' || line[i] == '#')
+		if (line[i] == '@' || line[j] == '#')
 		{
 			i++;
 			break ;
 		}
+		if (line[i] == '#')
+			break ;
 		if (line[i] >= '0' && line[i] <= '9' && line[j + 1] >= '0' && line[i] <= '9')
 		{
 			k = i;
@@ -63,6 +66,8 @@ static int	ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 		}
 		i++;
 	}
+	if (line[j] == '*')
+		i++;
 	if (line[i - 1] == '"')
 		return (0);
 	oldvar = ft_substr(line, j, i - j);
@@ -76,14 +81,15 @@ static int	ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 	newvar = ft_check_var_tlist(mini, oldvar);
 	if (ft_strcmp(oldvar, "#") == 0)
 		newvar = ft_strdup("0");
-	// printf("start[%s] end[%s] oldbvar[%s] newvar[%s]\n", start, end, oldvar, newvar);
 	if (ft_strcmp(oldvar, "") == 0 && end[0] != '\'' && end[0] != '"')
 		newvar = ft_strdup("$");
 	if (ft_strcmp(oldvar, "") == 0 && (start[ft_strlen(start)] == '"' || s->d % 2 == 1) && end[0] == '"')
 		newvar = ft_strdup("$");
+	// printf("start[%s] end[%s] oldbvar[%s] newvar[%s]\n", start, end, oldvar, newvar);
+	retval = ft_len(newvar) - 1;
 	s->line = ft_strjoin_three(start, newvar, end);
 	free(oldvar);
-	return (ft_len(newvar) - 1);
+	return (retval);
 }
 
 static int 			ft_check_backslash(t_line *s, int i)
@@ -102,18 +108,19 @@ static int 			ft_check_backslash(t_line *s, int i)
 
 static int		ft_double_quotes(t_line *s, int i)
 {
-	// printf("in double wxith line %s and t %d\n", s->line, s->d);
+	// printf("in double wxith line %s and t %d i is %d\n", s->line, s->d, i);
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
-	i--;
+	if (i != 0)
+		i--;
 	if (s->s % 2 == 0)
 		s->d++;
-	// printf("out double wxith line %s and t %d line[i]\n", s->line, s->d);
+	// printf("out double wxith line %s and t %d line[i] i is %d \n", s->line, s->d, i);
 	return (i);
 }
 
 static int		ft_single_quotes(t_line *s, int i)
 {
-	// printf("in single with line %s and t %d i is %d and char is %c \n", s->line, s->d, i, s->line[i]);
+	// printf("in single with line %s and t %d i is %d and char is %c i is %d \n", s->line, s->d, i, s->line[i], i);
 	// if inside double quotes we keep the single quotes and then covert
 	if (s->d % 2 == 1)
 	{
@@ -123,7 +130,8 @@ static int		ft_single_quotes(t_line *s, int i)
 	}
 	// remove single quotes and print exactly what is inside without changing
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);
-	i--;
+	if (i != 0)
+		i--;
 	s->s++;
 	if (s->line[i] == '\\' && s->d % 2 == 0)
 	{
@@ -176,7 +184,11 @@ static char		*ft_check_quotes_in_order(t_line *s, t_mini *mini, int j, char *lin
 		if (j != 2)
 			return (NULL);
 	}
-	return (s->line);
+	s->s = 0;
+	s->d = 0;
+	free(line);
+	line = s->line;
+	return (line);
 }
 
 void		ft_exit_status_replace(t_line *s, int i, t_mini *mini)
@@ -218,7 +230,7 @@ char			*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j)
 		else if ((s.line[i] == '$') && (s.line[i + 1] != '/') && \
 		(s.line[i + 1] != '\\') && (s.line[i + 1] != '\0') && (s.line[i + 1] != '?'))
 			i = i + ft_find_dolla(s.line, i + 1, mini, &s);
-		else if (s.line[i] == '$' && s.line[i + 1] == '?' && (s.d == 0 || s.d % 2 == 1) && (s.s == 0 ||s.s % 2 == 0))
+		else if (s.line[i] == '$' && s.line[i + 1] == '?' && i != 0 && (s.d == 0 || s.d % 2 == 1) && (s.s == 0 ||s.s % 2 == 0))
 			ft_exit_status_replace(&s, i, mini);
 		if (s.line[i] != '\0')
 			i++;

@@ -6,14 +6,13 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/04 14:23:26 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/05 14:18:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // CLEAN UP THIS FILE
-// WRITE PARSER SO IT WORKS WITH REDIR
 // SO LOOK AT ALL > < and BACKSLASH
 
 static int	ft_remove_redir_argv(t_base *ptr, int i, int j)
@@ -45,7 +44,7 @@ static int	ft_remove_redir_argv(t_base *ptr, int i, int j)
 	return (0);
 }
 
-static int		error_opening(char *error, t_mini *mini)
+static int	error_opening(char *error, t_mini *mini)
 {
 	ft_putstr_fd("bash: ", mini->stderr);
 	ft_putstr_fd(error, mini->stderr);
@@ -55,8 +54,10 @@ static int		error_opening(char *error, t_mini *mini)
 	return (-1);
 }
 
-static int		ft_open_file(t_base *ptr, int i, t_mini *mini)
+static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 {
+	// printf("in open file funtion with ptr->argv[i][%s]ptr->argv[i + 1][%s] will try open\n,", ptr->argv[i], ptr->argv[i + 1]);
+	// ptr->argv[i + 1] = ft_check_dolla_quotes(ptr->argv[i + 1], mini, 0, 0); //FIXXXXXX!!!
 	if (ptr->redir == 0)
 		return (i);
 	if (ft_strcmp(">", ptr->argv[i]) == 0)
@@ -79,7 +80,7 @@ static int		ft_open_file(t_base *ptr, int i, t_mini *mini)
 	return (i);
 }
 
-static char		**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
+static char	**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
 {
 	char	**new;
 
@@ -108,41 +109,31 @@ static char		**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
 	return (new);
 }
 
-static char		*add_new_backslash_into_list(int j, t_base *ptr, int i)
+static int	add_new_into_list(int j, t_base *ptr, int i)
 {
-	char	*newchar;
-	char	*temp;
+	char	*tmp;
 
-	newchar = (char *)malloc(sizeof(char) * (j + 1));
-	if (newchar == NULL)
-		return (NULL);
-	newchar[j] = '\0';
-	j--;
-	while (j >= 0)
+	tmp = NULL;
+	if (j > 0)
 	{
-		newchar[j] = '\\';
-		j--;
-	}
-	if (ptr->redir == 1)
-	{	
-		temp = newchar;
-		newchar = ft_strjoin(temp, "\\");
-		free(temp);
-		// newchar = temp;
-		// newchar = ft_strjoin(newchar, "\\");
+		tmp = ft_substr(ptr->argv[i], 0, j);
+		free(ptr->argv[i]);
+		if (ptr->redir != 1 && numb_char(tmp, '\\') == (int)ft_strlen(tmp))
+			tmp = ft_memmove(&tmp[0], &tmp[1], ft_strlen(tmp));
+		ptr->argv[i] = ft_substr(ptr->argv[i], j, ft_strlen(ptr->argv[i]) - j);
 	}
 	if (i > 0)
 	{
 		ptr->size = ptr->size + 1;
-		if ((ptr->argv = add_tmp_tolist(newchar, ptr, i, 0)) == NULL)
-			return (NULL);
+		if ((ptr->argv = add_tmp_tolist(tmp, ptr, i, 0)) == NULL)
+			return (-1);
 	}
-	return (newchar);
+	return (0);
 }
 
 static void	remove_extra_backslash_check_redir(t_base *ptr, int i)
 {
-	int j;
+	int 	j;
 
 	j = 0;
 	while (ptr->argv[i][j] == '\\')
@@ -158,13 +149,11 @@ static void	remove_extra_backslash_check_redir(t_base *ptr, int i)
 	}
 }
 
-static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini)
+static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 {
-	int		j;
 	char	*tmp;
 
 	tmp = NULL;
-	j = 0;
 	remove_extra_backslash_check_redir(ptr, i);
 	if (numb_char(ptr->argv[i], '\'') > 0 || numb_char(ptr->argv[i], '"') > 0)
 	{
@@ -172,7 +161,7 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini)
 		ptr->redir = 3;
 		return (i);
 	}
-	while (ptr->argv[i][j] == '\\')
+	while (ptr->argv[i][j] != '>' && ptr->argv[i][j] != '<')
 		j++;
 	if (j <= 0)
 	{
@@ -183,11 +172,8 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini)
 			return (i);
 		}
 	}
-	if (j > 0)
-		ptr->argv[i] = ft_substr(ptr->argv[i], j, ft_strlen(ptr->argv[i]) - j);
-	if ((tmp = add_new_backslash_into_list(j - 1, ptr, i)) == NULL)
+	if (add_new_into_list(j, ptr, i) == -1)
 		return (-1);
-	free(tmp);
 	return (i);
 }
 
@@ -199,9 +185,10 @@ t_base		*ft_redir(t_mini *mini, t_base *ptr)
 	ptr->redir = 0;
 	while (i < ptr->size && ptr->argv[i])
 	{
-		if ((ft_strchr_numb(ptr->argv[i], '>', 0) != -1) || (ft_strchr_numb(ptr->argv[i], '<', 0) != -1))
+		if ((ft_strchr_numb(ptr->argv[i], '>', 0) != -1) ||
+		(ft_strchr_numb(ptr->argv[i], '<', 0) != -1))
 		{
-			if (ft_backslash_redir(ptr, i, mini) == -1)
+			if (ft_backslash_redir(ptr, i, mini, 0) == -1)
 				return (NULL);
 			if (ptr->redir == 1)
 				i--;
@@ -213,3 +200,15 @@ t_base		*ft_redir(t_mini *mini, t_base *ptr)
 	}
 	return (ptr);
 }
+
+	// t_base *tmpp = ptr;
+	// while(tmpp)
+	// {
+	// 	printf("AFTEr REDIR Argument HERE in list: tmpp->size%d\n", tmpp->size);
+	// 	for (int k = 0; k < tmpp->size; k++)
+	// 		printf("the argument: %s\n", tmpp->argv[k]);
+	// 	printf("TYPE: %d\n", tmpp->type);
+	// 	printf("SIZE: %d\n", tmpp->size);
+	// 	printf("end of argument in list\n\n");
+	// 	tmpp = tmpp->next;
+	// }

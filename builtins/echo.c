@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 11:23:04 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/09 12:30:14 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int    ft_echo(t_base *ptr, t_mini *mini)
     char	*string;
 	char	*tmp;
 
+	printf("GOOOO into echo \n");
     mini->exit = 0;
     if (ft_strcmp("", ptr->argv[0]) == 0)
     {

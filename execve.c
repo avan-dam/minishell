@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/09 11:07:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/09 14:21:22 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,18 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		dup2(mini->stdout, STDOUT);
 		if (ft_is_builtin_command(ptr->argv[0]) == 0 && look_for_non_builtin(ptr) == 2)
 			unvalid_identifier(ptr->argv[0], mini, 127);
+		// printf("1here\n");
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 			exit (0); // change
+		// printf("2here\n");
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE && dup2(ptr->prev->fd[0], STDIN) < 0)
 			exit (0);
+		// printf("3here\n");
 		if ((ft_strcmp(ptr->argv[0], "echo")) == 0 || (ft_strcmp(ptr->argv[0], "/bin/echo") == 0) || (ft_strcmp(ptr->argv[0], "Echo") == 0))
-			ft_echo(ptr, mini);
+		{
+			// printf("going in here\n");
+				ft_echo(ptr, mini);
+		}
 		else if ((ft_strcmp(ptr->argv[0], "pwd") == 0) || (ft_strcmp(ptr->argv[0], "/bin/pwd") == 0))
 			ft_pwd(mini);
 		else if ((ft_strcmp(ptr->argv[0], "cd") == 0) || (ft_strcmp(ptr->argv[0], "/usr/bin/cd") == 0))
@@ -90,6 +96,18 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 				return (0) ;
 			tmp = ft_redir(mini, tmp);
 		}
+	// 	t_base *tmpp = tmp;
+	// while(tmpp)
+	// {
+	// 	printf("AFTEr REDIR Argument HERE in list: tmpp->size%d\n", tmpp->size);
+	// 	for (int k = 0; k < tmpp->size; k++)
+	// 		printf("the argument: %s\n", tmpp->argv[k]);
+	// 	printf("TYPE: %d\n", tmpp->type);
+	// 	printf("SIZE: %d\n", tmpp->size);
+	// 	printf("end of argument in list\n\n");
+	// 	tmpp = tmpp->next;
+	// }
+	// printf("so [%s] tmp->argv[0] \n",tmp->argv[0]);
 		if ((tmp->type == TYPE_PIPE  || (tmp->prev && tmp->prev->type == TYPE_PIPE)) && ft_is_builtin_command(tmp->argv[0]) == 1)
 			execve_commands(tmp, envp, mini);
 		else if (ft_strcmp(tmp->argv[0], "$?") == 0)
@@ -107,10 +125,15 @@ int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		else if (ft_strcmp(tmp->argv[0], "exit") == 0)
 		{
 			if (tmp->argv[1] != NULL)
-			{	
-				mini->exit = ft_atoi(tmp->argv[1]);
-				if (tmp->argv[2] != NULL)
-					mini->exit = 1;
+			{
+				if (ft_is_str_int(tmp->argv[1]) == 0)
+					mini->exit = 255;
+				else
+				{
+					mini->exit = ft_atoi(tmp->argv[1]);
+					if (tmp->argv[2] != NULL)
+						mini->exit = 1;
+				}
 			}
 			return (-1); // maybe tmp can also
 		}

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/08 22:00:12 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/09 14:24:22 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,6 @@ static int	error_opening(char *error, t_mini *mini)
 
 static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 {
-	// int k;
-
-	// k = i;
 	// printf("ptr->argv[i][%s]ptr->argv[i + 1][%s] will try open\n,", ptr->argv[i], ptr->argv[i + 1]);
 	// ptr->argv[i + 1] = ft_check_dolla_quotes(ptr->argv[i + 1], mini, 0, 0); //FIXXXXXX!!!
 	if (ptr->argv[i + 1] == NULL || ft_strcmp(ptr->argv[i + 1], ">") == 0)
@@ -175,17 +172,53 @@ static void	remove_extra_backslash_check_redir(t_base *ptr, int i)
 	}
 }
 
+static char *ft_argvs_before_redirinto_string(t_base *ptr, int max)
+{
+	char	*tmp;
+	char	*string;
+	int		i;
+
+	i = 1;
+	tmp = ft_strdup("");
+	string = NULL;
+    while (i != max)
+	{
+		if (string)
+			free(string);
+		string = ft_strjoin(tmp, ptr->argv[i]);
+		free(tmp);
+		if (i + 1 != max)
+        {
+            if (ptr->argv[i + 1] && ptr->argv[i + 1][0] != '>' && ptr->argv[i + 1][0] != '<')
+			{    
+				tmp = ft_strdup(string);
+				free(string);
+				string = ft_strjoin(tmp, " ");
+				free(tmp);
+			}
+        }
+		tmp = ft_strdup(string);
+		i++;
+	}
+	return (string);
+}
+
 static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 {
 	char	*tmp;
 
-	tmp = NULL;
 	remove_extra_backslash_check_redir(ptr, i);
+	tmp = ft_argvs_before_redirinto_string(ptr, i);
+	if (ft_check_dolla_quotes(tmp, mini, 0, 1) == NULL)
+	{
+		ptr->redir = 4;
+		return (0);
+	}
 	if (numb_char(ptr->argv[i], '\'') > 0 || numb_char(ptr->argv[i], '"') > 0)
 	{
 		ptr->argv[i] = ft_check_dolla_quotes(ptr->argv[i], mini, 0, 2);
 		ptr->redir = 3;
-		return (i);
+		return (0);
 	}
 	while (ptr->argv[i][j] != '>' && ptr->argv[i][j] != '<')
 		j++;
@@ -195,13 +228,12 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 		{
 			if (ft_open_file(ptr, i, mini) == -1)
 				return (-1);
-			// printf("here return i %d\n", i);
-			return (i);
+			return (0);
 		}
 	}
 	if (add_new_into_list(j, ptr, i) == -1)
 		return (-1);
-	return (i);
+	return (0);
 }
 
 t_base		*ft_redir(t_mini *mini, t_base *ptr)
@@ -227,10 +259,8 @@ t_base		*ft_redir(t_mini *mini, t_base *ptr)
 				i++;
 		}
 		tmp->redir = 0;
-		// printf("i is %d and tmp->size is%d \n", i, tmp->size);
 		i++;
 	}
-	// printf("tmp->argv[0] is [%s]\n", tmp->argv[0]);
 	return (tmp);
 }
 

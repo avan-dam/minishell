@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/09 14:24:22 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/09 14:28:43 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 	tmp = ft_argvs_before_redirinto_string(ptr, i);
 	if (ft_check_dolla_quotes(tmp, mini, 0, 1) == NULL)
 	{
+		ptr->argv[i] = ft_check_dolla_quotes(ptr->argv[i], mini, 0, 2);
 		ptr->redir = 4;
 		return (0);
 	}

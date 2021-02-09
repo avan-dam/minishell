@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/09 12:15:11 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/09 14:16:15 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		mini->exit = WEXITSTATUS(status); // check this
 		if (piped)
 		{
-			close(ptr->fd[1]); // COMMENTING THE BELOW OUT IS WHAT FIXED GRIFFINS TESTER
+			close(ptr->fd[1]);
 			// if (!ptr->next || ptr->next->type == TYPE_BREAK)
-				// close(ptr->fd[0]);
+			if (ptr->type != TYPE_PIPE)
+				close(ptr->fd[0]);
 		}
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE)
 			close(ptr->prev->fd[0]);

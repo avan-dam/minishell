@@ -6,7 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2021/02/09 11:10:52 by salbregh      ########   odam.nl         */
+=======
+/*   Updated: 2021/02/09 11:07:35 by ambervandam   ########   odam.nl         */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +63,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 	else // parent process
 	{
 		waitpid(pid, &status, 0);
-		mini->exit = WEXITSTATUS(status);
+		mini->exit = WEXITSTATUS(status); // check this
 		if (piped)
 		{
 			close(ptr->fd[1]); // COMMENTING THE BELOW OUT IS WHAT FIXED GRIFFINS TESTER

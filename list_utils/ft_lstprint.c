@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:49:11 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 10:50:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/09 11:20:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ void	ft_lstprint(t_list *lst, t_mini *mini, int i)
 			ft_putstr_fd("declare -x ", mini->stdout);
 		ft_putstr_fd(tmp->var1, mini->stdout);
 		ft_putstr_fd("=", mini->stdout);
+		if (i == 1)
+			ft_putstr_fd("\"", mini->stdout);
 		ft_putstr_fd(tmp->var2, mini->stdout);
+		if (i == 1)
+			ft_putstr_fd("\"", mini->stdout);
 		ft_putstr_fd("\n", mini->stdout);
 		tmp = tmp->next;
 	}

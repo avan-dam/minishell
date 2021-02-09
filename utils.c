@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 18:55:16 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/09 11:56:17 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,18 @@ char        *ft_string_insert(char *string, int i, char *middle)
 	start = ft_substr(string, 0, i + 1);
 	end = ft_substr(string, i + 1, ft_strlen(string) - i - 1);
 	return (ft_strjoin_three(start, middle, end));
+}
+
+int     ft_is_str_int(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+	    if (str[i] < 48 || str[i] > 57)
+		    return (0);
+        i++;
+    }
+	return (1);
 }

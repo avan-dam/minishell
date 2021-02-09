@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 22:17:37 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/09 11:10:52 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 			ft_unset(mini, ptr->argv[1]);
 		else if (ft_strcmp(ptr->argv[0], "env") == 0 || ft_strcmp(ptr->argv[0], "/usr/bin/env") == 0)
 			ft_lstprint(mini->env1, mini, 0);
-		else if (execve(ptr->argv[0], ptr->argv, envp) < 0)
-			exit (0);
+		else if (execve(ptr->argv[0], ptr->argv, envp) < 0 || !ptr->argv[1])
+			exit (1);
 		else
 			unvalid_identifier(ptr->argv[0], mini, 127);
 		exit (EXIT_SUCCESS); // closes process with succes // change
@@ -59,12 +59,12 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 	else // parent process
 	{
 		waitpid(pid, &status, 0);
-		// mini->exit = WEXITSTATUS(status); // check this
+		mini->exit = WEXITSTATUS(status);
 		if (piped)
 		{
 			close(ptr->fd[1]); // COMMENTING THE BELOW OUT IS WHAT FIXED GRIFFINS TESTER
 			// if (!ptr->next || ptr->next->type == TYPE_BREAK)
-			// 	close(ptr->fd[0]);
+				// close(ptr->fd[0]);
 		}
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE)
 			close(ptr->prev->fd[0]);

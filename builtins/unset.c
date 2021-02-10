@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:46:57 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 20:42:56 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/10 20:50:30 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,12 @@ void		delete_node(t_list *lst, t_list *target, t_mini *mini)
 		return ;
 	}
 	// Remove node from Linked List
+	t_list *temp1 = prev->next;
 	prev->next = prev->next->next;
-	lst = prev;
+	lst = temp1;// lst = prev;
+	free(temp1->var1);
+	free(temp1->var2);
+	free(temp1);
 	// ft_lstclear(&target);
 	return ;
 }

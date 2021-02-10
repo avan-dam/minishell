@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:04:41 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 10:49:40 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/10 14:22:42 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,6 @@ int		ft_export(t_base *ptr, t_mini *mini)
 	int i;
 
 	i = 1;
-	// t_base *tmpp = ptr;
-	// while(tmpp)
-	// {
-	// 	printf("AFTEr REDIR Argument HERE in list: tmpp->size%d\n", tmpp->size);
-	// 	for (int k = 0; k < tmpp->size; k++)
-	// 		printf("the argument: %s\n", tmpp->argv[k]);
-	// 	printf("TYPE: %d\n", tmpp->type);
-	// 	printf("SIZE: %d\n", tmpp->size);
-	// 	printf("end of argument in list\n\n");
-	// 	tmpp = tmpp->next;
-	// }
 	if (ptr->argv[1] == NULL)
 	{
 		ft_lstprint(mini->env1, mini, 1); //but then with delares and slighlty different
@@ -43,8 +32,8 @@ int		ft_export(t_base *ptr, t_mini *mini)
     		mini->exit = 1;
       		return (-1); // change
 		} //check this
-		ft_split_into_tlist(mini, ptr->argv[i]);
-		mini->exit = 0;
+		if (ft_split_into_tlist(mini, ptr->argv[i]) != -1)
+			mini->exit = 0;
 		i++;
 	}
 	return (0); //change

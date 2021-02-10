@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/06 13:35:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/09 16:24:46 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ void		ft_printf_exit_status(t_mini *mini)
 {
 	char	*exitstatus;
 
+	printf("in haaa \n");
 	exitstatus = ft_itoa(mini->exit);
+	ft_putstr_fd("bash: ", mini->stdout);
 	ft_putstr_fd(exitstatus, mini->stdout);
-	ft_putstr_fd("\n", mini->stdout);
+	ft_putstr_fd(": command not found\n", mini->stdout);
 	mini->exit = 127;
 }
 

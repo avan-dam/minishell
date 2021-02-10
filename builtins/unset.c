@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:46:57 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 14:35:42 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/10 14:27:15 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void		delete_node(t_list *lst, t_list *target, t_mini *mini)
 {
+	// TAGERT NEEDS TO BE REMOVED
+	// LST IS THE HEAD 
 	t_list		*temp;
 	t_list		*prev;
 
@@ -24,7 +26,7 @@ void		delete_node(t_list *lst, t_list *target, t_mini *mini)
 	{
 		if (lst->next == NULL)
 		{
-			free(lst);
+			ft_t_lstclear(&lst);
 			mini->env1 = temp;
 			return ;
 		}
@@ -71,3 +73,46 @@ int			ft_unset(t_mini *mini, char *unset)
 	mini->exit = 0;
 	return (0);
 }
+
+
+
+
+// void		delete_node(t_list *lst, t_list *target, t_mini *mini)
+// {
+// 	// TAGERT NEEDS TO BE REMOVED
+// 	// LST IS THE HEAD 
+// 	t_list		*temp;
+// 	t_list		*prev;
+
+// 	temp = NULL;
+// 	if (lst == NULL)
+// 		return ;
+// 	if (lst == target)
+// 	{
+// 		if (lst->next == NULL)
+// 		{
+// 			free(lst);
+// 			mini->env1 = temp;
+// 			return ;
+// 		}
+// 		lst->var1 = lst->next->var1;
+// 		lst->var2 = lst->next->var2;
+// 		lst->next = lst->next->next;
+// 		return ;
+// 	}
+// 	// if not first node, find previous node
+// 	prev = lst;
+// 	while ((prev->next != NULL) && (prev->next != target))
+// 	{
+// 		prev = prev->next;
+// 		lst = lst->next;
+// 	}
+// 	// double check target in list
+// 	if (prev->next == NULL)
+// 		return ;
+// 	// Remove node from Linked List
+// 	prev->next = prev->next->next;
+// 	free(target);
+// 	lst = prev;
+// 	return ;
+// }

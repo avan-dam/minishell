@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/09 11:56:17 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/09 16:28:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int		unvalid_identifier(char *error, t_mini *mini, int exitstatus)
 {
     // printf("VALUE OR ERROR: %s\n", error);
     // is this STDOUT OR STD ERROR
+    if (ft_strcmp(error, "\\$?") == 0)
+        error = "$?";
     ft_putstr_fd("bash: ", mini->stderr);
     ft_putstr_fd(error, mini->stderr);
     ft_putstr_fd(": command not found\n", mini->stderr);

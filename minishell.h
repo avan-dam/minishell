@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 09:46:30 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/10 18:13:32 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstadd_back_new(t_base **ptr, t_base *new); // new replace this one or old one
 void				ft_lstprint(t_list *lst, t_mini *mini, int i);
 void				ft_lstclear(t_list **lst);
-int  				ft_split_into_tlist(t_mini *mini, char *line);
+int  				ft_split_into_tlist(t_mini *mini, char *line, int j);
 void				ft_lstprintold(t_list *lst);
 void				ft_baseclear(t_base **lst);
 

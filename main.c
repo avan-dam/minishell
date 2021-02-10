@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 09:39:08 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/10 18:18:13 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		main(int argc, char **argv, char **envp)
 		ft_set_env(argv, envp, &mini);
 		mini.stdout = 1;
 		mini.stderr = 2;
-		ft_set_env(argv, envp, &mini);
 		while (lineret)
 		{
 			ft_putstr_fd("> ", mini.stdout);

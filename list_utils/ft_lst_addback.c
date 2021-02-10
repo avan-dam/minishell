@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:48:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 09:46:23 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/10 19:05:40 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ void		ft_lstadd_back(t_list **alst, t_list *new)
 
 	if (alst == NULL || new == NULL)
 		return ;
-	if (*alst == NULL)
+	if (!*alst)
 		*alst = new;
-	first = *alst;
-	while (first->next != NULL)
-		first = first->next;
-	first->next = new;
-	new->next = NULL;
+	else
+	{
+		first = *alst;
+		while (first->next)
+			first = first->next;
+		first->next = new;
+		new->next = NULL;
+	}
 }
 
 /*

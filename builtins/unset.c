@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:46:57 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 12:13:26 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/10 19:34:41 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,40 @@
 
 void		delete_node(t_list *lst, t_list *target, t_mini *mini)
 {
-	t_list		*temp;
+	t_list		*tmp;
 	t_list		*prev;
 
-	temp = NULL;
+	tmp = NULL;
 	if (lst == NULL)
 		return ;
 	if (lst == target)
 	{
-		if (lst->next == NULL)
+		if (!lst->next)
 		{
-			// ft_lstclear(&lst);
-			mini->env1 = temp;
+			mini->env1 = tmp; // list is NULL
 			return ;
 		}
-		// lst->var1 = lst->next->var1;
-		// lst->var2 = lst->next->var2;
-		lst->next = lst->next->next;
+		lst = lst->next;
+		mini->env1 = lst;
 		return ;
 	}
 	// if not first node, find previous node
 	prev = lst;
-	while ((prev->next != NULL) && (prev->next != target))
+	while (prev->next && prev->next != target)
 	{
 		prev = prev->next;
 		lst = lst->next;
 	}
-	// double check target in list
 	if (prev->next == NULL)
 	{
 		ft_lstclear(&lst);
+		ft_lstclear(&target);
 		return ;
 	}
 	// Remove node from Linked List
 	prev->next = prev->next->next;
-	// ft_lstclear(&target);
 	lst = prev;
-	// ft_lstclear(&prev);
+	// ft_lstclear(&target);
 	return ;
 }
 

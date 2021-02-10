@@ -6,15 +6,12 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/08 21:11:26 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/10 09:39:08 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-// WE SHOULD IMPLEMET SO CAPS DOESNT MATTER in COMMAND
-// echo or Echo or ECHO or ECHo
 int		main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -32,11 +29,15 @@ int		main(int argc, char **argv, char **envp)
 		ft_set_env(argv, envp, &mini);
 		while (lineret)
 		{
-			// ft_putstr_fd("> ", mini.stdout); // the bash prompt
-			// ft_putstr_fd("> ", STDOUT); // the bash prompt
+			ft_putstr_fd("> ", mini.stdout);
 			ft_signals(&mini, 0);
 			if ((lineret = get_next_line(mini.stdin, &line)) < 0)
-				return (-1);
+			{
+				free(line);
+				line = NULL;
+				ft_lstclear(&mini.env1);
+				exit(1);
+			}
 			if (parse_input_string(line, &mini, envp) == -1)
 			{
 				free(line);
@@ -49,6 +50,10 @@ int		main(int argc, char **argv, char **envp)
 		}
 		if (lineret == 0)
 			ft_signals(&mini, 1);
+		free(line);
+		line = NULL;
+		ft_lstclear(&mini.env1);
+		system("leaks minishell");
 	}
 	else
 		ft_putstr_fd("No argument needed.\nUsage: ./minishell\n", STDERR);

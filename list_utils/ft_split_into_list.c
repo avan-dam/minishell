@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 17:32:41 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 14:36:13 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/10 11:54:48 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,10 @@ int  ft_split_into_tlist(t_mini *mini, char *line)
 		return (0);
 	var1 = ft_substr(line, 0, i);
 	var2 = ft_substr(line, i + 1, ft_strlen(line) - i - 1);
-	ft_unset(mini, var1);
+	ft_unset(mini, var1); // leak comes from here
 	newnode = ft_lstnew(var1, var2);
 	ft_lstadd_back(&mini->env1, newnode);
 	free(var1);
 	free(var2);
-	// free(newnode);
 	return (1);
 }

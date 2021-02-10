@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:48:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 12:28:35 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/10 09:46:23 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void		ft_lstadd_back(t_list **alst, t_list *new)
 	new->next = NULL;
 }
 
-
-/* 
+/*
 **	list functions used in new parser
 **	lets see if we can make this to one
 */
@@ -36,7 +35,7 @@ void		ft_lstadd_back(t_list **alst, t_list *new)
 void		ft_lstadd_back_new(t_base **ptr, t_base *new)
 {
 	t_base	*tmp;
-	
+
 	if (!(*ptr))
 		*ptr = new;
 	else

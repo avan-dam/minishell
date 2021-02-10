@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:46:57 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 14:35:42 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/10 12:13:26 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void		delete_node(t_list *lst, t_list *target, t_mini *mini)
 	{
 		if (lst->next == NULL)
 		{
-			free(lst);
+			// ft_lstclear(&lst);
 			mini->env1 = temp;
 			return ;
 		}
-		lst->var1 = lst->next->var1;
-		lst->var2 = lst->next->var2;
+		// lst->var1 = lst->next->var1;
+		// lst->var2 = lst->next->var2;
 		lst->next = lst->next->next;
 		return ;
 	}
@@ -42,11 +42,15 @@ void		delete_node(t_list *lst, t_list *target, t_mini *mini)
 	}
 	// double check target in list
 	if (prev->next == NULL)
+	{
+		ft_lstclear(&lst);
 		return ;
+	}
 	// Remove node from Linked List
 	prev->next = prev->next->next;
-	free(target);
+	// ft_lstclear(&target);
 	lst = prev;
+	// ft_lstclear(&prev);
 	return ;
 }
 

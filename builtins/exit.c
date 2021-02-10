@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/06 13:35:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/09 14:49:00 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	clear_mini(t_mini *mini, int i)
 	if (i == 0)
 	{	
 		mini->exit = 0;	
-		ft_t_lstclear(&mini->env1);
+		ft_lstclear(&mini->env1);
 	}
 }
 

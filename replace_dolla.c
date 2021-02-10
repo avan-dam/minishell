@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/08 11:33:27 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/09 16:29:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,10 @@ static int	ft_find_dolla(char *line, int i, t_mini *mini, t_line *s)
 
 static int 			ft_check_backslash(t_line *s, int i)
 {
+	if (i == 0 && s->line[1] == '$') // to deal with \$?
+	{	
+		return (i + 2);
+	}
 	// printf("in backslash function with s->line[i]%c s->line[i + 1]%c s->s%d s->d%d\n", s->line[i], s->line[i + 1], s->s, s->d);
 	if (((s->line[i + 1] == '`') || (s->line[i + 1] == '"') || ((s->line[i + 1] == '\'') && (s->d % 2 == 0))|| s->line[i + 1] == '$'|| s->line[i + 1] == '\\') && s->line[i + 1] != '>' && s->line[i + 1] != '<')
 	{
@@ -134,7 +138,7 @@ static int		ft_single_quotes(t_line *s, int i)
 	{
 		if ((s->line[i + 1] == '\\') || ((s->line[i + 1] == '"') && (s->d %2 == 1)) || (i + 2 == (int)ft_strlen(s->line)))
 			return (i);
-		return (i + 1);
+		return (i + 2);
 	}
 	// remove single quotes and print exactly what is inside without changing
 	ft_memmove(&s->line[i], &s->line[i+1], ft_strlen(s->line) - i);

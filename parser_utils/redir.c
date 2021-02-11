@@ -6,14 +6,12 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/11 11:01:03 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/11 14:20:38 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// CLEAN UP THIS FILE
-// SO LOOK AT ALL > < and BACKSLASH
 static char	**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
 {
 	char	**new;
@@ -149,7 +147,7 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 	return (i);
 }
 
-static void	remove_extra_backslash_check_redir(t_base *ptr, int i)
+static void	check_extra_backslash(t_base *ptr, int i)
 {
 	int 	j;
 
@@ -167,13 +165,11 @@ static void	remove_extra_backslash_check_redir(t_base *ptr, int i)
 	}
 }
 
-static char *ft_argvs_before_redirinto_string(t_base *ptr, int max)
+static char *ft_argvs_before_redirinto_string(t_base *ptr, int max, int i)
 {
 	char	*tmp;
 	char	*string;
-	int		i;
 
-	i = 0;
 	tmp = ft_strdup("");
 	string = NULL;
 	while (i != max && ptr->argv[i])
@@ -185,7 +181,7 @@ static char *ft_argvs_before_redirinto_string(t_base *ptr, int max)
 		if (i + 1 != max)
         {
             if (ptr->argv[i + 1] && ptr->argv[i + 1][0] != '>' && ptr->argv[i + 1][0] != '<')
-			{    
+			{
 				tmp = ft_strdup(string);
 				free(string);
 				string = ft_strjoin(tmp, " ");
@@ -202,8 +198,7 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 {
 	char	*tmp;
 
-	remove_extra_backslash_check_redir(ptr, i);
-	tmp = ft_argvs_before_redirinto_string(ptr, i);
+	tmp = ft_argvs_before_redirinto_string(ptr, i, 0);
 	if (tmp != NULL && ft_check_dolla_quotes(tmp, mini, 0, 1) == NULL)
 	{
 		ptr->argv[i] = ft_check_dolla_quotes(ptr->argv[i], mini, 0, 2);
@@ -239,13 +234,12 @@ t_base		*ft_redir(t_mini *mini, t_base *ptr)
 
 	tmp = ptr;
 	i = 0;
-	tmp->redir = 0;
-	t_base *tmpp = ptr;
 	while (i < tmp->size && tmp->argv[i])
 	{
 		if ((ft_strchr_numb(tmp->argv[i], '>', 0) != -1) ||
 		(ft_strchr_numb(tmp->argv[i], '<', 0) != -1))
 		{
+			check_extra_backslash(ptr, i);
 			if (ft_backslash_redir(tmp, i, mini, 0) == -1)
 				return (NULL);
 			if (tmp->redir == 1 && i != 0)
@@ -256,6 +250,5 @@ t_base		*ft_redir(t_mini *mini, t_base *ptr)
 		tmp->redir = 0;
 		i++;
 	}
-	tmpp = tmp;
 	return (tmp);
 }

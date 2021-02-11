@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 18:16:48 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/11 10:36:41 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_set_env(char **argv, char **envp, t_mini *mini)
 	{
 		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
 			i++;
-		ft_split_into_tlist(mini, envp[i], 1);
+		ft_split_into_tlist(mini, envp[i]);
 		i++;
 	}
 	envp[i] = NULL;

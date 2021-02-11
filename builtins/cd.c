@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/09 11:07:35 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/11 10:54:21 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **	syntax: cd [directory]
 **	cd: change directory
 **	Implement for only a relative or absolute path
-**	Change the current working directory to directory, 
+**	Change the current working directory to directory,
 **	if [directory] is not supplied, the value of HOME shell variable is used
 **	any additional arguments following [directory] are ignored
 **
@@ -24,7 +24,6 @@
 ** cd .			. is short for current directory
 ** cd ..		.. is short for parent directory
 ** cd /			use to move to the root directory?
-
 ** everytime you change directory, change OLDPWD and PWD
 */
 
@@ -101,6 +100,5 @@ void		ft_cd(t_base *ptr, t_mini *mini)
 		ft_unset(mini, "PWD");
 		ft_add_env("PWD", getcwd(cwd, sizeof(cwd)), mini);
 	}
-	// printf("value of pwd end: %s\nvalue of oldpwd end: %s\n", ft_get_env("PWD", mini), ft_get_env("OLDPWD", mini));
 	mini->exit = 0;
 }

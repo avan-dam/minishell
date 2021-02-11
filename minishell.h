@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 18:13:32 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/11 11:00:09 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct		s_mini
 	t_list			*env1;
 	int				stdout;
 	int				stderr;
-	int				numb_cmds; // Command counter new struct
+	int				numb_cmds;
 	char			*cmd_part;
 	int				type_end;
 	int				stdin;
@@ -76,11 +76,11 @@ typedef struct		s_piper
 
 /* LIST FUNCTIONS */
 t_list				*ft_lstnew(void *var1, void *var2);
-void				ft_lstadd_back(t_list **alst, t_list *new);
-void				ft_lstadd_back_new(t_base **ptr, t_base *new); // new replace this one or old one
+void				ft_lstadd_back(t_list **alst, t_list *new); // replace one
+void				ft_lstadd_back_new(t_base **ptr, t_base *new); //replace one
 void				ft_lstprint(t_list *lst, t_mini *mini, int i);
 void				ft_lstclear(t_list **lst);
-int  				ft_split_into_tlist(t_mini *mini, char *line, int j);
+int  				ft_split_into_tlist(t_mini *mini, char *line);
 void				ft_lstprintold(t_list *lst);
 void				ft_baseclear(t_base **lst);
 
@@ -90,46 +90,36 @@ int					ft_export(t_base *ptr, t_mini *mini);
 int					ft_unset(t_mini *mini, char *unset);
 void				ft_cd(t_base *ptr, t_mini *mini);
 void				ft_pwd(t_mini *mini);
+void				ft_exit(t_mini *mini, int exitstatus);
+void				ft_printf_exit_status(t_mini *mini);
+void				ft_set_env(char **argv, char **envp, t_mini *mini);
+void				ft_add_env(char *env, char *path, t_mini *mini); // or static
+char				*ft_get_env(char *env, t_mini *mini); // or static
+void				handle_sigint(int sig);
+void				ft_signals(t_mini *mini, int i);
 
 /* PARSER FUNCTIONS */
 int					parse_input_string(char *line, t_mini *mini, char **envp);
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
 char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j);
+t_base				*ft_redir(t_mini *mini, t_base *ptr);
+int					ft_parse_input(char *command, char *more, t_mini *mini, char **envp);
+char				*ft_string_insert(char *string, int i, char *middle);
+char				*ft_strjoin_three(char *start, char *newvar, char *end);
 
 /* EXECVE FUNCTIONS */
 int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 int					look_for_non_builtin(t_base *ptr);
 int					unvalid_identifier(char *error, t_mini *mini, int exitstatus);
 int         		ft_is_builtin_command(char *str);
+int					ft_execve(t_mini *mini, char **envp);
 
 /* UTILS */
 int 				ft_strchr_numb(char *line, char c, int i);
 int					ft_strrchr_numb(char *line, char c, int i);
 int  				numb_char(char *line, char c);
 int     			ft_is_str_int(char *str);
-
-
 void				clear_mini(t_mini *mini, int i);
-
-// int					ft_redir(t_mini *mini, int d);
-
-
-// int					ft_builtin(t_mini *mini, char *command, char *more, char **envp);
-int					ft_execve(t_mini *mini, char **envp);
-t_base				*ft_redir(t_mini *mini, t_base *ptr);
-// int					ft_redir(t_mini *mini, t_base *ptr);
-int					ft_parse_input(char *command, char *more, t_mini *mini, char **envp);
-void				ft_printf_exit_status(t_mini *mini);
-char				*ft_string_insert(char *string, int i, char *middle);
 void 				ft_reset_fds(t_mini *mini);
-void				ft_exit(t_mini *mini, int exitstatus);
-char				*ft_strjoin_three(char *start, char *newvar, char *end);
-void				handle_sigint(int sig);
-void				ft_signals(t_mini *mini, int i);
-void				ft_add_env(char *env, char *path, t_mini *mini); // or static
-char				*ft_get_env(char *env, t_mini *mini); // of static
-
-void				ft_set_env(char **argv, char **envp, t_mini *mini);
-
 
 #endif

@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/02/03 18:57:58 by salbregh      ########   odam.nl          #
+#    Updated: 2021/02/11 10:56:37 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,18 +20,18 @@ SRCS =		main.c \
 			builtins/export.c \
 			builtins/cd.c \
 			builtins/exit.c \
+			builtins/signal.c \
 			list_utils/ft_lst_addback.c \
 			list_utils/ft_lstclear.c \
 			list_utils/ft_lstnew.c \
 			list_utils/ft_lstprint.c \
 			list_utils/ft_split_into_list.c \
-			utils.c \
-			replace_dolla.c \
-			redir.c \
-			parser.c \
-			execve.c \
-			signal.c \
-			non_builtins.c
+			parser_utils/utils.c \
+			parser_utils/replace_dolla.c \
+			parser_utils/redir.c \
+			parser_utils/parser.c \
+			execve/execve.c \
+			execve/non_builtins.c
 			# exec.c \
 			# exit_status.c \
 			# parser.c \

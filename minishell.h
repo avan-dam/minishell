@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/09 11:53:38 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/10 18:13:32 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,10 @@ typedef struct		s_mini
 	int				stdout;
 	int				stderr;
 	int				numb_cmds; // Command counter new struct
-	char 			*cmd_part;
+	char			*cmd_part;
 	int				type_end;
 	int				stdin;
 	int				exit;
-	// char			*command;
-	// char			*more;
-	// t_list		*run2;
-	// char			*currentpwd;
-	// char			*oldpwd;
 }					t_mini;
 
 typedef struct		s_piper
@@ -84,43 +79,41 @@ t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstadd_back_new(t_base **ptr, t_base *new); // new replace this one or old one
 void				ft_lstprint(t_list *lst, t_mini *mini, int i);
-void				ft_t_lstclear(t_list **lst);
-int  				ft_split_into_tlist(t_mini *mini, char *line);
+void				ft_lstclear(t_list **lst);
+int  				ft_split_into_tlist(t_mini *mini, char *line, int j);
 void				ft_lstprintold(t_list *lst);
-void				ft_t_baseclear(t_base **lst);
+void				ft_baseclear(t_base **lst);
 
 /* BUILTIN FUNCTION */
 int 			  	ft_echo(t_base *ptr, t_mini *mini);
 int					ft_export(t_base *ptr, t_mini *mini);
 int					ft_unset(t_mini *mini, char *unset);
-void				ft_cd(t_base *ptr, t_mini *mini); // new
+void				ft_cd(t_base *ptr, t_mini *mini);
 void				ft_pwd(t_mini *mini);
 
 /* PARSER FUNCTIONS */
 int					parse_input_string(char *line, t_mini *mini, char **envp);
-
-
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
-// int				ft_echo(char *string, t_mini *mini, t_piper *piper);
-// void				ft_putstr(char *s);
 char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j);
+
+/* EXECVE FUNCTIONS */
+int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
+int					look_for_non_builtin(t_base *ptr);
 int					unvalid_identifier(char *error, t_mini *mini, int exitstatus);
+int         		ft_is_builtin_command(char *str);
+
+/* UTILS */
 int 				ft_strchr_numb(char *line, char c, int i);
 int					ft_strrchr_numb(char *line, char c, int i);
 int  				numb_char(char *line, char c);
-
-// int				ft_execve(t_mini *mini, char **envp, t_piper *piper);
-int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
-int					look_for_non_builtin(t_base *ptr);
-int         		ft_is_builtin_command(char *str);
-void				clear_mini(t_mini *mini, int i);
 int     			ft_is_str_int(char *str);
+
+
+void				clear_mini(t_mini *mini, int i);
 
 // int					ft_redir(t_mini *mini, int d);
 
-int  				ft_split_into_tlist(t_mini *mini, char *line);
-t_list				*ft_lstnew(void *var1, void *var2);
-void				ft_lstadd_back(t_list **alst, t_list *new);
+
 // int					ft_builtin(t_mini *mini, char *command, char *more, char **envp);
 int					ft_execve(t_mini *mini, char **envp);
 t_base				*ft_redir(t_mini *mini, t_base *ptr);

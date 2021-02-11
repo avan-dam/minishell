@@ -6,32 +6,30 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:50:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/07 10:06:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/09 17:44:48 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_t_lstclear(t_list **lst)
+void	ft_lstclear(t_list **lst)
 {
-	t_list	*store;
-	t_list	*storenext;
+	t_list *current;
+	t_list *next;
 
-	if (lst == NULL)
-		return ;
-	store = *lst;
-	*lst = NULL;
-	while (store != NULL)
+	current = *lst;
+	while (current != NULL)
 	{
-		free(store->var1);
-		free(store->var2);
-		storenext = (store->next);
-		free(store);
-		store = storenext;
+		next = current->next;
+		free(current->var1);
+		free(current->var2);
+		free(current);
+		current = next;
 	}
+	*lst = NULL;
 }
 
-void	ft_t_baseclear(t_base **lst)
+void	ft_baseclear(t_base **lst)
 {
 	t_base	*store;
 	t_base	*storenext;
@@ -53,7 +51,7 @@ void	ft_t_baseclear(t_base **lst)
 			// printf("i is %d and store->size is %d\n", i, store->size);
 			// printf("and store->argv[i] is [%s]\n", store->argv[i]);
 			if (store->argv[i])
-			{	
+			{
 				free(store->argv[i]);
 				store->argv[i] = NULL;
 			}

@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/01/27 17:04:41 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 14:22:42 by ambervandam   ########   odam.nl         */
+/*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
+/*   Updated: 2021/02/10 20:43:54 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int		ft_export(t_base *ptr, t_mini *mini)
     		mini->exit = 1;
       		return (-1); // change
 		} //check this
-		if (ft_split_into_tlist(mini, ptr->argv[i]) != -1)
-			mini->exit = 0;
+		ft_split_into_tlist(mini, ptr->argv[i], 0);
+		mini->exit = 0;
 		i++;
 	}
 	return (0); //change
@@ -55,3 +55,4 @@ int		ft_export(t_base *ptr, t_mini *mini)
 	// } //check this
 	// ft_split_into_tlist(mini, ptr->argv[1]);
 	// mini->exit = 0;
+	

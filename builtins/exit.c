@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/09 16:24:46 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/10 16:34:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		ft_printf_exit_status(t_mini *mini)
 {
 	char	*exitstatus;
 
-	printf("in haaa \n");
+	// printf("in haaa \n");
 	exitstatus = ft_itoa(mini->exit);
 	ft_putstr_fd("bash: ", mini->stdout);
 	ft_putstr_fd(exitstatus, mini->stdout);
@@ -63,7 +63,7 @@ void	clear_mini(t_mini *mini, int i)
 	if (i == 0)
 	{	
 		mini->exit = 0;	
-		ft_t_lstclear(&mini->env1);
+		ft_lstclear(&mini->env1);
 	}
 }
 

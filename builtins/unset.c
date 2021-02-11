@@ -6,13 +6,43 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:46:57 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 20:50:30 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/11 14:05:26 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void		delete_node(t_list *lst, t_list *target, t_mini *mini)
+static void		node_free(t_list *lst)
+{
+	free(lst->var1);
+	free(lst->var2);
+	free(lst);
+}
+
+static void		find_target(t_list *lst, t_list *prev, t_list *target)
+{
+	while (prev->next && prev->next != target)
+	{
+		prev = prev->next;
+		lst = lst->next;
+	}
+}
+
+static void		equal_list(t_list *lst, t_list *tmp, t_mini *mini)
+{
+	if (!lst->next)
+	{
+		mini->env1 = tmp;
+		node_free(tmp);
+		return ;
+	}
+	tmp = lst->next;
+	node_free(lst);
+	mini->env1 = tmp;
+	return ;
+}
+
+void			delete_node(t_list *lst, t_list *target, t_mini *mini)
 {
 	t_list		*tmp;
 	t_list		*prev;
@@ -22,47 +52,30 @@ void		delete_node(t_list *lst, t_list *target, t_mini *mini)
 		return ;
 	if (lst == target)
 	{
-		if (!lst->next)
-		{
-			mini->env1 = tmp; // list is NULL
-			return ;
-		}
-		lst = lst->next;
-		mini->env1 = lst;
+		equal_list(lst, tmp, mini);
 		return ;
 	}
-	// if not first node, find previous node
 	prev = lst;
-	while (prev->next && prev->next != target)
-	{
-		prev = prev->next;
-		lst = lst->next;
-	}
+	find_target(lst, prev, target);
 	if (prev->next == NULL)
 	{
 		ft_lstclear(&lst);
 		ft_lstclear(&target);
 		return ;
 	}
-	// Remove node from Linked List
-	t_list *temp1 = prev->next;
+	tmp = prev->next;
 	prev->next = prev->next->next;
-	lst = temp1;// lst = prev;
-	free(temp1->var1);
-	free(temp1->var2);
-	free(temp1);
-	// ft_lstclear(&target);
+	lst = tmp;
+	node_free(tmp);
 	return ;
 }
 
-int			ft_unset(t_mini *mini, char *unset)
+int				ft_unset(t_mini *mini, char *unset)
 {
 	t_list		*tlist;
 
 	if (unset == NULL)
 		return (0);
-	// looping through environmental variables only not run tlist
-	// to see if can delete any from list
 	tlist = mini->env1;
 	while (tlist != NULL)
 	{

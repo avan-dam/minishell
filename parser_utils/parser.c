@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/11 10:55:48 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/11 11:42:37 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 		free(mini->cmd_part);
 		mini->cmd_part = NULL;
 	}
-	ft_lstadd_back_new(ptr, new);
+	ft_lstadd_back_base(ptr, new);
 	return (numb_characters);
 }
 

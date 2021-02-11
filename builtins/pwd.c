@@ -6,12 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/05 17:59:29 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/04 14:35:22 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/11 12:46:35 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <sys/syslimits.h>
 
 /*
 **	pwd : Print Working Directory
@@ -19,19 +18,15 @@
 **	prints the path of the current directory starting from the root
 **	$PWD is an environment variable which stores the path of the
 **	current directory
-**
-**	TO DO: check for > pwd ; cd..
 */
 
-void		ft_pwd(t_mini *mini) // change to ptr?
+void		ft_pwd(t_mini *mini)
 {
 	char	cwd[PATH_MAX];
 
 	(void)mini;
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		ft_putstr_fd(cwd, STDOUT);
-	// ft_putstr_fd(cwd, STDOUT);
-	// ft_putstr_fd(cwd, mini->stdout);
 	ft_putchar('\n');
 	mini->exit = 0;
 }

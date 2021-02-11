@@ -6,10 +6,9 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/11 11:00:09 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/11 11:42:22 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -17,10 +16,9 @@
 # include "libft/libft.h"
 # include <stdio.h> // delete after
 # include <stdlib.h>
-# include <sys/syslimits.h> // not sure if allowed?
+# include <sys/syslimits.h>
 # include <fcntl.h>
 # include <signal.h>
-
 
 # define STDIN		0
 # define STDOUT		1
@@ -76,8 +74,8 @@ typedef struct		s_piper
 
 /* LIST FUNCTIONS */
 t_list				*ft_lstnew(void *var1, void *var2);
-void				ft_lstadd_back(t_list **alst, t_list *new); // replace one
-void				ft_lstadd_back_new(t_base **ptr, t_base *new); //replace one
+void				ft_lstadd_back(t_list **alst, t_list *new);
+void				ft_lstadd_back_base(t_base **ptr, t_base *new);
 void				ft_lstprint(t_list *lst, t_mini *mini, int i);
 void				ft_lstclear(t_list **lst);
 int  				ft_split_into_tlist(t_mini *mini, char *line);

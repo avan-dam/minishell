@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:46:57 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/11 14:05:26 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/12 11:58:20 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,6 @@ static void		node_free(t_list *lst)
 	free(lst->var1);
 	free(lst->var2);
 	free(lst);
-}
-
-static void		find_target(t_list *lst, t_list *prev, t_list *target)
-{
-	while (prev->next && prev->next != target)
-	{
-		prev = prev->next;
-		lst = lst->next;
-	}
 }
 
 static void		equal_list(t_list *lst, t_list *tmp, t_mini *mini)
@@ -42,6 +33,16 @@ static void		equal_list(t_list *lst, t_list *tmp, t_mini *mini)
 	return ;
 }
 
+static t_list	*loop_through(t_list *prev, t_list *lst, t_list *target)
+{
+	while (prev->next && prev->next != target)
+	{
+		prev = prev->next;
+		lst = lst->next;
+	}
+	return (prev);
+}
+
 void			delete_node(t_list *lst, t_list *target, t_mini *mini)
 {
 	t_list		*tmp;
@@ -56,7 +57,7 @@ void			delete_node(t_list *lst, t_list *target, t_mini *mini)
 		return ;
 	}
 	prev = lst;
-	find_target(lst, prev, target);
+	prev = loop_through(prev, lst, target);
 	if (prev->next == NULL)
 	{
 		ft_lstclear(&lst);

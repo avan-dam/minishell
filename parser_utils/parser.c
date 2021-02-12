@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/11 11:42:37 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/12 11:34:31 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	fill_argv_list(t_base *new, t_mini *mini, int j, int l, int k)
 	{
 		if (mini->cmd_part[j] == '\0')
 			new->argv[l] = ft_strdup("");
-		else 
+		else
 		{
 			while (mini->cmd_part[j] == ' ')
 				j++;
@@ -64,7 +64,7 @@ static void	fill_argv_list(t_base *new, t_mini *mini, int j, int l, int k)
 				new->argv[l] = ft_substr(mini->cmd_part, k, j - k + 1);
 				j++;
 			}
-			else 
+			else
 				new->argv[l] = ft_substr(mini->cmd_part, k, j - k);
 		}
 		l++;
@@ -98,6 +98,7 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 		free(mini->cmd_part);
 		mini->cmd_part = NULL;
 	}
+	new->argv[0] = ft_strtolower(new->argv[0]);
 	ft_lstadd_back_base(ptr, new);
 	return (numb_characters);
 }

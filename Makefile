@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/02/11 10:56:37 by salbregh      ########   odam.nl          #
+#    Updated: 2021/02/12 12:42:01 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS =		main.c \
 			parser_utils/replace_dolla.c \
 			parser_utils/redir.c \
 			parser_utils/parser.c \
+			parser_utils/unvalid_identifier.c \
 			execve/execve.c \
 			execve/non_builtins.c
 			# exec.c \

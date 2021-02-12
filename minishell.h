@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/11 11:42:22 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/12 12:41:39 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,14 @@ int					parse_input_string(char *line, t_mini *mini, char **envp);
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
 char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j);
 t_base				*ft_redir(t_mini *mini, t_base *ptr);
-int					ft_parse_input(char *command, char *more, t_mini *mini, char **envp);
+// int					ft_parse_input(char *cmd, char *more, t_mini *mini, char **envp);
 char				*ft_string_insert(char *string, int i, char *middle);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
+int					unvalid_identifier(char *error, t_mini *mini, int exitstatus);
 
 /* EXECVE FUNCTIONS */
 int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 int					look_for_non_builtin(t_base *ptr);
-int					unvalid_identifier(char *error, t_mini *mini, int exitstatus);
 int         		ft_is_builtin_command(char *str);
 int					ft_execve(t_mini *mini, char **envp);
 
@@ -119,5 +119,6 @@ int  				numb_char(char *line, char c);
 int     			ft_is_str_int(char *str);
 void				clear_mini(t_mini *mini, int i);
 void 				ft_reset_fds(t_mini *mini);
+char				*ft_strtolower(char *str);
 
 #endif

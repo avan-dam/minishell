@@ -6,32 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/12 12:41:17 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/15 18:42:10 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// why dont we use putstr from libft? this is a double function
-// void	ft_putstr(char *s)
-// {
-// 	int i;
-	
-// 	if (s == NULL)
-// 		return ;
-// 	i = 0;
-// 	while (i < (int)ft_strlen(s))
-// 	{
-// 		// so that if you type \ once nothing happens only 
-// 		// if twice in a row
-// 		// if (s[i] == 92)
-// 		// 	i++;
-// 		write(1, &s[i], 1);
-// 		i++;
-// 	}
-// }
-
-/* put in file for error handling? */
 
 int		ft_strchr_numb(char *line, char c, int i)
 {
@@ -129,4 +108,21 @@ char		*ft_strtolower(char *str)
 		i++;
 	}
 	return (str);
+}
+
+char     *ft_trim_paths(char *line, char *set)
+{
+    char    *tmp1;
+    int     i;
+    char    *tmp2;
+    tmp2 = NULL;
+    i = 0;
+    tmp1 = ft_strtrim(line, set);
+    if (tmp1[0] == ' ' || tmp1[ft_strlen(tmp1)] == ' ')
+    {
+        tmp2 = ft_strtrim(tmp1, " ");
+        free(tmp1);
+        return (tmp2);
+    }
+    return (tmp1);
 }

@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/02/12 12:42:01 by salbregh      ########   odam.nl          #
+#    Updated: 2021/02/15 17:40:50 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,13 +32,9 @@ SRCS =		main.c \
 			parser_utils/parser.c \
 			parser_utils/unvalid_identifier.c \
 			execve/execve.c \
+			leaks.c \
 			execve/non_builtins.c
-			# exec.c \
-			# exit_status.c \
-			# parser.c \
-			# delete unused_tlist.c
-			# unused_tlists.c
-
+# lets delete the leaks.c
 FLAGS = 	-Wall -Werror -Wextra 
 
 SEGFAULT =	-g -fsanitize=address
@@ -55,8 +51,8 @@ $(NAME):	$(OFILES) $(INCLUDES)
 			cp get_next_line/libgnl.a .
 			make -C libft/
 			cp libft/libft.a .
-			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS)
-			#$(SEGFAULT)
+			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS) 
+			# $(SEGFAULT)
 			
 %.o:		%.c
 			gcc -Ilibft -Ignl $(FLAGS) -c $< -o $@

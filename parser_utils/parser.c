@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/15 14:09:55 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/15 18:42:02 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 {
-	line = ft_strtrim(line, " ");
+	char *temp;
+	// char *temp2;
+
+	// temp2 = ft_strtrim(line, " ");
+	// line = temp2;
+	// free(temp2);
+	line = ft_trim_paths(line, " ");
+	// line = ft_strtrim(line, " ");
 	while (line[i] && ((line[i] != '|' && line[i] != ';') ||
 	(check_tokens(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
 	{
@@ -26,7 +33,11 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 			(check_tokens(ft_substr(line, 0, i), mini, 0, 1) != NULL))
 			{
 				mini->numb_cmds = numb;
-				mini->cmd_part = ft_substr(line, 0, i);
+				// mini->cmd_part = ft_substr(line, 0, i);
+				temp = ft_substr(line, 0, i);
+				// printf("temp is[%s] and line i s[%s]\n", temp, line);
+				mini->cmd_part = temp;
+				free(temp);
 				if (line[i] == '|')
 					mini->type_end = TYPE_PIPE;
 				else if (line[i] == ';')
@@ -42,7 +53,10 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 		i++;
 	}
 	mini->numb_cmds = numb;
-	mini->cmd_part = ft_substr(line, 0, i);
+	// mini->cmd_part = ft_substr(line, 0, i);
+	char *temp3 = ft_substr(line, 0, i);
+	mini->cmd_part = temp3;
+	free(temp3);
 	mini->type_end = TYPE_END;
 	return (i);
 }
@@ -52,7 +66,7 @@ static void	fill_argv_list(t_base *new, t_mini *mini, int j, int l, int k)
 	while (l != new->size)
 	{
 		if (mini->cmd_part[j] == '\0')
-			new->argv[l] = ft_strdup("");
+			new->argv[l] = NULL;
 		else
 		{
 			while (mini->cmd_part[j] == ' ')
@@ -107,6 +121,7 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 	}
 	new->argv[0] = ft_strtolower(new->argv[0]);
 	ft_lstadd_back_base(ptr, new);
+	// free(line);
 	return (numb_characters);
 }
 
@@ -116,28 +131,40 @@ int			parse_input_string(char *line, t_mini *mini, char **envp)
 	int			i;
 	int			k;
 
-	ptr = NULL;
 	i = 0;
-	if (check_tokens(line, mini, 0, 0) == NULL)
-		return (-2);
+	ptr = NULL;
+	// ft_memset(&ptr, 0, sizeof(t_base));
+	if (check_tokens(line, mini, 0, 0) == NULL) // check leak
+		return (0);
+	// printf("BEFORE\n");
+	// ft_leaks();
 	while (line[i])
 	{
 		while (line[i] == ' ')
 			i++;
 		k = create_argv_list(&ptr, &line[i], mini);
+		if (k == -1)
+		{
+			mini->exit = 1;
+			return (0);
+		}
 		i = i + k;
 		if (!line[i])
 			break ;
 		else
 			i++;
 	}
+	// printf("AFTER\n");
+	// ft_leaks();
 	if (ptr)
+	{
 		if (exec_cmds(ptr, envp, mini) == -1)
 		{
 			ft_baseclear(&ptr);
 			free(ptr);
 			return (-1);
 		}
+	}
 	ft_baseclear(&ptr);
 	free(ptr);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/15 13:54:59 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/15 13:41:58 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,8 +193,8 @@ static char		*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 	}
 	s->s = 0;
 	s->d = 0;
-	str = s->str;
-	return (str);
+	// str = s->str;
+	return (s->str);
 }
 
 void		ft_exit_status_replace(t_line *s, int i, t_mini *mini)
@@ -219,7 +219,7 @@ char			*check_tokens(char *str, t_mini *mini, int i, int j)
 	if (str == NULL || ft_strcmp(str, "") == 0)
 		return (NULL);
 	ft_memset(&s, 0, sizeof(t_line));
-	s.str = ft_strdup(str);
+	s.str = ft_strdup(str); // free this in some way
 	if ((numb_char(s.str, '>') != 0 || numb_char(s.str, '<') != 0) && j != 2)
 		return (s.str);
 	while (s.str[i] != '\0')
@@ -240,5 +240,7 @@ char			*check_tokens(char *str, t_mini *mini, int i, int j)
 		if (s.str[i] != '\0' || i == -1)
 			i++;
 	}
-	return (check_line_valid(&s, mini, j, str));
+	// printf("Leak in check_tokens\n");
+	// system("leaks minishell");
+	return (check_line_valid(&s, mini, j, s.str)); // maybe change s.str back to str
 }

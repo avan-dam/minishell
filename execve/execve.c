@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/11 14:06:13 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/15 13:03:40 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,8 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 	}
 }
 
-int			exec_cmds(t_base *ptr, char **envp, t_mini *mini)
+int			exec_cmds(t_base *tmp, char **envp, t_mini *mini)
 {
-	t_base	*tmp;
-
-	tmp = ptr;
 	while (tmp)
 	{
 		if ((tmp == NULL) || (tmp->size == 0))

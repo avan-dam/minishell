@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:09:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/11/15 16:09:45 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/15 12:14:48 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	ft_putnbr_fd(int n, int fd)
 	char	c;
 
 	if (n == -2147483648)
-		return (ft_putstr_fd("-2147483648", fd));
+	{
+		ft_putstr_fd("-2147483648", fd);
+		return ;
+	}
 	if (n < 0)
 	{
 		write(fd, "-", 1);

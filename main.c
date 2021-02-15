@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/11 10:42:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/15 13:44:55 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		main(int argc, char **argv, char **envp)
 		mini.stderr = 2;
 		while (lineret)
 		{
-			ft_putstr_fd("> ", mini.stdout);
+			// ft_putstr_fd("> ", mini.stdout);
 			ft_signals(&mini, 0);
 			if ((lineret = get_next_line(mini.stdin, &line)) < 0)
 			{
@@ -52,7 +52,7 @@ int		main(int argc, char **argv, char **envp)
 		free(line);
 		line = NULL;
 		ft_lstclear(&mini.env1);
-		system("leaks minishell");
+		// system("leaks minishell");
 	}
 	else
 		ft_putstr_fd("No argument needed.\nUsage: ./minishell\n", STDERR);

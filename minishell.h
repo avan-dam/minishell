@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/11 11:42:22 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/15 13:54:34 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include <sys/syslimits.h>
 # include <fcntl.h>
 # include <signal.h>
+
+# define R O_RDWR
+# define C O_CREAT
+# define A O_APPEND
+# define T O_TRUNC
+// # define FLAGS "O_RDWR | O_CREAT | O_TRUNC"
 
 # define STDIN		0
 # define STDOUT		1
@@ -42,7 +48,7 @@ typedef struct		s_line
 {
 	int				s;		//number of single quotes that are registered as such
 	int				d;		//number of double quotes that are registered as such
-	char			*line;
+	char			*str;
 }					t_line;
 
 typedef struct		s_list
@@ -99,7 +105,7 @@ void				ft_signals(t_mini *mini, int i);
 /* PARSER FUNCTIONS */
 int					parse_input_string(char *line, t_mini *mini, char **envp);
 int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
-char				*ft_check_dolla_quotes(char *line, t_mini *mini, int i, int j);
+char				*check_tokens(char *line, t_mini *mini, int i, int j);
 t_base				*ft_redir(t_mini *mini, t_base *ptr);
 int					ft_parse_input(char *command, char *more, t_mini *mini, char **envp);
 char				*ft_string_insert(char *string, int i, char *middle);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 16:34:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/15 13:07:00 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	clear_mini(t_mini *mini, int i)
 	// mini->stderr = 0;
 	// mini->stdout = 0;
 	if (i == 0)
-	{	
+	{
 		mini->exit = 0;	
 		ft_lstclear(&mini->env1);
 	}
@@ -70,5 +70,6 @@ void	clear_mini(t_mini *mini, int i)
 void	ft_exit(t_mini *mini, int exitstatus) // exit with 0 or exit statment??
 {
 	clear_mini(mini, 0);
+	// system("leaks minishell");
 	exit(exitstatus);
 }

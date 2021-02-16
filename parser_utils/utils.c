@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/15 18:42:10 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/16 14:25:52 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		numb_char(char *line, char c)
 	return (j);
 }
 
-char		*ft_strjoin_three(char *start, char *newvar, char *end)
+char	*ft_strjoin_three(char *start, char *newvar, char *end)
 {
 	char	*temp;
 	char	*newline;
@@ -72,17 +72,17 @@ char		*ft_strjoin_three(char *start, char *newvar, char *end)
 	return (newline);
 }
 
-char		*ft_string_insert(char *string, int i, char *middle)
+char	*ft_string_insert(char *string, int i, char *middle)
 {
 	char	*start;
-	char 	*end;
+	char	*end;
 
 	start = ft_substr(string, 0, i + 1);
 	end = ft_substr(string, i + 1, ft_strlen(string) - i - 1);
 	return (ft_strjoin_three(start, middle, end));
 }
 
-int			ft_is_str_int(char *str)
+int		ft_is_str_int(char *str)
 {
 	int i;
 
@@ -96,7 +96,7 @@ int			ft_is_str_int(char *str)
 	return (1);
 }
 
-char		*ft_strtolower(char *str)
+char	*ft_strtolower(char *str)
 {
 	int		i;
 
@@ -110,19 +110,30 @@ char		*ft_strtolower(char *str)
 	return (str);
 }
 
-char     *ft_trim_paths(char *line, char *set)
+char	*ft_trim_paths(char *line, char *set)
 {
-    char    *tmp1;
-    int     i;
-    char    *tmp2;
-    tmp2 = NULL;
-    i = 0;
-    tmp1 = ft_strtrim(line, set);
-    if (tmp1[0] == ' ' || tmp1[ft_strlen(tmp1)] == ' ')
-    {
-        tmp2 = ft_strtrim(tmp1, " ");
-        free(tmp1);
-        return (tmp2);
-    }
-    return (tmp1);
+	char	*tmp1;
+	int		i;
+	char	*tmp2;
+
+	tmp2 = NULL;
+	i = 0;
+	tmp1 = ft_strtrim(line, set);
+	if (tmp1[0] == ' ' || tmp1[ft_strlen(tmp1)] == ' ')
+	{
+		tmp2 = ft_strtrim(tmp1, " ");
+		free(tmp1);
+		return (tmp2);
+	}
+	return (tmp1);
+}
+
+char	*memory_check_tokens(char *str, t_mini *mini, int i, int j)
+{
+	char *temp;
+
+	temp = str;
+	str = check_tokens(temp, mini, i, j);
+	free(temp);
+	return (str);
 }

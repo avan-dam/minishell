@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/15 18:42:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/16 10:29:57 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,6 @@ void				clear_mini(t_mini *mini, int i);
 void 				ft_reset_fds(t_mini *mini);
 char				*ft_strtolower(char *str);
 char				*ft_trim_paths(char *line, char *set);
+char				*memory_check_tokens(char *str, t_mini *mini, int i, int j);
 
 #endif

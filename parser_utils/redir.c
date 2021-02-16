@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/15 17:39:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/16 14:28:59 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,13 +124,18 @@ static void	direction_list(t_base *ptr, int i)
 
 static int	check_file_toredir(t_base *ptr, int i, t_mini *mini)
 {
-	ptr->argv[i + 1] = check_tokens(ptr->argv[i + 1], mini, 0, 0);
+	char *tmp;
+	tmp = ptr->argv[i + 1];
+	ptr->argv[i + 1] = check_tokens(tmp, mini, 0, 0);
+	free(tmp);
 	if (ptr->argv[i + 1] == NULL || ft_strcmp(ptr->argv[i + 1], ">") == 0)
 	{
+		printf("in hereeee\n");
 		ft_putstr_fd("bash: syntax error near ", mini->stderr);
 		ft_putstr_fd("unexpected token `newline'\n", mini->stderr);
 		ft_reset_fds(mini);
 		mini->exit = 258;
+		// MEM LEAK IN THIS
 		return (-1);
 	}
 	return (0);
@@ -215,17 +220,21 @@ static char	*ft_argvs_before_redir(t_base *ptr, int max, int i, char *str)
 static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 {
 	char	*tmp;
+	char	*tmp2;
 
 	tmp = ft_argvs_before_redir(ptr, i, 0, NULL);
-	if ((tmp != NULL && check_tokens(tmp, mini, 0, 1) == NULL) ||
+	tmp2 = check_tokens(tmp, mini, 0, 1);
+	if ((tmp != NULL && tmp2 == NULL) ||
 	(numb_char(ptr->argv[i], '\'') > 0 || numb_char(ptr->argv[i], '"') > 0))
 	{
-		ptr->argv[i] = check_tokens(ptr->argv[i], mini, 0, 2);
+		ptr->argv[i] = memory_check_tokens(ptr->argv[i], mini, 0, 2);
 		ptr->redir = 3;
 		free(tmp);
+		free(tmp2);
 		return (0);
 	}
 	free(tmp);
+	free(tmp2);
 	while (ptr->argv[i][j] != '>' && ptr->argv[i][j] != '<')
 		j++;
 	if (j <= 0)
@@ -248,8 +257,6 @@ t_base		*ft_redir(t_mini *mini, t_base *ptr)
 	int		i;
 
 	i = 0;
-	// 	printf("before\n");
-	// system("leaks minishell");
 	while (i < ptr->size && ptr->argv[i])
 	{
 		if ((ft_strchr_numb(ptr->argv[i], '>', 0) != -1) ||
@@ -266,7 +273,5 @@ t_base		*ft_redir(t_mini *mini, t_base *ptr)
 		ptr->redir = 0;
 		i++;
 	}
-			// 	printf("after\n");
-			// system("leaks minishell");
 	return (ptr);
 }

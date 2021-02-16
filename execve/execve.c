@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/15 13:03:40 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/16 10:07:27 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,16 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		exit (0); // change
 	if (pid == 0) // child process
 	{
-		// printf("in with [%s]\n", ptr->argv[0]);
 		dup2(mini->stdin, STDIN);
 		dup2(mini->stdout, STDOUT);
 		if (ft_is_builtin_command(ptr->argv[0]) == 0 && look_for_non_builtin(ptr) == 2)
 			unvalid_identifier(ptr->argv[0], mini, 127);
-		// printf("1here\n");
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 			exit (0); // change
-		// printf("2here\n");
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE && dup2(ptr->prev->fd[0], STDIN) < 0)
 			exit (0);
-		// printf("3here\n");
 		if ((ft_strcmp(ptr->argv[0], "echo")) == 0 || (ft_strcmp(ptr->argv[0], "/bin/echo") == 0) || (ft_strcmp(ptr->argv[0], "Echo") == 0))
-		{
-			// printf("going in here\n");
-				ft_echo(ptr, mini);
-		}
+			ft_echo(ptr, mini);
 		else if ((ft_strcmp(ptr->argv[0], "pwd") == 0) || (ft_strcmp(ptr->argv[0], "/bin/pwd") == 0))
 			ft_pwd(mini);
 		else if ((ft_strcmp(ptr->argv[0], "cd") == 0) || (ft_strcmp(ptr->argv[0], "/usr/bin/cd") == 0))
@@ -77,7 +70,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 	}
 }
 
-int			exec_cmds(t_base *tmp, char **envp, t_mini *mini)
+int		exec_cmds(t_base *tmp, char **envp, t_mini *mini)
 {
 	while (tmp)
 	{

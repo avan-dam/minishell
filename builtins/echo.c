@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/16 16:16:30 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/16 16:24:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ int			ft_echo(t_base *ptr, t_mini *mini)
 	char	*tmp;
 
 	mini->exit = 0;
-			// 	printf("before\n");
-			// ft_leaks();
+	// 	printf("before\n");
+	// ft_leaks();
 	if (ft_strcmp("", ptr->argv[0]) == 0)
 		return (ft_putstr_fd("", mini->stdout));
 	string = ft_argvs_into_string(ptr, 1, NULL);

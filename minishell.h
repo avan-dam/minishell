@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/15 14:10:02 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/15 18:42:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ typedef struct		s_piper
 	int				fd[2]; // fd[0] - read fd[1] - write made by pipe(fd);
 }					t_piper;
 
+void ft_leaks();
+
 /* LIST FUNCTIONS */
 t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_back(t_list **alst, t_list *new);
@@ -126,5 +128,6 @@ int     			ft_is_str_int(char *str);
 void				clear_mini(t_mini *mini, int i);
 void 				ft_reset_fds(t_mini *mini);
 char				*ft_strtolower(char *str);
+char				*ft_trim_paths(char *line, char *set);
 
 #endif

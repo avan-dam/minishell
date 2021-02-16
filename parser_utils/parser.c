@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/15 18:42:02 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/16 19:32:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 {
 	char *temp;
-	// char *temp2;
+	char *temp3;
 
+	// printf("BEFORE\n");
+	// ft_leaks();
 	// temp2 = ft_strtrim(line, " ");
 	// line = temp2;
 	// free(temp2);
 	line = ft_trim_paths(line, " ");
 	// line = ft_strtrim(line, " ");
 	while (line[i] && ((line[i] != '|' && line[i] != ';') ||
-	(check_tokens(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
+	(memory_check_tokens(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
 	{
 		if (line[i] == ' ')
 		{
 			while (line[i] == ' ')
 				i++;
 			if ((line[i] == '|' || line[i] == ';') &&
-			(check_tokens(ft_substr(line, 0, i), mini, 0, 1) != NULL))
+			(memory_check_tokens(ft_substr(line, 0, i), mini, 0, 1) != NULL))
 			{
 				mini->numb_cmds = numb;
-				// mini->cmd_part = ft_substr(line, 0, i);
 				temp = ft_substr(line, 0, i);
-				// printf("temp is[%s] and line i s[%s]\n", temp, line);
 				mini->cmd_part = temp;
 				free(temp);
 				if (line[i] == '|')
@@ -53,8 +53,7 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 		i++;
 	}
 	mini->numb_cmds = numb;
-	// mini->cmd_part = ft_substr(line, 0, i);
-	char *temp3 = ft_substr(line, 0, i);
+	temp3 = ft_substr(line, 0, i);
 	mini->cmd_part = temp3;
 	free(temp3);
 	mini->type_end = TYPE_END;
@@ -101,6 +100,8 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 
 	numb_characters = no_of_commands(line, mini, 0, 1);
 	size = mini->numb_cmds;
+	// printf("BEFORE\n");
+	// ft_leaks();
 	mini->cmd_part = check_tokens(mini->cmd_part, mini, 0, 0);
 	if (mini->cmd_part == NULL)
 		return (1);
@@ -121,7 +122,6 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 	}
 	new->argv[0] = ft_strtolower(new->argv[0]);
 	ft_lstadd_back_base(ptr, new);
-	// free(line);
 	return (numb_characters);
 }
 
@@ -130,14 +130,17 @@ int			parse_input_string(char *line, t_mini *mini, char **envp)
 	t_base		*ptr;
 	int			i;
 	int			k;
+	char		*tmp;
 
 	i = 0;
 	ptr = NULL;
-	// ft_memset(&ptr, 0, sizeof(t_base));
-	if (check_tokens(line, mini, 0, 0) == NULL) // check leak
+	tmp = check_tokens(line, mini, 0, 0);
+	if (tmp == NULL)
+	{
+		free(tmp);
 		return (0);
-	// printf("BEFORE\n");
-	// ft_leaks();
+	}
+	free(tmp);
 	while (line[i])
 	{
 		while (line[i] == ' ')
@@ -154,8 +157,7 @@ int			parse_input_string(char *line, t_mini *mini, char **envp)
 		else
 			i++;
 	}
-	// printf("AFTER\n");
-	// ft_leaks();
+	free(line);
 	if (ptr)
 	{
 		if (exec_cmds(ptr, envp, mini) == -1)

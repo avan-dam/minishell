@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/16 16:24:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/16 19:09:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static char	*ft_howmany_n(char *string, int i, int j)
 {
-	// char *temp;??
 	while (string[i] != '\0')
 	{
 		j = i;
@@ -41,6 +40,7 @@ static int	ft_echo_n(char *string, t_mini *mini)
 	string = ft_strtrim(tmp, " ");
 	ft_putstr_fd(string, mini->stdout);
 	free(string);
+	free(tmp);
 	mini->exit = 0;
 	return (0);
 }
@@ -75,8 +75,6 @@ static char	*ft_argvs_into_string(t_base *ptr, int i, char *string)
 	tmp = ft_strdup("");
 	while (ptr->argv[i])
 	{
-		if (string)
-			free(string);
 		string = ft_strjoin(tmp, ptr->argv[i]);
 		free(tmp);
 		if (i + 1 != ptr->size)
@@ -87,12 +85,14 @@ static char	*ft_argvs_into_string(t_base *ptr, int i, char *string)
 				tmp = ft_strdup(string);
 				free(string);
 				string = ft_strjoin(tmp, " ");
+				free(tmp);
 			}
 		}
 		tmp = string;
 		i++;
 	}
-	return (string);
+	free(string);
+	return (tmp);
 }
 
 int			ft_echo(t_base *ptr, t_mini *mini)
@@ -101,33 +101,22 @@ int			ft_echo(t_base *ptr, t_mini *mini)
 	char	*tmp;
 
 	mini->exit = 0;
-	// 	printf("before\n");
-	// ft_leaks();
 	if (ft_strcmp("", ptr->argv[0]) == 0)
 		return (ft_putstr_fd("", mini->stdout));
 	string = ft_argvs_into_string(ptr, 1, NULL);
 	if (string == NULL || ft_check_empty(string) == 1)
 	{
-		// if (string)
-			// free(string);// this breaks when echo $POEP $MEERPOEP
+		if (string == NULL)
+			free(string);
 		string = NULL;
 		return (ft_putchar_fd('\n', mini->stdout));
 	}
 	if ((string[0] == '-') && (string[1] == 'n') &&
 	((string[2] == ' ') || (string[2] == '\0') || (string[2] == 'n')))
-	{
-		if (ft_echo_n(string, mini) != 2)
-		{
-			// printf("after\n");
-			// ft_leaks();
-			return (0);
-		}
-	}
+		return (ft_echo_n(string, mini));
 	tmp = string;
 	string = ft_strtrim(tmp, " ");
 	ft_putstr_fd(string, mini->stdout);
 	free(string);
-	// printf("after\n");
-	// ft_leaks();
 	return (ft_putchar_fd('\n', mini->stdout));
 }

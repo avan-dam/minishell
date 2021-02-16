@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/16 10:07:27 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/16 19:26:18 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		dup2(mini->stdin, STDIN);
 		dup2(mini->stdout, STDOUT);
 		if (ft_is_builtin_command(ptr->argv[0]) == 0 && look_for_non_builtin(ptr) == 2)
-			unvalid_identifier(ptr->argv[0], mini, 127);
+			unvalid_ident(ptr->argv[0], mini, 127);
 		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 			exit (0); // change
 		if (ptr->prev && ptr->prev->type == TYPE_PIPE && dup2(ptr->prev->fd[0], STDIN) < 0)
@@ -52,7 +52,7 @@ static void		execve_commands(t_base *ptr, char **envp, t_mini *mini)
 		else if (execve(ptr->argv[0], ptr->argv, envp) < 0 || !ptr->argv[1])
 			exit (1);
 		else
-			unvalid_identifier(ptr->argv[0], mini, 127);
+			unvalid_ident(ptr->argv[0], mini, 127);
 		exit (EXIT_SUCCESS); // closes process with succes // change
 	}
 	else // parent process
@@ -121,7 +121,7 @@ int		exec_cmds(t_base *tmp, char **envp, t_mini *mini)
 			{
 				if (ft_strcmp("", tmp->argv[0]) == 0)
 					break ;
-				unvalid_identifier(tmp->argv[0], mini, 127);
+				unvalid_ident(tmp->argv[0], mini, 127);
 			}
 			else
 				execve_commands(tmp, envp, mini);

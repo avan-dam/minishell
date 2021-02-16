@@ -6,11 +6,25 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/16 14:28:59 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/16 20:30:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static void	ft_free_array(char **array)
+{
+	int j;
+
+	j = 0;
+	while (array[j])
+	{
+		free(array[j]);
+		array[j] = NULL;
+		j++;
+	}
+	free(array);
+}
 
 static char	**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
 {
@@ -31,14 +45,7 @@ static char	**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
 		j++;
 	}
 	new[j] = NULL;
-	j = 0;
-	while (ptr->argv[j])
-	{
-		free(ptr->argv[j]);
-		ptr->argv[j] = NULL;
-		j++;
-	}
-	free(ptr->argv);
+	ft_free_array(ptr->argv);
 	return (new);
 }
 
@@ -125,6 +132,7 @@ static void	direction_list(t_base *ptr, int i)
 static int	check_file_toredir(t_base *ptr, int i, t_mini *mini)
 {
 	char *tmp;
+
 	tmp = ptr->argv[i + 1];
 	ptr->argv[i + 1] = check_tokens(tmp, mini, 0, 0);
 	free(tmp);

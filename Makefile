@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/02/15 17:40:50 by ambervandam   ########   odam.nl          #
+#    Updated: 2021/02/16 20:13:48 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,12 @@ SRCS =		main.c \
 			list_utils/ft_lstprint.c \
 			list_utils/ft_split_into_list.c \
 			parser_utils/utils.c \
+			parser_utils/utils2.c \
+			parser_utils/replace_specials.c \
 			parser_utils/replace_dolla.c \
+			parser_utils/replace_quote_backslash.c \
 			parser_utils/redir.c \
 			parser_utils/parser.c \
-			parser_utils/unvalid_identifier.c \
 			execve/execve.c \
 			leaks.c \
 			execve/non_builtins.c

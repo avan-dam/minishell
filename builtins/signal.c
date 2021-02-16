@@ -5,21 +5,28 @@
 /*                                                     +:+                    */
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/01/25 18:35:10 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/11 10:56:25 by salbregh      ########   odam.nl         */
+/*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
+/*   Updated: 2021/02/16 19:14:42 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void handle_sigint(int sig)
+/*
+**	(sig == SIGINT) handles CTRL-C
+**	(sig == SIGQUIT) handles CTRL-\
+**	CTRL slash this overwrites the previous two chars
+**	CTRL D detected by EOF so handled differently when lineret ==0
+*/
+
+void	handle_sigint(int sig)
 {
-    if (sig == SIGINT) //THIS IS FOR CRTL-C only
-	{	
+	if (sig == SIGINT)
+	{
 		write(1, "\b\b  \b\b", 6);
-		ft_putstr_fd("\n> ", 1); // comment out for tester
+		ft_putstr_fd("\n> ", 1);
 	}
-	if (sig == SIGQUIT) //CTRL slash this overwrites the previous two chars
+	if (sig == SIGQUIT)
 		write(1, "\b\b  \b\b", 6);
 }
 
@@ -28,12 +35,20 @@ void	ft_signals(t_mini *mini, int i)
 	if (i == 0)
 	{
 		if (signal(SIGQUIT, &handle_sigint) == SIG_ERR)
+		{
+			mini->exit = 0;
 			ft_exit(mini, mini->exit);
+		}
 		if (signal(SIGINT, &handle_sigint) == SIG_ERR)
+		{
+			mini->exit = 0;
 			ft_exit(mini, mini->exit);
+		}
 	}
-	if (i == 1) //CTRL D detected by EOF so handled differently when lineret ==0
-		ft_putstr_fd("exit\n", 1); // ALSO FREE ALL IF GET THERE
+	if (i == 1)
+	{
+		mini->exit = 0;
+		ft_putstr_fd("exit\n", 1);
+		ft_exit(mini, mini->exit);
+	}
 }
-//need to make sure these signals work with execve properly
-//maybe use WIFSIGNALED

@@ -6,15 +6,14 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/15 13:19:04 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/16 19:10:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void 		ft_reset_fds(t_mini *mini)
+void	ft_reset_fds(t_mini *mini)
 {
-	// printf("in close fds mini->stdout is %d mini->stdin is %d mini->stderr is %d\n", mini->stdout, mini->stdin, mini->stderr);
 	if (mini->stdout != 1)
 	{
 		if (mini->stdout != 2 && mini->stdout != 0)
@@ -35,11 +34,10 @@ void 		ft_reset_fds(t_mini *mini)
 	}
 }
 
-void		ft_printf_exit_status(t_mini *mini)
+void	ft_printf_exit_status(t_mini *mini)
 {
 	char	*exitstatus;
 
-	// printf("in haaa \n");
 	exitstatus = ft_itoa(mini->exit);
 	ft_putstr_fd("bash: ", mini->stdout);
 	ft_putstr_fd(exitstatus, mini->stdout);
@@ -57,20 +55,15 @@ void	clear_mini(t_mini *mini, int i)
 	mini->type_end = 0;
 	mini->numb_cmds = 0;
 	ft_reset_fds(mini);
-	// mini->stdin = 0;
-	// mini->stderr = 0;
-	// mini->stdout = 0;
 	if (i == 0)
 	{
-		mini->exit = 0;	
+		mini->exit = 0;
 		ft_lstclear(&mini->env1);
 	}
 }
 
-void	ft_exit(t_mini *mini, int exitstatus) // exit with 0 or exit statment??
+void	ft_exit(t_mini *mini, int exitstatus)
 {
 	clear_mini(mini, 0);
-	// system("leaks minishell");
-	// system("leaks minishell");
 	exit(exitstatus);
 }

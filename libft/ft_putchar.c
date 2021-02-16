@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/19 16:30:20 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/12/21 13:30:20 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/16 19:15:34 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 int	ft_putchar(char c)
 {
 	write(1, &c, 1);
-	return(0);
+	return (0);
 }

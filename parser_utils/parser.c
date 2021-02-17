@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/17 15:41:47 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/17 17:06:27 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,13 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 int			parse_input_string(char *line, t_mini *mini, char **envp)
 {
 	t_base		*ptr;
+	char		*tmp;
 	int			i;
 	int			k;
 
 	i = 0;
 	ptr = NULL;
-	char *tmp = check_tokens(line, mini, 0, 0);
+	tmp = check_tokens(line, mini, 0, 0);
 	if (tmp == NULL)
 	{
 		free(tmp);

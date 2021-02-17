@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/17 16:52:54 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/17 16:58:12 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int				exec_cmds(t_base *tmp, char **envp, t_mini *mini)
 		(tmp->prev && tmp->prev->type == TYPE_PIPE)) &&
 		ft_is_builtin_command(tmp->argv[0]) == 1)
 			execve_commands(tmp, envp, mini);
+		else if (ft_strcmp("", tmp->argv[0]) == 0) // changed to here
+			break ;
 		else if (ft_strcmp(tmp->argv[0], "exit") != 0 &&
 		ft_is_builtin_command(tmp->argv[0]) == 1)
 			exec_builtin(tmp, mini);
@@ -142,17 +144,10 @@ int				exec_cmds(t_base *tmp, char **envp, t_mini *mini)
 			}
 			return (-1);
 		}
+		else if (look_for_non_builtin(tmp) == 2)
+			unvalid_ident(tmp->argv[0], mini, 127);
 		else
-		{
-			if (look_for_non_builtin(tmp) == 2)
-			{
-				if (ft_strcmp("", tmp->argv[0]) == 0)
-					break ;
-				unvalid_ident(tmp->argv[0], mini, 127);
-			}
-			else
-				execve_commands(tmp, envp, mini);
-		}
+			execve_commands(tmp, envp, mini);
 		ft_reset_fds(mini);
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/16 20:08:18 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/17 14:57:24 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ void				ft_pwd(t_mini *mini);
 void				ft_exit(t_mini *mini, int exitstatus);
 void				ft_printf_exit_status(t_mini *mini);
 void				ft_set_env(char **argv, char **envp, t_mini *mini);
-void				ft_add_env(char *env, char *path, t_mini *mini); // or static
-char				*ft_get_env(char *env, t_mini *mini); // or static
 void				handle_sigint(int sig);
 void				ft_signals(t_mini *mini, int i);
 
@@ -111,15 +109,17 @@ void				ft_signals(t_mini *mini, int i);
 **	PARSER FUNCTIONS
 */
 int					parse_input_string(char *line, t_mini *mini, char **envp);
-int					ft_start_parsing(char *line, t_mini *mini, char **envp); // new
 char				*check_tokens(char *line, t_mini *mini, int i, int j);
-int			        ft_find_dolla(char *str, int i, t_mini *mini, t_line *s);
-int 				ft_replace_quotes(t_line *s, int i);
-int	  				ft_correct_backslash(t_line *s, int i);
-t_base				*ft_redir(t_mini *mini, t_base *ptr);
-char				*ft_string_insert(char *string, int i, char *middle);
-char				*ft_strjoin_three(char *start, char *newvar, char *end);
+int					ft_find_dolla(int i, t_mini *mini, t_line *s);
+int					ft_replace_quotes(t_line *s, int i);
+int					ft_correct_backslash(t_line *s, int i);
 int					unvalid_ident(char *error, t_mini *mini, int exitstatus);
+t_base				*ft_redir(t_mini *mini, t_base *ptr);
+char				**ft_remove_redir_argv(t_base *ptr, int i, int j);
+int					add_new_into_list(int j, t_base *ptr, int i);
+void				redir_change_backslash(t_base *ptr, int i);
+int					ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i);
+int					check_file_toredir(t_base *ptr, int i, t_mini *mini);
 
 /*
 **	EXECVE FUNCTION
@@ -141,5 +141,7 @@ void				ft_reset_fds(t_mini *mini);
 char				*ft_strtolower(char *str);
 char				*ft_trim_paths(char *line, char *set);
 char				*memory_check_tokens(char *str, t_mini *mini, int i, int j);
+char				*ft_string_insert(char *string, int i, char *middle);
+char				*ft_strjoin_three(char *start, char *newvar, char *end);
 
 #endif

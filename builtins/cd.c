@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/11 12:45:43 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/17 10:12:42 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 ** cd /			use to move to the root directory
 */
 
-void			ft_add_env(char *env, char *path, t_mini *mini)
+static void		ft_add_env(char *env, char *path, t_mini *mini)
 {
 	t_list		*lst;
 
@@ -34,7 +34,7 @@ void			ft_add_env(char *env, char *path, t_mini *mini)
 	ft_lstadd_back(&mini->env1, lst);
 }
 
-char			*ft_get_env(char *env, t_mini *mini)
+static char		*ft_get_env(char *env, t_mini *mini)
 {
 	t_list		*lst;
 	char		*pathname;

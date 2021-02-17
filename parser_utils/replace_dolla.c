@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:04:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/16 20:16:48 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/17 16:07:16 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ static char	*ft_check_envar(t_mini *mini, char *oldvar)
 	return (ft_strdup(""));
 }
 
-static int	change_var(char *start, char *end, char *oldvar, t_line *s, t_mini *mini)
+static char *find_newvar(char *oldvar, char *start, char *end, t_line *s, t_mini *mini)
 {
-	char	*newvar;
-	int		retval;
+	char *newvar;
 
 	if (start[ft_len(start) - 1] == 39 && end[0] == 39 && ft_len(end) > 1)
 	{
@@ -40,65 +39,77 @@ static int	change_var(char *start, char *end, char *oldvar, t_line *s, t_mini *m
 	}
 	newvar = ft_check_envar(mini, oldvar);
 	if (ft_strcmp(oldvar, "") == 0 && end[0] != '\'' && end[0] != '"')
+	{
+		free(newvar);
 		newvar = ft_strdup("$");
+	}
 	if (ft_strcmp(oldvar, "") == 0 && (start[ft_strlen(start)] == '"'
 	|| s->d % 2 == 1) && end[0] == '"')
-		newvar = ft_strdup("$");
-	retval = ft_len(newvar) - 1;
-	s->str = ft_strjoin_three(start, newvar, end);
-	free(oldvar);
-	return (retval);
-}
-
-static int	find_start_end_old(int j, int i, char *str, t_line *s, t_mini *mini)
-{
-	char	*start;
-	char	*oldvar;
-	char	*end;
-
-	oldvar = ft_substr(str, j, i - j);
-	start = ft_substr(str, 0, j - 1);
-	end = ft_substr(str, i, ft_strlen(str) - i);
-	return (change_var(start, end, oldvar, s, mini));
-}
-
-int			ft_find_dolla(char *str, int i, t_mini *mini, t_line *s)
-{
-	int		j;
-	int		k;
-
-	j = i;
-	while (str[i] != '\0' && str[i] != '$' && str[i] != '-' && str[i] != '=' &&
-	str[i] != ' ' && str[i] != '\'' && str[i] != '"' && str[i] != '\\' &&
-	str[i] != '/' && str[i] != '%' && str[i] != '*')
 	{
-		if (str[i] == '@' || str[j] == '#')
+		free(newvar);
+		newvar = ft_strdup("$");
+	}
+	free(oldvar);
+	return (newvar);
+}
+
+static int	dolla_while_checker(char *s, int i)
+{
+	if (s[i] != '\0' && s[i] != '$' && s[i] != '-' && s[i] != '=' && s[i]
+	!= ' ' && s[i] != '\'' && s[i] != '"' && s[i] != '\\' && s[i] != '/' &&
+	s[i] != '%' && s[i] != '*')
+		return (1);
+	return (0);
+}
+
+static int	ft_len_replace_dolla(int j, int i, char *s, int k)
+{
+	while (dolla_while_checker(s, i) == 1)
+	{
+		if (s[i] == '@' || s[j] == '#' || s[i] == '#')
 		{
-			i++;
+			if (s[i] == '@' || s[j] == '#')
+				i++;
 			break ;
 		}
-		if (str[i] == '#')
-			break ;
-		if (str[i] >= '0' && str[i] <= '9' &&
-		str[j + 1] >= '0' && str[i] <= '9')
+		if (s[i] >= '0' && s[i] <= '9' && s[j + 1] >= '0' && s[i] <= '9')
 		{
 			k = i;
-			while (str[i] >= '0' && str[i] <= '9')
+			while (s[i] >= '0' && s[i] <= '9')
 				i++;
-			if (str[i] == '\0' && k != j)
-				break ;
-			if (k == j)
+			if ((s[i] == '\0' && k != j) || (k == j))
 			{
-				i = k + 1;
+				if (k == j)
+					i = k + 1;
 				break ;
 			}
 			i = k;
 		}
 		i++;
 	}
-	if (str[j] == '*')
+	return (i);
+}
+
+int			ft_find_dolla(int i, t_mini *mini, t_line *s)
+{
+	int		j;
+	char	*oldvar;
+	char	*start;
+	char	*end;
+	int		retval;
+	char	*newvar;
+
+	j = i;
+	i = ft_len_replace_dolla(j, i, s->str, 0);
+	if (s->str[j] == '*')
 		i++;
-	if (str[i - 1] == '"')
+	if (s->str[i - 1] == '"')
 		return (0);
-	return (find_start_end_old(j, i, str, s, mini));
+	oldvar = ft_substr(s->str, j, i - j);
+	start = ft_substr(s->str, 0, j - 1);
+	end = ft_substr(s->str, i, ft_strlen(s->str) - i);
+	newvar = find_newvar(oldvar, start, end, s, mini);
+	retval = ft_len(newvar) - 1;
+	s->str = ft_strjoin_three(start, newvar, end);
+	return (retval);
 }

@@ -6,13 +6,13 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:50:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/09 17:44:48 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/17 15:44:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_lstclear(t_list **lst)
+void		ft_lstclear(t_list **lst)
 {
 	t_list *current;
 	t_list *next;
@@ -29,7 +29,15 @@ void	ft_lstclear(t_list **lst)
 	*lst = NULL;
 }
 
-void	ft_baseclear(t_base **lst)
+static void	zero_store(t_base *store)
+{
+	store->redir = 0;
+	store->type = 0;
+	store->fd[0] = 0;
+	store->fd[1] = 0;
+}
+
+void		ft_baseclear(t_base **lst)
 {
 	t_base	*store;
 	t_base	*storenext;
@@ -42,21 +50,14 @@ void	ft_baseclear(t_base **lst)
 	*lst = NULL;
 	while (store != NULL)
 	{
-		store->redir = 0;
-		store->type = 0;
-		store->fd[0] = 0;
-		store->fd[1] = 0;
+		zero_store(store);
 		while (i < store->size)
 		{
-			// printf("i is %d and store->size is %d\n", i, store->size);
-			// printf("and store->argv[i] is [%s]\n", store->argv[i]);
 			if (store->argv[i])
-			{
 				free(store->argv[i]);
-				store->argv[i] = NULL;
-			}
 			i++;
 		}
+		i = 0;
 		store->size = 0;
 		free(store->argv);
 		storenext = (store->next);

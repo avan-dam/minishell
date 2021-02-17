@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/16 19:09:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/17 15:43:55 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ static char	*ft_argvs_into_string(t_base *ptr, int i, char *string)
 		tmp = string;
 		i++;
 	}
-	free(string);
-	return (tmp);
+	return (string);
 }
 
 int			ft_echo(t_base *ptr, t_mini *mini)
@@ -108,7 +107,6 @@ int			ft_echo(t_base *ptr, t_mini *mini)
 	{
 		if (string == NULL)
 			free(string);
-		string = NULL;
 		return (ft_putchar_fd('\n', mini->stdout));
 	}
 	if ((string[0] == '-') && (string[1] == 'n') &&
@@ -118,5 +116,6 @@ int			ft_echo(t_base *ptr, t_mini *mini)
 	string = ft_strtrim(tmp, " ");
 	ft_putstr_fd(string, mini->stdout);
 	free(string);
+	free(tmp);
 	return (ft_putchar_fd('\n', mini->stdout));
 }

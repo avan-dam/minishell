@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/16 19:32:58 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/17 15:41:47 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,7 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 	char *temp;
 	char *temp3;
 
-	// printf("BEFORE\n");
-	// ft_leaks();
-	// temp2 = ft_strtrim(line, " ");
-	// line = temp2;
-	// free(temp2);
 	line = ft_trim_paths(line, " ");
-	// line = ft_strtrim(line, " ");
 	while (line[i] && ((line[i] != '|' && line[i] != ';') ||
 	(memory_check_tokens(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
 	{
@@ -53,8 +47,9 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 		i++;
 	}
 	mini->numb_cmds = numb;
-	temp3 = ft_substr(line, 0, i);
-	mini->cmd_part = temp3;
+	temp3 = line;
+	line = ft_substr(temp3, 0, i);
+	mini->cmd_part = line;
 	free(temp3);
 	mini->type_end = TYPE_END;
 	return (i);
@@ -100,8 +95,6 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 
 	numb_characters = no_of_commands(line, mini, 0, 1);
 	size = mini->numb_cmds;
-	// printf("BEFORE\n");
-	// ft_leaks();
 	mini->cmd_part = check_tokens(mini->cmd_part, mini, 0, 0);
 	if (mini->cmd_part == NULL)
 		return (1);
@@ -130,11 +123,10 @@ int			parse_input_string(char *line, t_mini *mini, char **envp)
 	t_base		*ptr;
 	int			i;
 	int			k;
-	char		*tmp;
 
 	i = 0;
 	ptr = NULL;
-	tmp = check_tokens(line, mini, 0, 0);
+	char *tmp = check_tokens(line, mini, 0, 0);
 	if (tmp == NULL)
 	{
 		free(tmp);

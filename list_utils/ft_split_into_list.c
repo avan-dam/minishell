@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:12 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/16 19:26:20 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/17 10:02:30 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 **	add new node to the end of the list of environmental variables
 */
 
-int  ft_split_into_tlist(t_mini *mini, char *line)
+int		ft_split_into_tlist(t_mini *mini, char *line)
 {
-	t_list 		*newnode;
+	t_list		*newnode;
 	int			i;
 	char		*var1;
 	char		*var2;

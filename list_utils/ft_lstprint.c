@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:49:11 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 11:50:06 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/17 10:01:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	ft_lstprintold(t_list *lst)
 	}
 }
 
-void ft_put_var_with_extra_backslash(char *tmpvar2, t_mini *mini)
+void	ft_put_var_with_extra_backslash(char *tmpvar2, t_mini *mini)
 {
 	int i;
 
 	i = 0;
-	while(tmpvar2[i])
+	while (tmpvar2[i])
 	{
 		if (tmpvar2[i] == '\\')
 			ft_putchar_fd('\\', mini->stdout);
@@ -43,6 +43,7 @@ void ft_put_var_with_extra_backslash(char *tmpvar2, t_mini *mini)
 void	ft_lstprint(t_list *lst, t_mini *mini, int i)
 {
 	t_list *tmp;
+
 	tmp = lst;
 	if (tmp == NULL)
 		return ;

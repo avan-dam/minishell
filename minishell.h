@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/17 14:57:24 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/17 16:18:02 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void				ft_signals(t_mini *mini, int i);
 */
 int					parse_input_string(char *line, t_mini *mini, char **envp);
 char				*check_tokens(char *line, t_mini *mini, int i, int j);
-int					ft_find_dolla(int i, t_mini *mini, t_line *s);
+int					ft_find_dolla(int i, int j, t_mini *mini, t_line *s);
 int					ft_replace_quotes(t_line *s, int i);
 int					ft_correct_backslash(t_line *s, int i);
 int					unvalid_ident(char *error, t_mini *mini, int exitstatus);

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:04:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/17 16:07:16 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/17 16:18:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*ft_check_envar(t_mini *mini, char *oldvar)
 	return (ft_strdup(""));
 }
 
-static char *find_newvar(char *oldvar, char *start, char *end, t_line *s, t_mini *mini)
+static char	*find_newvar(char *oldvar, char *start, char *end, t_mini *mini)
 {
 	char *newvar;
 
@@ -43,13 +43,6 @@ static char *find_newvar(char *oldvar, char *start, char *end, t_line *s, t_mini
 		free(newvar);
 		newvar = ft_strdup("$");
 	}
-	if (ft_strcmp(oldvar, "") == 0 && (start[ft_strlen(start)] == '"'
-	|| s->d % 2 == 1) && end[0] == '"')
-	{
-		free(newvar);
-		newvar = ft_strdup("$");
-	}
-	free(oldvar);
 	return (newvar);
 }
 
@@ -90,16 +83,14 @@ static int	ft_len_replace_dolla(int j, int i, char *s, int k)
 	return (i);
 }
 
-int			ft_find_dolla(int i, t_mini *mini, t_line *s)
+int			ft_find_dolla(int i, int j, t_mini *mini, t_line *s)
 {
-	int		j;
 	char	*oldvar;
 	char	*start;
 	char	*end;
 	int		retval;
 	char	*newvar;
 
-	j = i;
 	i = ft_len_replace_dolla(j, i, s->str, 0);
 	if (s->str[j] == '*')
 		i++;
@@ -108,7 +99,14 @@ int			ft_find_dolla(int i, t_mini *mini, t_line *s)
 	oldvar = ft_substr(s->str, j, i - j);
 	start = ft_substr(s->str, 0, j - 1);
 	end = ft_substr(s->str, i, ft_strlen(s->str) - i);
-	newvar = find_newvar(oldvar, start, end, s, mini);
+	newvar = find_newvar(oldvar, start, end, mini);
+	if (ft_strcmp(oldvar, "") == 0 && (start[ft_strlen(start)] == '"'
+	|| s->d % 2 == 1) && end[0] == '"')
+	{
+		free(newvar);
+		newvar = ft_strdup("$");
+	}
+	free(oldvar);
 	retval = ft_len(newvar) - 1;
 	s->str = ft_strjoin_three(start, newvar, end);
 	return (retval);

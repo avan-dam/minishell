@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:12:13 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/12 10:33:02 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 20:26:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ char		*ft_itoa(int n);
 void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
-void		*ft_memccpy(void *dst, const void *src,
-			int c, size_t n);
+void		*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void		*ft_memmove(void *dst, const void *src, size_t len);
 void		*ft_memset(void *b, int c, size_t len);
 int			ft_putchar(char c);
@@ -44,10 +43,8 @@ char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_strrchr(const char *s, int c);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
-size_t		ft_strlcat(char *dst, const char *src,
-			size_t dstsize);
-size_t		ft_strlcpy(char *dst, const char *src,
-			size_t dstsize);
+size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
+size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strstr(const char *haystack, const char *needle);

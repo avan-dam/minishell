@@ -6,13 +6,13 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:09:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/11/15 16:09:54 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/21 20:26:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_count_strings(const char *s, char c)
+static int	ft_count_strings(const char *s, char c)
 {
 	int		strings;
 	int		i;
@@ -28,7 +28,7 @@ static int		ft_count_strings(const char *s, char c)
 	return (strings);
 }
 
-static int		ft_str_len(char const *s, int i, char c)
+static int	ft_str_len(char const *s, int i, char c)
 {
 	int	len;
 
@@ -41,7 +41,7 @@ static int		ft_str_len(char const *s, int i, char c)
 	return (len);
 }
 
-static int		ft_free_all(int word, int strings, char **strarray)
+static int	ft_free_all(int word, int strings, char **strarray)
 {
 	if (!(strarray[word]))
 	{
@@ -57,7 +57,7 @@ static int		ft_free_all(int word, int strings, char **strarray)
 	return (1);
 }
 
-static char		**ft_fill_strarray(char const *s, char c,
+static char	**ft_fill_strarray(char const *s, char c,
 				char **strarray, int strings)
 {
 	int	i;
@@ -87,7 +87,7 @@ static char		**ft_fill_strarray(char const *s, char c,
 	return (strarray);
 }
 
-char			**ft_split(const char *s, char c)
+char	**ft_split(const char *s, char c)
 {
 	char	**strarray;
 	int		strings;

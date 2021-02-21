@@ -6,16 +6,16 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:50:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/17 15:44:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 20:23:41 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void		ft_lstclear(t_list **lst)
+void	ft_lstclear(t_list **lst)
 {
-	t_list *current;
-	t_list *next;
+	t_list	*current;
+	t_list	*next;
 
 	current = *lst;
 	while (current != NULL)
@@ -37,7 +37,7 @@ static void	zero_store(t_base *store)
 	store->fd[1] = 0;
 }
 
-void		ft_baseclear(t_base **lst)
+void	ft_baseclear(t_base **lst)
 {
 	t_base	*store;
 	t_base	*storenext;

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/05 17:59:29 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/11 12:46:35 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/21 20:31:49 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 **	current directory
 */
 
-void		ft_pwd(t_mini *mini)
+void	ft_pwd(t_mini *mini)
 {
 	char	cwd[PATH_MAX];
 

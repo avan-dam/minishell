@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/21 20:04:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 20:49:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,11 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 		if (s.str[i] == '\\' && numb_char(s.str, '>') == 0
 			&& numb_char(s.str, '<') == 0)
 			i = ft_correct_backslash(&s, i);
-		if ((s.str[i] == '\'') || (s.str[i] == '"'))
-			i = ft_replace_quotes(&s, i);
-		else if ((s.str[i] == '$') && (s.str[i + 1] != '/') &&
-			(s.str[i + 1] != '\\') && (s.str[i + 1] != '\0') && 
-			(s.str[i + 1] != '?'))
+		if ((s.str[i] == '$') && (s.str[i + 1] != '/') && (s.str[i + 1] != '\\')
+			&& (s.str[i + 1] != '\0') && (s.str[i + 1] != '?'))
 			i = i + ft_find_dolla(i + 1, i + 1, mini, &s);
+		else if ((s.str[i] == '\'') || (s.str[i] == '"'))
+			i = ft_replace_quotes(&s, i);
 		else if (s.str[i] == '$' && s.str[i + 1] == '?' && i != 0
 			&& (s.d == 0 || s.d % 2 == 1) && (s.s == 0 || s.s % 2 == 0))
 			ft_exit_status_replace(&s, i, mini);

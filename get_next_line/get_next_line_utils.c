@@ -6,13 +6,13 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 17:47:54 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/02/16 19:16:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 20:29:26 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		ft_len(const char *s)
+int	ft_len(const char *s)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int		ft_len(const char *s)
 	return (i);
 }
 
-int		ft_no_new_line(char *storage)
+int	ft_no_new_line(char *storage)
 {
 	int	i;
 	int	length;

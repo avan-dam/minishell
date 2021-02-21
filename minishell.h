@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/17 16:18:02 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 21:14:09 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define TYPE_PIPE	4
 # define TYPE_BREAK	5
 
-typedef struct		s_base
+typedef struct s_base
 {
 	char			**argv;
 	int				size;
@@ -43,21 +43,21 @@ typedef struct		s_base
 	int				redir;
 }					t_base;
 
-typedef struct		s_line
+typedef struct s_line
 {
 	int				s;
 	int				d;
 	char			*str;
 }					t_line;
 
-typedef struct		s_list
+typedef struct s_list
 {
 	char			*var1;
 	char			*var2;
 	struct s_list	*next;
 }					t_list;
 
-typedef struct		s_mini
+typedef struct s_mini
 {
 	t_list			*env1;
 	int				stdout;
@@ -69,7 +69,7 @@ typedef struct		s_mini
 	int				exit;
 }					t_mini;
 
-typedef struct		s_piper
+typedef struct s_piper
 {
 	int				check;
 	char			*write_side;
@@ -120,6 +120,7 @@ int					add_new_into_list(int j, t_base *ptr, int i);
 void				redir_change_backslash(t_base *ptr, int i);
 int					ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i);
 int					check_file_toredir(t_base *ptr, int i, t_mini *mini);
+int					error_opening(char *error, t_mini *mini);
 
 /*
 **	EXECVE FUNCTION
@@ -140,7 +141,7 @@ void				clear_mini(t_mini *mini, int i);
 void				ft_reset_fds(t_mini *mini);
 char				*ft_strtolower(char *str);
 char				*ft_trim_paths(char *line, char *set);
-char				*memory_check_tokens(char *str, t_mini *mini, int i, int j);
+char				*mem_check_tokens(char *str, t_mini *mini, int i, int j);
 char				*ft_string_insert(char *string, int i, char *middle);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
 

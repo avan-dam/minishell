@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:06:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/11/30 19:10:52 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/21 20:24:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static long int	check_atoi(unsigned long int result, const char *str, int neg)
 	return (result);
 }
 
-intmax_t		ft_atoi(const char *str)
+intmax_t	ft_atoi(const char *str)
 {
 	intmax_t	result;
 	int			neg;

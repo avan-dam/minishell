@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/17 10:12:42 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 20:30:50 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 ** cd /			use to move to the root directory
 */
 
-static void		ft_add_env(char *env, char *path, t_mini *mini)
+static void	ft_add_env(char *env, char *path, t_mini *mini)
 {
 	t_list		*lst;
 
@@ -34,7 +34,7 @@ static void		ft_add_env(char *env, char *path, t_mini *mini)
 	ft_lstadd_back(&mini->env1, lst);
 }
 
-static char		*ft_get_env(char *env, t_mini *mini)
+static char	*ft_get_env(char *env, t_mini *mini)
 {
 	t_list		*lst;
 	char		*pathname;
@@ -54,7 +54,7 @@ static char		*ft_get_env(char *env, t_mini *mini)
 	return (NULL);
 }
 
-static void		ft_no_oldpwd(t_mini *mini)
+static void	ft_no_oldpwd(t_mini *mini)
 {
 	char		cwd[PATH_MAX];
 
@@ -72,7 +72,7 @@ static void		ft_no_oldpwd(t_mini *mini)
 		ft_putstr_fd("bash: cd: OLDPWD not set\n", STDOUT);
 }
 
-static void		ft_change_directory(t_mini *mini, char *path)
+static void	ft_change_directory(t_mini *mini, char *path)
 {
 	char		cwd[PATH_MAX];
 
@@ -92,7 +92,7 @@ static void		ft_change_directory(t_mini *mini, char *path)
 	ft_add_env("PWD", getcwd(cwd, sizeof(cwd)), mini);
 }
 
-void			ft_cd(t_base *ptr, t_mini *mini)
+void	ft_cd(t_base *ptr, t_mini *mini)
 {
 	if (ptr->argv[1] == NULL || ft_strcmp(ptr->argv[1], "~") == 0)
 	{

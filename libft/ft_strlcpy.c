@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:10:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/11/15 16:10:41 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/21 20:28:04 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		return (ft_strlen(src));
 	d = ft_strlen(dst);
 	s = ft_strlen(src);
-	while ((i < (dstsize - 1)) && ((i < (s - 1)) || (i < (d - 1))) && \
-	(src[i] != '\0'))
+	while ((i < (dstsize - 1)) && ((i < (s - 1)) || (i < (d - 1)))
+		&& (src[i] != '\0'))
 	{
 		dst[i] = src[i];
 		i++;

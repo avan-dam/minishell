@@ -6,15 +6,25 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:38:57 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/17 09:42:56 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 21:09:26 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	error_opening(char *error, t_mini *mini)
+{
+	ft_putstr_fd("bash: ", mini->stderr);
+	ft_putstr_fd(error, mini->stderr);
+	ft_putstr_fd(": No such file or directory\n", mini->stderr);
+	ft_reset_fds(mini);
+	mini->exit = 1;
+	return (-1);
+}
+
 static void	ft_free_array(char **array)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (array[j])
@@ -30,7 +40,8 @@ static char	**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
 {
 	char	**new;
 
-	if ((new = (char **)malloc(sizeof(char *) * (ptr->size + 1))) == NULL)
+	new = (char **)malloc(sizeof(char *) * (ptr->size + 1));
+	if (new == NULL)
 		return (NULL);
 	while (j < i)
 	{
@@ -49,7 +60,7 @@ static char	**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
 	return (new);
 }
 
-int			add_new_into_list(int j, t_base *ptr, int i)
+int	add_new_into_list(int j, t_base *ptr, int i)
 {
 	char	*tmp;
 	char	*newargv;
@@ -67,18 +78,19 @@ int			add_new_into_list(int j, t_base *ptr, int i)
 	if (i > 0)
 	{
 		ptr->size = ptr->size + 1;
-		if ((ptr->argv = add_tmp_tolist(tmp, ptr, i, 0)) == NULL)
+		ptr->argv = add_tmp_tolist(tmp, ptr, i, 0);
+		if (ptr->argv == NULL)
 			return (-1);
 	}
 	return (0);
 }
 
-char		**ft_remove_redir_argv(t_base *ptr, int i, int j)
+char	**ft_remove_redir_argv(t_base *ptr, int i, int j)
 {
 	char	**temp;
 
-	ptr->size = ptr->size - 2;
-	if ((temp = (char **)malloc(sizeof(char *) * (ptr->size + 1))) == NULL)
+	temp = (char **)malloc(sizeof(char *) * (ptr->size + 1));
+	if (temp == NULL)
 		return (NULL);
 	while (j < i)
 	{

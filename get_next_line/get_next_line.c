@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 17:58:43 by avan-dam      #+#    #+#                 */
-/*   Updated: 2020/12/07 09:50:37 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/21 20:29:17 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #endif
 
-static int		ft_free_storage(char **storage, int result)
+static int	ft_free_storage(char **storage, int result)
 {
 	if (result == -1)
 	{
@@ -40,7 +40,7 @@ static int		ft_free_storage(char **storage, int result)
 	return (1);
 }
 
-static int		ft_find_new_line(char **sto, char **line)
+static int	ft_find_new_line(char **sto, char **line)
 {
 	int		len;
 	char	*temp;
@@ -69,7 +69,7 @@ static int		ft_find_new_line(char **sto, char **line)
 	return (1);
 }
 
-static int		ft_eof(char **line, int rd, char **sto)
+static int	ft_eof(char **line, int rd, char **sto)
 {
 	if (rd < 0)
 		return (ft_free_storage(sto, -1));
@@ -79,7 +79,7 @@ static int		ft_eof(char **line, int rd, char **sto)
 	return (0);
 }
 
-static int		ft_join_me(char **sto, char *buf, int rd)
+static int	ft_join_me(char **sto, char *buf, int rd)
 {
 	char	*temp;
 
@@ -96,9 +96,9 @@ static int		ft_join_me(char **sto, char *buf, int rd)
 	return (1);
 }
 
-int				get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
-	static char *storage;
+	static char	*storage;
 	char		buf[BUFFER_SIZE + 1];
 	int			rd;
 	int			result;

@@ -6,20 +6,20 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:46:57 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/12 11:58:20 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/21 20:32:16 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void		node_free(t_list *lst)
+static void	node_free(t_list *lst)
 {
 	free(lst->var1);
 	free(lst->var2);
 	free(lst);
 }
 
-static void		equal_list(t_list *lst, t_list *tmp, t_mini *mini)
+static void	equal_list(t_list *lst, t_list *tmp, t_mini *mini)
 {
 	if (!lst->next)
 	{
@@ -43,7 +43,7 @@ static t_list	*loop_through(t_list *prev, t_list *lst, t_list *target)
 	return (prev);
 }
 
-void			delete_node(t_list *lst, t_list *target, t_mini *mini)
+void	delete_node(t_list *lst, t_list *target, t_mini *mini)
 {
 	t_list		*tmp;
 	t_list		*prev;
@@ -71,7 +71,7 @@ void			delete_node(t_list *lst, t_list *target, t_mini *mini)
 	return ;
 }
 
-int				ft_unset(t_mini *mini, char *unset)
+int	ft_unset(t_mini *mini, char *unset)
 {
 	t_list		*tlist;
 

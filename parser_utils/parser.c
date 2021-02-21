@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/17 20:56:39 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 21:15:48 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 {
-	char *temp;
-	char *temp3;
+	char	*temp;
+	char	*temp3;
 
 	line = ft_trim_paths(line, " ");
-	while (line[i] && ((line[i] != '|' && line[i] != ';') ||
-	(memory_check_tokens(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
+	while (line[i] && ((line[i] != '|' && line[i] != ';')
+			|| (mem_check_tokens(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
 	{
 		if (line[i] == ' ')
 		{
 			while (line[i] == ' ')
 				i++;
-			if ((line[i] == '|' || line[i] == ';') &&
-			(memory_check_tokens(ft_substr(line, 0, i), mini, 0, 1) != NULL))
+			if ((line[i] == '|' || line[i] == ';')
+				&& (mem_check_tokens(ft_substr(line, 0, i), mini, 0, 1) != NULL))
 			{
 				mini->numb_cmds = numb;
 				temp = ft_substr(line, 0, i);
@@ -41,8 +41,8 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 			numb++;
 		}
 		if ((line[i] == '>' || line[i] == '<') && line[i + 1] != ' '
-		&& line[i + 1] != '"' && line[i + 1] != '\'' && line[i + 1] != '>'
-		&& line[i + 1] != '\0')
+			&& line[i + 1] != '"' && line[i + 1] != '\'' && line[i + 1] != '>'
+			&& line[i + 1] != '\0')
 			numb++;
 		i++;
 	}
@@ -69,13 +69,13 @@ static void	fill_argv_list(t_base *new, t_mini *mini, int j, int l, int k)
 			while (mini->cmd_part[j] != ' ' && mini->cmd_part[j])
 			{
 				if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
-				&& mini->cmd_part[j + 1] != '\'' && mini->cmd_part[j + 1] != '>'
-				&& mini->cmd_part[j + 1] != '"')
+					&& mini->cmd_part[j + 1] != '\'' && mini->cmd_part[j + 1] != '>'
+					&& mini->cmd_part[j + 1] != '"')
 					break ;
 				j++;
 			}
 			if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
-			&& mini->cmd_part[j + 1] != '>')
+				&& mini->cmd_part[j + 1] != '>')
 			{
 				new->argv[l] = ft_substr(mini->cmd_part, k, j - k + 1);
 				j++;
@@ -120,7 +120,7 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 	return (numb_characters);
 }
 
-int			parse_input_string(char *line, t_mini *mini, char **envp)
+int	parse_input_string(char *line, t_mini *mini, char **envp)
 {
 	t_base		*ptr;
 	char		*tmp;

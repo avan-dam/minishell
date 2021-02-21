@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:08:33 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/11/15 16:08:34 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/21 20:24:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_len_itoa(int n)
 
 static void	ft_fill_array(char *str, int n, int len)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	str[len] = '\0';
@@ -51,7 +51,7 @@ static void	ft_fill_array(char *str, int n, int len)
 	}
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	int		len;
 	char	*str;

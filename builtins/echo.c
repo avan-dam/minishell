@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/17 15:43:55 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 20:30:24 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static char	*ft_argvs_into_string(t_base *ptr, int i, char *string)
 		if (i + 1 != ptr->size)
 		{
 			if (ptr->argv[i + 1] && ptr->argv[i + 1][0] != '>'
-			&& ptr->argv[i + 1][0] != '<')
+				&& ptr->argv[i + 1][0] != '<')
 			{
 				tmp = ft_strdup(string);
 				free(string);
@@ -94,7 +94,7 @@ static char	*ft_argvs_into_string(t_base *ptr, int i, char *string)
 	return (string);
 }
 
-int			ft_echo(t_base *ptr, t_mini *mini)
+int	ft_echo(t_base *ptr, t_mini *mini)
 {
 	char	*string;
 	char	*tmp;
@@ -109,8 +109,8 @@ int			ft_echo(t_base *ptr, t_mini *mini)
 			free(string);
 		return (ft_putchar_fd('\n', mini->stdout));
 	}
-	if ((string[0] == '-') && (string[1] == 'n') &&
-	((string[2] == ' ') || (string[2] == '\0') || (string[2] == 'n')))
+	if ((string[0] == '-') && (string[1] == 'n')
+		&& ((string[2] == ' ') || (string[2] == '\0') || (string[2] == 'n')))
 		return (ft_echo_n(string, mini));
 	tmp = string;
 	string = ft_strtrim(tmp, " ");

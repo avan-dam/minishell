@@ -6,13 +6,13 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/17 13:41:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 19:59:43 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		ft_strchr_numb(char *line, char c, int i)
+int	ft_strchr_numb(char *line, char c, int i)
 {
 	if (line == NULL || i < 0)
 		return (-1);
@@ -25,7 +25,7 @@ int		ft_strchr_numb(char *line, char c, int i)
 	return (-1);
 }
 
-int		ft_strrchr_numb(char *line, char c, int i)
+int	ft_strrchr_numb(char *line, char c, int i)
 {
 	if (line == NULL || i < 0)
 		return (-1);
@@ -40,10 +40,10 @@ int		ft_strrchr_numb(char *line, char c, int i)
 	return (-1);
 }
 
-int		numb_char(char *line, char c)
+int	numb_char(char *line, char c)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;

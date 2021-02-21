@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/17 17:06:27 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/17 20:56:39 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,11 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 
 	numb_characters = no_of_commands(line, mini, 0, 1);
 	size = mini->numb_cmds;
+	// SEGFAULT IN THIS
 	mini->cmd_part = check_tokens(mini->cmd_part, mini, 0, 0);
 	if (mini->cmd_part == NULL)
 		return (1);
+	// PART
 	new = (t_base *)malloc(sizeof(t_base));
 	new->argv = (char **)malloc(sizeof(char *) * (size + 1));
 	if (new->argv == NULL)

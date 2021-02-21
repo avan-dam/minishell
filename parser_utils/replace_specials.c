@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/17 16:17:37 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 20:04:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 static int	no_org_backslash(char *str, int backslash)
 {
-	int i;
+	int	i;
 
 	i = (int)ft_strlen(str) - 1;
 	if (str[i] == '\\')
@@ -54,13 +54,13 @@ static void	ft_printf_error(int i, t_mini *mini)
 
 static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 {
-	int i;
-	int backslash;
+	int	i;
+	int	backslash;
 
 	i = 0;
 	backslash = no_org_backslash(str, 0);
 	if ((((str[i] == '<') || (str[i] == '>')) && str[i - 1] != '\\')
-	&& (j == 0))
+		&& (j == 0))
 	{
 		ft_printf_error(0, mini);
 		return (NULL);
@@ -77,7 +77,7 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 	return (s->str);
 }
 
-void		ft_exit_status_replace(t_line *s, int i, t_mini *mini)
+void	ft_exit_status_replace(t_line *s, int i, t_mini *mini)
 {
 	char	*start;
 	char	*middle;
@@ -92,7 +92,7 @@ void		ft_exit_status_replace(t_line *s, int i, t_mini *mini)
 	s->str = ft_strjoin_three(start, middle, end);
 }
 
-char		*check_tokens(char *str, t_mini *mini, int i, int j)
+char	*check_tokens(char *str, t_mini *mini, int i, int j)
 {
 	t_line	s;
 
@@ -105,15 +105,16 @@ char		*check_tokens(char *str, t_mini *mini, int i, int j)
 	while (s.str[i] != '\0')
 	{
 		if (s.str[i] == '\\' && numb_char(s.str, '>') == 0
-		&& numb_char(s.str, '<') == 0)
+			&& numb_char(s.str, '<') == 0)
 			i = ft_correct_backslash(&s, i);
 		if ((s.str[i] == '\'') || (s.str[i] == '"'))
 			i = ft_replace_quotes(&s, i);
-		else if ((s.str[i] == '$') && (s.str[i + 1] != '/') && (s.str[i + 1]
-		!= '\\') && (s.str[i + 1] != '\0') && (s.str[i + 1] != '?'))
+		else if ((s.str[i] == '$') && (s.str[i + 1] != '/') &&
+			(s.str[i + 1] != '\\') && (s.str[i + 1] != '\0') && 
+			(s.str[i + 1] != '?'))
 			i = i + ft_find_dolla(i + 1, i + 1, mini, &s);
-		else if (s.str[i] == '$' && s.str[i + 1] == '?' && i != 0 &&
-		(s.d == 0 || s.d % 2 == 1) && (s.s == 0 || s.s % 2 == 0))
+		else if (s.str[i] == '$' && s.str[i + 1] == '?' && i != 0
+			&& (s.d == 0 || s.d % 2 == 1) && (s.s == 0 || s.s % 2 == 0))
 			ft_exit_status_replace(&s, i, mini);
 		if (s.str[i] != '\0' || i == -1)
 			i++;

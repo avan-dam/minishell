@@ -6,15 +6,15 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 19:28:33 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/16 20:13:32 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 19:59:09 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		ft_is_str_int(char *str)
+int	ft_is_str_int(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -60,7 +60,7 @@ char	*ft_trim_paths(char *line, char *set)
 
 char	*memory_check_tokens(char *str, t_mini *mini, int i, int j)
 {
-	char *temp;
+	char	*temp;
 
 	temp = str;
 	str = check_tokens(temp, mini, i, j);
@@ -68,7 +68,7 @@ char	*memory_check_tokens(char *str, t_mini *mini, int i, int j)
 	return (str);
 }
 
-int		unvalid_ident(char *error, t_mini *mini, int exitstatus)
+int	unvalid_ident(char *error, t_mini *mini, int exitstatus)
 {
 	if (ft_strcmp(error, "\\$?") == 0)
 		error = "$?";

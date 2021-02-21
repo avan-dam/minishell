@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:04:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/17 16:18:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 20:14:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*ft_check_envar(t_mini *mini, char *oldvar)
 
 static char	*find_newvar(char *oldvar, char *start, char *end, t_mini *mini)
 {
-	char *newvar;
+	char	*newvar;
 
 	if (start[ft_len(start) - 1] == 39 && end[0] == 39 && ft_len(end) > 1)
 	{
@@ -49,8 +49,8 @@ static char	*find_newvar(char *oldvar, char *start, char *end, t_mini *mini)
 static int	dolla_while_checker(char *s, int i)
 {
 	if (s[i] != '\0' && s[i] != '$' && s[i] != '-' && s[i] != '=' && s[i]
-	!= ' ' && s[i] != '\'' && s[i] != '"' && s[i] != '\\' && s[i] != '/' &&
-	s[i] != '%' && s[i] != '*')
+		!= ' ' && s[i] != '\'' && s[i] != '"' && s[i] != '\\' && s[i] != '/'
+		&& s[i] != '%' && s[i] != '*')
 		return (1);
 	return (0);
 }
@@ -83,7 +83,7 @@ static int	ft_len_replace_dolla(int j, int i, char *s, int k)
 	return (i);
 }
 
-int			ft_find_dolla(int i, int j, t_mini *mini, t_line *s)
+int	ft_find_dolla(int i, int j, t_mini *mini, t_line *s)
 {
 	char	*oldvar;
 	char	*start;
@@ -100,8 +100,8 @@ int			ft_find_dolla(int i, int j, t_mini *mini, t_line *s)
 	start = ft_substr(s->str, 0, j - 1);
 	end = ft_substr(s->str, i, ft_strlen(s->str) - i);
 	newvar = find_newvar(oldvar, start, end, mini);
-	if (ft_strcmp(oldvar, "") == 0 && (start[ft_strlen(start)] == '"'
-	|| s->d % 2 == 1) && end[0] == '"')
+	if (ft_strcmp(oldvar, "") == 0
+		&& (start[ft_strlen(start)] == '"' || s->d % 2 == 1) && end[0] == '"')
 	{
 		free(newvar);
 		newvar = ft_strdup("$");

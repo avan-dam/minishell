@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/17 15:14:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/21 20:15:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ static int	error_opening(char *error, t_mini *mini)
 
 static void	direction_list(t_base *ptr, int i)
 {
-	int j;
+	int	j;
 
-	if ((ft_strchr_numb(ptr->argv[i + 1], '>', 0) != -1) ||
-		(ft_strchr_numb(ptr->argv[i + 1], '<', 0) != -1))
+	if ((ft_strchr_numb(ptr->argv[i + 1], '>', 0) != -1)
+		|| (ft_strchr_numb(ptr->argv[i + 1], '<', 0) != -1))
 	{
 		if (ft_strchr_numb(ptr->argv[i + 1], '>', 0) != -1)
 			j = ft_strchr_numb(ptr->argv[i + 1], '>', 0);
-		if ((ft_strchr_numb(ptr->argv[i + 1], '<', 0) != -1) &&
-		ft_strchr_numb(ptr->argv[i + 1], '<', 0) < j)
+		if ((ft_strchr_numb(ptr->argv[i + 1], '<', 0) != -1)
+			&& ft_strchr_numb(ptr->argv[i + 1], '<', 0) < j)
 			j = ft_strchr_numb(ptr->argv[i + 1], '<', 0);
 		if (add_new_into_list(j, ptr, i + 1) == -1)
 			i++;

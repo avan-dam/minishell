@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/21 21:15:48 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/23 14:28:51 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 
 	line = ft_trim_paths(line, " ");
 	while (line[i] && ((line[i] != '|' && line[i] != ';')
-			|| (mem_check_tokens(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
+			|| (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
 	{
 		if (line[i] == ' ')
 		{
 			while (line[i] == ' ')
 				i++;
 			if ((line[i] == '|' || line[i] == ';')
-				&& (mem_check_tokens(ft_substr(line, 0, i), mini, 0, 1) != NULL))
+				&& (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) != NULL))
 			{
 				mini->numb_cmds = numb;
 				temp = ft_substr(line, 0, i);

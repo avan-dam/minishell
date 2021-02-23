@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:44:30 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/21 21:14:15 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/23 14:30:54 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i)
 	if ((tmp != NULL && tmp2 == NULL) || (numb_char(ptr->argv[i], '\'') > 0
 				|| (numb_char(ptr->argv[i], '"') > 0)))
 	{
-		ptr->argv[i] = mem_check_tokens(ptr->argv[i], mini, 0, 2);
+		ptr->argv[i] = mem_check_tkns(ptr->argv[i], mini, 0, 2);
 		ptr->redir = 3;
 		free(tmp);
 		free(tmp2);

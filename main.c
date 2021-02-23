@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/21 20:36:02 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/23 13:49:14 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static void	handle_line(int lineret, char *line, t_mini *mini, char **envp)
 	{
 	// ft_putstr_fd("> ", mini.stdout);
 		ft_signals(mini, 0);
-		if ((lineret = get_next_line(mini->stdin, &line)) < 0)
+		lineret = get_next_line(mini->stdin, &line);
+		if (lineret < 0)
 		{
 			free(line);
 			ft_lstclear(&mini->env1);

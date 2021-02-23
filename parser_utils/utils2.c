@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 19:28:33 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/21 21:14:18 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/23 14:30:42 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_trim_paths(char *line, char *set)
 	return (tmp1);
 }
 
-char	*mem_check_tokens(char *str, t_mini *mini, int i, int j)
+char	*mem_check_tkns(char *str, t_mini *mini, int i, int j)
 {
 	char	*temp;
 

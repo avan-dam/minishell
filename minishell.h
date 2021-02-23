@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/21 21:14:09 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/23 14:32:12 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,19 @@ typedef struct s_mini
 	int				exit;
 }					t_mini;
 
+/*
+** fd[0] - read fd[1] - write made by pipe(fd);
+*/
+
 typedef struct s_piper
 {
 	int				check;
 	char			*write_side;
 	char			*read_side;
-	int				fd[2]; // fd[0] - read fd[1] - write made by pipe(fd);
+	int				fd[2];
 }					t_piper;
 
-void				ft_leaks(); // DELETE
+void				ft_leaks(void); // DELETE
 
 /*
 **	LIST FUNCTION
@@ -127,7 +131,7 @@ int					error_opening(char *error, t_mini *mini);
 */
 int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 int					look_for_non_builtin(t_base *ptr);
-int					ft_is_builtin_command(char *str);
+int					ft_is_builtin(char *str);
 int					ft_execve(t_mini *mini, char **envp);
 
 /*
@@ -141,7 +145,7 @@ void				clear_mini(t_mini *mini, int i);
 void				ft_reset_fds(t_mini *mini);
 char				*ft_strtolower(char *str);
 char				*ft_trim_paths(char *line, char *set);
-char				*mem_check_tokens(char *str, t_mini *mini, int i, int j);
+char				*mem_check_tkns(char *str, t_mini *mini, int i, int j);
 char				*ft_string_insert(char *string, int i, char *middle);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
 

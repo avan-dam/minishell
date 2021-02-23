@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:09:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/21 20:26:08 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/23 13:46:10 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static char	**ft_fill_strarray(char const *s, char c,
 		position = 0;
 		while (s[i] == c)
 			i++;
-		strarray[word] = (char*)malloc(sizeof(char) * ft_str_len(s, i, c) + 1);
+		strarray[word] = (char *)malloc(sizeof(char) * ft_str_len(s, i, c) + 1);
 		if (!(ft_free_all(word, strings, strarray)))
 			return (0);
 		while ((s[i] != c) && (s[i] != '\0'))
@@ -95,7 +95,7 @@ char	**ft_split(const char *s, char c)
 	if (s == 0)
 		return (NULL);
 	strings = ft_count_strings(s, c);
-	strarray = (char**)malloc(sizeof(char*) * (strings + 1));
+	strarray = (char **)malloc(sizeof(char *) * (strings + 1));
 	if (strarray == NULL)
 		return (NULL);
 	ft_fill_strarray(s, c, strarray, strings);

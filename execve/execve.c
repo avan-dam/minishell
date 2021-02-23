@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 13:41:27 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/23 14:27:03 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,26 @@ static void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 		close(ptr->prev->fd[0]);
 }
 
-static void	execve_commands(t_base *ptr, char **envp, t_mini *mini)
+static int	child_process(t_base *ptr, t_mini *mini, char **envp)
+{
+	if (ft_is_builtin(ptr->argv[0]) == 0 && look_for_non_builtin(ptr) == 2)
+		unvalid_ident(ptr->argv[0], mini, 127);
+	if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
+		return (1);
+	if (ptr->prev && ptr->prev->type == TYPE_PIPE
+		&& dup2(ptr->prev->fd[0], STDIN) < 0)
+		return (1);
+	if (ft_strcmp(ptr->argv[0], "exit") != 0
+		&& ft_is_builtin(ptr->argv[0]) == 1)
+		exec_builtin(ptr, mini);
+	else if (execve(ptr->argv[0], ptr->argv, envp) < 0 || !ptr->argv[1])
+		return (1);
+	else
+		unvalid_ident(ptr->argv[0], mini, 127);
+	return (0);
+}
+
+static void	execves(t_base *ptr, char **envp, t_mini *mini)
 {
 	pid_t		pid;
 	int			piped;
@@ -69,21 +88,8 @@ static void	execve_commands(t_base *ptr, char **envp, t_mini *mini)
 	{
 		dup2(mini->stdin, STDIN);
 		dup2(mini->stdout, STDOUT);
-		if (ft_is_builtin_command(ptr->argv[0]) == 0
-			&& look_for_non_builtin(ptr) == 2)
-			unvalid_ident(ptr->argv[0], mini, 127);
-		if (ptr->type == TYPE_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
-			exit(EXIT_FAILURE);
-		if (ptr->prev && ptr->prev->type == TYPE_PIPE
-			&& dup2(ptr->prev->fd[0], STDIN) < 0)
-			exit(EXIT_FAILURE);
-		if (ft_strcmp(ptr->argv[0], "exit") != 0
-			&& ft_is_builtin_command(ptr->argv[0]) == 1)
-			exec_builtin(ptr, mini);
-		else if (execve(ptr->argv[0], ptr->argv, envp) < 0 || !ptr->argv[1])
-			exit(EXIT_FAILURE);
-		else
-			unvalid_ident(ptr->argv[0], mini, 127);
+		if (child_process(ptr, mini, envp) == 1)
+			exit (EXIT_FAILURE);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -108,12 +114,12 @@ int	exec_cmds(t_base *tmp, char **envp, t_mini *mini)
 		}
 		if ((tmp->type == TYPE_PIPE
 				|| (tmp->prev && tmp->prev->type == TYPE_PIPE))
-			&& ft_is_builtin_command(tmp->argv[0]) == 1)
-			execve_commands(tmp, envp, mini);
+			&& ft_is_builtin(tmp->argv[0]) == 1)
+			execves(tmp, envp, mini);
 		else if (ft_strcmp("", tmp->argv[0]) == 0)
 			break ;
 		else if (ft_strcmp(tmp->argv[0], "exit") != 0
-			&& ft_is_builtin_command(tmp->argv[0]) == 1)
+			&& ft_is_builtin(tmp->argv[0]) == 1)
 			exec_builtin(tmp, mini);
 		else if (ft_strcmp(tmp->argv[0], "exit") == 0)
 		{
@@ -133,7 +139,7 @@ int	exec_cmds(t_base *tmp, char **envp, t_mini *mini)
 		else if (look_for_non_builtin(tmp) == 2)
 			unvalid_ident(tmp->argv[0], mini, 127);
 		else
-			execve_commands(tmp, envp, mini);
+			execves(tmp, envp, mini);
 		ft_reset_fds(mini);
 		tmp = tmp->next;
 	}

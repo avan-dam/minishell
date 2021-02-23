@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 13:39:19 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/23 13:55:19 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 	return (1);
 }
 
-int	ft_is_builtin_command(char *str)
+int	ft_is_builtin(char *str)
 {
 	if (ft_strcmp(str, "echo") == 0 || ft_strcmp(str, "/bin/echo") == 0
 		|| ft_strcmp(str, "cd") == 0 || ft_strcmp(str, "/usr/bin/cd") == 0
@@ -89,7 +89,7 @@ int	look_for_non_builtin(t_base *ptr)
 	struct dirent	*dit;
 
 	tmp = ptr;
-	if (ft_is_builtin_command(tmp->argv[0]) == 1)
+	if (ft_is_builtin(tmp->argv[0]) == 1)
 		return (1);
 	dit = NULL;
 	dirp = opendir("/bin");

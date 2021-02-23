@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 17:38:10 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/23 18:29:35 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 static void	exec_builtin(t_base *tmp, t_mini *mini)
 {
-	if (ft_strcmp(tmp->argv[0], "$?") == 0)
+	if (ft_strcmp(tmp->av[0], "$?") == 0)
 		ft_printf_exit_status(mini);
-	else if (ft_strcmp(tmp->argv[0], "env") == 0
-		|| ft_strcmp(tmp->argv[0], "/usr/bin/env") == 0)
+	else if (ft_strcmp(tmp->av[0], "env") == 0
+		|| ft_strcmp(tmp->av[0], "/usr/bin/env") == 0)
 		ft_lstprint(mini->env1, mini, 0);
-	else if (ft_strcmp(tmp->argv[0], "export") == 0)
+	else if (ft_strcmp(tmp->av[0], "export") == 0)
 		ft_export(tmp, mini);
-	else if (ft_strcmp(tmp->argv[0], "echo") == 0
-		|| ft_strcmp(tmp->argv[0], "/bin/echo") == 0)
+	else if (ft_strcmp(tmp->av[0], "echo") == 0
+		|| ft_strcmp(tmp->av[0], "/bin/echo") == 0)
 		ft_echo(tmp, mini);
-	else if ((ft_strcmp(tmp->argv[0], "pwd") == 0)
-		|| (ft_strcmp(tmp->argv[0], "/bin/pwd") == 0))
+	else if ((ft_strcmp(tmp->av[0], "pwd") == 0)
+		|| (ft_strcmp(tmp->av[0], "/bin/pwd") == 0))
 		ft_pwd(mini);
-	else if (ft_strcmp(tmp->argv[0], "cd") == 0
-		|| ft_strcmp(tmp->argv[0], "/usr/bin/cd") == 0)
+	else if (ft_strcmp(tmp->av[0], "cd") == 0
+		|| ft_strcmp(tmp->av[0], "/usr/bin/cd") == 0)
 		ft_cd(tmp, mini);
-	else if (ft_strcmp(tmp->argv[0], "unset") == 0)
-		ft_unset(mini, tmp->argv[1]);
+	else if (ft_strcmp(tmp->av[0], "unset") == 0)
+		ft_unset(mini, tmp->av[1]);
 }
 
 static void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
@@ -52,20 +52,20 @@ static void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 
 static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 {
-	if (ft_is_builtin(ptr->argv[0]) == 0 && look_for_non_builtin(ptr) == 2)
-		unvalid_ident(ptr->argv[0], mini, 127);
+	if (ft_is_builtin(ptr->av[0]) == 0 && look_for_non_builtin(ptr) == 2)
+		unvalid_ident(ptr->av[0], mini, 127);
 	if (ptr->type == T_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 		return (1);
 	if (ptr->prev && ptr->prev->type == T_PIPE
 		&& dup2(ptr->prev->fd[0], STDIN) < 0)
 		return (1);
-	if (ft_strcmp(ptr->argv[0], "exit") != 0
-		&& ft_is_builtin(ptr->argv[0]) == 1)
+	if (ft_strcmp(ptr->av[0], "exit") != 0
+		&& ft_is_builtin(ptr->av[0]) == 1)
 		exec_builtin(ptr, mini);
-	else if (execve(ptr->argv[0], ptr->argv, envp) < 0 || !ptr->argv[1])
+	else if (execve(ptr->av[0], ptr->av, envp) < 0 || !ptr->av[1])
 		return (1);
 	else
-		unvalid_ident(ptr->argv[0], mini, 127);
+		unvalid_ident(ptr->av[0], mini, 127);
 	return (0);
 }
 
@@ -113,29 +113,29 @@ int	exec_cmds(t_base *tmp, char **envp, t_mini *mini)
 			tmp = ft_redir(mini, tmp);
 		}
 		if ((tmp->type == T_PIPE || (tmp->prev && tmp->prev->type == T_PIPE))
-			&& ft_is_builtin(tmp->argv[0]) == 1)
+			&& ft_is_builtin(tmp->av[0]) == 1)
 			execves(tmp, envp, mini);
-		else if (ft_strcmp("", tmp->argv[0]) == 0)
+		else if (ft_strcmp("", tmp->av[0]) == 0)
 			break ;
-		else if (ft_strcmp(tmp->argv[0], "exit") != 0 && ft_is_builtin(tmp->argv[0])) // change all argv to av?
+		else if (ft_strcmp(tmp->av[0], "exit") != 0 && ft_is_builtin(tmp->av[0]))
 			exec_builtin(tmp, mini);
-		else if (ft_strcmp(tmp->argv[0], "exit") == 0)
+		else if (ft_strcmp(tmp->av[0], "exit") == 0)
 		{
-			if (tmp->argv[1] != NULL)
+			if (tmp->av[1] != NULL)
 			{
-				if (ft_is_str_int(tmp->argv[1]) == 0)
+				if (ft_is_str_int(tmp->av[1]) == 0)
 					mini->exit = 255;
 				else
 				{
-					mini->exit = ft_atoi(tmp->argv[1]);
-					if (tmp->argv[2] != NULL)
+					mini->exit = ft_atoi(tmp->av[1]);
+					if (tmp->av[2] != NULL)
 						mini->exit = 1;
 				}
 			}
 			return (-1);
 		}
 		else if (look_for_non_builtin(tmp) == 2)
-			unvalid_ident(tmp->argv[0], mini, 127);
+			unvalid_ident(tmp->av[0], mini, 127);
 		else
 			execves(tmp, envp, mini);
 		ft_reset_fds(mini);

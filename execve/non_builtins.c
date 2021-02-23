@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 13:55:19 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_check_in_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 	char		*tmp;
 	int			usrbin;
 
-	command = ptr->argv[0];
+	command = ptr->av[0];
 	tmp = command;
 	usrbin = ft_strcmp(ft_substr(tmp, 0, 9), "/usr/bin/");
 	if (usrbin == 0)
@@ -29,7 +29,7 @@ static int	ft_check_in_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 	{
 		if (ft_strcmp(dit->d_name, tmp) == 0)
 		{
-			ptr->argv[0] = ft_strjoin("/usr/bin/", tmp);
+			ptr->av[0] = ft_strjoin("/usr/bin/", tmp);
 			closedir(dirp);
 			return (0);
 		}
@@ -44,7 +44,7 @@ static int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 	char		*tmp;
 	int			bin;
 
-	command = ptr->argv[0];
+	command = ptr->av[0];
 	tmp = command;
 	bin = ft_strcmp(ft_substr(tmp, 0, 5), "/bin/");
 	if (bin == 0)
@@ -54,7 +54,7 @@ static int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 	{
 		if (ft_strcmp(dit->d_name, tmp) == 0)
 		{
-			ptr->argv[0] = ft_strjoin("/bin/", tmp);
+			ptr->av[0] = ft_strjoin("/bin/", tmp);
 			closedir(dirp);
 			return (0);
 		}
@@ -89,7 +89,7 @@ int	look_for_non_builtin(t_base *ptr)
 	struct dirent	*dit;
 
 	tmp = ptr;
-	if (ft_is_builtin(tmp->argv[0]) == 1)
+	if (ft_is_builtin(tmp->av[0]) == 1)
 		return (1);
 	dit = NULL;
 	dirp = opendir("/bin");

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 17:35:20 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 typedef struct s_base
 {
-	char			**argv;
+	char			**av;
 	int				size;
 	int				type;
 	int				fd[2];
@@ -105,7 +105,7 @@ void				ft_cd(t_base *ptr, t_mini *mini);
 void				ft_pwd(t_mini *mini);
 void				ft_exit(t_mini *mini, int exitstatus);
 void				ft_printf_exit_status(t_mini *mini);
-void				ft_set_env(char **argv, char **envp, t_mini *mini);
+void				ft_set_env(char **av, char **envp, t_mini *mini);
 void				handle_sigint(int sig);
 void				ft_signals(t_mini *mini, int i);
 
@@ -119,7 +119,7 @@ int					ft_replace_quotes(t_line *s, int i);
 int					ft_correct_backslash(t_line *s, int i);
 int					unvalid_ident(char *error, t_mini *mini, int exitstatus);
 t_base				*ft_redir(t_mini *mini, t_base *ptr);
-char				**ft_remove_redir_argv(t_base *ptr, int i, int j);
+char				**ft_remove_redir_av(t_base *ptr, int i, int j);
 int					add_new_into_list(int j, t_base *ptr, int i);
 void				redir_change_backslash(t_base *ptr, int i);
 int					ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i);

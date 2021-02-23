@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:50:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/21 20:23:41 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ void	ft_baseclear(t_base **lst)
 		zero_store(store);
 		while (i < store->size)
 		{
-			if (store->argv[i])
-				free(store->argv[i]);
+			if (store->av[i])
+				free(store->av[i]);
 			i++;
 		}
 		i = 0;
 		store->size = 0;
-		free(store->argv);
+		free(store->av);
 		storenext = (store->next);
 		free(store);
 		store = storenext;

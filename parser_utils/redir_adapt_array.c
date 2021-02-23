@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:38:57 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/21 21:09:26 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,47 +45,47 @@ static char	**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
 		return (NULL);
 	while (j < i)
 	{
-		new[j] = ft_strdup(ptr->argv[j]);
+		new[j] = ft_strdup(ptr->av[j]);
 		j++;
 	}
 	new[j] = tmp;
 	j++;
 	while (j < ptr->size)
 	{
-		new[j] = ft_strdup(ptr->argv[j - 1]);
+		new[j] = ft_strdup(ptr->av[j - 1]);
 		j++;
 	}
 	new[j] = NULL;
-	ft_free_array(ptr->argv);
+	ft_free_array(ptr->av);
 	return (new);
 }
 
 int	add_new_into_list(int j, t_base *ptr, int i)
 {
 	char	*tmp;
-	char	*newargv;
+	char	*newav;
 
 	tmp = NULL;
 	if (j > 0)
 	{
-		tmp = ft_substr(ptr->argv[i], 0, j);
+		tmp = ft_substr(ptr->av[i], 0, j);
 		if (ptr->redir != 1 && numb_char(tmp, '\\') == (int)ft_strlen(tmp))
 			tmp = ft_memmove(&tmp[0], &tmp[1], ft_strlen(tmp));
-		newargv = ptr->argv[i];
-		ptr->argv[i] = ft_substr(newargv, j, ft_strlen(newargv) - j);
-		free(newargv);
+		newav = ptr->av[i];
+		ptr->av[i] = ft_substr(newav, j, ft_strlen(newav) - j);
+		free(newav);
 	}
 	if (i > 0)
 	{
 		ptr->size = ptr->size + 1;
-		ptr->argv = add_tmp_tolist(tmp, ptr, i, 0);
-		if (ptr->argv == NULL)
+		ptr->av = add_tmp_tolist(tmp, ptr, i, 0);
+		if (ptr->av == NULL)
 			return (-1);
 	}
 	return (0);
 }
 
-char	**ft_remove_redir_argv(t_base *ptr, int i, int j)
+char	**ft_remove_redir_av(t_base *ptr, int i, int j)
 {
 	char	**temp;
 
@@ -94,22 +94,22 @@ char	**ft_remove_redir_argv(t_base *ptr, int i, int j)
 		return (NULL);
 	while (j < i)
 	{
-		temp[j] = ft_strdup(ptr->argv[j]);
+		temp[j] = ft_strdup(ptr->av[j]);
 		j++;
 	}
 	while (j < ptr->size)
 	{
-		temp[j] = ft_strdup(ptr->argv[j + 2]);
+		temp[j] = ft_strdup(ptr->av[j + 2]);
 		j++;
 	}
 	temp[j] = NULL;
 	j = 0;
-	while (ptr->argv[j])
+	while (ptr->av[j])
 	{
-		free(ptr->argv[j]);
-		ptr->argv[j] = NULL;
+		free(ptr->av[j]);
+		ptr->av[j] = NULL;
 		j++;
 	}
-	free(ptr->argv);
+	free(ptr->av);
 	return (temp);
 }

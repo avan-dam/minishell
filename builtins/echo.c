@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/21 20:30:24 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,19 @@ static int	ft_check_empty(char *string)
 	return (0);
 }
 
-static char	*ft_argvs_into_string(t_base *ptr, int i, char *string)
+static char	*ft_avs_into_string(t_base *ptr, int i, char *string)
 {
 	char	*tmp;
 
 	tmp = ft_strdup("");
-	while (ptr->argv[i])
+	while (ptr->av[i])
 	{
-		string = ft_strjoin(tmp, ptr->argv[i]);
+		string = ft_strjoin(tmp, ptr->av[i]);
 		free(tmp);
 		if (i + 1 != ptr->size)
 		{
-			if (ptr->argv[i + 1] && ptr->argv[i + 1][0] != '>'
-				&& ptr->argv[i + 1][0] != '<')
+			if (ptr->av[i + 1] && ptr->av[i + 1][0] != '>'
+				&& ptr->av[i + 1][0] != '<')
 			{
 				tmp = ft_strdup(string);
 				free(string);
@@ -100,9 +100,9 @@ int	ft_echo(t_base *ptr, t_mini *mini)
 	char	*tmp;
 
 	mini->exit = 0;
-	if (ft_strcmp("", ptr->argv[0]) == 0)
+	if (ft_strcmp("", ptr->av[0]) == 0)
 		return (ft_putstr_fd("", mini->stdout));
-	string = ft_argvs_into_string(ptr, 1, NULL);
+	string = ft_avs_into_string(ptr, 1, NULL);
 	if (string == NULL || ft_check_empty(string) == 1)
 	{
 		if (string == NULL)

@@ -258,7 +258,7 @@ return a stat structure, which contains the
 On success, zero is returned.  On error, -1 is returned, and errno is set appropriately.
 
 - execve
-int execve(const char *pathname, char *const argv[], char *const envp[]);
+int execve(const char *pathname, char *const av[], char *const envp[]);
 execve() executes the program referred to by pathname.  This causes the program that is currently being run 
 by the calling process to be replaced with a new program, with newly initialized stack, heap, and (initialized 
 and uninitialized) data segments.

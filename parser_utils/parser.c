@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 17:36:38 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 	return (i);
 }
 
-static void	fill_argv_list(t_base *new, t_mini *mini, int j, int l, int k)
+static void	fill_av_list(t_base *new, t_mini *mini, int j, int l, int k)
 {
 	while (l != new->size)
 	{
 		if (mini->cmd_part[j] == '\0')
-			new->argv[l] = NULL;
+			new->av[l] = NULL;
 		else
 		{
 			while (mini->cmd_part[j] == ' ')
@@ -77,17 +77,17 @@ static void	fill_argv_list(t_base *new, t_mini *mini, int j, int l, int k)
 			if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
 				&& mini->cmd_part[j + 1] != '>')
 			{
-				new->argv[l] = ft_substr(mini->cmd_part, k, j - k + 1);
+				new->av[l] = ft_substr(mini->cmd_part, k, j - k + 1);
 				j++;
 			}
 			else
-				new->argv[l] = ft_substr(mini->cmd_part, k, j - k);
+				new->av[l] = ft_substr(mini->cmd_part, k, j - k);
 		}
 		l++;
 	}
 }
 
-static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
+static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 {
 	int		numb_characters;
 	int		size;
@@ -101,21 +101,21 @@ static int	create_argv_list(t_base **ptr, char *line, t_mini *mini)
 		return (1);
 	// PART
 	new = (t_base *)malloc(sizeof(t_base));
-	new->argv = (char **)malloc(sizeof(char *) * (size + 1));
-	if (new->argv == NULL)
+	new->av = (char **)malloc(sizeof(char *) * (size + 1));
+	if (new->av == NULL)
 		return (-1); // should exit program AND DOES NOT
 	new->size = size;
 	new->prev = NULL;
 	new->next = NULL;
-	new->argv[size] = NULL;
-	fill_argv_list(new, mini, 0, 0, 0);
+	new->av[size] = NULL;
+	fill_av_list(new, mini, 0, 0, 0);
 	new->type = mini->type_end;
 	if (mini->cmd_part)
 	{
 		free(mini->cmd_part);
 		mini->cmd_part = NULL;
 	}
-	new->argv[0] = ft_strtolower(new->argv[0]);
+	new->av[0] = ft_strtolower(new->av[0]);
 	ft_lstadd_back_base(ptr, new);
 	return (numb_characters);
 }
@@ -140,7 +140,7 @@ int	parse_input_string(char *line, t_mini *mini, char **envp)
 	{
 		while (line[i] == ' ')
 			i++;
-		k = create_argv_list(&ptr, &line[i], mini);
+		k = create_av_list(&ptr, &line[i], mini);
 		if (k == -1)
 		{
 			mini->exit = 1;

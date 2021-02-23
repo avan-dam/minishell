@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 13:49:14 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/23 18:30:15 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ static void	handle_line(int lineret, char *line, t_mini *mini, char **envp)
 	ft_lstclear(&mini->env1);
 }
 
-int	main(int argc, char **argv, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	char	*line;
 	t_mini	mini;
 
 	line = NULL;
-	if (argc == 1)
+	if (ac == 1)
 	{
 		ft_memset(&mini, 0, sizeof(t_mini));
-		ft_set_env(argv, envp, &mini);
+		ft_set_env(av, envp, &mini);
 		// memset for argument struct
 		mini.stdout = 1;
 		mini.stderr = 2;

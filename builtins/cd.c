@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/21 20:30:50 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void	ft_change_directory(t_mini *mini, char *path)
 
 void	ft_cd(t_base *ptr, t_mini *mini)
 {
-	if (ptr->argv[1] == NULL || ft_strcmp(ptr->argv[1], "~") == 0)
+	if (ptr->av[1] == NULL || ft_strcmp(ptr->av[1], "~") == 0)
 	{
 		chdir(ft_get_env("HOME", mini));
 		ft_unset(mini, "OLDPWD");
@@ -102,12 +102,12 @@ void	ft_cd(t_base *ptr, t_mini *mini)
 		ft_unset(mini, "PWD");
 		ft_add_env("PWD", ft_get_env("HOME", mini), mini);
 	}
-	else if (ft_strcmp(ptr->argv[1], "-") == 0)
+	else if (ft_strcmp(ptr->av[1], "-") == 0)
 	{
 		ft_no_oldpwd(mini);
 		return ;
 	}
-	else if (ptr->argv[1] != NULL)
-		ft_change_directory(mini, ptr->argv[1]);
+	else if (ptr->av[1] != NULL)
+		ft_change_directory(mini, ptr->av[1]);
 	mini->exit = 0;
 }

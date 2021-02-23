@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 14:32:12 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/23 17:35:20 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 # define STDIN		0
 # define STDOUT		1
 # define STDERR		2
-# define TYPE_END	3
-# define TYPE_PIPE	4
-# define TYPE_BREAK	5
+# define T_END		3	
+# define T_PIPE		4
+# define T_BREAK	5
 
 typedef struct s_base
 {

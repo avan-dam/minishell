@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 14:28:51 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/23 17:36:38 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 				mini->cmd_part = temp;
 				free(temp);
 				if (line[i] == '|')
-					mini->type_end = TYPE_PIPE;
+					mini->type_end = T_PIPE;
 				else if (line[i] == ';')
-					mini->type_end = TYPE_BREAK;
+					mini->type_end = T_BREAK;
 				return (i);
 			}
 			numb++;
@@ -51,7 +51,7 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 	line = ft_substr(temp3, 0, i);
 	mini->cmd_part = line;
 	free(temp3);
-	mini->type_end = TYPE_END;
+	mini->type_end = T_END;
 	return (i);
 }
 

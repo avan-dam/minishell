@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:11:20 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/21 20:25:09 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/23 17:35:11 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	ft_begin(const char *s1, char const *set)
 	return (instr);
 }
 
-static int	ft_end(const char *s1, char const *set)
+static int	fT_END(const char *s1, char const *set)
 {
 	int		instr;
 	int		inset;
@@ -64,7 +64,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (set == NULL)
 		return (ft_strdup(s1));
 	begin = ft_begin(s1, set);
-	end = ft_end(s1, set);
+	end = fT_END(s1, set);
 	if (begin > end)
 		return (ft_strdup(""));
 	newstr = (char *)malloc(sizeof(char) * (end - begin + 2));

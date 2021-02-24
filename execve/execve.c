@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 18:29:35 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/24 15:56:35 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,31 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		parent_proces(pid, mini, ptr, piped);
 }
 
+static void list_rewind(t_base **list)
+{
+	while (*list && (*list)->prev)
+		*list = (*list)->prev;
+}
+
+static void list_clear(t_base **cmds)
+{
+	t_base	*tmp;
+	int		i;
+
+	list_rewind(cmds);
+	while (*cmds)
+	{
+		tmp = (*cmds)->next;
+		i = 0;
+		while (i < (*cmds)->size)
+			free((*cmds)->av[i++]);
+		free((*cmds)->av);
+		free(*cmds);
+		*cmds = tmp;
+	}
+	*cmds = NULL;	
+}
+
 int	exec_cmds(t_base *tmp, char **envp, t_mini *mini)
 {
 	while (tmp)
@@ -141,5 +166,6 @@ int	exec_cmds(t_base *tmp, char **envp, t_mini *mini)
 		ft_reset_fds(mini);
 		tmp = tmp->next;
 	}
+	list_clear(&tmp);
 	return (0);
 }

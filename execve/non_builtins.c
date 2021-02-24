@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/24 16:45:36 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@ static int	ft_check_in_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 	char		*command;
 	char		*tmp;
 	int			usrbin;
+	char		*startcmd;
 
 	command = ptr->av[0];
 	tmp = command;
-	usrbin = ft_strcmp(ft_substr(tmp, 0, 9), "/usr/bin/");
+	startcmd = ft_substr(command, 0, 9);
+	usrbin = ft_strcmp(startcmd, "/usr/bin/");
+	free(startcmd);
 	if (usrbin == 0)
 		tmp = ft_substr(command, 9, ft_strlen(command) - 9);
 	dit = readdir(dirp);
@@ -43,10 +46,13 @@ static int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 	char		*command;
 	char		*tmp;
 	int			bin;
+	char		*startcmd;
 
 	command = ptr->av[0];
 	tmp = command;
-	bin = ft_strcmp(ft_substr(tmp, 0, 5), "/bin/");
+	startcmd = ft_substr(command, 0, 5);
+	bin = ft_strcmp(startcmd, "/bin/");
+	free(startcmd);
 	if (bin == 0)
 		tmp = ft_substr(command, 5, ft_strlen(command) - 5);
 	dit = readdir(dirp);
@@ -95,9 +101,11 @@ int	look_for_non_builtin(t_base *ptr)
 	dirp = opendir("/bin");
 	if (dirp == NULL)
 		exit(0);
+	// ft_leaks();
 	if (ft_check_in_bin(tmp, dit, dirp) == 0)
 		return (0);
 	closedir(dirp);
+	// ft_leaks();
 	dirp = opendir("/usr/bin");
 	if (dirp == NULL)
 		exit(0);
@@ -105,5 +113,7 @@ int	look_for_non_builtin(t_base *ptr)
 		return (0);
 	if (closedir(dirp) == -1)
 		exit(0);
+	// free(tmp->av[0]);
+	// ft_baseclear(&ptr);
 	return (2);
 }

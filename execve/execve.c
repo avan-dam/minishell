@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 18:29:35 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/24 17:14:21 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,9 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		parent_proces(pid, mini, ptr, piped);
 }
 
-int	exec_cmds(t_base *tmp, char **envp, t_mini *mini)
+int	exec_cmds(t_base *tmpstart, char **envp, t_mini *mini)
 {
+	t_base *tmp = tmpstart;
 	while (tmp)
 	{
 		if ((tmp == NULL) || (tmp->size == 0))
@@ -139,7 +140,20 @@ int	exec_cmds(t_base *tmp, char **envp, t_mini *mini)
 		else
 			execves(tmp, envp, mini);
 		ft_reset_fds(mini);
-		tmp = tmp->next;
+		// int i = 0;
+		// while (i < tmp->size)
+		// {
+		// 	// printf("i in\n");
+		// 	free(tmp->av[i]);
+		// 	i++;
+		// }
+		// free(tmp->av);
+		tmpstart = tmp->next;
+		// free(tmp);
+		tmp = tmpstart;
+		// tmp = tmp->next;
+
 	}
+	// ft_baseclear(&tmpstart);
 	return (0);
 }

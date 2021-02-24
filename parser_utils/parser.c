@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/24 17:15:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,18 @@ static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	mini->cmd_part = check_tokens(mini->cmd_part, mini, 0, 0);
 	if (mini->cmd_part == NULL)
 		return (1);
-	// PART
+		// PART
+	// char *tmp = check_tokens(mini->cmd_part, mini, 0, 0);
+	// if (tmp == NULL)
+	// {	
+	// 	free(tmp);
+	// 	// printf("exit statement is : %d\n", mini->exit);
+	// 	return (1);
+	// }
+	// // printf("exit statement is : %d\n", mini->exit);
+	// free(mini->cmd_part);
+	// mini->cmd_part = tmp;
+	// free(tmp);
 	new = (t_base *)malloc(sizeof(t_base));
 	new->av = (char **)malloc(sizeof(char *) * (size + 1));
 	if (new->av == NULL)

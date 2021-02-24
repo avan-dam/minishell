@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:50:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/24 15:42:26 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	ft_baseclear(t_base **lst)
 				free(store->av[i]);
 			i++;
 		}
-		i = 0;
 		store->size = 0;
 		free(store->av);
 		storenext = (store->next);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/25 15:35:46 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/25 16:05:34 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,31 @@
 
 static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 {
-	char	*temp;
-	char	*temp3;
+	char	*mysub;
 
+	mysub = ft_substr(line, 0, i);
 	while (line[i] && ((line[i] != '|' && line[i] != ';')
-			|| (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
+			|| (mem_check_tkns(mysub, mini, 0, 1) == NULL)))
 	{
+		free(mysub);
 		if (line[i] == ' ')
 		{
 			while (line[i] == ' ')
 				i++;
+			mysub = ft_substr(line, 0, i);
 			if ((line[i] == '|' || line[i] == ';')
-				&& (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) != NULL))
+				&& (mem_check_tkns(mysub, mini, 0, 1) != NULL))
 			{
 				mini->numb_cmds = numb;
-				temp = ft_substr(line, 0, i);
-				mini->cmd_part = temp;
-				free(temp);
+				mini->cmd_part = mysub;
 				if (line[i] == '|')
 					mini->type_end = T_PIPE;
 				else if (line[i] == ';')
 					mini->type_end = T_BREAK;
 				return (i);
 			}
+			else
+				free(mysub);
 			numb++;
 		}
 		if ((line[i] == '>' || line[i] == '<') && line[i + 1] != ' '
@@ -44,13 +46,10 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 			&& line[i + 1] != '\0')
 			numb++;
 		i++;
+		mysub = ft_substr(line, 0, i);
 	}
 	mini->numb_cmds = numb;
-	temp3 = line;
-	line = ft_substr(temp3, 0, i);
-	mini->cmd_part = line;
-	free(temp3);
-	// mini->cmd_part = mem_substr(line, 0, i);
+	mini->cmd_part = mysub;
 	mini->type_end = T_END;
 	return (i);
 }
@@ -96,11 +95,11 @@ static void 	create_av_list_more(t_base *new, t_mini *mini, t_base **ptr)
 	new->av[mini->numb_cmds] = NULL;
 	fill_av_list(new, mini, 0, 0, 0);
 	new->type = mini->type_end;
-	if (mini->cmd_part)
-	{
-		free(mini->cmd_part);
-		mini->cmd_part = NULL;
-	}
+	// if (mini->cmd_part)
+	// {
+		// free(mini->cmd_part);
+	// 	mini->cmd_part = NULL;
+	// }
 	new->av[0] = ft_strtolower(new->av[0]);
 	ft_lstadd_back_base(ptr, new);
 }
@@ -116,14 +115,33 @@ static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	// mini->cmd_part = mem_check_tkns(mini->cmd_part, mini, 0, 0);
 	// if (mini->cmd_part == NULL)
 	// 	return (-1);
-	char *temp1 = mini->cmd_part;
-	char *temp2 = check_tokens(temp1, mini, 0, 0);
-	if (temp2 == NULL)
-	{
-		free(temp2);
-		return (-1);
-	}
-	free(temp2);
+	// char *temp1 = mini->cmd_part;
+	// mini->cmd_part = check_tokens(mini->cmd_part, mini, 0, 0);
+	// if (mini->cmd_part == NULL)
+	// {
+	// 	// free(temp2);
+	// 	return (-1);
+	// }
+
+	// mini->cmd_part = check_tokens(mini->cmd_part, mini, 0, 0);
+	// if (mini->cmd_part == NULL)
+	// {
+	// 	return (-1);
+	// }
+	
+
+	// char *temp = check_tokens(mini->cmd_part, mini, 0, 0);
+	// printf("temp: [%s]\n", temp);
+	// printf("mini->cmd_part: [%s]\n", mini->cmd_part);
+	// if (temp == NULL)
+	// {
+	// 	free(temp);
+	// 	return (-1);
+	// }
+	// free(mini->cmd_part);
+	// mini->cmd_part = temp;
+	// free(temp);
+	// free(temp2);
 	new = (t_base *)malloc(sizeof(t_base));
 	new->av = (char **)malloc(sizeof(char *) * (mini->numb_cmds + 1));
 	if (new->av == NULL)

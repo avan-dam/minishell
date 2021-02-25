@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/25 15:07:42 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/25 15:27:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 {
 	char	*temp;
-	// char	*temp3;
+	char	*temp3;
 
 	while (line[i] && ((line[i] != '|' && line[i] != ';')
 			|| (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
@@ -45,12 +45,12 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 			numb++;
 		i++;
 	}
-	// mini->numb_cmds = numb;
-	// temp3 = line;
-	// line = ft_substr(temp3, 0, i);
-	// mini->cmd_part = line;
-	// free(temp3);
-	mini->cmd_part = mem_substr(line, 0, i);
+	mini->numb_cmds = numb;
+	temp3 = line;
+	line = ft_substr(temp3, 0, i);
+	mini->cmd_part = line;
+	free(temp3);
+	// mini->cmd_part = mem_substr(line, 0, i);
 	mini->type_end = T_END;
 	return (i);
 }
@@ -112,10 +112,18 @@ static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 
 	line = ft_trim_paths(line, " ");
 	numb_characters = no_of_commands(line, mini, 0, 1);
+	// mini->cmd_part = check_tokens(mini->cmd_part, mini, 0, 0);
 	// mini->cmd_part = mem_check_tkns(mini->cmd_part, mini, 0, 0);
-	mini->cmd_part = check_tokens(mini->cmd_part, mini, 0, 0);
-	if (mini->cmd_part == NULL)
+	// if (mini->cmd_part == NULL)
+	// 	return (-1);
+	char *temp1 = mini->cmd_part;
+	char *temp2 = check_tokens(temp1, mini, 0, 0);
+	if (temp2 == NULL)
+	{
+		free(temp2);
 		return (-1);
+	}
+	free(temp2);
 	new = (t_base *)malloc(sizeof(t_base));
 	new->av = (char **)malloc(sizeof(char *) * (mini->numb_cmds + 1));
 	if (new->av == NULL)

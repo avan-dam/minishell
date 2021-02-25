@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/24 16:26:54 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/25 14:19:16 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,64 +96,62 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		parent_proces(pid, mini, ptr, piped);
 }
 
-int	exec_cmds(t_base *tmpstart, char **envp, t_mini *mini)
+int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
-	t_base *tmp = tmpstart;
-	while (tmp)
+	ft_leaks();
+	t_base	*tmp;
+	int		i;
+	while (ptr)
 	{
-		if ((tmp == NULL) || (tmp->size == 0))
+		tmp = ptr->next;
+		if ((ptr == NULL) || (ptr->size == 0))
 			return (0);
-		tmp = ft_redir(mini, tmp);
-		if (tmp == NULL)
+		ptr = ft_redir(mini, ptr);
+		if (ptr == NULL)
 			return (0);
-		while (tmp->size == 0)
-		{
-			tmp = tmp->next;
-			if (tmp == NULL)
-				return (0);
-			tmp = ft_redir(mini, tmp);
-		}
-		if ((tmp->type == T_PIPE || (tmp->prev && tmp->prev->type == T_PIPE))
-			&& ft_is_builtin(tmp->av[0]) == 1)
-			execves(tmp, envp, mini);
-		else if (ft_strcmp("", tmp->av[0]) == 0)
+		// while (ptr->size == 0)
+		// {
+		// 	ptr = ptr->next;
+		// 	if (ptr == NULL)
+		// 		return (0);
+		// 	ptr = ft_redir(mini, ptr);
+		// }
+		if ((ptr->type == T_PIPE || (ptr->prev && ptr->prev->type == T_PIPE))
+			&& ft_is_builtin(ptr->av[0]) == 1)
+			execves(ptr, envp, mini);
+		else if (ft_strcmp("", ptr->av[0]) == 0)
 			break ;
-		else if (ft_strcmp(tmp->av[0], "exit") != 0 && ft_is_builtin(tmp->av[0]))
-			exec_builtin(tmp, mini);
-		else if (ft_strcmp(tmp->av[0], "exit") == 0)
+		else if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]))
+			exec_builtin(ptr, mini);
+		else if (ft_strcmp(ptr->av[0], "exit") == 0)
 		{
-			if (tmp->av[1] != NULL)
+			if (ptr->av[1] != NULL)
 			{
-				if (ft_is_str_int(tmp->av[1]) == 0)
+				if (ft_is_str_int(ptr->av[1]) == 0)
 					mini->exit = 255;
 				else
 				{
-					mini->exit = ft_atoi(tmp->av[1]);
-					if (tmp->av[2] != NULL)
+					mini->exit = ft_atoi(ptr->av[1]);
+					if (ptr->av[2] != NULL)
 						mini->exit = 1;
 				}
 			}
 			return (-1);
 		}
-		else if (look_for_non_builtin(tmp) == 2)
-			unvalid_ident(tmp->av[0], mini, 127);
+		else if (look_for_non_builtin(ptr) == 2)
+			unvalid_ident(ptr->av[0], mini, 127);
 		else
-			execves(tmp, envp, mini);
+			execves(ptr, envp, mini);
 		ft_reset_fds(mini);
-		// int i = 0;
-		// while (i < tmp->size)
-		// {
-		// 	// printf("i in\n");
-		// 	free(tmp->av[i]);
-		// 	i++;
-		// }
-		// free(tmp->av);
-		tmpstart = tmp->next;
-		// free(tmp);
-		tmp = tmpstart;
-		// tmp = tmp->next;
-
+		i = 0;
+		while (i <= ptr->size)
+		{
+			free(ptr->av[i]);
+			i++;
+		}
+		free(ptr->av);
+		free(ptr);
+		ptr = tmp;
 	}
-	// ft_baseclear(&tmpstart);
 	return (0);
 }

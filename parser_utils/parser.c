@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/24 17:15:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/25 14:07:01 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,14 +166,15 @@ int	parse_input_string(char *line, t_mini *mini, char **envp)
 	free(line);
 	if (ptr)
 	{
-		if (exec_cmds(ptr, envp, mini) == -1)
-		{
-			ft_baseclear(&ptr);
-			free(ptr);
-			return (-1);
-		}
+		exec_cmds(ptr, envp, mini);
+		// if (exec_cmds(ptr, envp, mini) == -1)
+		// {
+		// 	ft_baseclear(&ptr);
+		// 	free(ptr);
+		// 	return (-1);
+		// }
 	}
-	ft_baseclear(&ptr);
-	free(ptr);
+	// ft_baseclear(&ptr);
+	// ptr = NULL;
 	return (0);
 }

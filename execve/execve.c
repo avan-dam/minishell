@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/25 14:19:16 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/25 14:24:16 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		ptr = ft_redir(mini, ptr);
 		if (ptr == NULL)
 			return (0);
-		// while (ptr->size == 0)
-		// {
-		// 	ptr = ptr->next;
-		// 	if (ptr == NULL)
-		// 		return (0);
-		// 	ptr = ft_redir(mini, ptr);
-		// }
+		while (ptr->size == 0)
+		{
+			ptr = ptr->next;
+			if (ptr == NULL)
+				return (0);
+			ptr = ft_redir(mini, ptr);
+		}
 		if ((ptr->type == T_PIPE || (ptr->prev && ptr->prev->type == T_PIPE))
 			&& ft_is_builtin(ptr->av[0]) == 1)
 			execves(ptr, envp, mini);

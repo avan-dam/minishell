@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/26 11:51:13 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/26 16:51:18 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	handle_line(int lineret, t_mini *mini, char **envp)
 			if (parse_input_string(line, mini, envp, 0) == -1)
 				ft_exit(mini, mini->exit);
 		}
-		free(line);
-		line = NULL;
+		// free(line);
+		// line = NULL;
 		// clear_mini(mini, 1);
 		// ft_leaks(); // delete
 	}

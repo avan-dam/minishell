@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/26 16:23:47 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/26 16:49:57 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,13 @@ static int 	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	int		size;
 	t_base	*new;
 
-	// ft_leaks();
+	if (mini->cmd_part)
+		free(mini->cmd_part);
 	numb_characters = no_of_commands(line, mini, 0, 1);
 	size = mini->numb_cmds;
-	mini->cmd_part = check_tokens(mini->cmd_part, mini, 0, 0);
+	char *temp = mini->cmd_part;
+	free(mini->cmd_part);
+	mini->cmd_part = check_tokens(temp, mini, 0, 0);
 	if (mini->cmd_part == NULL)
 		return (1);
 	new = (t_base *)malloc(sizeof(t_base));
@@ -111,8 +114,9 @@ static int 	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	fill_av_list(new, mini, 0, 0, 0);
 	new->type = mini->type_end;
 	new->av[0] = ft_strtolower(new->av[0]);
+	// ft_leaks(); // delete
 	ft_lstadd_back_base(ptr, new);
-	// ft_leaks();
+	// free(mini->cmd_part);
 	return (numb_characters);
 }
 
@@ -155,7 +159,7 @@ int	parse_input_string(char *line, t_mini *mini, char **envp, int i)
 		else
 			i++;
 	}
-	// free(line);
+	free(line);
 	if (ptr)
 		if (exec_cmds(ptr, envp, mini) == -1)
 			return (-1);

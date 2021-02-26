@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/25 14:24:16 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/26 10:12:15 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,13 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 
 int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
-	ft_leaks();
+	// ft_leaks();
 	t_base	*tmp;
 	int		i;
+
 	while (ptr)
 	{
+		// printf("ptr->av[0]: %s, ptr->av[1]: %s in execve\n", ptr->av[0], ptr->av[1]);
 		tmp = ptr->next;
 		if ((ptr == NULL) || (ptr->size == 0))
 			return (0);

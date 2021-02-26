@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/25 14:07:01 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/26 10:11:32 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 	char	*temp;
 	char	*temp3;
 
-	line = ft_trim_paths(line, " ");
+	// printf("line straight before trim: %s\n", line);
+	// line = ft_trim_paths(line, " ");
+	// printf("line straight after trim: %s\n", line);
 	while (line[i] && ((line[i] != '|' && line[i] != ';')
 			|| (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
 	{
@@ -31,7 +33,7 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 				mini->numb_cmds = numb;
 				temp = ft_substr(line, 0, i);
 				mini->cmd_part = temp;
-				free(temp);
+				// free(temp);
 				if (line[i] == '|')
 					mini->type_end = T_PIPE;
 				else if (line[i] == ';')
@@ -50,7 +52,8 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 	temp3 = line;
 	line = ft_substr(temp3, 0, i);
 	mini->cmd_part = line;
-	free(temp3);
+	// free(tmp);
+	// free(temp3);
 	mini->type_end = T_END;
 	return (i);
 }
@@ -93,24 +96,12 @@ static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	int		size;
 	t_base	*new;
 
+	// ft_leaks();
 	numb_characters = no_of_commands(line, mini, 0, 1);
 	size = mini->numb_cmds;
-	// SEGFAULT IN THIS
 	mini->cmd_part = check_tokens(mini->cmd_part, mini, 0, 0);
 	if (mini->cmd_part == NULL)
 		return (1);
-		// PART
-	// char *tmp = check_tokens(mini->cmd_part, mini, 0, 0);
-	// if (tmp == NULL)
-	// {	
-	// 	free(tmp);
-	// 	// printf("exit statement is : %d\n", mini->exit);
-	// 	return (1);
-	// }
-	// // printf("exit statement is : %d\n", mini->exit);
-	// free(mini->cmd_part);
-	// mini->cmd_part = tmp;
-	// free(tmp);
 	new = (t_base *)malloc(sizeof(t_base));
 	new->av = (char **)malloc(sizeof(char *) * (size + 1));
 	if (new->av == NULL)
@@ -121,13 +112,9 @@ static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	new->av[size] = NULL;
 	fill_av_list(new, mini, 0, 0, 0);
 	new->type = mini->type_end;
-	if (mini->cmd_part)
-	{
-		free(mini->cmd_part);
-		mini->cmd_part = NULL;
-	}
 	new->av[0] = ft_strtolower(new->av[0]);
 	ft_lstadd_back_base(ptr, new);
+	// ft_leaks();
 	return (numb_characters);
 }
 
@@ -149,6 +136,7 @@ int	parse_input_string(char *line, t_mini *mini, char **envp)
 	free(tmp);
 	while (line[i])
 	{
+		// // check
 		while (line[i] == ' ')
 			i++;
 		k = create_av_list(&ptr, &line[i], mini);
@@ -163,17 +151,9 @@ int	parse_input_string(char *line, t_mini *mini, char **envp)
 		else
 			i++;
 	}
-	free(line);
+	// free(line);
 	if (ptr)
-	{
 		exec_cmds(ptr, envp, mini);
-		// if (exec_cmds(ptr, envp, mini) == -1)
-		// {
-		// 	ft_baseclear(&ptr);
-		// 	free(ptr);
-		// 	return (-1);
-		// }
-	}
 	// ft_baseclear(&ptr);
 	// ptr = NULL;
 	return (0);

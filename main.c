@@ -6,14 +6,16 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/26 10:24:42 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/26 11:51:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_line(int lineret, char *line, t_mini *mini, char **envp)
+static void	handle_line(int lineret, t_mini *mini, char **envp)
 {
+	char *line;
+
 	while (lineret)
 	{
 	// ft_putstr_fd("> ", mini.stdout);
@@ -34,6 +36,8 @@ static void	handle_line(int lineret, char *line, t_mini *mini, char **envp)
 			if (parse_input_string(line, mini, envp, 0) == -1)
 				ft_exit(mini, mini->exit);
 		}
+		free(line);
+		line = NULL;
 		// clear_mini(mini, 1);
 		// ft_leaks(); // delete
 	}
@@ -44,10 +48,8 @@ static void	handle_line(int lineret, char *line, t_mini *mini, char **envp)
 
 int	main(int ac, char **av, char **envp)
 {
-	char	*line;
 	t_mini	mini;
 
-	line = NULL;
 	if (ac == 1)
 	{
 		ft_memset(&mini, 0, sizeof(t_mini));
@@ -55,7 +57,7 @@ int	main(int ac, char **av, char **envp)
 		// memset for argument struct
 		mini.stdout = 1;
 		mini.stderr = 2;
-		handle_line(1, line, &mini, envp);
+		handle_line(1, &mini, envp);
 	}
 	else
 		ft_putstr_fd("No argument needed.\nUsage: ./minishell\n", STDERR);

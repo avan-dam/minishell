@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:03:26 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/26 10:11:32 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/26 10:21:11 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 	char	*temp;
 	char	*temp3;
 
-	// printf("line straight before trim: %s\n", line);
-	// line = ft_trim_paths(line, " ");
-	// printf("line straight after trim: %s\n", line);
 	while (line[i] && ((line[i] != '|' && line[i] != ';')
 			|| (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
 	{
@@ -72,7 +69,8 @@ static void	fill_av_list(t_base *new, t_mini *mini, int j, int l, int k)
 			while (mini->cmd_part[j] != ' ' && mini->cmd_part[j])
 			{
 				if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
-					&& mini->cmd_part[j + 1] != '\'' && mini->cmd_part[j + 1] != '>'
+					&& mini->cmd_part[j + 1] != '\''
+					&& mini->cmd_part[j + 1] != '>'
 					&& mini->cmd_part[j + 1] != '"')
 					break ;
 				j++;
@@ -90,7 +88,7 @@ static void	fill_av_list(t_base *new, t_mini *mini, int j, int l, int k)
 	}
 }
 
-static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
+static int 	create_av_list(t_base **ptr, char *line, t_mini *mini)
 {
 	int		numb_characters;
 	int		size;
@@ -109,7 +107,7 @@ static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	new->size = size;
 	new->prev = NULL;
 	new->next = NULL;
-	new->av[size] = NULL;
+	new->av[mini->numb_cmds] = NULL;
 	fill_av_list(new, mini, 0, 0, 0);
 	new->type = mini->type_end;
 	new->av[0] = ft_strtolower(new->av[0]);
@@ -118,22 +116,28 @@ static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	return (numb_characters);
 }
 
-int	parse_input_string(char *line, t_mini *mini, char **envp)
+// static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
+// {
+// 	int		numb_characters;
+// 	t_base	*new;
+
+// 	line = ft_trim_paths(line, " ");
+// 	numb_characters = no_of_commands(line, mini, 0, 1);
+// 	new = (t_base *)malloc(sizeof(t_base));
+// 	new->av = (char **)malloc(sizeof(char *) * (mini->numb_cmds + 1));
+// 	if (new->av == NULL)
+// 		return (-1);
+// 	create_av_list_more(new, mini, ptr);
+// 	return (numb_characters);
+// }
+
+
+int	parse_input_string(char *line, t_mini *mini, char **envp, int i)
 {
 	t_base		*ptr;
-	char		*tmp;
-	int			i;
 	int			k;
 
-	i = 0;
 	ptr = NULL;
-	tmp = check_tokens(line, mini, 0, 0);
-	if (tmp == NULL)
-	{
-		free(tmp);
-		return (0);
-	}
-	free(tmp);
 	while (line[i])
 	{
 		// // check

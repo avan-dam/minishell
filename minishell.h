@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/25 13:53:17 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/02/25 15:35:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void				ft_signals(t_mini *mini, int i);
 /*
 **	PARSER FUNCTIONS
 */
-int					parse_input_string(char *line, t_mini *mini, char **envp);
+int					parse_input_string(char *line, t_mini *mini, char **envp, int i);
 char				*check_tokens(char *line, t_mini *mini, int i, int j);
 int					ft_find_dolla(int i, int j, t_mini *mini, t_line *s);
 int					ft_replace_quotes(t_line *s, int i);
@@ -149,5 +149,7 @@ char				*ft_trim_paths(char *line, char *set);
 char				*mem_check_tkns(char *str, t_mini *mini, int i, int j);
 char				*ft_string_insert(char *string, int i, char *middle);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
+int					mem_check_tkns2(char *str, t_mini *mini);
+char				*mem_substr(char *line, int start, int len);
 
 #endif

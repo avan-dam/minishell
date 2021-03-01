@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/26 11:49:45 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/01 14:47:52 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ void	ft_signals(t_mini *mini, int i)
 	}
 	else if (i == 1)
 	{
-		printf("I AM HERE\n");
 		mini->exit = 0;
-		// ft_putstr_fd("exit\n", mini->stdout);
 		write(1, "exit\n", 5);
 		ft_exit(mini, mini->exit);
 	}

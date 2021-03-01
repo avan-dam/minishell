@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/26 16:49:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/02/26 17:17:57 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 {
-	char	*temp;
-	char	*temp3;
-
 	while (line[i] && ((line[i] != '|' && line[i] != ';')
 			|| (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
 	{
@@ -28,9 +25,7 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 				&& (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) != NULL))
 			{
 				mini->numb_cmds = numb;
-				temp = ft_substr(line, 0, i);
-				mini->cmd_part = temp;
-				// free(temp);
+				mini->cmd_part = ft_substr(line, 0, i);;
 				if (line[i] == '|')
 					mini->type_end = T_PIPE;
 				else if (line[i] == ';')
@@ -46,11 +41,7 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 		i++;
 	}
 	mini->numb_cmds = numb;
-	temp3 = line;
-	line = ft_substr(temp3, 0, i);
-	mini->cmd_part = line;
-	// free(tmp);
-	// free(temp3);
+	mini->cmd_part = ft_substr(line, 0, i);;
 	mini->type_end = T_END;
 	return (i);
 }
@@ -100,9 +91,11 @@ static int 	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	size = mini->numb_cmds;
 	char *temp = mini->cmd_part;
 	free(mini->cmd_part);
+	// ft_leaks();
 	mini->cmd_part = check_tokens(temp, mini, 0, 0);
 	if (mini->cmd_part == NULL)
 		return (1);
+	// ft_leaks();
 	new = (t_base *)malloc(sizeof(t_base));
 	new->av = (char **)malloc(sizeof(char *) * (size + 1));
 	if (new->av == NULL)
@@ -120,22 +113,6 @@ static int 	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	return (numb_characters);
 }
 
-// static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
-// {
-// 	int		numb_characters;
-// 	t_base	*new;
-
-// 	line = ft_trim_paths(line, " ");
-// 	numb_characters = no_of_commands(line, mini, 0, 1);
-// 	new = (t_base *)malloc(sizeof(t_base));
-// 	new->av = (char **)malloc(sizeof(char *) * (mini->numb_cmds + 1));
-// 	if (new->av == NULL)
-// 		return (-1);
-// 	create_av_list_more(new, mini, ptr);
-// 	return (numb_characters);
-// }
-
-
 int	parse_input_string(char *line, t_mini *mini, char **envp, int i)
 {
 	t_base		*ptr;
@@ -144,7 +121,6 @@ int	parse_input_string(char *line, t_mini *mini, char **envp, int i)
 	ptr = NULL;
 	while (line[i])
 	{
-		// // check
 		while (line[i] == ' ')
 			i++;
 		k = create_av_list(&ptr, &line[i], mini);
@@ -163,7 +139,5 @@ int	parse_input_string(char *line, t_mini *mini, char **envp, int i)
 	if (ptr)
 		if (exec_cmds(ptr, envp, mini) == -1)
 			return (-1);
-	// ft_baseclear(&ptr);
-	// ptr = NULL;
 	return (0);
 }

@@ -6,26 +6,66 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/01 14:13:15 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/01 14:54:30 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
+// {
+// 	while (line[i] && ((line[i] != '|' && line[i] != ';')
+// 			|| (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
+// 	{
+// 		if (line[i] == ' ')
+// 		{
+// 			while (line[i] == ' ')
+// 				i++;
+// 			if ((line[i] == '|' || line[i] == ';')
+// 				&& (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) != NULL))
+// 			{
+// 				//leak
+// 				mini->numb_cmds = numb;
+// 				mini->cmd_part = ft_substr(line, 0, i);
+// 				if (line[i] == '|')
+// 					mini->type_end = T_PIPE;
+// 				else if (line[i] == ';')
+// 					mini->type_end = T_BREAK;
+// 				return (i);
+// 			}
+// 			numb++;
+// 		}
+// 		if ((line[i] == '>' || line[i] == '<') && line[i + 1] != ' '
+// 			&& line[i + 1] != '"' && line[i + 1] != '\'' && line[i + 1] != '>'
+// 			&& line[i + 1] != '\0')
+// 			numb++;
+// 		i++;
+// 	}
+// 	mini->numb_cmds = numb;
+// 	mini->cmd_part = ft_substr(line, 0, i);;
+// 	mini->type_end = T_END;
+// 	return (i);
+// }
+
 static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 {
+	char 	*tmp;
+
+	tmp = ft_substr(line, 0, i);
 	while (line[i] && ((line[i] != '|' && line[i] != ';')
-			|| (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
+			|| (mem_check_tkns(tmp, mini, 0, 1) == NULL)))
 	{
+		free(tmp);
 		if (line[i] == ' ')
 		{
 			while (line[i] == ' ')
 				i++;
 			if ((line[i] == '|' || line[i] == ';')
-				&& (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) != NULL))
+				&& (mem_check_tkns(tmp, mini, 0, 1) != NULL))
 			{
+				//leak
 				mini->numb_cmds = numb;
-				mini->cmd_part = ft_substr(line, 0, i);;
+				mini->cmd_part = ft_substr(line, 0, i);
 				if (line[i] == '|')
 					mini->type_end = T_PIPE;
 				else if (line[i] == ';')
@@ -39,7 +79,9 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 			&& line[i + 1] != '\0')
 			numb++;
 		i++;
+		tmp = ft_substr(line, 0, i);
 	}
+	free(tmp);
 	mini->numb_cmds = numb;
 	mini->cmd_part = ft_substr(line, 0, i);;
 	mini->type_end = T_END;
@@ -87,6 +129,7 @@ static int 	create_av_list(t_base **ptr, char *line, t_mini *mini)
 
 	if (mini->cmd_part)
 		free(mini->cmd_part);
+	printf("LINE: %s\n", line);
 	numb_characters = no_of_commands(line, mini, 0, 1);
 	size = mini->numb_cmds;
 	char *temp = mini->cmd_part;
@@ -110,6 +153,7 @@ static int 	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	// ft_leaks(); // delete
 	ft_lstadd_back_base(ptr, new);
 	// free(mini->cmd_part);
+	free(line);
 	return (numb_characters);
 }
 
@@ -124,6 +168,7 @@ int	parse_input_string(char *line, t_mini *mini, char **envp, int i)
 		while (line[i] == ' ')
 			i++;
 		k = create_av_list(&ptr, &line[i], mini);
+		printf("value line: %s\n", &line[i]);
 		if (k == -1)
 		{
 			mini->exit = 1;
@@ -135,7 +180,8 @@ int	parse_input_string(char *line, t_mini *mini, char **envp, int i)
 		else
 			i++;
 	}
-	free(line);
+	printf("line: %s\n", line);
+	// free(line);
 	if (ptr)
 		if (exec_cmds(ptr, envp, mini) == -1)
 			return (-1);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/02 12:26:58 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/02 11:56:35 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	handle_line(int lineret, t_mini *mini, char **envp)
 
 	while (lineret)
 	{
-	// ft_putstr_fd("> ", mini.stdout);
 		ft_signals(mini, 0);
 		lineret = get_next_line(mini->stdin, &line);
 		if (lineret < 0)
@@ -27,18 +26,11 @@ static void	handle_line(int lineret, t_mini *mini, char **envp)
 			ft_lstclear(&mini->env1);
 			exit(1);
 		}
-		// if (parse_input_string(line, mini, envp) == -1)
-		// 	ft_exit(mini, mini->exit);
-		// // clear_mini(mini, 1);
-		// // ft_leaks(); // delete
 		if (mem_check_tkns2(line, mini) != 0)
 		{
 			if (parse_input_string(line, mini, envp, 0) == -1)
 				ft_exit(mini, mini->exit);
 		}
-		// free(line);
-		// line = NULL;
-		// clear_mini(mini, 1);
 		ft_leaks(); // delete
 	}
 	if (lineret == 0)

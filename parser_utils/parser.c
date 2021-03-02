@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/02 11:42:05 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/02 11:57:25 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
             {
 				free(tmp);
 				free(result);
-                //leak
                 mini->numb_cmds = numb;
                 mini->cmd_part = ft_substr(line, 0, i);
                 if (line[i] == '|')
@@ -141,16 +140,12 @@ static int  create_av_list(t_base **ptr, char *line, t_mini *mini)
 
     if (mini->cmd_part)
      free(mini->cmd_part);
-    // printf("LINE: %s\n", line);
     numb_characters = no_of_commands(line, mini, 0, 1);
     size = mini->numb_cmds;
     char *temp = mini->cmd_part;
-    // free(mini->cmd_part);
-    // ft_leaks();
     mini->cmd_part = mem_check_tkns(temp, mini, 0, 0);
     if (mini->cmd_part == NULL)
 		return (1);
-    // ft_leaks();
     new = (t_base *)malloc(sizeof(t_base));
     new->av = (char **)malloc(sizeof(char *) * (size + 1));
     if (new->av == NULL)
@@ -162,9 +157,7 @@ static int  create_av_list(t_base **ptr, char *line, t_mini *mini)
     fill_av_list(new, mini, 0, 0, 0);
     new->type = mini->type_end;
     new->av[0] = ft_strtolower(new->av[0]);
-    // ft_leaks(); // delete
     ft_lstadd_back_base(ptr, new);
-    // free(mini->cmd_part);
     free(line);
     return (numb_characters);
 }
@@ -182,7 +175,6 @@ int parse_input_string(char *line, t_mini *mini, char **envp, int i)
             i++;
         tmp = ft_strdup(&line[i]);
         k = create_av_list(&ptr, tmp, mini);
-        // printf("value line: %s\n", &line[i]);
         if (k == -1)
         {
             mini->exit = 1;
@@ -194,11 +186,9 @@ int parse_input_string(char *line, t_mini *mini, char **envp, int i)
         else
             i++;
     }
-    // printf("line: %s\n", line);
     free(line);
     if (ptr)
         if (exec_cmds(ptr, envp, mini) == -1)
             return (-1);
     return (0);
 }
-

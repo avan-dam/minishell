@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/25 15:09:10 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/02 12:17:55 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	ft_exit_status_replace(t_line *s, int i, t_mini *mini)
 char	*check_tokens(char *str, t_mini *mini, int i, int j)
 {
 	t_line	s;
-
+	
 	if (str == NULL || ft_strcmp(str, "") == 0)
 		return (NULL);
 	ft_memset(&s, 0, sizeof(t_line));

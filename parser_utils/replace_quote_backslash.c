@@ -6,11 +6,12 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/02 12:16:44 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/02 13:38:14 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "string.h"
 
 int	ft_correct_backslash(t_line *s, int i)
 {

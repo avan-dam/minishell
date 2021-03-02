@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/02 11:57:25 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/02 13:08:22 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
 			free(result);
 		    tmp = ft_substr(line, 0, i);
 			result = check_tokens(tmp, mini, 0, 1);
+            printf("result: %s<\n", result);
             if ((line[i] == '|' || line[i] == ';')
                 && (result != NULL))
             {

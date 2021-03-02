@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/02 12:17:55 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/02 13:42:19 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 	}
 	s->s = 0;
 	s->d = 0;
+	printf("value of s->str: %s\n", s->str);
 	return (s->str);
 }
 
@@ -99,6 +100,7 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 	if (str == NULL || ft_strcmp(str, "") == 0)
 		return (NULL);
 	ft_memset(&s, 0, sizeof(t_line));
+	free(s.str);
 	s.str = ft_strdup(str);
 	if ((numb_char(s.str, '>') != 0 || numb_char(s.str, '<') != 0) && j != 2)
 		return (s.str);
@@ -118,5 +120,8 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 		if (s.str[i] != '\0' || i == -1)
 			i++;
 	}
-	return (check_line_valid(&s, mini, j, str));
+	// return (check_line_valid(&s, mini, j, str));
+	if (check_line_valid(&s, mini, j, str) == NULL)
+		return (NULL);
+	return (s.str);
 }

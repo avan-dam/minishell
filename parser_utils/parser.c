@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/02 09:05:55 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/02 09:31:43 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
     while (line[i] && ((line[i] != '|' && line[i] != ';')
             || (mem_check_tkns(tmp, mini, 0, 1) == NULL)))
     {
-        free(tmp);
         if (line[i] == ' ')
         {
             while (line[i] == ' ')
@@ -81,7 +80,7 @@ static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
         i++;
         tmp = ft_substr(line, 0, i);
     }
-    free(tmp);
+    // free(tmp);
     mini->numb_cmds = numb;
     mini->cmd_part = ft_substr(line, 0, i);;
     mini->type_end = T_END;

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 19:28:33 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/25 15:05:05 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/01 16:22:50 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int mem_check_tkns2(char *str, t_mini *mini)
 	tmp = check_tokens(str, mini, 0, 0);
 	if (tmp == NULL)
 	{
-		free(tmp);
+		// free(tmp);
 		return (0);
 	}
 	free(tmp);

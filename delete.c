@@ -1,51 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parser.c                                           :+:    :+:            */
+/*   delete.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/02 09:05:55 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/02 09:00:48 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// static int   no_of_commands(char *line, t_mini *mini, int i, int numb)
-// {
-//  while (line[i] && ((line[i] != '|' && line[i] != ';')
-//          || (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
-//  {
-//      if (line[i] == ' ')
-//      {
-//          while (line[i] == ' ')
-//              i++;
-//          if ((line[i] == '|' || line[i] == ';')
-//              && (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) != NULL))
-//          {
-//              //leak
-//              mini->numb_cmds = numb;
-//              mini->cmd_part = ft_substr(line, 0, i);
-//              if (line[i] == '|')
-//                  mini->type_end = T_PIPE;
-//              else if (line[i] == ';')
-//                  mini->type_end = T_BREAK;
-//              return (i);
-//          }
-//          numb++;
-//      }
-//      if ((line[i] == '>' || line[i] == '<') && line[i + 1] != ' '
-//          && line[i + 1] != '"' && line[i + 1] != '\'' && line[i + 1] != '>'
-//          && line[i + 1] != '\0')
-//          numb++;
-//      i++;
-//  }
-//  mini->numb_cmds = numb;
-//  mini->cmd_part = ft_substr(line, 0, i);;
-//  mini->type_end = T_END;
-//  return (i);
-// }
+static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
+{
+    while (line[i] && ((line[i] != '|' && line[i] != ';')
+            || (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
+    {
+        if (line[i] == ' ')
+        {
+            while (line[i] == ' ')
+                i++;
+            if ((line[i] == '|' || line[i] == ';')
+                && (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) != NULL))
+            {
+                //leak
+                mini->numb_cmds = numb;
+                mini->cmd_part = ft_substr(line, 0, i);
+                if (line[i] == '|')
+                    mini->type_end = T_PIPE;
+                else if (line[i] == ';')
+                    mini->type_end = T_BREAK;
+                return (i);
+            }
+            numb++;
+        }
+        if ((line[i] == '>' || line[i] == '<') && line[i + 1] != ' '
+            && line[i + 1] != '"' && line[i + 1] != '\'' && line[i + 1] != '>'
+            && line[i + 1] != '\0')
+            numb++;
+        i++;
+    }
+    mini->numb_cmds = numb;
+    mini->cmd_part = ft_substr(line, 0, i);;
+    mini->type_end = T_END;
+    return (i);
+}
 
 static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
 {
@@ -127,17 +127,17 @@ static int  create_av_list(t_base **ptr, char *line, t_mini *mini)
     int     size;
     t_base  *new;
 
-    if (mini->cmd_part)
-     free(mini->cmd_part);
-    // printf("LINE: %s\n", line);
+    // if (mini->cmd_part)
+    //  free(mini->cmd_part);
+    printf("LINE: %s\n", line);
     numb_characters = no_of_commands(line, mini, 0, 1);
     size = mini->numb_cmds;
     char *temp = mini->cmd_part;
-    // free(mini->cmd_part);
+    free(mini->cmd_part);
     // ft_leaks();
-    mini->cmd_part = mem_check_tkns(temp, mini, 0, 0);
+    mini->cmd_part = check_tokens(temp, mini, 0, 0);
     if (mini->cmd_part == NULL)
-		return (1);
+        return (1);
     // ft_leaks();
     new = (t_base *)malloc(sizeof(t_base));
     new->av = (char **)malloc(sizeof(char *) * (size + 1));

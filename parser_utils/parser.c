@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/02 09:31:43 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/02 12:36:11 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,26 @@
 static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
 {
     char    *tmp;
+	char	*result;
 
     tmp = ft_substr(line, 0, i);
+	result = check_tokens(tmp, mini, 0, 1);
     while (line[i] && ((line[i] != '|' && line[i] != ';')
-            || (mem_check_tkns(tmp, mini, 0, 1) == NULL)))
+            || (result == NULL)))
     {
         if (line[i] == ' ')
         {
             while (line[i] == ' ')
                 i++;
+			free(tmp);
+			free(result);
+		    tmp = ft_substr(line, 0, i);
+			result = check_tokens(tmp, mini, 0, 1);
             if ((line[i] == '|' || line[i] == ';')
-                && (mem_check_tkns(tmp, mini, 0, 1) != NULL))
+                && (result != NULL))
             {
+				free(tmp);
+				free(result);
                 //leak
                 mini->numb_cmds = numb;
                 mini->cmd_part = ft_substr(line, 0, i);
@@ -71,16 +79,21 @@ static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
                     mini->type_end = T_BREAK;
                 return (i);
             }
-            numb++;
-        }
+			numb++;
+
+		}
         if ((line[i] == '>' || line[i] == '<') && line[i + 1] != ' '
-            && line[i + 1] != '"' && line[i + 1] != '\'' && line[i + 1] != '>'
-            && line[i + 1] != '\0')
-            numb++;
-        i++;
+        	&& line[i + 1] != '"' && line[i + 1] != '\'' && line[i + 1] != '>'
+        	&& line[i + 1] != '\0')
+            	numb++;
+		i++;
+		free(tmp);
+		free(result);
         tmp = ft_substr(line, 0, i);
+		result = check_tokens(tmp, mini, 0, 1);
     }
-    // free(tmp);
+    free(tmp);
+	free(result);
     mini->numb_cmds = numb;
     mini->cmd_part = ft_substr(line, 0, i);;
     mini->type_end = T_END;

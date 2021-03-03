@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/25 15:09:10 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/03 08:12:38 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,24 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 		&& (j == 0))
 	{
 		ft_printf_error(0, mini);
+		printf("here\n");
 		return (NULL);
 	}
 	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
 	{
+		// printf("in dis\n");
+		// if (j == 0)
+		// {	ft_printf_error(1, mini);
+		// 	return (NULL);
+		// }
 		if (j == 0)
 			ft_printf_error(1, mini);
 		if (j != 2)
+		{	
+			if (s->str)
+				free(s->str);
 			return (NULL);
+		}
 	}
 	s->s = 0;
 	s->d = 0;

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/23 13:51:11 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/03 08:00:46 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_correct_backslash(t_line *s, int i)
 {
+	// printf("LEAKS BEFORE\n");
+	// ft_leaks();
 	if (i == 0 && s->str[1] == '$')
 		return (i + 2);
 	if (s->str[i + 1] != '>' && s->str[i + 1] != '<'
@@ -30,6 +32,8 @@ int	ft_correct_backslash(t_line *s, int i)
 	else if ((s->s % 2 == 0) && (s->d % 2 == 0)
 		&& (s->str[i + 1] != '>') && (s->str[i + 1] != '<'))
 		ft_memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
+	// printf("LEAKS AFTER\n");
+	// ft_leaks();
 	return (i);
 }
 

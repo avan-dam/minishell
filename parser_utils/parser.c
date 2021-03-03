@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/03 08:58:06 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/03 10:47:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,25 @@ static int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 	return (i);
 }
 
-static void	fill_av_list(t_base *new, t_mini *mini, int j, int l, int k)
+static int 	fill_av_more(t_mini *mini, int j)
 {
+	while (mini->cmd_part[j] != ' ' && mini->cmd_part[j])
+	{
+		if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
+			&& mini->cmd_part[j + 1] != '\''
+			&& mini->cmd_part[j + 1] != '>'
+			&& mini->cmd_part[j + 1] != '"')
+			break ;
+		j++;
+	}
+	return (j);
+}
+
+static void	fill_av_list(t_base *new, t_mini *mini, int j, int l)
+{
+	int	k;
+
+	k = 0;
 	while (l != new->size)
 	{
 		if (mini->cmd_part[j] == '\0')
@@ -75,15 +92,7 @@ static void	fill_av_list(t_base *new, t_mini *mini, int j, int l, int k)
 			while (mini->cmd_part[j] == ' ')
 				j++;
 			k = j;
-			while (mini->cmd_part[j] != ' ' && mini->cmd_part[j])
-			{
-				if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
-					&& mini->cmd_part[j + 1] != '\''
-					&& mini->cmd_part[j + 1] != '>'
-					&& mini->cmd_part[j + 1] != '"')
-					break ;
-				j++;
-			}
+			j = fill_av_more(mini, j);
 			if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
 				&& mini->cmd_part[j + 1] != '>')
 			{
@@ -97,35 +106,49 @@ static void	fill_av_list(t_base *new, t_mini *mini, int j, int l, int k)
 	}
 }
 
+static void	more_av_list(t_base *new, t_mini *mini, t_base **ptr, char *line)
+{
+	new->size = mini->numb_cmds;
+	new->prev = NULL;
+	new->next = NULL;
+	new->av[mini->numb_cmds] = NULL;
+	fill_av_list(new, mini, 0, 0);
+	new->type = mini->type_end;
+	new->av[0] = ft_strtolower(new->av[0]);
+	ft_lstadd_back_base(ptr, new);
+	free(line);
+}
+
 static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 {
 	int		numb_characters;
-	int		size;
 	t_base	*new;
 	char	*temp;
 
 	if (mini->cmd_part)
 		free(mini->cmd_part);
 	numb_characters = no_of_commands(line, mini, 0, 1);
-	size = mini->numb_cmds;
 	temp = mini->cmd_part;
 	mini->cmd_part = mem_check_tkns(temp, mini, 0, 0);
 	if (mini->cmd_part == NULL)
 		return (-1);
 	new = (t_base *)malloc(sizeof(t_base));
-	new->av = (char **)malloc(sizeof(char *) * (size + 1));
+	if (new == NULL)
+		return (-1);
+	new->av = (char **)malloc(sizeof(char *) * (mini->numb_cmds + 1));
 	if (new->av == NULL)
 		return (-1);
-	new->size = size;
-	new->prev = NULL;
-	new->next = NULL;
-	new->av[mini->numb_cmds] = NULL;
-	fill_av_list(new, mini, 0, 0, 0);
-	new->type = mini->type_end;
-	new->av[0] = ft_strtolower(new->av[0]);
-	ft_lstadd_back_base(ptr, new);
-	free(line);
+	more_av_list(new, mini, ptr, line);
 	return (numb_characters);
+}
+
+static int	send_exec_cmds(t_base *ptr, char **envp, t_mini *mini, char *line)
+{
+	free(line);
+	if (ptr)
+		if (exec_cmds(ptr, envp, mini) == -1)
+			return (-1);
+	return (0);
 }
 
 int	parse_input(char *line, t_mini *mini, char **envp, int i)
@@ -152,9 +175,5 @@ int	parse_input(char *line, t_mini *mini, char **envp, int i)
 		else
 			i++;
 	}
-	free(line);
-	if (ptr)
-		if (exec_cmds(ptr, envp, mini) == -1)
-			return (-1);
-	return (0);
+	return (send_exec_cmds(ptr, envp, mini, line));
 }

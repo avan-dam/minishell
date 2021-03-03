@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/03 08:33:46 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/03 10:20:24 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,13 @@ static void	ft_printf_error(int i, t_mini *mini)
 
 static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 {
-	int	i;
 	int	backslash;
 
-	i = 0;
 	backslash = no_org_backslash(str, 0);
-	if ((((str[i] == '<') || (str[i] == '>')) && str[i - 1] != '\\')
+	if ((((str[0] == '<') || (str[0] == '>')))
 		&& (j == 0))
 	{
 		ft_printf_error(0, mini);
-		printf("here\n");
 		if (s->str)
 			free(s->str);
 		return (NULL);

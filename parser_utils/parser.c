@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/02 11:42:05 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/03 08:14:20 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,16 @@ static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
 {
     char    *tmp;
 	char	*result;
+    char    *tmp2;
 
-    tmp = ft_substr(line, 0, i);
+    
+    tmp2 = ft_strdup(line);
+    tmp = ft_substr(tmp2, 0, i);
+    free(tmp2);
+    // printf("result is being made with tmp %s mini->cmd_part %s and 0 and 1 \n", tmp, mini->cmd_part);
 	result = check_tokens(tmp, mini, 0, 1);
+    // if (mini->cmd_part)
+    //     free(mini->cmd_part);
     while (line[i] && ((line[i] != '|' && line[i] != ';')
             || (result == NULL)))
     {
@@ -63,22 +70,34 @@ static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
                 i++;
 			free(tmp);
 			free(result);
-		    tmp = ft_substr(line, 0, i);
+            tmp2 = ft_strdup(line);
+            tmp = ft_substr(tmp2, 0, i);
+            free(tmp2);
+            // printf("result is being made with tmp %s mini->cmd_part %s and 0 and 1 \n", tmp, mini->cmd_part);
 			result = check_tokens(tmp, mini, 0, 1);
+            // printf("1tmp[%s] result[%s]mini->cmd_part[%s]\n", tmp, result, mini->cmd_part);
             if ((line[i] == '|' || line[i] == ';')
                 && (result != NULL))
             {
+                // if (result == NULL)
+                    // printf("22I AM HERE\n");
 				free(tmp);
 				free(result);
                 //leak
                 mini->numb_cmds = numb;
-                mini->cmd_part = ft_substr(line, 0, i);
-                if (line[i] == '|')
+                tmp2 = ft_strdup(line);
+                // if (mini->cmd_part)
+                //     free(mini->cmd_part);
+                mini->cmd_part = ft_substr(tmp2, 0, i);
+                free(tmp2);
+                    if (line[i] == '|')
                     mini->type_end = T_PIPE;
                 else if (line[i] == ';')
                     mini->type_end = T_BREAK;
                 return (i);
             }
+            // else
+                // printf("3tmp[%s] result[%s]mini->cmd_part[%s]\n", tmp, result, mini->cmd_part);
 			numb++;
 
 		}
@@ -87,15 +106,27 @@ static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
         	&& line[i + 1] != '\0')
             	numb++;
 		i++;
+        // printf("2tmp[%s] result[%s] mini->cmd_part[%s]\n", tmp, result, mini->cmd_part);
+        // if (result == NULL)
+        //     printf("I AM HERE\n");
 		free(tmp);
-		free(result);
-        tmp = ft_substr(line, 0, i);
+        if (result)
+    		free(result);
+        tmp2 = ft_strdup(line);
+        tmp = ft_substr(tmp2, 0, i);
+        free(tmp2);
 		result = check_tokens(tmp, mini, 0, 1);
+        // printf("result is being made with tmp %s mini->cmd_part %s and 0 and 1 \n", tmp, mini->cmd_part);
+        // printf("2tmp[%s] result[%s] mini->cmd_part[%s]\n", tmp, result, mini->cmd_part);
+
     }
     free(tmp);
-	free(result);
     mini->numb_cmds = numb;
-    mini->cmd_part = ft_substr(line, 0, i);;
+    tmp2 = ft_strdup(line);
+    // printf("mini->cmd part os [%s] result is [%s]\n", mini->cmd_part, result);
+	free(result);
+    mini->cmd_part = ft_substr(tmp2, 0, i);
+    free(tmp2);
     mini->type_end = T_END;
     return (i);
 }

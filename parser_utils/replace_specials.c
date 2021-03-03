@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/02 13:42:19 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/02 19:19:29 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 	int	backslash;
 
 	i = 0;
+	// printf("goes in with str: %s\n", str);
+	// printf("value of s.str: %s\n", s->str);
 	backslash = no_org_backslash(str, 0);
 	if ((((str[i] == '<') || (str[i] == '>')) && str[i - 1] != '\\')
 		&& (j == 0))
@@ -74,7 +76,6 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 	}
 	s->s = 0;
 	s->d = 0;
-	printf("value of s->str: %s\n", s->str);
 	return (s->str);
 }
 
@@ -102,24 +103,47 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 	ft_memset(&s, 0, sizeof(t_line));
 	free(s.str);
 	s.str = ft_strdup(str);
+
+	// printf("Goes in with: %s\n", str);
 	if ((numb_char(s.str, '>') != 0 || numb_char(s.str, '<') != 0) && j != 2)
 		return (s.str);
 	while (s.str[i] != '\0')
 	{
 		if (s.str[i] == '\\' && numb_char(s.str, '>') == 0
 			&& numb_char(s.str, '<') == 0)
+		{
+			// printf("Goes in 1 with: %s\n", str);
+			// LEAK IN HERE
+			// printf("value of s.str before: %s<\n", s.str);
 			i = ft_correct_backslash(&s, i);
+			// printf("value of s.str after: %s<\n", s.str);
+			// free(str);
+			// str = s.str;
+		}
 		if ((s.str[i] == '$') && (s.str[i + 1] != '/') && (s.str[i + 1] != '\\')
 			&& (s.str[i + 1] != '\0') && (s.str[i + 1] != '?'))
+		{
+			// printf("Goes in 2 with: %s\n", str);
 			i = i + ft_find_dolla(i + 1, i + 1, mini, &s);
+		}
 		else if ((s.str[i] == '\'') || (s.str[i] == '"'))
+		{
+			// printf("Goes in 3 with: %s\n", str);
 			i = ft_replace_quotes(&s, i);
+		}
 		else if (s.str[i] == '$' && s.str[i + 1] == '?' && i != 0
 			&& (s.d == 0 || s.d % 2 == 1) && (s.s == 0 || s.s % 2 == 0))
+		{
+			// printf("Goes in 4 with: %s\n", str);
 			ft_exit_status_replace(&s, i, mini);
+		}
 		if (s.str[i] != '\0' || i == -1)
+		{
+			// printf("Goes in 5 with: %s\n", str);
 			i++;
+		}
 	}
+	
 	// return (check_line_valid(&s, mini, j, str));
 	if (check_line_valid(&s, mini, j, str) == NULL)
 		return (NULL);

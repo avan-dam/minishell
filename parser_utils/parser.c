@@ -6,46 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/02 13:08:22 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/02 17:09:26 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// static int   no_of_commands(char *line, t_mini *mini, int i, int numb)
-// {
-//  while (line[i] && ((line[i] != '|' && line[i] != ';')
-//          || (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) == NULL)))
-//  {
-//      if (line[i] == ' ')
-//      {
-//          while (line[i] == ' ')
-//              i++;
-//          if ((line[i] == '|' || line[i] == ';')
-//              && (mem_check_tkns(ft_substr(line, 0, i), mini, 0, 1) != NULL))
-//          {
-//              //leak
-//              mini->numb_cmds = numb;
-//              mini->cmd_part = ft_substr(line, 0, i);
-//              if (line[i] == '|')
-//                  mini->type_end = T_PIPE;
-//              else if (line[i] == ';')
-//                  mini->type_end = T_BREAK;
-//              return (i);
-//          }
-//          numb++;
-//      }
-//      if ((line[i] == '>' || line[i] == '<') && line[i + 1] != ' '
-//          && line[i + 1] != '"' && line[i + 1] != '\'' && line[i + 1] != '>'
-//          && line[i + 1] != '\0')
-//          numb++;
-//      i++;
-//  }
-//  mini->numb_cmds = numb;
-//  mini->cmd_part = ft_substr(line, 0, i);;
-//  mini->type_end = T_END;
-//  return (i);
-// }
 
 static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
 {
@@ -65,7 +30,6 @@ static int  no_of_commands(char *line, t_mini *mini, int i, int numb)
 			free(result);
 		    tmp = ft_substr(line, 0, i);
 			result = check_tokens(tmp, mini, 0, 1);
-            printf("result: %s<\n", result);
             if ((line[i] == '|' || line[i] == ';')
                 && (result != NULL))
             {

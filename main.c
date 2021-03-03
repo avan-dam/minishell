@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/02 11:56:35 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/02 19:20:12 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	handle_line(int lineret, t_mini *mini, char **envp)
 			if (parse_input_string(line, mini, envp, 0) == -1)
 				ft_exit(mini, mini->exit);
 		}
-		ft_leaks(); // delete
+		// ft_leaks(); // delete
 	}
 	if (lineret == 0)
 		ft_signals(mini, 1);

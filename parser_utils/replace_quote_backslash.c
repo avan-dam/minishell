@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/02 13:38:14 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/02 19:22:43 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,18 @@
 
 int	ft_correct_backslash(t_line *s, int i)
 {
+	char *tmp;// printf("VALUE OF S.STR FFS: %s\n", s->str);
 	if (i == 0 && s->str[1] == '$')
+	{
+		// printf("GOES IN 1\n");
 		return (i + 2);
+	}
 	if (s->str[i + 1] != '>' && s->str[i + 1] != '<'
 		&& ((s->str[i + 1] == '`') || (s->str[i + 1] == '"')
 			|| ((s->str[i + 1] == '\'') && (s->d % 2 == 0))
 			|| s->str[i + 1] == '$' || s->str[i + 1] == '\\'))
 	{
+		// printf("GOES IN 2\n");
 		ft_memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
 		if (s->str[i] != '\0' && ((s->str[i] == '$'
 					&& ((i == 0) || ((i > 0) && (s->str[i - 1] != '\\'))))
@@ -30,7 +35,14 @@ int	ft_correct_backslash(t_line *s, int i)
 	}
 	else if ((s->s % 2 == 0) && (s->d % 2 == 0)
 		&& (s->str[i + 1] != '>') && (s->str[i + 1] != '<'))
-		ft_memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
+	{
+		// printf("GOES IN 3\n");
+		tmp = s->str;
+		ft_memmove(&tmp[i], &tmp[i + 1], ft_strlen(tmp) - i);
+		// free(tmp);
+		// memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
+	}
+	// printf("VALUE OF S.STR FFS AFTER: %s\n", s->str);
 	return (i);
 }
 

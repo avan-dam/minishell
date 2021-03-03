@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/03 08:18:15 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/03 08:57:52 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void				ft_lstclear(t_list **lst);
 int					ft_split_into_tlist(t_mini *mini, char *line);
 void				ft_lstprintold(t_list *lst);
 void				ft_baseclear(t_base **lst);
-void 				clear_leaks(t_base *ptr);
+void				clear_leaks(t_base *ptr);
 
 /*
 **	BUILTIN FUNCTION
@@ -113,7 +113,7 @@ void				ft_signals(t_mini *mini, int i);
 /*
 **	PARSER FUNCTIONS
 */
-int					parse_input_string(char *line, t_mini *mini, char **envp, int i);
+int					parse_input(char *line, t_mini *mini, char **envp, int i);
 char				*check_tokens(char *line, t_mini *mini, int i, int j);
 int					ft_find_dolla(int i, int j, t_mini *mini, t_line *s);
 int					ft_replace_quotes(t_line *s, int i);

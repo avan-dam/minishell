@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/26 16:59:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/03 14:42:57 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,11 +148,12 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		i = 0;
 		while (i <= ptr->size)
 		{
+			printf("value of ptr->av[i]: %s\n", ptr->av[i]);
 			free(ptr->av[i]);
 			i++;
 		}
 		free(ptr->av);
-		free(ptr);
+		// free(ptr);
 		ptr = tmp;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 19:28:33 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/01 16:22:50 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/03 08:41:48 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,29 +68,18 @@ char	*mem_check_tkns(char *str, t_mini *mini, int i, int j)
 	return (str);
 }
 
-int mem_check_tkns2(char *str, t_mini *mini)
+int	mem_check_tkns2(char *str, t_mini *mini)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = check_tokens(str, mini, 0, 0);
 	if (tmp == NULL)
 	{
-		// free(tmp);
+		free(tmp);
 		return (0);
 	}
 	free(tmp);
 	return (1);
-}
-
-char	*mem_substr(char *line, int start, int len)
-{
-	char *temp;
-	char *result;
-	
-	temp = line;
-	result = ft_substr(temp, start, len);
-	free(temp);
-	return (result);
 }
 
 int	unvalid_ident(char *error, t_mini *mini, int exitstatus)

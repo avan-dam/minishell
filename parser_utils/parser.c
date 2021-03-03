@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/03 08:14:20 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/03 08:43:25 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,36 +200,33 @@ static int  create_av_list(t_base **ptr, char *line, t_mini *mini)
     return (numb_characters);
 }
 
-int parse_input_string(char *line, t_mini *mini, char **envp, int i)
+int	parse_input_string(char *line, t_mini *mini, char **envp, int i)
 {
-    t_base      *ptr;
-    char        *tmp;
-    int         k;
+	t_base      *ptr;
+	char        *tmp;
+	int         k;
 
-    ptr = NULL;
-    while (line[i])
-    {
-        while (line[i] == ' ')
-            i++;
-        tmp = ft_strdup(&line[i]);
-        k = create_av_list(&ptr, tmp, mini);
-        // printf("value line: %s\n", &line[i]);
-        if (k == -1)
-        {
-            mini->exit = 1;
-            return (0);
-        }
-        i = i + k;
-        if (!line[i])
-            break ;
-        else
-            i++;
-    }
-    // printf("line: %s\n", line);
-    free(line);
-    if (ptr)
-        if (exec_cmds(ptr, envp, mini) == -1)
-            return (-1);
-    return (0);
+	ptr = NULL;
+	while (line[i])
+	{
+		while (line[i] == ' ')
+			i++;
+		tmp = ft_strdup(&line[i]);
+		k = create_av_list(&ptr, tmp, mini);
+		if (k == -1)
+		{
+			mini->exit = 1;
+			return (0);
+		}
+		i = i + k;
+		if (!line[i])
+			break ;
+		else
+			i++;
+	}
+	free(line);
+	if (ptr)
+		if (exec_cmds(ptr, envp, mini) == -1)
+			return (-1);
+	return (0);
 }
-

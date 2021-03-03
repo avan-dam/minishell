@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/03 14:42:57 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/03 16:24:55 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,9 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 
 	while (ptr)
 	{
-		// printf("ptr->av[0]: %s, ptr->av[1]: %s in execve\n", ptr->av[0], ptr->av[1]);
 		tmp = ptr->next;
-		if ((ptr == NULL) || (ptr->size == 0))
-			return (0);
 		ptr = ft_redir(mini, ptr);
-		if (ptr == NULL)
+		if (ptr == NULL || ptr->size == 0)
 			return (0);
 		while (ptr->size == 0)
 		{
@@ -118,12 +115,16 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 				return (0);
 			ptr = ft_redir(mini, ptr);
 		}
-		if ((ptr->type == T_PIPE || (ptr->prev && ptr->prev->type == T_PIPE))
-			&& ft_is_builtin(ptr->av[0]) == 1)
+		if ((ptr->type == T_PIPE || (ptr->prev && ptr->prev->type == T_PIPE)))
+			// && ft_is_builtin(ptr->av[0]) == 1)
+		{
+			// printf("GOES IN PIPES\n");
 			execves(ptr, envp, mini);
-		else if (ft_strcmp("", ptr->av[0]) == 0)
-			break ;
-		else if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]))
+			// printf("COMES OUTs PIPES\n");
+		}
+		// else if (ft_strcmp("", ptr->av[0]) == 0)
+		// 	break ;
+		else if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]) == 1)
 			exec_builtin(ptr, mini);
 		else if (ft_strcmp(ptr->av[0], "exit") == 0)
 		{
@@ -148,12 +149,12 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		i = 0;
 		while (i <= ptr->size)
 		{
-			printf("value of ptr->av[i]: %s\n", ptr->av[i]);
+			// printf("value of ptr->av[i]: %s\n", ptr->av[i]);
 			free(ptr->av[i]);
 			i++;
 		}
 		free(ptr->av);
-		// free(ptr);
+		free(ptr);
 		ptr = tmp;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/03 14:40:19 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/03 16:18:05 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 	int			bin;
 	char		*startcmd;
 
+	// printf("GOES IN WITH: %s\n", ptr->av[0]);
 	command = ptr->av[0];
 	tmp = command;
 	startcmd = ft_substr(command, 0, 5);
@@ -56,7 +57,7 @@ static int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 	free(startcmd);
 	if (bin == 0)
 		tmp = ft_substr(command, 5, ft_strlen(command) - 5);
-	free(command);
+	// free(command);
 	dit = readdir(dirp);
 	while (dit)
 	{
@@ -64,6 +65,7 @@ static int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp)
 		{
 			ptr->av[0] = ft_strjoin("/bin/", tmp);
 			closedir(dirp);
+			// printf("COMES OUT\n");
 			return (0);
 		}
 		dit = readdir(dirp);
@@ -103,11 +105,9 @@ int	look_for_non_builtin(t_base *ptr)
 	dirp = opendir("/bin");
 	if (dirp == NULL)
 		exit(0);
-	// ft_leaks();
 	if (ft_check_in_bin(tmp, dit, dirp) == 0)
 		return (0);
 	closedir(dirp);
-	// ft_leaks();
 	dirp = opendir("/usr/bin");
 	if (dirp == NULL)
 		exit(0);
@@ -115,6 +115,6 @@ int	look_for_non_builtin(t_base *ptr)
 		return (0);
 	if (closedir(dirp) == -1)
 		exit(0);
-	// free(tmp->av[0]);
+	free(tmp->av[0]);
 	return (2);
 }

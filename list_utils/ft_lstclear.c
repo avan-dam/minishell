@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:50:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/04 10:47:42 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/04 11:32:43 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,5 @@ void	one_baseclear(t_base *store)
 	}
 	store->size = 0;
 	free(store->av);
-	free(store);
+	// free(store);
 }

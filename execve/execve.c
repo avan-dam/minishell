@@ -6,7 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2021/03/04 11:14:46 by avan-dam      ########   odam.nl         */
+=======
+/*   Updated: 2021/03/04 11:40:06 by avan-dam      ########   odam.nl         */
+>>>>>>> amberbranch
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +184,6 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		unvalid_ident(ptr->av[0], mini, 127);
 	else
 		execves(ptr, envp, mini);
-	ft_reset_fds(mini);
+	// ft_reset_fds(mini);
 	return (0);
 }

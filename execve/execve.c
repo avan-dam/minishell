@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/04 10:24:25 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/04 11:02:50 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 
 static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 {
-	if (ft_is_builtin(ptr->av[0]) == 0 && look_for_non_builtin(ptr) == 2)
+	if (ft_is_builtin(ptr->av[0]) == 0 && look_for_non_builtin(ptr, 1) == 2)
 		unvalid_ident(ptr->av[0], mini, 127);
 	if (ptr->type == T_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 		return (1);
@@ -189,7 +189,7 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		}
 		return (-1);
 	}
-	else if (look_for_non_builtin(ptr) == 2)
+	else if (look_for_non_builtin(ptr, 0) == 2)
 		unvalid_ident(ptr->av[0], mini, 127);
 	else
 		execves(ptr, envp, mini);

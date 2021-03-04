@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/04 10:35:13 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/04 10:56:31 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int					error_opening(char *error, t_mini *mini);
 **	EXECVE FUNCTION
 */
 int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
-int					look_for_non_builtin(t_base *ptr);
+int					look_for_non_builtin(t_base *ptr, int i);
 int					ft_is_builtin(char *str);
 int					ft_execve(t_mini *mini, char **envp);
 

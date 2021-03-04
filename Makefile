@@ -6,11 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-<<<<<<< HEAD
-#    Updated: 2021/03/03 14:38:00 by salbregh      ########   odam.nl          #
-=======
-#    Updated: 2021/03/04 11:12:06 by avan-dam      ########   odam.nl          #
->>>>>>> amberbranch
+#    Updated: 2021/03/04 11:24:48 by avan-dam      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 

@@ -3,14 +3,10 @@
 /*                                                        ::::::::            */
 /*   non_builtins.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
+/*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2021/03/03 16:18:05 by salbregh      ########   odam.nl         */
-=======
-/*   Updated: 2021/03/04 11:02:01 by avan-dam      ########   odam.nl         */
->>>>>>> amberbranch
+/*   Created: 2021/03/04 11:14:35 by avan-dam      #+#    #+#                 */
+/*   Updated: 2021/03/04 11:14:36 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +109,6 @@ int	look_for_non_builtin(t_base *ptr, int i)
 	dirp = opendir("/bin");
 	if (dirp == NULL)
 		exit(0);
-	// ft_leaks();
 	if (ft_check_in_bin(tmp, dit, dirp, i) == 0)
 		return (0);
 	closedir(dirp);
@@ -124,6 +119,9 @@ int	look_for_non_builtin(t_base *ptr, int i)
 		return (0);
 	if (closedir(dirp) == -1)
 		exit(0);
+<<<<<<< HEAD
 	free(tmp->av[0]);
+=======
+>>>>>>> amberbranch
 	return (2);
 }

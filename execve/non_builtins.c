@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/04 11:46:53 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/04 11:47:57 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,5 @@ int	look_for_non_builtin(t_base *ptr, int i)
 		return (0);
 	if (closedir(dirp) == -1)
 		exit(0);
-<<<<<<< HEAD
-	free(tmp->av[0]);
-=======
->>>>>>> amberbranch
 	return (2);
 }

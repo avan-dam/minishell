@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/04 11:46:46 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/04 11:53:28 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,13 @@ static int	send_exec_cmds(t_base *ptr, char **envp, t_mini *mini, char *line)
 		tmp2 = tmp->next;
 		one_baseclear(tmp);
 		tmp = tmp2;
-		// ft_reset_fds(mini);
+		ft_reset_fds(mini);
 	}
 	while(ptr)
-{		free(ptr);
-		ptr = ptr->next;}
+	{		
+		free(ptr);
+		ptr = ptr->next;
+	}
 	// ft_reset_fds(mini);
 	return (0);
 }

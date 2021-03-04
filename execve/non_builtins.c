@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/04 11:02:01 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/04 11:07:53 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,9 @@ int	look_for_non_builtin(t_base *ptr, int i)
 	dirp = opendir("/bin");
 	if (dirp == NULL)
 		exit(0);
-	// ft_leaks();
 	if (ft_check_in_bin(tmp, dit, dirp, i) == 0)
 		return (0);
 	closedir(dirp);
-	// ft_leaks();
 	dirp = opendir("/usr/bin");
 	if (dirp == NULL)
 		exit(0);
@@ -117,7 +115,5 @@ int	look_for_non_builtin(t_base *ptr, int i)
 		return (0);
 	if (closedir(dirp) == -1)
 		exit(0);
-	// free(tmp->av[0]);
-	// ft_baseclear(&ptr);
 	return (2);
 }

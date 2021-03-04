@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/04 10:56:31 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/04 11:12:27 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,9 @@ void				redir_change_backslash(t_base *ptr, int i);
 int					ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i);
 int					check_file_toredir(t_base *ptr, int i, t_mini *mini);
 int					error_opening(char *error, t_mini *mini);
+void				fill_av_list(t_base *new, t_mini *mini, int j, int l);
+int					create_av_list(t_base **ptr, char *line, t_mini *mini);
+int					no_of_commands(char *line, t_mini *mini, int i, int numb);
 
 /*
 **	EXECVE FUNCTION

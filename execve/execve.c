@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/03 16:24:55 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/04 11:04:41 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 
 static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 {
-	if (ft_is_builtin(ptr->av[0]) == 0 && look_for_non_builtin(ptr) == 2)
+	if (ft_is_builtin(ptr->av[0]) == 0 && look_for_non_builtin(ptr, 1) == 2)
 		unvalid_ident(ptr->av[0], mini, 127);
 	if (ptr->type == T_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 		return (1);
@@ -96,14 +96,73 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		parent_proces(pid, mini, ptr, piped);
 }
 
+// int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
+// {
+// 	// t_base	*tmp;
+// 	int		i;
+
+// 	while (ptr)
+// 	{
+// 		if ((ptr == NULL) || (ptr->size == 0))
+// 			return (0);
+// 		ptr = ft_redir(mini, ptr);
+// 		if (ptr == NULL)
+// 			return (0);
+// 		while (ptr->size == 0)
+// 		{
+// 			ptr = ptr->next;
+// 			if (ptr == NULL)
+// 				return (0);
+// 			ptr = ft_redir(mini, ptr);
+// 		}
+// 		if ((ptr->type == T_PIPE || (ptr->prev && ptr->prev->type == T_PIPE))
+// 			&& ft_is_builtin(ptr->av[0]) == 1)
+// 			execves(ptr, envp, mini);
+// 		else if (ft_strcmp("", ptr->av[0]) == 0)
+// 			break ;
+// 		else if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]))
+// 			exec_builtin(ptr, mini);
+// 		else if (ft_strcmp(ptr->av[0], "exit") == 0)
+// 		{
+// 			if (ptr->av[1] != NULL)
+// 			{
+// 				if (ft_is_str_int(ptr->av[1]) == 0)
+// 					mini->exit = 255;
+// 				else
+// 				{
+// 					mini->exit = ft_atoi(ptr->av[1]);
+// 					if (ptr->av[2] != NULL)
+// 						mini->exit = 1;
+// 				}
+// 			}
+// 			return (-1);
+// 		}
+// 		else if (look_for_non_builtin(ptr) == 2)
+// 			unvalid_ident(ptr->av[0], mini, 127);
+// 		else
+// 			execves(ptr, envp, mini);
+// 		ft_reset_fds(mini);
+// 		i = 0;
+// 		while (i <= ptr->size)
+// 		{
+// 			free(ptr->av[i]);
+// 			i++;
+// 		}
+// 		free(ptr->av);
+// 		ptr = ptr->next;
+// 	}
+// 	return (0);
+// }
 int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
-	// ft_leaks();
-	t_base	*tmp;
-	int		i;
-
-	while (ptr)
+	if ((ptr == NULL) || (ptr->size == 0))
+		return (0);
+	ptr = ft_redir(mini, ptr);
+	if (ptr == NULL)
+		return (0);
+	while (ptr->size == 0)
 	{
+<<<<<<< HEAD
 		tmp = ptr->next;
 		ptr = ft_redir(mini, ptr);
 		if (ptr == NULL || ptr->size == 0)
@@ -127,20 +186,34 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		else if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]) == 1)
 			exec_builtin(ptr, mini);
 		else if (ft_strcmp(ptr->av[0], "exit") == 0)
+=======
+		ptr = ptr->next;
+		if (ptr == NULL)
+			return (0);
+		ptr = ft_redir(mini, ptr);
+	}
+	if ((ptr->type == T_PIPE || (ptr->prev && ptr->prev->type == T_PIPE))
+		&& ft_is_builtin(ptr->av[0]) == 1)
+		execves(ptr, envp, mini);
+	else if (ft_strcmp("", ptr->av[0]) == 0)
+		return (0) ;
+	else if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]))
+		exec_builtin(ptr, mini);
+	else if (ft_strcmp(ptr->av[0], "exit") == 0)
+	{
+		if (ptr->av[1] != NULL)
+>>>>>>> amberbranch
 		{
-			if (ptr->av[1] != NULL)
+			if (ft_is_str_int(ptr->av[1]) == 0)
+				mini->exit = 255;
+			else
 			{
-				if (ft_is_str_int(ptr->av[1]) == 0)
-					mini->exit = 255;
-				else
-				{
-					mini->exit = ft_atoi(ptr->av[1]);
-					if (ptr->av[2] != NULL)
-						mini->exit = 1;
-				}
+				mini->exit = ft_atoi(ptr->av[1]);
+				if (ptr->av[2] != NULL)
+					mini->exit = 1;
 			}
-			return (-1);
 		}
+<<<<<<< HEAD
 		else if (look_for_non_builtin(ptr) == 2)
 			unvalid_ident(ptr->av[0], mini, 127);
 		else
@@ -156,6 +229,14 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		free(ptr->av);
 		free(ptr);
 		ptr = tmp;
+=======
+		return (-1);
+>>>>>>> amberbranch
 	}
+	else if (look_for_non_builtin(ptr, 0) == 2)
+		unvalid_ident(ptr->av[0], mini, 127);
+	else
+		execves(ptr, envp, mini);
+	ft_reset_fds(mini);
 	return (0);
 }

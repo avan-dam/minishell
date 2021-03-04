@@ -6,7 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2021/03/03 14:42:46 by salbregh      ########   odam.nl         */
+=======
+/*   Updated: 2021/03/04 10:45:48 by avan-dam      ########   odam.nl         */
+>>>>>>> amberbranch
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +148,19 @@ static int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 
 static int	send_exec_cmds(t_base *ptr, char **envp, t_mini *mini, char *line)
 {
+	t_base *tmp;
+	t_base *tmp2;
+
+	tmp = ptr;
 	free(line);
-	if (ptr)
-		if (exec_cmds(ptr, envp, mini) == -1)
+	while (tmp)
+	{
+		if (exec_cmds(tmp, envp, mini) == -1)
 			return (-1);
+		tmp2 = tmp->next;		
+		one_baseclear(tmp);
+		tmp = tmp2;
+	}
 	return (0);
 }
 
@@ -175,5 +188,8 @@ int	parse_input(char *line, t_mini *mini, char **envp, int i)
 		else
 			i++;
 	}
-	return (send_exec_cmds(ptr, envp, mini, line));
+	int p = send_exec_cmds(ptr, envp, mini, line);
+	// printf("going into ptr")
+	// ft_baseclear(&ptr);
+	return (p);
 }

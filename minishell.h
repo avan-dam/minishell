@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/03 09:09:38 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/04 10:35:13 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int					ft_split_into_tlist(t_mini *mini, char *line);
 void				ft_lstprintold(t_list *lst);
 void				ft_baseclear(t_base **lst);
 void				clear_leaks(t_base *ptr);
+void				one_baseclear(t_base *store);
 
 /*
 **	BUILTIN FUNCTION

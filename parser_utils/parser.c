@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/04 11:53:28 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/06 18:16:13 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 
 	tmp = ft_substr(line, 0, i);
 	result = check_tokens(tmp, mini, 0, 1);
-	while (line[i] && ((line[i] != '|' && line[i] != ';')
-			|| (result == NULL)))
+	while (line[i] && ((line[i] != '|' && line[i] != ';') || (result == NULL)))
 	{
 		if (line[i] == ' ')
 		{
@@ -30,8 +29,7 @@ int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 			free(result);
 			tmp = ft_substr(line, 0, i);
 			result = check_tokens(tmp, mini, 0, 1);
-			if ((line[i] == '|' || line[i] == ';')
-				&& (result != NULL))
+			if ((line[i] == '|' || line[i] == ';') && (result != NULL))
 			{
 				free(tmp);
 				free(result);
@@ -80,12 +78,11 @@ static int	send_exec_cmds(t_base *ptr, char **envp, t_mini *mini, char *line)
 		tmp = tmp2;
 		ft_reset_fds(mini);
 	}
-	while(ptr)
+	while (ptr)
 	{		
 		free(ptr);
 		ptr = ptr->next;
 	}
-	// ft_reset_fds(mini);
 	return (0);
 }
 

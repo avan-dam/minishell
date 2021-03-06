@@ -6,20 +6,36 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/06 15:19:40 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/06 18:11:58 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	ft_send_to_parser(char *line, t_mini *mini, char **envp)
+{
+	char	*tmp;
+	char	*result;
+
+	tmp = line;
+	result = check_tokens(tmp, mini, 0, 0);
+	if (result != NULL)
+	{
+		free(result);
+		if (parse_input(line, mini, envp, 0) == -1)
+			ft_exit(mini, mini->exit);
+	}
+	else
+		free(tmp);
+}
+
 static void	handle_line(int lineret, t_mini *mini, char **envp)
 {
 	char	*line;
-	char	*result;
-	char	*tmp;
 
 	while (lineret)
 	{
+		// ft_putstr_fd("> ", mini->stdout);
 		ft_signals(mini, 0);
 		lineret = get_next_line(mini->stdin, &line);
 		if (lineret < 0)
@@ -28,17 +44,7 @@ static void	handle_line(int lineret, t_mini *mini, char **envp)
 			ft_lstclear(&mini->env1);
 			exit(1);
 		}
-		tmp = line;
-		result = check_tokens(tmp, mini, 0, 0);
-		if (result != NULL)
-		{
-			free(result);
-			if (parse_input(line, mini, envp, 0) == -1)
-				ft_exit(mini, mini->exit);
-		}
-		else
-			free(tmp);
-		// ft_leaks(); // delete
+		ft_send_to_parser(line, mini, envp);
 	}
 	if (lineret == 0)
 		ft_signals(mini, 1);

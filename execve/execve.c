@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/04 11:47:39 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/06 10:35:14 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,5 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		unvalid_ident(ptr->av[0], mini, 127);
 	else
 		execves(ptr, envp, mini);
-	// ft_reset_fds(mini);
 	return (0);
 }

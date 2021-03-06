@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/06 10:00:22 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/06 10:30:42 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	ft_check_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 	tmp = command;
 	startcmd = ft_substr(command, 0, 9);
 	free(startcmd);
-	if (ft_strcmp(startcmd, "/usr/bin") == 0)
+	if ((ft_strcmp(startcmd, "/usr/bin/")) == 0)
 		tmp = ft_substr(command, 9, ft_strlen(command) - 9);
 	dit = readdir(dirp);
 	while (dit)
@@ -41,7 +41,7 @@ static int	ft_check_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 	return (1);
 }
 
-static int	ft_check_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
+static int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 {
 	char		*command;
 	char		*tmp;
@@ -51,7 +51,7 @@ static int	ft_check_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 	tmp = command;
 	startcmd = ft_substr(command, 0, 5);
 	free(startcmd);
-	if (ft_strcmp(startcmd, "/bin/") == 0)
+	if ((ft_strcmp(startcmd, "/bin/") == 0))
 		tmp = ft_substr(command, 5, ft_strlen(command) - 5);
 	dit = readdir(dirp);
 	while (dit)
@@ -101,7 +101,7 @@ int	look_for_non_builtin(t_base *ptr, int i)
 	dirp = opendir("/bin");
 	if (dirp == NULL)
 		exit(0);
-	if (ft_check_bin(tmp, dit, dirp, i) == 0)
+	if (ft_check_in_bin(tmp, dit, dirp, i) == 0)
 		return (0);
 	closedir(dirp);
 	dirp = opendir("/usr/bin");

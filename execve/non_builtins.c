@@ -6,28 +6,25 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/04 11:47:57 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/06 10:00:22 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include <dirent.h>
 
-static int	ft_check_in_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
+static int	ft_check_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 {
 	char		*command;
 	char		*tmp;
-	int			usrbin;
 	char		*startcmd;
 
 	command = ptr->av[0];
 	tmp = command;
 	startcmd = ft_substr(command, 0, 9);
-	usrbin = ft_strcmp(startcmd, "/usr/bin/");
 	free(startcmd);
-	if (usrbin == 0)
+	if (ft_strcmp(startcmd, "/usr/bin") == 0)
 		tmp = ft_substr(command, 9, ft_strlen(command) - 9);
-	// free(command);
 	dit = readdir(dirp);
 	while (dit)
 	{
@@ -44,22 +41,18 @@ static int	ft_check_in_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i
 	return (1);
 }
 
-static int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
+static int	ft_check_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 {
 	char		*command;
 	char		*tmp;
-	int			bin;
 	char		*startcmd;
 
-	// printf("GOES IN WITH: %s\n", ptr->av[0]);
 	command = ptr->av[0];
 	tmp = command;
 	startcmd = ft_substr(command, 0, 5);
-	bin = ft_strcmp(startcmd, "/bin/");
 	free(startcmd);
-	if (bin == 0)
+	if (ft_strcmp(startcmd, "/bin/") == 0)
 		tmp = ft_substr(command, 5, ft_strlen(command) - 5);
-	// free(command);
 	dit = readdir(dirp);
 	while (dit)
 	{
@@ -69,7 +62,6 @@ static int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 			if (tmp && i == 0)
 				free(tmp);
 			closedir(dirp);
-			// printf("COMES OUT\n");
 			return (0);
 		}
 		dit = readdir(dirp);
@@ -109,13 +101,13 @@ int	look_for_non_builtin(t_base *ptr, int i)
 	dirp = opendir("/bin");
 	if (dirp == NULL)
 		exit(0);
-	if (ft_check_in_bin(tmp, dit, dirp, i) == 0)
+	if (ft_check_bin(tmp, dit, dirp, i) == 0)
 		return (0);
 	closedir(dirp);
 	dirp = opendir("/usr/bin");
 	if (dirp == NULL)
 		exit(0);
-	if (ft_check_in_usr_bin(ptr, dit, dirp, i) == 0)
+	if (ft_check_usr_bin(ptr, dit, dirp, i) == 0)
 		return (0);
 	if (closedir(dirp) == -1)
 		exit(0);

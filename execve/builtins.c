@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/06 10:30:42 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/06 15:16:00 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,26 @@ int	look_for_non_builtin(t_base *ptr, int i)
 	if (closedir(dirp) == -1)
 		exit(0);
 	return (2);
+}
+
+void	exec_builtin(t_base *tmp, t_mini *mini)
+{
+	if (ft_strcmp(tmp->av[0], "$?") == 0)
+		ft_printf_exit_status(mini);
+	else if (ft_strcmp(tmp->av[0], "env") == 0
+		|| ft_strcmp(tmp->av[0], "/usr/bin/env") == 0)
+		ft_lstprint(mini->env1, mini, 0);
+	else if (ft_strcmp(tmp->av[0], "export") == 0)
+		ft_export(tmp, mini);
+	else if (ft_strcmp(tmp->av[0], "echo") == 0
+		|| ft_strcmp(tmp->av[0], "/bin/echo") == 0)
+		ft_echo(tmp, mini);
+	else if ((ft_strcmp(tmp->av[0], "pwd") == 0)
+		|| (ft_strcmp(tmp->av[0], "/bin/pwd") == 0))
+		ft_pwd(mini);
+	else if (ft_strcmp(tmp->av[0], "cd") == 0
+		|| ft_strcmp(tmp->av[0], "/usr/bin/cd") == 0)
+		ft_cd(tmp, mini);
+	else if (ft_strcmp(tmp->av[0], "unset") == 0)
+		ft_unset(mini, tmp->av[1]);
 }

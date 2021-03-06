@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/04 11:24:48 by avan-dam      ########   odam.nl          #
+#    Updated: 2021/03/06 15:16:34 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRCS =		main.c \
 			parser_utils/parser_av_list.c \
 			execve/execve.c \
 			leaks.c \
-			execve/non_builtins.c
+			execve/builtins.c
 # lets delete the leaks.c
 FLAGS = 	-Wall -Werror -Wextra 
 

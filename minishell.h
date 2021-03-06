@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/04 11:12:27 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/06 15:16:26 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void				ft_printf_exit_status(t_mini *mini);
 void				ft_set_env(char **av, char **envp, t_mini *mini);
 void				handle_sigint(int sig);
 void				ft_signals(t_mini *mini, int i);
+void				exec_builtin(t_base *tmp, t_mini *mini);
 
 /*
 **	PARSER FUNCTIONS

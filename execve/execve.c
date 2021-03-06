@@ -6,33 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/06 10:35:14 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/06 15:17:26 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static void	exec_builtin(t_base *tmp, t_mini *mini)
-{
-	if (ft_strcmp(tmp->av[0], "$?") == 0)
-		ft_printf_exit_status(mini);
-	else if (ft_strcmp(tmp->av[0], "env") == 0
-		|| ft_strcmp(tmp->av[0], "/usr/bin/env") == 0)
-		ft_lstprint(mini->env1, mini, 0);
-	else if (ft_strcmp(tmp->av[0], "export") == 0)
-		ft_export(tmp, mini);
-	else if (ft_strcmp(tmp->av[0], "echo") == 0
-		|| ft_strcmp(tmp->av[0], "/bin/echo") == 0)
-		ft_echo(tmp, mini);
-	else if ((ft_strcmp(tmp->av[0], "pwd") == 0)
-		|| (ft_strcmp(tmp->av[0], "/bin/pwd") == 0))
-		ft_pwd(mini);
-	else if (ft_strcmp(tmp->av[0], "cd") == 0
-		|| ft_strcmp(tmp->av[0], "/usr/bin/cd") == 0)
-		ft_cd(tmp, mini);
-	else if (ft_strcmp(tmp->av[0], "unset") == 0)
-		ft_unset(mini, tmp->av[1]);
-}
 
 static void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 {
@@ -96,6 +74,30 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		parent_proces(pid, mini, ptr, piped);
 }
 
+static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
+{
+	if (ft_strcmp(ptr->av[0], "exit") == 0)
+	{
+		if (ptr->av[1] != NULL)
+		{
+			if (ft_is_str_int(ptr->av[1]) == 0)
+				mini->exit = 255;
+			else
+			{
+				mini->exit = ft_atoi(ptr->av[1]);
+				if (ptr->av[2] != NULL)
+					mini->exit = 1;
+			}
+		}
+		return (-1);
+	}
+	else if (look_for_non_builtin(ptr, 0) == 2)
+		unvalid_ident(ptr->av[0], mini, 127);
+	else
+		execves(ptr, envp, mini);
+	return (0);
+}
+
 int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
 	if ((ptr == NULL) || (ptr->size == 0))
@@ -117,24 +119,7 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		return (0);
 	else if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]))
 		exec_builtin(ptr, mini);
-	else if (ft_strcmp(ptr->av[0], "exit") == 0)
-	{
-		if (ptr->av[1] != NULL)
-		{
-			if (ft_is_str_int(ptr->av[1]) == 0)
-				mini->exit = 255;
-			else
-			{
-				mini->exit = ft_atoi(ptr->av[1]);
-				if (ptr->av[2] != NULL)
-					mini->exit = 1;
-			}
-		}
+	else if (execve_more(ptr, mini, envp) == -1)
 		return (-1);
-	}
-	else if (look_for_non_builtin(ptr, 0) == 2)
-		unvalid_ident(ptr->av[0], mini, 127);
-	else
-		execves(ptr, envp, mini);
 	return (0);
 }

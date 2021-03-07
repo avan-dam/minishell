@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/07 14:20:20 by salbregh      ########   odam.nl          #
+#    Updated: 2021/03/07 14:26:32 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,8 +63,7 @@ $(NAME):	$(OFILES) $(INCLUDES)
 %.o:		%.c
 			gcc -Ilibft -Ignl $(FLAGS) -c $< -o $@
 
-clean:
-			/bin/rm -f $(OFILES)
+clean:		/bin/rm -f $(OFILES)
 			make clean -C get_next_line/
 			make clean -C libft/
 

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 09:50:10 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/07 09:51:38 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	exec_builtin(t_base *tmp, t_mini *mini)
 		ft_printf_exit_status(mini);
 	else if (ft_strcmp(tmp->av[0], "env") == 0
 		|| ft_strcmp(tmp->av[0], "/usr/bin/env") == 0)
-			ft_lstprint_env(mini->env1, mini, tmp);
+		ft_lstprint_env(mini->env1, mini, tmp);
 	else if (ft_strcmp(tmp->av[0], "export") == 0)
 		ft_export(tmp, mini);
 	else if (ft_strcmp(tmp->av[0], "echo") == 0

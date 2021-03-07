@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:44:30 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/07 07:19:39 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	redir_change_backslash(t_base *ptr, int i)
 		if (ptr->av[i][j + 1] == '\\')
 		{
 			ft_memmove(&ptr->av[i][j], &ptr->av[i][j + 1],
-			ft_strlen(ptr->av[i]) - j);
+				ft_strlen(ptr->av[i]) - j);
 		}
 		j++;
 	}
@@ -70,7 +70,7 @@ int	ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i)
 	tmp = ft_avs_before_redir(ptr, i, 0, NULL);
 	tmp2 = check_tokens(tmp, mini, 0, 1);
 	if ((tmp != NULL && tmp2 == NULL) || (numb_char(ptr->av[i], '\'') > 0
-				|| (numb_char(ptr->av[i], '"') > 0)))
+			|| (numb_char(ptr->av[i], '"') > 0)))
 	{
 		ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0, 2);
 		ptr->redir = 3;

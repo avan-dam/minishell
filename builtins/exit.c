@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/03 08:41:46 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/07 08:44:06 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ void	clear_mini(t_mini *mini, int i)
 void	ft_exit(t_mini *mini, int exitstatus)
 {
 	clear_mini(mini, 0);
+	write(2, "exit\n", 5); // ADDED THIS AS 2
 	exit(exitstatus);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   non_builtins.c                                     :+:    :+:            */
+/*   builtins.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/06 15:16:00 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/07 08:42:14 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,8 @@ void	exec_builtin(t_base *tmp, t_mini *mini)
 		|| ft_strcmp(tmp->av[0], "/usr/bin/cd") == 0)
 		ft_cd(tmp, mini);
 	else if (ft_strcmp(tmp->av[0], "unset") == 0)
+	{
 		ft_unset(mini, tmp->av[1]);
+		mini->exit = 0;
+	}
 }

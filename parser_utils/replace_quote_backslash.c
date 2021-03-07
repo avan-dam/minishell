@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/03 08:21:13 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/07 07:17:55 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_single_quotes(t_line *s, int i)
 	if (s->d % 2 == 1)
 	{
 		if ((s->str[i + 1] == '\\') || ((s->str[i + 1] == '"')
-					&& (s->d % 2 == 1)) || (i + 2 == (int)ft_strlen(s->str)))
+				&& (s->d % 2 == 1)) || (i + 2 == (int)ft_strlen(s->str)))
 			return (i);
 		return (i + 2);
 	}

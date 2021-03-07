@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 08:44:06 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/07 09:28:00 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_printf_exit_status(t_mini *mini)
 	ft_putstr_fd("bash: ", mini->stdout);
 	ft_putstr_fd(exitstatus, mini->stdout);
 	ft_putstr_fd(": command not found\n", mini->stdout);
+	// clear_mini(mini, 1);
 	mini->exit = 127;
 }
 

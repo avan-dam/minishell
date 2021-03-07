@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 15:08:51 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/07 17:20:59 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static char	*ft_howmany_n(char *string, int i, int j)
 {
+	if (ft_strcmp(string, "-n") == 0)
+		return (ft_substr(string, 3, ft_strlen(string) - 3));
 	while (string[i] != '\0')
 	{
 		j = i;
@@ -37,16 +39,12 @@ static int	ft_echo_n(char *string, t_mini *mini)
 		return (0);
 	string = ft_howmany_n(string, 0, 0);
 	tmp = string;
-	if (ft_strcmp(tmp, "") != 0)
-		string = ft_strtrim(tmp, " ");
+	if (ft_strcmp(tmp, "") == 0)
+		return (0);
+	string = ft_strtrim(tmp, " ");
 	ft_putstr_fd(string, mini->stdout);
-	// printf("STRING:[%s]\n", string);
 	free(string);
-	// printf("tmp:[%s]\n", tmp);
-	// if (ft_strcmp(tmp, "") != 0)
 	free(tmp);
-	// printf("STRING:[%s]\n", string);
-	// ft_leaks();
 	mini->exit = 0;
 	return (0);
 }

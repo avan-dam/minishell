@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/01 14:47:52 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/07 08:51:59 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	ft_signals(t_mini *mini, int i)
 	else if (i == 1)
 	{
 		mini->exit = 0;
-		write(1, "exit\n", 5);
 		ft_exit(mini, mini->exit);
 	}
 }

@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/06 15:16:34 by salbregh      ########   odam.nl          #
+#    Updated: 2021/03/07 08:00:16 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS =		main.c \
 			parser_utils/redir_check_valid.c \
 			parser_utils/parser.c \
 			parser_utils/parser_av_list.c \
+			parser_utils/parser_no_commands.c \
 			execve/execve.c \
 			leaks.c \
 			execve/builtins.c

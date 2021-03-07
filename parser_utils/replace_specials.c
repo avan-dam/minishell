@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/03 10:20:24 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/07 09:33:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	ft_exit_status_replace(t_line *s, int i, t_mini *mini)
 	middle = ft_itoa(mini->exit);
 	start = ft_substr(s->str, 0, i + 1);
 	end = ft_substr(s->str, i + 1, ft_strlen(s->str) - i - 1);
+	free(s->str);
 	s->str = ft_strjoin_three(start, middle, end);
 }
 

@@ -6,18 +6,36 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/02 19:20:12 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/07 14:20:44 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	ft_send_to_parser(char *line, t_mini *mini, char **envp)
+{
+	char	*tmp;
+	char	*result;
+
+	tmp = line;
+	result = check_tokens(tmp, mini, 0, 0);
+	if (result != NULL)
+	{
+		free(result);
+		if (parse_input(line, mini, envp, 0) == -1)
+			ft_exit(mini, mini->exit);
+	}
+	else
+		free(tmp);
+}
+
 static void	handle_line(int lineret, t_mini *mini, char **envp)
 {
-	char *line;
+	char	*line;
 
 	while (lineret)
 	{
+		// ft_putstr_fd("> ", mini->stdout);
 		ft_signals(mini, 0);
 		lineret = get_next_line(mini->stdin, &line);
 		if (lineret < 0)
@@ -26,12 +44,8 @@ static void	handle_line(int lineret, t_mini *mini, char **envp)
 			ft_lstclear(&mini->env1);
 			exit(1);
 		}
-		if (mem_check_tkns2(line, mini) != 0)
-		{
-			if (parse_input_string(line, mini, envp, 0) == -1)
-				ft_exit(mini, mini->exit);
-		}
-		// ft_leaks(); // delete
+		ft_send_to_parser(line, mini, envp);
+		// ft_leaks(); //remove
 	}
 	if (lineret == 0)
 		ft_signals(mini, 1);
@@ -46,7 +60,6 @@ int	main(int ac, char **av, char **envp)
 	{
 		ft_memset(&mini, 0, sizeof(t_mini));
 		ft_set_env(av, envp, &mini);
-		// memset for argument struct
 		mini.stdout = 1;
 		mini.stderr = 2;
 		handle_line(1, &mini, envp);

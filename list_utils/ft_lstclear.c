@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:50:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/25 13:53:49 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/06 15:18:01 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	ft_baseclear(t_base **lst)
 
 void 	clear_leaks(t_base *ptr)
 {
-	t_base *temp;
-	int i;
+	t_base	*temp;
+	int		i;
 
 	while (ptr)
 	{
@@ -85,4 +85,21 @@ void 	clear_leaks(t_base *ptr)
 	}
 	free(ptr);
 	ptr = NULL;
+}
+
+void	one_baseclear(t_base *store)
+{
+	int		i;
+
+	i = 0;
+	if (store == NULL)
+		return ;
+	while (i < store->size)
+	{
+		if (store->av[i])
+			free(store->av[i]);
+		i++;
+	}
+	store->size = 0;
+	free(store->av);
 }

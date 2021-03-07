@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/25 15:35:37 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/07 10:12:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void				ft_lstclear(t_list **lst);
 int					ft_split_into_tlist(t_mini *mini, char *line);
 void				ft_lstprintold(t_list *lst);
 void				ft_baseclear(t_base **lst);
-void 				clear_leaks(t_base *ptr);
+void				clear_leaks(t_base *ptr);
+void				one_baseclear(t_base *store);
 
 /*
 **	BUILTIN FUNCTION
@@ -109,11 +110,14 @@ void				ft_printf_exit_status(t_mini *mini);
 void				ft_set_env(char **av, char **envp, t_mini *mini);
 void				handle_sigint(int sig);
 void				ft_signals(t_mini *mini, int i);
+void				exec_builtin(t_base *tmp, t_mini *mini);
+void				ft_lstprint_env(t_list *lst, t_mini *mini, t_base *ptr);
+int					ft_unset_builtin(t_mini *mini, char *unset, t_base *ptr);
 
 /*
 **	PARSER FUNCTIONS
 */
-int					parse_input_string(char *line, t_mini *mini, char **envp, int i);
+int					parse_input(char *line, t_mini *mini, char **envp, int i);
 char				*check_tokens(char *line, t_mini *mini, int i, int j);
 int					ft_find_dolla(int i, int j, t_mini *mini, t_line *s);
 int					ft_replace_quotes(t_line *s, int i);
@@ -126,12 +130,17 @@ void				redir_change_backslash(t_base *ptr, int i);
 int					ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i);
 int					check_file_toredir(t_base *ptr, int i, t_mini *mini);
 int					error_opening(char *error, t_mini *mini);
+void				fill_av_list(t_base *new, t_mini *mini, int j, int l);
+int					create_av_list(t_base **ptr, char *line, t_mini *mini);
+int					no_of_commands(char *line, t_mini *mini, int i, int numb);
+void				ft_free_tmps(char *tmp, char *result);
+char				*free_reset_tmp(char *tmp, char *result, char *line, int i);
 
 /*
 **	EXECVE FUNCTION
 */
 int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
-int					look_for_non_builtin(t_base *ptr);
+int					look_for_non_builtin(t_base *ptr, int i);
 int					ft_is_builtin(char *str);
 int					ft_execve(t_mini *mini, char **envp);
 
@@ -149,7 +158,5 @@ char				*ft_trim_paths(char *line, char *set);
 char				*mem_check_tkns(char *str, t_mini *mini, int i, int j);
 char				*ft_string_insert(char *string, int i, char *middle);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
-int					mem_check_tkns2(char *str, t_mini *mini);
-char				*mem_substr(char *line, int start, int len);
 
 #endif

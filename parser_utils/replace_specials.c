@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/02 19:19:29 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/07 14:21:35 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,15 @@ static void	ft_printf_error(int i, t_mini *mini)
 
 static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 {
-	int	i;
 	int	backslash;
 
-	i = 0;
-	// printf("goes in with str: %s\n", str);
-	// printf("value of s.str: %s\n", s->str);
 	backslash = no_org_backslash(str, 0);
-	if ((((str[i] == '<') || (str[i] == '>')) && str[i - 1] != '\\')
+	if ((((str[0] == '<') || (str[0] == '>')))
 		&& (j == 0))
 	{
 		ft_printf_error(0, mini);
+		if (s->str)
+			free(s->str);
 		return (NULL);
 	}
 	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
@@ -72,7 +70,11 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 		if (j == 0)
 			ft_printf_error(1, mini);
 		if (j != 2)
+		{	
+			if (s->str)
+				free(s->str);
 			return (NULL);
+		}
 	}
 	s->s = 0;
 	s->d = 0;
@@ -91,6 +93,7 @@ void	ft_exit_status_replace(t_line *s, int i, t_mini *mini)
 	middle = ft_itoa(mini->exit);
 	start = ft_substr(s->str, 0, i + 1);
 	end = ft_substr(s->str, i + 1, ft_strlen(s->str) - i - 1);
+	free(s->str);
 	s->str = ft_strjoin_three(start, middle, end);
 }
 

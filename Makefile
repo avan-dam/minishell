@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/02 18:25:45 by salbregh      ########   odam.nl          #
+#    Updated: 2021/03/07 14:20:20 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,9 +35,11 @@ SRCS =		main.c \
 			parser_utils/redir_adapt_array.c \
 			parser_utils/redir_check_valid.c \
 			parser_utils/parser.c \
+			parser_utils/parser_av_list.c \
+			parser_utils/parser_no_commands.c \
 			execve/execve.c \
 			leaks.c \
-			execve/non_builtins.c
+			execve/builtins.c
 # lets delete the leaks.c
 FLAGS = 	-Wall -Werror -Wextra 
 
@@ -55,7 +57,7 @@ $(NAME):	$(OFILES) $(INCLUDES)
 			cp get_next_line/libgnl.a .
 			make -C libft/
 			cp libft/libft.a .
-			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS) 
+			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS)  
 			#$(SEGFAULT)
 			
 %.o:		%.c

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 14:15:11 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/07 15:08:51 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	ft_echo(t_base *ptr, t_mini *mini)
 
 	mini->exit = 0;
 	if (ft_strcmp("", ptr->av[0]) == 0)
-		return (ft_putstr_fd("", mini->stdout));
+		return (ft_putstr_fd("", mini->));
 	string = ft_avs_into_string(ptr, 1, NULL);
 	if (string == NULL || ft_check_empty(string) == 1)
 	{

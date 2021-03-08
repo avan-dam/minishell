@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 07:59:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/07 08:02:56 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/08 12:55:56 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 
 	tmp = ft_substr(line, 0, i);
 	result = check_tokens(tmp, mini, 0, 1);
-	while (line[i] && ((line[i] != '|' && line[i] != ';') || (result == NULL)))
+	while (line[i] && ((line[i] != '|' && line[i] != ';') || (i == 0) || (line[i - 1] == '\\') || (result == NULL)))
 	{
 		if (line[i] == ' ')
 		{

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:49:11 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/09 11:57:31 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/09 15:30:10 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_lstprint(t_list *lst, t_mini *mini, int i)
 	}
 }
 
-int ft_lst_cmp(t_mini *mini, char *value)
+int	ft_lst_cmp(t_mini *mini, char *value)
 {
 	t_list		*tlist;
 

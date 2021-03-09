@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/06 15:17:26 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/09 15:51:44 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,16 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 
 int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
+	int	i;
+
+	i = 0;
 	if ((ptr == NULL) || (ptr->size == 0))
 		return (0);
+	while (i < ptr->size && ptr->av[i])
+	{
+		ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0 , 6);
+		i++;
+	}
 	ptr = ft_redir(mini, ptr);
 	if (ptr == NULL)
 		return (0);

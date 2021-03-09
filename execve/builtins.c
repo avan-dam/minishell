@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 10:11:36 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/09 15:28:13 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	look_for_non_builtin(t_base *ptr, int i)
 void	exec_builtin(t_base *tmp, t_mini *mini)
 {
 	if (ft_strcmp(tmp->av[0], "$?") == 0)
-		ft_printf_exit_status(mini);
+		ft_print_exit_status(mini);
 	else if (ft_strcmp(tmp->av[0], "env") == 0
 		|| ft_strcmp(tmp->av[0], "/usr/bin/env") == 0)
 		ft_lstprint_env(mini->env1, mini, tmp);

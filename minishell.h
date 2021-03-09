@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/09 11:57:08 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/09 15:28:15 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int					ft_unset(t_mini *mini, char *unset);
 void				ft_cd(t_base *ptr, t_mini *mini);
 void				ft_pwd(t_mini *mini);
 void				ft_exit(t_mini *mini, int exitstatus);
-void				ft_printf_exit_status(t_mini *mini);
+void				ft_print_exit_status(t_mini *mini);
 void				ft_set_env(char **av, char **envp, t_mini *mini);
 void				handle_sigint(int sig);
 void				ft_signals(t_mini *mini, int i);
@@ -131,7 +131,7 @@ void				redir_change_backslash(t_base *ptr, int i);
 int					ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i);
 int					check_file_toredir(t_base *ptr, int i, t_mini *mini);
 int					error_opening(char *error, t_mini *mini);
-void				fill_av_list(t_base *new, t_mini *mini, int j, int l);
+int					fill_av_list(t_base *new, t_mini *mini, int j, int l);
 int					create_av_list(t_base **ptr, char *line, t_mini *mini);
 int					no_of_commands(char *line, t_mini *mini, int i, int numb);
 void				ft_free_tmps(char *tmp, char *result);

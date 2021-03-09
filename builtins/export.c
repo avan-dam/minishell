@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/09 12:01:49 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/09 15:30:39 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 		|| (ptr->av[i][0] == '?') || (ptr->av[i][0] == '$')
 		|| (ft_strcmp(ptr->av[i], "=") == 0)
 		|| (ft_lst_cmp(mini, ptr->av[i])))
-		// OR CHECK IN LAST BIT OF LIST
 	{
 		ft_putstr_fd("bash: export: ", mini->stderr);
 		ft_putstr_fd(ptr->av[i], mini->stderr);

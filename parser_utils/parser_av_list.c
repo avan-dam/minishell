@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/04 11:10:44 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/03/09 14:59:39 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/09 15:50:57 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static int 	fill_av_more(t_mini *mini, int j, int k)
 	temp = mini->cmd_part;
 	mini->cmd_part = ft_strtrim_backslash(temp, ' ');
 	free(temp);
-	// printf("before\n");
 	result = mem_check_tkns(ft_substr(mini->cmd_part, k, j - k + 1), mini, 0, 4);
 	while (mini->cmd_part[j] && 
 		((mini->cmd_part[j] != ' ' ||  (mini->cmd_part[j] != ' ' && mini->cmd_part[j + 1] != '\\'))
@@ -94,13 +93,12 @@ static int 	fill_av_more(t_mini *mini, int j, int k)
 		result = mem_check_tkns(ft_substr(mini->cmd_part, k, j - k + 1), mini, 0, 4);
 		j++;
 	}
-		// printf("after \n");
 	if (result)
 		free(result);
 	return (j);
 }
 
-void	fill_av_list(t_base *new, t_mini *mini, int j, int l)
+int	fill_av_list(t_base *new, t_mini *mini, int j, int l)
 {
 	int		k;
 	char	*temp;
@@ -124,53 +122,54 @@ void	fill_av_list(t_base *new, t_mini *mini, int j, int l)
 			}
 			else
 				new->av[l] = ft_substr(mini->cmd_part, k, j - k);
-			// printf("new->av[l][%s]\n", new->av[l]);
 			temp = new->av[l];
-			new->av[l] = mem_check_tkns(temp, mini, 0, 0);
-			// printf("2new->av[l][%s]\n", new->av[l]);
-			if (new->av[l] == NULL)
-			{
-				// printf("in this\n");
-				return ;
-			} // do something return -1
+			// printf("new->av[l][%s]\n", new->av[l]);
+			// new->av[l] = mem_check_tkns(temp, mini, 0, 0);
+			// // printf("2new->av[l][%s]\n", new->av[l]);
+			// if (new->av[l] == NULL)
+			// 	return (-1);
+			if (check_tokens(temp, mini, 0, 0) == NULL)
+				return (-1);
 		}
 		l++;
 	}
+	return (0);
 }
 
-static void	more_av_list(t_base *new, t_mini *mini, t_base **ptr, char *line)
+static int	more_av_list(t_base *new, t_mini *mini, t_base **ptr, char *line)
 {
 	new->size = mini->numb_cmds;
 	new->prev = NULL;
 	new->next = NULL;
 	new->av[mini->numb_cmds] = NULL;
-	fill_av_list(new, mini, 0, 0);
+	if (fill_av_list(new, mini, 0, 0) == -1)
+	{
+		free(line);
+		return (-1);
+	}
 	new->type = mini->type_end;
-	new->av[0] = ft_strtolower(new->av[0]);
+	if (new->av[0][0] != '$')
+		new->av[0] = ft_strtolower(new->av[0]);
 	ft_lstadd_back_base(ptr, new);
 	free(line);
+	return (0);
 }
 
 int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 {
 	int		numb_characters;
 	t_base	*new;
-	// char	*temp;
 
-	// printf("in av list create\n");
 	if (mini->cmd_part)
 		free(mini->cmd_part);
 	numb_characters = no_of_commands(line, mini, 0, 1);
-	// temp = mini->cmd_part;
-	// mini->cmd_part = mem_check_tkns(temp, mini, 0, 0);
-	// if (mini->cmd_part == NULL)
-	// 	return (-1);
 	new = (t_base *)malloc(sizeof(t_base));
 	if (new == NULL)
 		return (-1);
 	new->av = (char **)malloc(sizeof(char *) * (mini->numb_cmds + 1));
 	if (new->av == NULL)
 		return (-1);
-	more_av_list(new, mini, ptr, line);
+	if (more_av_list(new, mini, ptr, line) == -1)
+		return (-1);
 	return (numb_characters);
 }

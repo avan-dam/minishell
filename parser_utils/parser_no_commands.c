@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 07:59:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/09 13:27:20 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/09 15:29:50 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,10 @@ int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 	char	*tmp;
 	char	*result;
 
-	// printf("in no commandsline is [%s]\n", line);
 	tmp = ft_substr(line, 0, i);
-	// printf("temp is [%s]\n", tmp);
 	result = check_tokens(tmp, mini, 0, 1);
-	// printf("in no commands");
-	while (line[i] && ((line[i] != '|' && line[i] != ';') || (i == 0) || (line[i - 1] == '\\') || (result == NULL)))
+	while (line[i] && ((line[i] != '|' && line[i] != ';')
+			|| (i == 0) || (line[i - 1] == '\\') || (result == NULL)))
 	{
 		if (line[i] == ' ')
 		{

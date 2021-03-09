@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 16:56:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/09 15:28:07 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,11 @@ void	ft_reset_fds(t_mini *mini)
 	}
 }
 
-void	ft_printf_exit_status(t_mini *mini)
+void	ft_print_exit_status(t_mini *mini)
 {
-	// char	*exitstatus;
-
-	// exitstatus = ft_itoa(mini->exit);
 	ft_putstr_fd("bash: ", STDERR);
 	ft_putnbr_fd(mini->exit, STDERR);
-	// ft_putstr_fd(exitstatus, STDERR);
 	ft_putstr_fd(": command not found\n", STDERR);
-	// clear_mini(mini, 1);
 	mini->exit = 127;
 }
 

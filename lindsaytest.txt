@@ -3,7 +3,7 @@ e'c'ho -n test
 e\cho -n test
 \e\c\h\o \-\n \t\e\s\t
 "e""c""h""o" "-""n" "t""e""s""t"
-'e''c''h''o' '-''n' 't''e''s''t'
+'e''c''h''o' '-''n' 't''e''s''p'
 "e"'c'"h"'o' '-'"n" te's't
 "e"'c'"h"'o' "-"'n' '-'"n" "-"'n' te's't
 "e"'c'"h"'o' \-"n" te's't

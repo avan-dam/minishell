@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 15:53:02 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/09 12:47:59 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ static void	ft_send_to_parser(char *line, t_mini *mini, char **envp)
 			ft_exit(mini, mini->exit);
 	}
 	else
-		free(tmp);
+	{
+	// 	printf("hereoo\n");
+		free(line);
+	// 	free(line);
+	}
 }
 
 static void	handle_line(int lineret, t_mini *mini, char **envp)

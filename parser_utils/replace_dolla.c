@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:04:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/21 20:14:13 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/09 14:13:04 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static int	ft_len_replace_dolla(int j, int i, char *s, int k)
 		}
 		i++;
 	}
+	// printf("i is %d and car is %c\n", i, s[i]);
 	return (i);
 }
 

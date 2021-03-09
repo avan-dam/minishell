@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/08 19:25:50 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/09 14:12:41 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ static int	no_org_backslash(char *str, int backslash)
 
 static void	ft_printf_error(int i, t_mini *mini)
 {
-	if (i == 0)
-	{
-		ft_putstr_fd("bash: syntax error near ", mini->stderr);
-		ft_putstr_fd("unexpected token `newline'\n", mini->stderr);
-		mini->exit = 258;
-	}
+	// if (i == 0)
+	// {
+	// 	ft_putstr_fd("bash: syntax error near ", mini->stderr);
+	// 	ft_putstr_fd("unexpected token `newline'\n", mini->stderr);
+	// 	mini->exit = 258;
+	// }
 	if (i == 1)
 	{
 		ft_putstr_fd("minishell does not ", mini->stderr);
@@ -58,15 +58,15 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 
 	backslash = no_org_backslash(str, 0);
 	// printf("in checkvalid last bit\n");
-	if ((((str[0] == '<') || (str[0] == '>')))
-		&& (j == 0))
-	{
-		// printf("hooo\n");
-		ft_printf_error(0, mini);
-		if (s->str)
-			free(s->str);
-		return (NULL);
-	}
+	// if ((((str[0] == '<') || (str[0] == '>')))
+	// 	&& (j == 0) && ft_strlen(str) != 1)
+	// {
+	// 	// printf("strlenstr is [%zu] and str is [%s]\n", ft_strlen(str), str);
+	// 	ft_printf_error(0, mini);
+	// 	if (s->str)
+	// 		free(s->str);
+	// 	return (NULL);
+	// }
 	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
 	{
 		// printf("here s->s%d s->d %d\n", s->s, s->d);
@@ -110,8 +110,20 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 
 	// printf("start\n");
 	// printf("start[%s]\n", str);
+	// printf("1here str is [%s]\n", str);
+	// if (str == NULL || ft_strcmp(str, "") == 0)
+	// 	return (NULL);
+	// char *temp;
+	// printf("2here str is [%s]\n", str);
+	// if (j == 6)
+	// {
+	// 	temp = str;
+	// 	str = ft_strtrim(temp, " ");
+	// 	free(temp);
+	// }
 	if (str == NULL || ft_strcmp(str, "") == 0)
 		return (NULL);
+	// printf("3here str is [%s]\n", str);
 	ft_memset(&s, 0, sizeof(t_line));
 	s.str = ft_strdup(str);
 	// string is TRIMMMMM ADD HERE TAKE OUT OF ECHO
@@ -137,7 +149,7 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 		else if ((s.str[i] == '\'') || (s.str[i] == '"'))
 		{	
 			// printf("goes in replace quotes shit i is %d\n", i);
-			i = ft_replace_quotes(&s, i);
+			i = ft_replace_quotes(&s, i, j);
 		}
 		else if (s.str[i] == '$' && s.str[i + 1] == '?' && i != 0
 			&& (s.d == 0 || s.d % 2 == 1) && (s.s == 0 || s.s % 2 == 0))

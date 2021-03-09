@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/08 19:25:30 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/09 10:54:13 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,13 @@ static int	ft_single_quotes(t_line *s, int i)
 	return (i);
 }
 
-int	ft_replace_quotes(t_line *s, int i)
+int	ft_replace_quotes(t_line *s, int i, int j)
 {
 	// int k;
-	if (numb_char(s->str, '>') != 0 || numb_char(s->str, '<') != 0)
+	// printf("in replace quotes s->str is [%s] s->str[i][%c]\n", s->str, s->str[i]);
+	if ((numb_char(s->str, '>') != 0 || numb_char(s->str, '<') != 0) && j != 4)
 		return (i);
+	// printf("past\n");
 	// printf("in replace quotes s->str is [%s]\n", s->str);
 	if (s->str[i] == '\'')
 		i = ft_single_quotes(s, i);

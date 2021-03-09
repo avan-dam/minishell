@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/08 20:28:24 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,37 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 	return (i);
 }
 
+static char	*ft_change_quote(char *string)
+{
+	int	i;
+
+	i = 0;
+	while (string[i])
+	{
+		// printf("string[%s] string[i] is %c\n", string, string[i]);
+		if (string[i] == '\'' || string[i] == '"')
+			ft_memmove(&string[i], &string[i + 1], ft_strlen(string) - i);
+		else
+			i++;
+	}
+	return (string);
+}
+
 static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 {
-	if (ft_check_redir_in_quotes(ptr, mini, i) == 0)
-		return (0);
+	if ((numb_char(ptr->av[i], '"') != 0) || (numb_char(ptr->av[i], '\'') != 0))
+	{
+		printf("hooo\n");
+		// printf("in ptr->av[i][%s]\n", ptr->av[i]);
+		ptr->av[i] = ft_change_quote(ptr->av[i]);
+		if (ft_check_redir_in_quotes(ptr, mini, i) == 0)
+			return (0);
+		// printf("in ptr->av[i][%s]\n", ptr->av[i]);
+		// return (1);
+	}
+	printf("hooo\n");
+	// if (ft_check_redir_in_quotes(ptr, mini, i) == 0)
+	// 	return (0);
 	while (ptr->av[i][j] != '>' && ptr->av[i][j] != '<')
 		j++;
 	if (j <= 0)
@@ -93,6 +120,7 @@ t_base	*ft_redir(t_mini *mini, t_base *ptr)
 	int		i;
 
 	i = 0;
+	// printf("in redir\n");
 	while (i < ptr->size && ptr->av[i])
 	{
 		if ((ft_strchr_numb(ptr->av[i], '>', 0) != -1)
@@ -101,9 +129,9 @@ t_base	*ft_redir(t_mini *mini, t_base *ptr)
 			redir_change_backslash(ptr, i);
 			if (ft_backslash_redir(ptr, i, mini, 0) == -1)
 				return (NULL);
-			if (ptr->redir == 1 && i != 0)
-				i--;
-			if (ptr->redir == 0)
+			// if (ptr->redir == 1 && i != 0)
+			// 	i--;
+			// if (ptr->redir == 0)
 				i++;
 		}
 		ptr->redir = 0;

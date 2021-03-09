@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/09 13:11:30 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/09 15:03:44 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,12 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string)
 	{
 		string = ft_strjoin(tmp, ptr->av[i]);
 		free(tmp);
+		// printf("string is [%s]\n", string);
 		if (i + 1 != ptr->size)
 		{
 			if (ptr->av[i + 1] && ptr->av[i + 1][0] != '>'
-				&& ptr->av[i + 1][0] != '<')
+				&& ptr->av[i + 1][0] != '<' && ft_strcmp("", ptr->av[i + 1]) != 0
+				&& (i == 0 || ft_strcmp("", string) != 0))
 			{
 				tmp = ft_strdup(string);
 				free(string);

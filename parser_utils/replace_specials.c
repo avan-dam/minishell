@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/09 15:39:37 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/09 16:25:24 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 		if (j == 0)
 			ft_print_error(mini);
 		if (j != 2)
-		{	
+		{
 			if (s->str)
 				free(s->str);
 			return (NULL);

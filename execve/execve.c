@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/09 15:51:44 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/09 17:43:47 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,13 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 		return (0);
 	while (i < ptr->size && ptr->av[i])
 	{
-		ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0 , 6);
+		// ALL THIS FOR echo >""; fix it
+		// printf("1ptr->av[i][%s]\n", ptr->av[i]);
+		// if ((ptr->av[i][0] != '"' && ptr->av[i][1] != '"' && ptr->av[i][2] != '\0') || !(ptr->av[i][0] == '\'' && ptr->av[i][1] == '\'' && ptr->av[i][2] == '\0') &&
+		// if ((ft_strcmp(ptr->av[i], """") != 0) && (ft_strcmp(ptr->av[i], "''") != 0) && 
+		if (ft_strcmp(ptr->av[0], "export") != 0)
+			ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0 , 6);
+		// printf("2ptr->av[i][%s]\n", ptr->av[i]);
 		i++;
 	}
 	ptr = ft_redir(mini, ptr);

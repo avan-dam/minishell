@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 07:59:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/09 15:29:50 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/09 17:03:37 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	no_of_commands_more(t_mini *mini, int i, char *line, int numb)
 static int	no_commands_line(char *line, int i, int numb)
 {
 	if ((line[i] == '>' || line[i] == '<') && line[i + 1] != ' '
-		&& line[i + 1] != '"' && line[i + 1] != '\'' && line[i + 1] != '>'
+		&& line[i + 1] != '\'' && line[i + 1] != '>'
 		&& line[i + 1] != '\0')
 		numb++;
 	return (numb);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/09 15:30:39 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/09 16:02:19 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ int	ft_export(t_base *ptr, t_mini *mini)
 	int	i;
 
 	i = 1;
+	int j = 0;
+	while (j < ptr->size && ptr->av[i])
+	{
+		ptr->av[j] = mem_check_tkns(ptr->av[j], mini, 0 , 6);
+		j++;
+	}
 	if (ptr->av[1] == NULL || ft_strcmp(ptr->av[1], "") == 0)
 	{
 		ft_lstprint(mini->env1, mini, 1);

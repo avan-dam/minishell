@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/04 11:10:44 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/03/09 15:50:57 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/09 17:04:19 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static int 	fill_av_more(t_mini *mini, int j, int k)
 	temp = mini->cmd_part;
 	mini->cmd_part = ft_strtrim_backslash(temp, ' ');
 	free(temp);
+	// printf("mini->cmd_part is [%s]\n", mini->cmd_part);
 	result = mem_check_tkns(ft_substr(mini->cmd_part, k, j - k + 1), mini, 0, 4);
 	while (mini->cmd_part[j] && 
 		((mini->cmd_part[j] != ' ' ||  (mini->cmd_part[j] != ' ' && mini->cmd_part[j + 1] != '\\'))
@@ -85,8 +86,9 @@ static int 	fill_av_more(t_mini *mini, int j, int k)
 		if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
 			&& mini->cmd_part[j + 1] != '\''
 			&& mini->cmd_part[j + 1] != '>'
-			&& mini->cmd_part[j + 1] != '"' && result != NULL)
+			&& result != NULL)
 		{
+			// printf("in break\n");
 				break ;
 		}
 		free(result);
@@ -95,6 +97,7 @@ static int 	fill_av_more(t_mini *mini, int j, int k)
 	}
 	if (result)
 		free(result);
+	// printf("returns values %d\n", j);
 	return (j);
 }
 
@@ -106,6 +109,7 @@ int	fill_av_list(t_base *new, t_mini *mini, int j, int l)
 	k = 0;
 	while (l != new->size)
 	{
+		// printf("new->size is %d\n", new->size);
 		if (mini->cmd_part[j] == '\0')
 			new->av[l] = NULL;
 		else
@@ -124,10 +128,6 @@ int	fill_av_list(t_base *new, t_mini *mini, int j, int l)
 				new->av[l] = ft_substr(mini->cmd_part, k, j - k);
 			temp = new->av[l];
 			// printf("new->av[l][%s]\n", new->av[l]);
-			// new->av[l] = mem_check_tkns(temp, mini, 0, 0);
-			// // printf("2new->av[l][%s]\n", new->av[l]);
-			// if (new->av[l] == NULL)
-			// 	return (-1);
 			if (check_tokens(temp, mini, 0, 0) == NULL)
 				return (-1);
 		}
@@ -149,7 +149,7 @@ static int	more_av_list(t_base *new, t_mini *mini, t_base **ptr, char *line)
 	}
 	new->type = mini->type_end;
 	if (new->av[0][0] != '$')
-		new->av[0] = ft_strtolower(new->av[0]);
+	new->av[0] = ft_strtolower(new->av[0]);
 	ft_lstadd_back_base(ptr, new);
 	free(line);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/09 15:28:15 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/10 17:16:17 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int					create_av_list(t_base **ptr, char *line, t_mini *mini);
 int					no_of_commands(char *line, t_mini *mini, int i, int numb);
 void				ft_free_tmps(char *tmp, char *result);
 char				*free_reset_tmp(char *tmp, char *result, char *line, int i);
+char				*ft_strtrim_backslash(char const *s1, char c);
 
 /*
 **	EXECVE FUNCTION

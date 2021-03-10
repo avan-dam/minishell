@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/09 17:43:47 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/10 17:19:07 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,24 +101,42 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
 	int	i;
+	char *temp;
 
 	i = 0;
 	if ((ptr == NULL) || (ptr->size == 0))
 		return (0);
 	while (i < ptr->size && ptr->av[i])
 	{
+		// printf("1in execve withptr->av[i][%s] \n", ptr->av[i]);
 		// ALL THIS FOR echo >""; fix it
-		// printf("1ptr->av[i][%s]\n", ptr->av[i]);
-		// if ((ptr->av[i][0] != '"' && ptr->av[i][1] != '"' && ptr->av[i][2] != '\0') || !(ptr->av[i][0] == '\'' && ptr->av[i][1] == '\'' && ptr->av[i][2] == '\0') &&
-		// if ((ft_strcmp(ptr->av[i], """") != 0) && (ft_strcmp(ptr->av[i], "''") != 0) && 
-		if (ft_strcmp(ptr->av[0], "export") != 0)
+		// printf("mini->cmd_part is [%s]\n", mini->cmd_part);
+		while (i < ptr->size && ptr->av[i] && ((ptr->av[i][0] == '"' && ptr->av[i][1] == '"' && ptr->av[i][2] == '\0') || (ptr->av[i][0] == '\'' && ptr->av[i][1] == '\'' && ptr->av[i][2] == '\0')))
+			i++;
+	 	if (i < ptr->size && ptr->av[i] && ((i == 0) || (ft_strcmp(ptr->av[0], "export") != 0 && ft_strcmp(ptr->av[0], "echo") != 0)))
+		{
+			temp = ptr->av[i];
+			ptr->av[i] = ft_strtrim_backslash(temp, ' ');
+			free(temp);
 			ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0 , 6);
-		// printf("2ptr->av[i][%s]\n", ptr->av[i]);
+		}
+		// printf("1.2in execve withptr->av[i][%s] \n", ptr->av[i]);
 		i++;
 	}
 	ptr = ft_redir(mini, ptr);
 	if (ptr == NULL)
 		return (0);
+		i = 0;
+	while (i < ptr->size && ptr->av[i])
+	{
+		// printf("2in execve withptr->av[i]%s] \n", ptr->av[i]);
+		if ((ptr->av[i][0] == '"' && ptr->av[i][1] == '"' && ptr->av[i][2] == '\0') || (ptr->av[i][0] == '\'' && ptr->av[i][1] == '\'' && ptr->av[i][2] == '\0'))
+		{
+			free(ptr->av[i]);
+			ptr->av[i] = ft_strdup("");
+		}
+		i++;
+	}
 	while (ptr->size == 0)
 	{
 		ptr = ptr->next;

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/10 13:47:18 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/11 16:10:10 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static int	direction_list(t_base *ptr, int i, t_mini *mini)
 {
-	int	j;
-	int k;
+	int		j;
+	int		k;
+	char	*temp;
 
 	k = 0;
-	// printf("in check withptr->av[i + 1]%s] \n", ptr->av[i + 1]);
 	while (ptr->av[i][k + 1])
 	{
 		if ((ptr->av[i][k] == '<' && ptr->av[i][k + 1] == '<')
@@ -45,25 +45,28 @@ static int	direction_list(t_base *ptr, int i, t_mini *mini)
 		if (add_new_into_list(j, ptr, i + 1) == -1)
 			i++;
 	}
+	i = 0;
+	while (ptr->av[i])
+	{
+		temp = ptr->av[i];
+		ptr->av[i] = ft_strtrim_backslash(temp, ' ');
+		free(temp);
+		i++;
+	}
 	return (0);
 }
 
 static int	open_file_more(t_base *ptr, int i, t_mini *mini)
 {
-	char *opendir;
-	char *filename;
-	int ret;
+	char	*opendir;
+	char	*filename;
+	int		ret;
 
 	opendir = ptr->av[i];
 	filename = ptr->av[i + 1];
 	ret = 0;
-	// if ((ptr->av[i + 1][0] != '"' && ptr->av[i + 1][1] != '"' && ptr->av[i + 1][2] != '\0') || (ptr->av[i + 1][0] == '\'' && ptr->av[i + 1][1] == '\'' && ptr->av[i + 1][2] == '\0'))
-	// {
-		// printf("ptr->av[i][%s] ptr->av[i + 1][%s], ptr->av[i + 2][%s]\n", ptr->av[i], ptr->av[i + 1], ptr->av[i + 2]);
-	// 	if (ptr->av[i + 2] == NULL)
-	// 		return (error_opening(" ", mini));
-	// }
-	if ((ptr->av[i + 2]) && (ft_strcmp(ptr->av[i + 1],"") == 0) && (ft_strcmp(ptr->av[i + 2],"") != 0))
+	if ((ptr->av[i + 2]) && (ft_strcmp(ptr->av[i + 1], "") == 0)
+		&& (ft_strcmp(ptr->av[i + 2], "") != 0))
 	{
 		filename = ptr->av[i + 2];
 		ret = 1;
@@ -91,11 +94,10 @@ static int	open_file_more(t_base *ptr, int i, t_mini *mini)
 
 static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 {
-	int ret;
-	// printf("in ptr->av[i + 1][%s]\n", ptr->av[i + 1]);
+	int	ret;
+
 	if (check_file_toredir(ptr, i, mini) == -1)
 		return (-1);
-	// printf("here\n");
 	if (ptr->redir == 0)
 		return (i);
 	ret = open_file_more(ptr, i, mini);
@@ -113,18 +115,12 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 
 static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 {
-	// printf("3ptr->av[i][%s]\n", ptr->av[i]);
-	// printf("3in ptr->av[i + 1][%s]\n", ptr->av[i + 1]);
 	if ((numb_char(ptr->av[i], '"') != 0) || (numb_char(ptr->av[i], '\'') != 0))
 	{
-		// printf("2.9ptr->av[i][%s]\n", ptr->av[i]);
 		ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0, 4);
 		ptr->redir = 5;
-		// printf("3.1ptr->av[i][%s]\n", ptr->av[i]);
 		return (1);
 	}
-	// printf("3ptr->av[i][%s]\n", ptr->av[i]);
-	// printf("3in ptr->av[i + 1][%s]\n", ptr->av[i + 1]);
 	if (ft_check_redir_in_quotes(ptr, mini, i) == 0)
 		return (0);
 	while (ptr->av[i][j] != '>' && ptr->av[i][j] != '<')
@@ -150,15 +146,12 @@ t_base	*ft_redir(t_mini *mini, t_base *ptr)
 	int		i;
 
 	i = 0;
-	while (i < ptr->size && ptr->av[i])
+	while (ptr->av[i] && i < ptr->size)
 	{
-		// printf("1ptr->av[i][%s]\n", ptr->av[i]);
 		if ((ft_strchr_numb(ptr->av[i], '>', 0) != -1)
 			|| (ft_strchr_numb(ptr->av[i], '<', 0) != -1))
 		{
 			redir_change_backslash(ptr, i);
-			// printf("2ptr->av[i][%s]\n", ptr->av[i]);
-
 			if (ft_backslash_redir(ptr, i, mini, 0) == -1)
 				return (NULL);
 			if (ptr->redir == 1 && i != 0)

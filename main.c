@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/10 10:52:22 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/11 16:00:04 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@ static void	ft_send_to_parser(char *line, t_mini *mini, char **envp)
 	result = check_tokens(tmp, mini, 0, 0);
 	if (result != NULL)
 	{
+		// printf("sending to parser\n");
 		free(result);
 		if (parse_input(line, mini, envp, 0) == -1)
 			ft_exit(mini, mini->exit);
 	}
 	else
+	{
 		free(tmp);
+		// printf("not to parser\n");
+	}
 }
 
 static void	handle_line(int lineret, t_mini *mini, char **envp)

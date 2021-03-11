@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/10 17:19:07 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/11 16:30:19 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,51 +92,66 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 		return (-1);
 	}
 	else if (look_for_non_builtin(ptr, 0) == 2)
+	{
 		unvalid_ident(ptr->av[0], mini, 127);
+	}
 	else
 		execves(ptr, envp, mini);
 	return (0);
 }
 
-int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
+static void 	sort_struct_before_redir(t_base *ptr, t_mini *mini)
 {
-	int	i;
-	char *temp;
+	char	*temp;
+	int		i;
 
 	i = 0;
-	if ((ptr == NULL) || (ptr->size == 0))
-		return (0);
 	while (i < ptr->size && ptr->av[i])
 	{
-		// printf("1in execve withptr->av[i][%s] \n", ptr->av[i]);
-		// ALL THIS FOR echo >""; fix it
-		// printf("mini->cmd_part is [%s]\n", mini->cmd_part);
-		while (i < ptr->size && ptr->av[i] && ((ptr->av[i][0] == '"' && ptr->av[i][1] == '"' && ptr->av[i][2] == '\0') || (ptr->av[i][0] == '\'' && ptr->av[i][1] == '\'' && ptr->av[i][2] == '\0')))
+		while (i < ptr->size && ptr->av[i] && ((ptr->av[i][0] == '"'
+					&& ptr->av[i][1] == '"' && ptr->av[i][2] == '\0')
+				|| (ptr->av[i][0] == '\'' && ptr->av[i][1] == '\''
+					&& ptr->av[i][2] == '\0')))
 			i++;
-	 	if (i < ptr->size && ptr->av[i] && ((i == 0) || (ft_strcmp(ptr->av[0], "export") != 0 && ft_strcmp(ptr->av[0], "echo") != 0)))
+	 		if (i < ptr->size && ptr->av[i] && ((i == 0)
+			 || (ft_strcmp(ptr->av[0], "export") != 0 && ft_strcmp(ptr->av[0], "echo") != 0)))
 		{
 			temp = ptr->av[i];
 			ptr->av[i] = ft_strtrim_backslash(temp, ' ');
 			free(temp);
-			ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0 , 6);
+			ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0, 6);
 		}
-		// printf("1.2in execve withptr->av[i][%s] \n", ptr->av[i]);
 		i++;
 	}
-	ptr = ft_redir(mini, ptr);
-	if (ptr == NULL)
-		return (0);
-		i = 0;
+}
+
+static void 	sort_struct_after_redir(t_base *ptr)
+{
+	int	i;
+
+	i = 0;
 	while (i < ptr->size && ptr->av[i])
 	{
-		// printf("2in execve withptr->av[i]%s] \n", ptr->av[i]);
-		if ((ptr->av[i][0] == '"' && ptr->av[i][1] == '"' && ptr->av[i][2] == '\0') || (ptr->av[i][0] == '\'' && ptr->av[i][1] == '\'' && ptr->av[i][2] == '\0'))
+		if ((ptr->av[i][0] == '"' && ptr->av[i][1] == '"'
+				&& ptr->av[i][2] == '\0') || (ptr->av[i][0] == '\''
+				&& ptr->av[i][1] == '\'' && ptr->av[i][2] == '\0'))
 		{
 			free(ptr->av[i]);
 			ptr->av[i] = ft_strdup("");
 		}
 		i++;
 	}
+}
+
+int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
+{
+	if ((ptr == NULL) || (ptr->size == 0))
+		return (0);
+	sort_struct_before_redir(ptr, mini);
+	ptr = ft_redir(mini, ptr);
+	if (ptr == NULL)
+		return (0);
+	sort_struct_after_redir(ptr);
 	while (ptr->size == 0)
 	{
 		ptr = ptr->next;

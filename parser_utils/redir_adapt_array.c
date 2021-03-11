@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:38:57 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/02/23 18:28:46 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/11 16:08:10 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
 	}
 	new[j] = tmp;
 	j++;
-	while (j < ptr->size)
+	while (j < ptr->size && ptr->av[j - 1])
 	{
 		new[j] = ft_strdup(ptr->av[j - 1]);
 		j++;
@@ -97,7 +97,7 @@ char	**ft_remove_redir_av(t_base *ptr, int i, int j)
 		temp[j] = ft_strdup(ptr->av[j]);
 		j++;
 	}
-	while (j < ptr->size)
+	while (ptr->av[j + 2] && j < ptr->size)
 	{
 		temp[j] = ft_strdup(ptr->av[j + 2]);
 		j++;

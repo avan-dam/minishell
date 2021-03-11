@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/09 15:28:13 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/11 15:25:16 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 	command = ptr->av[0];
 	tmp = command;
 	startcmd = ft_substr(command, 0, 5);
-	free(startcmd);
 	if ((ft_strcmp(startcmd, "/bin/") == 0))
 		tmp = ft_substr(command, 5, ft_strlen(command) - 5);
+	free(startcmd);
 	dit = readdir(dirp);
 	while (dit)
 	{

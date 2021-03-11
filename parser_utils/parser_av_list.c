@@ -6,11 +6,12 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/04 11:10:44 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/03/10 21:19:40 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/11 16:16:15 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 static int	ft_begin(const char *s1, char c)
 {
 	int		i;
@@ -67,33 +68,29 @@ char	*ft_strtrim_backslash(char const *s1, char c)
 	newstr[i] = '\0';
 	return (newstr);
 }
+
 static int 	fill_av_more(t_mini *mini, int j, int k)
 {
-	char *result;
-	// char *temp;
+	char	*result;
 
-	// temp = mini->cmd_part;
-	// mini->cmd_part = ft_strtrim_backslash(temp, ' ');
-	// free(temp);
-	// printf("mini->cmd_part is [%s]\n", mini->cmd_part);
 	result = mem_check_tkns(ft_substr(mini->cmd_part, k, j - k + 1), mini, 0, 4);
-	while (mini->cmd_part[j] && 
-		((mini->cmd_part[j] != ' ' ||  (mini->cmd_part[j] != ' ' && mini->cmd_part[j + 1] != '\\'))
-		|| result == NULL))
-		{
-			printf("mini->cmd_part[j][%c]\n", mini->cmd_part[j]);
-			free(result);
-			result = mem_check_tkns(ft_substr(mini->cmd_part, k, j - k + 1), mini, 0, 4);
-			if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
+	while (mini->cmd_part[j] && ((mini->cmd_part[j] != ' '
+				|| (mini->cmd_part[j] != ' ' && mini->cmd_part[j + 1] != '\\'))
+			|| result == NULL))
+	{
+		free(result);
+		result = mem_check_tkns(ft_substr(mini->cmd_part, k, j - k + 1), mini, 0, 4);
+		if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
 			&& mini->cmd_part[j + 1] != '>'
 			 && result != NULL)
 		{
-			printf("in break\n");
-				break ;
+			if ((mini->cmd_part[j + 1] == '"')
+				|| (mini->cmd_part[j + 1] == '\''))
+				j++;
+			break ;
 		}
 		if (result != NULL && (mini->cmd_part[j] == '\'' || mini->cmd_part[j] == '"'))
 		{
-			printf("in dis\n");
 			j++;
 			break ;
 		}
@@ -101,14 +98,10 @@ static int 	fill_av_more(t_mini *mini, int j, int k)
 		result = mem_check_tkns(ft_substr(mini->cmd_part, k, j - k + 1), mini, 0, 4);
 		j++;
 	}
-	printf("result is [%s]\n", result);
 	while (mini->cmd_part[j] == ' ')
 		j++;
-	if ((mini->cmd_part[j] == '>') || (mini->cmd_part[j] == '<'))
-		j--;
 	if (result)
 		free(result);
-	// printf("returns values %d\n", j);
 	return (j);
 }
 
@@ -127,20 +120,22 @@ int	fill_av_list(t_base *new, t_mini *mini, int j, int l)
 				j++;
 			k = j;
 			j = fill_av_more(mini, j, k);
-			if ((mini->cmd_part[j] == '>' || (mini->cmd_part[j] == '<'
-				&& mini->cmd_part[j + 1] != '>')))
+			if ((mini->cmd_part[j] == '>') || (mini->cmd_part[j] == '<'))
 			{
-				printf("in dis allocation\n");
-				new->av[l] = ft_substr(mini->cmd_part, k, j - k + 1);
+				if (mini->cmd_part[j + 1] == '>')
+				{
+					new->av[l] = ft_substr(mini->cmd_part, k, j - k + 2);
+					j++;
+				}
+				else
+					new->av[l] = ft_substr(mini->cmd_part, k, j - k + 1);
 				j++;
 			}
 			else
 				new->av[l] = ft_substr(mini->cmd_part, k, j - k);
-			printf("new->size %d, new->av[l][%s] l is %d\n", new->size, new->av[l], l);
 		}
 		l++;
 	}
-	// printf("out fill_av_list\n");
 	return (0);
 }
 
@@ -157,7 +152,7 @@ static int	more_av_list(t_base *new, t_mini *mini, t_base **ptr, char *line)
 	}
 	new->type = mini->type_end;
 	if (new->av[0][0] != '$')
-	new->av[0] = ft_strtolower(new->av[0]);
+		new->av[0] = ft_strtolower(new->av[0]);
 	ft_lstadd_back_base(ptr, new);
 	free(line);
 	return (0);
@@ -168,7 +163,6 @@ int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	int		numb_characters;
 	t_base	*new;
 
-	// printf("in create av list once with line [%s]\n", line);
 	if (ft_strcmp(line, "") == 0)
 		return (0);
 	if (mini->cmd_part)

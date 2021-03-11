@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/10 09:44:43 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/11 16:12:07 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static int	send_exec_cmds(t_base *ptr, char **envp, t_mini *mini, char *line)
 	{
 		if (exec_cmds(tmp, envp, mini) == -1)
 			return (free_before_exit(ptr, tmp));
-		// if (tmp->next)
-		// 	printf("type end temp is %d and first argv next tlist is tmp->next->av[0] is [%s]\n", tmp->type, tmp->next->av[0]);
-		if ((tmp->next) && (tmp->type == 5 || tmp->type == 4) && (ft_strcmp(tmp->next->av[0], ";") == 0 || ft_strcmp(tmp->next->av[0], "|") == 0))
+		if ((tmp->next) && (tmp->type == 5 || tmp->type == 4)
+			&& (ft_strcmp(tmp->next->av[0], ";") == 0
+				|| ft_strcmp(tmp->next->av[0], "|") == 0))
 		{
 			ft_putstr_fd("bash: syntax error near ", mini->stderr);
 			ft_putstr_fd("unexpected token `", mini->stderr);
@@ -67,7 +67,7 @@ static int	send_exec_cmds(t_base *ptr, char **envp, t_mini *mini, char *line)
 				one_baseclear(tmp);
 				tmp = tmp ->next;
 			}
-			break ;		
+			break ;
 		}
 		tmp2 = tmp->next;
 		one_baseclear(tmp);

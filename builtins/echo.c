@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/11 16:35:27 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/12 16:54:39 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,28 +70,24 @@ static int	ft_check_empty(char *string)
 static int	check_n_argv(char *string, t_mini *mini)
 {
 	int		i;
-	int		j;
 	char	*tempptr;
 
-	i = 0;	
+	i = 0;
+	if (string == NULL || ft_strcmp(string, "") == 0 || ft_strcmp(string, "-") == 0)
+		return(-1);
 	tempptr = string;
 	string = ft_strtrim_backslash(tempptr, ' ');
 	free(tempptr);
 	string = mem_check_tkns(string, mini, 0 , 6);
 	if (string == NULL || ft_strcmp(string, "") == 0 || ft_strcmp(string, "-") == 0)
 		return(-1);
-	while (string[i] != '\0')
-	{
-		j = i;
-		if (string[i] != '-')
-			return (-1);
+	if (string[i] != '-')
+		return(-1);
+	i++;
+	while (string[i] == 'n')
 		i++;
-		while (string[i] == 'n')
-			i++;
-		if (string[i] == ' ')
-			return (-1);
-		i++;
-	}
+	if (string[i] != '\0')
+		return (-1);
 	return (1);
 }
 
@@ -112,6 +108,8 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
 		free(ptr->av[i]);
 		ptr->av[i] = ft_strdup("-n");
 		i++;
+		if (ptr->av[i] == NULL)
+			break ;
 		free(tempptr);
 		tempptr = ft_strdup(ptr->av[i]);
 	}
@@ -129,14 +127,14 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
 		free(tmp);
 		tmp22 = check_tokens(ptr->av[i], mini, 0 , 6);
 		string2 = ft_strjoin(tmp2, tmp22);
-		free(tmp2);
 		free(tmp22);
+		free(tmp2);
 		tmp = string;
 		tmp2 = string2;
 		i++;
 	}
 	free(string);
-	if (string2[ft_strlen(string2) - 1] == ' ' && tmp[ft_strlen(tmp) - 1] != '\'' && tmp[ft_strlen(tmp) - 1] != '"')
+	if (string2 && tmp && string2[ft_strlen(string2) - 1] == ' ' && tmp[ft_strlen(tmp) - 1] != '\'' && tmp[ft_strlen(tmp) - 1] != '"')
 	{
 		tmp = string2;
 		string2 = ft_substr(tmp, 0, ft_strlen(string2) - 1);

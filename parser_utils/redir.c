@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/11 16:10:10 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/12 13:51:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,14 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 
 static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 {
+	// printf("backslash redir ptr->av[i][%s]\n", ptr->av[i]);
 	if ((numb_char(ptr->av[i], '"') != 0) || (numb_char(ptr->av[i], '\'') != 0))
 	{
 		ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0, 4);
 		ptr->redir = 5;
 		return (1);
 	}
+	// printf("backslash redir ptr->av[i][%s]\n", ptr->av[i]);
 	if (ft_check_redir_in_quotes(ptr, mini, i) == 0)
 		return (0);
 	while (ptr->av[i][j] != '>' && ptr->av[i][j] != '<')

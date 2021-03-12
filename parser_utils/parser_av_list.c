@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/04 11:10:44 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/03/11 16:16:15 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/12 16:42:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int 	fill_av_more(t_mini *mini, int j, int k)
 				j++;
 			break ;
 		}
-		if (result != NULL && (mini->cmd_part[j] == '\'' || mini->cmd_part[j] == '"'))
+		if (result != NULL && (mini->cmd_part[j] == '\'' || mini->cmd_part[j] == '"') && mini->cmd_part[j + 1] != '\'' && mini->cmd_part[j + 1] != '"')
 		{
 			j++;
 			break ;

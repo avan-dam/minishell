@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/12 16:54:39 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/12 18:10:32 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static char	*ft_howmany_n(char *string, int i, int j)
 
 static int	ft_echo_n(char *string, t_mini *mini)
 {
+	// printf("in\n");
 	if (string == NULL)
 		return (0);
 	string = ft_howmany_n(string, 0, 0);
@@ -73,6 +74,7 @@ static int	check_n_argv(char *string, t_mini *mini)
 	char	*tempptr;
 
 	i = 0;
+	// printf("string is [%s]\n", string);
 	if (string == NULL || ft_strcmp(string, "") == 0 || ft_strcmp(string, "-") == 0)
 		return(-1);
 	tempptr = string;
@@ -81,6 +83,7 @@ static int	check_n_argv(char *string, t_mini *mini)
 	string = mem_check_tkns(string, mini, 0 , 6);
 	if (string == NULL || ft_strcmp(string, "") == 0 || ft_strcmp(string, "-") == 0)
 		return(-1);
+	// printf("string going in is [%s]\n", string);
 	if (string[i] != '-')
 		return(-1);
 	i++;
@@ -129,6 +132,7 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
 		string2 = ft_strjoin(tmp2, tmp22);
 		free(tmp22);
 		free(tmp2);
+		// printf("string2[%s]string[%s]tmp[%s]tmp2[%s]\n", string2, string, tmp, tmp2);
 		tmp = string;
 		tmp2 = string2;
 		i++;

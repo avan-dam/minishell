@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/12 18:10:32 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/12 19:57:59 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,34 +116,45 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
 		free(tempptr);
 		tempptr = ft_strdup(ptr->av[i]);
 	}
-	free(tempptr);
+	// free(tempptr); // LEAK WITHOUT BUT WITH THIS IN IT BREAKS echo hallo"$USER"abc | cat -e
 	while (ptr->av[i])
 	{
 		if (ptr->av[i][0] == '$' || !(ptr->av[i+1]))
 		{
+			// printf("in with ptr->av[i][%s]\n", ptr->av[i]);
 			tempptr = ft_strdup(ptr->av[i]);
 			free(ptr->av[i]);
 			ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
 			free(tempptr);
 		}
 		string = ft_strjoin(tmp, ptr->av[i]);
-		free(tmp);
 		tmp22 = check_tokens(ptr->av[i], mini, 0 , 6);
+		// printf("tmp2[%s] and tmp22[%s]\n", tmp2, tmp22);
 		string2 = ft_strjoin(tmp2, tmp22);
+		// printf("string2[%s]\n", string2);
+		free(tmp);
+		if (ft_strcmp(tmp, "") == 0 && string2[ft_strlen(string2)-1] == ' ' && ptr->av[i +1] == NULL)
+		{
+			// printf("in\n");
+			tmp = string2;
+			free(string2);
+			string2 = ft_substr(tmp, 0, ft_strlen(tmp) - 1);
+			//leak?
+		}
 		free(tmp22);
 		free(tmp2);
-		// printf("string2[%s]string[%s]tmp[%s]tmp2[%s]\n", string2, string, tmp, tmp2);
 		tmp = string;
 		tmp2 = string2;
 		i++;
 	}
 	free(string);
-	if (string2 && tmp && string2[ft_strlen(string2) - 1] == ' ' && tmp[ft_strlen(tmp) - 1] != '\'' && tmp[ft_strlen(tmp) - 1] != '"')
-	{
-		tmp = string2;
-		string2 = ft_substr(tmp, 0, ft_strlen(string2) - 1);
-		free(tmp);
-	}
+	// if (string2 && tmp && string2[ft_strlen(string2) - 1] == ' ' && tmp[ft_strlen(tmp) - 1] != '\'' && tmp[ft_strlen(tmp) - 1] != '"')
+	// {
+	// 	tmp = string2;
+	// 	// free(string2);
+	// 	string2 = ft_substr(tmp, 0, ft_strlen(string2) - 1);
+	// 	free(tmp);
+	// }
 	return (string2);
 }
 

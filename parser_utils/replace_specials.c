@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/12 13:29:26 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/12 18:22:39 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 	int	backslash;
 
 	backslash = no_org_backslash(str, 0);
-	// printf("coming out of chck line valid with s->s%d, s->d%d backslash%d\n", s->s, s->d, backslash);
+	// printf("coming out of chck line valid with s->s%d, s->d%d backslash%d s->str is[%s] and str is[%s]\n", s->s, s->d, backslash, s->str, str);
 	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
 	{
 		if (j == 0)
@@ -102,6 +102,7 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 		else if (s.str[i] == '$' && s.str[i + 1] == '?' && i != 0
 			&& (s.d == 0 || s.d % 2 == 1) && (s.s == 0 || s.s % 2 == 0))
 			ft_exit_status_replace(&s, i, mini);
+		// printf("i is %d\n", i);
 		if (s.str[i] != '\0' || i == -1)
 			i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/12 19:07:59 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 14:53:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 {
 	int	ret;
 
+	// printf("here\n");
 	if (check_file_toredir(ptr, i, mini) == -1)
 		return (-1);
 	if (ptr->redir == 0)

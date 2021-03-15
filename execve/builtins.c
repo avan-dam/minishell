@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/11 15:25:16 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/15 08:22:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ int	ft_is_builtin(char *str)
 		|| ft_strcmp(str, "exit") == 0
 		|| ft_strcmp(str, "export") == 0
 		|| ft_strcmp(str, "pwd") == 0 || ft_strcmp(str, "/bin/pwd") == 0
-		|| ft_strcmp(str, "unset") == 0
-		|| ft_strcmp(str, "$?") == 0)
+		|| ft_strcmp(str, "unset") == 0)
+		// || ft_strcmp(str, "$?") == 0)
 		return (1);
 	return (0);
 }
@@ -116,9 +116,10 @@ int	look_for_non_builtin(t_base *ptr, int i)
 
 void	exec_builtin(t_base *tmp, t_mini *mini)
 {
-	if (ft_strcmp(tmp->av[0], "$?") == 0)
-		ft_print_exit_status(mini);
-	else if (ft_strcmp(tmp->av[0], "env") == 0
+	// if (ft_strcmp(tmp->av[0], "$?") == 0)
+	// 	ft_print_exit_status(mini);
+	// else 
+	if (ft_strcmp(tmp->av[0], "env") == 0
 		|| ft_strcmp(tmp->av[0], "/usr/bin/env") == 0)
 		ft_lstprint_env(mini->env1, mini, tmp);
 	else if (ft_strcmp(tmp->av[0], "export") == 0)

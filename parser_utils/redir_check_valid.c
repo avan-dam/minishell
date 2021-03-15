@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:44:30 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/12 19:25:19 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 14:54:25 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,27 @@ int	check_file_toredir(t_base *ptr, int i, t_mini *mini)
 {
 	char	*tmp;
 
-	// if (ft_strcmp("", ptr->av[i + 1]) == 0)
-	// 	return (1);
-	// printf("in check ptr->av[i + 1][%s]\n", ptr->av[i + 1]);
+	if (ptr->av[i + 1] == NULL)
+	{
+		ft_putstr_fd("bash: syntax error near ", mini->stderr);
+		ft_putstr_fd("unexpected token `newline'\n", mini->stderr);
+		ft_reset_fds(mini);
+		mini->exit = 258;
+		return (-1);
+	}
 	tmp = ptr->av[i + 1];
 	ptr->av[i + 1] = check_tokens(tmp, mini, 0, 0);
-	// printf("in check ptr->av[i + 1][%s]\n", ptr->av[i + 1]);
-	free(tmp);
+	if (ptr->av[i + 1] == NULL && ft_strcmp(tmp, "") == 0)
+	{
+		ft_putstr_fd("bash: : No such file or directory\n", mini->stderr);
+		mini->exit = 1;
+	}
 	if (ptr->av[i + 1] == NULL)
+	{
 		return (-1);
+	}
+	// printf("heressd\n");
+	free(tmp);
 	if (ft_strcmp(ptr->av[i + 1], ">") == 0)
 	{
 		ft_putstr_fd("bash: syntax error near ", mini->stderr);

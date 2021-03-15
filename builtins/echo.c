@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/12 19:57:59 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 14:43:31 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static char	*ft_howmany_n(char *string, int i, int j)
 
 static int	ft_echo_n(char *string, t_mini *mini)
 {
-	// printf("in\n");
 	if (string == NULL)
 		return (0);
 	string = ft_howmany_n(string, 0, 0);
@@ -74,7 +73,6 @@ static int	check_n_argv(char *string, t_mini *mini)
 	char	*tempptr;
 
 	i = 0;
-	// printf("string is [%s]\n", string);
 	if (string == NULL || ft_strcmp(string, "") == 0 || ft_strcmp(string, "-") == 0)
 		return(-1);
 	tempptr = string;
@@ -83,7 +81,6 @@ static int	check_n_argv(char *string, t_mini *mini)
 	string = mem_check_tkns(string, mini, 0 , 6);
 	if (string == NULL || ft_strcmp(string, "") == 0 || ft_strcmp(string, "-") == 0)
 		return(-1);
-	// printf("string going in is [%s]\n", string);
 	if (string[i] != '-')
 		return(-1);
 	i++;
@@ -93,6 +90,20 @@ static int	check_n_argv(char *string, t_mini *mini)
 		return (-1);
 	return (1);
 }
+
+// static int ft_spaces(char *string)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	if (string == NULL | ft_strcmp("", string) == 0)
+// 		return (0);
+// 	while (string[i] == ' ')
+// 		i++;
+// 	if (string[i] == '\0')
+// 		return (-1);
+// 	return (0);
+// }
 
 static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
 {
@@ -119,9 +130,9 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
 	// free(tempptr); // LEAK WITHOUT BUT WITH THIS IN IT BREAKS echo hallo"$USER"abc | cat -e
 	while (ptr->av[i])
 	{
-		if (ptr->av[i][0] == '$' || !(ptr->av[i+1]))
+		// if (ptr->av[i][0] == '$' || !(ptr->av[i+1]))
+		if (!(ptr->av[i+1]))
 		{
-			// printf("in with ptr->av[i][%s]\n", ptr->av[i]);
 			tempptr = ft_strdup(ptr->av[i]);
 			free(ptr->av[i]);
 			ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
@@ -129,18 +140,15 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
 		}
 		string = ft_strjoin(tmp, ptr->av[i]);
 		tmp22 = check_tokens(ptr->av[i], mini, 0 , 6);
-		// printf("tmp2[%s] and tmp22[%s]\n", tmp2, tmp22);
 		string2 = ft_strjoin(tmp2, tmp22);
-		// printf("string2[%s]\n", string2);
 		free(tmp);
 		if (ft_strcmp(tmp, "") == 0 && string2[ft_strlen(string2)-1] == ' ' && ptr->av[i +1] == NULL)
 		{
-			// printf("in\n");
 			tmp = string2;
 			free(string2);
 			string2 = ft_substr(tmp, 0, ft_strlen(tmp) - 1);
-			//leak?
 		}
+		// printf("string[%s], string2[%s], tmp2[%s], tmp22[%s]\n", string, string2, tmp2, tmp22);
 		free(tmp22);
 		free(tmp2);
 		tmp = string;
@@ -148,13 +156,6 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
 		i++;
 	}
 	free(string);
-	// if (string2 && tmp && string2[ft_strlen(string2) - 1] == ' ' && tmp[ft_strlen(tmp) - 1] != '\'' && tmp[ft_strlen(tmp) - 1] != '"')
-	// {
-	// 	tmp = string2;
-	// 	// free(string2);
-	// 	string2 = ft_substr(tmp, 0, ft_strlen(string2) - 1);
-	// 	free(tmp);
-	// }
 	return (string2);
 }
 

@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/12 19:05:45 by ambervandam   ########   odam.nl          #
+#    Updated: 2021/03/15 11:53:46 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,8 @@ $(NAME):	$(OFILES) $(INCLUDES)
 			cp get_next_line/libgnl.a .
 			make -C libft/
 			cp libft/libft.a .
-			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS) 
-			# $(SEGFAULT)
+			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS)
+			#  $(SEGFAULT)
 			
 %.o:		%.c
 			gcc -Ilibft -Ignl $(FLAGS) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/04 11:10:44 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/03/12 19:51:29 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 13:03:39 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,6 @@ int	fill_av_list(t_base *new, t_mini *mini, int j, int l)
 			}
 			else
 			{
-
-				// if (last == ' ')
-				// 	k--; // or k++
 				new->av[l] = ft_substr(mini->cmd_part, k, j - k);
 			}
 		}
@@ -156,7 +153,7 @@ static int	more_av_list(t_base *new, t_mini *mini, t_base **ptr, char *line)
 		return (-1);
 	}
 	new->type = mini->type_end;
-	if (new->av[0][0] != '$')
+	if (numb_char(new->av[0], '$') == 0)
 		new->av[0] = ft_strtolower(new->av[0]);
 	ft_lstadd_back_base(ptr, new);
 	free(line);

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 19:28:33 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/03 14:37:47 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:15:49 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ char	*mem_check_tkns(char *str, t_mini *mini, int i, int j)
 
 int	unvalid_ident(char *error, t_mini *mini, int exitstatus)
 {
+	// printf("here and exit status is [%d] error is [%s]\n", exitstatus, error);
+	if ((ft_strcmp(error, "|") == 0)|| (ft_strcmp(error, ";") == 0))
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token '", mini->stderr);
+		ft_putstr_fd(error, mini->stderr);
+		ft_putstr_fd("'\n", mini->stderr);
+		mini->exit = exitstatus;
+		return (-1);
+	}
 	if (ft_strcmp(error, "\\$?") == 0)
 		error = "$?";
 	ft_putstr_fd("bash: ", mini->stderr);

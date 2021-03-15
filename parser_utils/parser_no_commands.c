@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 07:59:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/11 16:10:40 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/15 12:32:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	set_mini_return(t_mini *mini, int numb, char *line, int i)
 
 static int	break_check(char *line, int i, char *result, char *tmp)
 {
-	if ((line[i] == '|' || line[i] == ';') && (result != NULL))
+	if ((line[i] == '|' || line[i] == ';')) // && (result != NULL)
 	{
 		ft_free_tmps(tmp, result);
 		return (1);
@@ -74,6 +74,11 @@ int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 			if (break_check(line, i, result, tmp) == 1)
 				return (no_of_commands_more(mini, i, line, numb));
 			numb++;
+		}
+		if ((line[i] == '|' || line[i] == ';') && result != NULL)
+		{
+			if (break_check(line, i, result, tmp) == 1)
+				return (no_of_commands_more(mini, i, line, numb));
 		}
 		numb = no_commands_line(line, i, numb, mini);
 		i++;

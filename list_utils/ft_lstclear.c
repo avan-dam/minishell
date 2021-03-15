@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:50:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/06 15:18:01 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/15 08:17:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	one_baseclear(t_base *store)
 	i = 0;
 	if (store == NULL)
 		return ;
-	while (i < store->size)
+	while (i < store->size && store->av[i])
 	{
 		if (store->av[i])
 			free(store->av[i]);

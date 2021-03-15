@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/09 16:02:19 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/15 14:57:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,29 @@
 
 static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 {
+	int j;
+
+	j = 0;
+	while (ptr->av[i][j])
+	{
+		if ((ptr->av[i][j] >= '0' && ptr->av[i][j] <= '9') || ptr->av[i][j] == '-')
+		{
+			ft_putstr_fd("bash: export: ", mini->stderr);
+			ft_putstr_fd(ptr->av[i], mini->stderr);
+			ft_putstr_fd(" : not a valid identifier\n", mini->stderr);
+			mini->exit = 1;
+			return (-1);
+		}
+		if (ptr->av[i][j] == '=')
+			break ;
+		j++;
+	}
 	if ((ptr->av[i][0] >= '0' && ptr->av[i][0] <= '9')
 		|| (ptr->av[i][0] == '+') || (ptr->av[i][0] == '/')
 		|| (ptr->av[i][0] == '?') || (ptr->av[i][0] == '$')
 		|| (ft_strcmp(ptr->av[i], "=") == 0)
 		|| (ft_lst_cmp(mini, ptr->av[i])))
 	{
-		ft_putstr_fd("bash: export: ", mini->stderr);
-		ft_putstr_fd(ptr->av[i], mini->stderr);
-		ft_putstr_fd(" : not a valid identifier\n", mini->stderr);
-		mini->exit = 1;
 		return (-1);
 	}
 	return (0);

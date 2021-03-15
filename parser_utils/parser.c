@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/11 16:12:07 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/15 12:16:00 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,39 @@ static int	free_before_exit(t_base *ptr, t_base *tmp)
 	return (-1);
 }
 
+static int	check_valid_dividers(t_base *tmp, t_mini *mini)
+{
+	t_base	*tmp2;
+	
+	tmp2 = tmp;
+	while(tmp)
+	{
+		if ((tmp->av[0][0] == ';')
+				|| (tmp->av[0][0] == '|'))
+		{
+			ft_putstr_fd("bash: syntax error near ", mini->stderr);
+			ft_putstr_fd("unexpected token `", mini->stderr);
+			ft_putchar_fd(tmp->av[0][0], mini->stderr);
+			ft_putstr_fd("'\n", mini->stderr);
+			mini->exit = 258;
+			while (tmp2)
+			{
+				one_baseclear(tmp2);
+				tmp2 = tmp2->next;
+				// free(tmp2);
+			}
+			// while (ptr)
+			// {		
+			// 	free(ptr);
+			// 	ptr = ptr->next;
+			// }
+			return (-1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 static int	send_exec_cmds(t_base *ptr, char **envp, t_mini *mini, char *line)
 {
 	t_base	*tmp;
@@ -49,26 +82,12 @@ static int	send_exec_cmds(t_base *ptr, char **envp, t_mini *mini, char *line)
 
 	tmp = ptr;
 	free(line);
+	if (check_valid_dividers(ptr, mini) == -1)
+		return (0);
 	while (tmp)
 	{
 		if (exec_cmds(tmp, envp, mini) == -1)
 			return (free_before_exit(ptr, tmp));
-		if ((tmp->next) && (tmp->type == 5 || tmp->type == 4)
-			&& (ft_strcmp(tmp->next->av[0], ";") == 0
-				|| ft_strcmp(tmp->next->av[0], "|") == 0))
-		{
-			ft_putstr_fd("bash: syntax error near ", mini->stderr);
-			ft_putstr_fd("unexpected token `", mini->stderr);
-			ft_putstr_fd(tmp->next->av[0], mini->stderr);
-			ft_putstr_fd("'\n", mini->stderr);
-			mini->exit = 258;
-			while (tmp)
-			{
-				one_baseclear(tmp);
-				tmp = tmp ->next;
-			}
-			break ;
-		}
 		tmp2 = tmp->next;
 		one_baseclear(tmp);
 		tmp = tmp2;

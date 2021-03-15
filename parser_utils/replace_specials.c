@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/15 14:19:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 17:36:41 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 	int	backslash;
 
 	backslash = no_org_backslash(str, 0);
-	// printf("coming out of chck line valid with s->s%d, s->d%d backslash%d s->str is[%s] and str is[%s]\n", s->s, s->d, backslash, s->str, str);
 	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
 	{
 		if (j == 0)
@@ -91,30 +90,19 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 	s.str = ft_strdup(str);
 	while (s.str[i] != '\0')
 	{
-		// printf("s.str[i][%c] s.str[%s] s.d[%d]\n", s.str[i], s.str, s.d);
-		if (s.str[i] == '\\' && numb_char(s.str, '>') == 0
-			&& numb_char(s.str, '<') == 0)
+		if (s.str[i] == '\\' && ((j == 7) || (numb_char(s.str, '>') == 0
+					&& numb_char(s.str, '<') == 0)))
 			i = ft_correct_backslash(&s, i);
 		if ((s.str[i] == '$') && (s.str[i + 1] != '/') && (s.str[i + 1] != '\\')
 			&& (s.str[i + 1] != '\0') && (s.str[i + 1] != '?') && j == 6)
-		{
-			// printf("going in find dolzla\n");
 			i = i + ft_find_dolla(i + 1, i + 1, mini, &s);
-		}
 		else if ((s.str[i] == '\'') || (s.str[i] == '"'))
-		{
-			// printf("going in replace quotes\n");
 			i = ft_replace_quotes(&s, i, j);
-		}
-		// else if (s.str[i] == '$' && s.str[i + 1] == '?' && i != 0
 		else if (s.str[i] == '$' && s.str[i + 1] == '?'
 			&& (s.d == 0 || s.d % 2 == 1) && (s.s == 0 || s.s % 2 == 0))
 			ft_exit_status_replace(&s, i, mini);
-		// printf("i is %d s.str[i][%c]\n", i, s.str[i]);
-		// printf("AFTER s.str[i][%c] s.str[%s] s.d[%d]\n", s.str[i], s.str, s.d);
 		if (s.str[i] != '\0' || i == -1)
 			i++;
-		// printf("i is %d s.str[i][%c]\n", i, s.str[i]);
 	}
 	return (check_line_valid(&s, mini, j, str));
 }

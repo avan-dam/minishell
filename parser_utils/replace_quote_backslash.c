@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/15 14:08:49 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 17:38:09 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	ft_correct_backslash(t_line *s, int i)
 					&& ((i == 0) || ((i > 0) && (s->str[i - 1] != '\\'))))
 				|| s->str[i] == '\'' || s->str[i] == '"'))
 		{
-			// printf("in here\n");
 			if (s->str[i] == '\'')
 				i++;
 			i++;
@@ -42,14 +41,9 @@ static int	ft_single_quotes(t_line *s, int i)
 {
 	if (s->d % 2 == 1)
 	{
-		// printf("in this s->str[i + 1][%c]\n", s->str[i + 1]);
-		if ((s->str[i + 1] == '\\') || ((s->str[i + 1] == '"')
-				&& (s->d % 2 == 1)) || (i + 2 == (int)ft_strlen(s->str)))
-		{
-			// printf("returning here\n");
-			return (i);
-		}
-		if (s->str[i + 1] == '$') // add condition abocve
+		if ((s->str[i + 1] == '\\') || (s->str[i + 1] == '$')
+			|| ((s->str[i + 1] == '"') && (s->d % 2 == 1))
+			|| (i + 2 == (int)ft_strlen(s->str)))
 			return (i);
 		return (i + 2);
 	}
@@ -70,7 +64,6 @@ static int	ft_single_quotes(t_line *s, int i)
 
 int	ft_replace_quotes(t_line *s, int i, int j)
 {
-	// printf("in replace quotes with char[%c] s->str[%s]\n", s->str[i], s->str);
 	if ((numb_char(s->str, '>') != 0 || numb_char(s->str, '<') != 0) && j != 4)
 	{
 		s->d++;
@@ -85,9 +78,5 @@ int	ft_replace_quotes(t_line *s, int i, int j)
 		if (s->s % 2 == 0)
 			s->d++;
 	}
-	// while (i > (int)ft_strlen(s->str))
-	// 	i--;
-	// i--;
-	// printf("OUT replace quotes with char[%c] s->str[%s] ft_stlen(s->str)(%zu) i is %d\n", s->str[i], s->str, ft_strlen(s->str), i);
 	return (i);
 }

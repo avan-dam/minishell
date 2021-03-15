@@ -6,34 +6,17 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/15 14:53:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 18:13:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	direction_list(t_base *ptr, int i, t_mini *mini)
+static int	direction_list(t_base *ptr, int i)
 {
 	int		j;
-	int		k;
 	char	*temp;
 
-	k = 0;
-	while (ptr->av[i][k + 1])
-	{
-		if ((ptr->av[i][k] == '<' && ptr->av[i][k + 1] == '<')
-			|| (ptr->av[i][k] == '<' && ptr->av[i][k + 1] == '>')
-			|| (ptr->av[i][k] == '>' && ptr->av[i][k + 1] == '<'))
-		{
-			ft_putstr_fd("bash: syntax error near ", mini->stderr);
-			ft_putstr_fd("unexpected token `", mini->stderr);
-			ft_putchar_fd(ptr->av[i][k + 1], mini->stderr);
-			ft_putstr_fd("'\n", mini->stderr);
-			mini->exit = 258;
-			return (-1);
-		}
-		k++;
-	}
 	if ((ft_strchr_numb(ptr->av[i + 1], '>', 0) != -1)
 		|| (ft_strchr_numb(ptr->av[i + 1], '<', 0) != -1))
 	{
@@ -56,34 +39,30 @@ static int	direction_list(t_base *ptr, int i, t_mini *mini)
 	return (0);
 }
 
-static int	open_file_more(t_base *ptr, int i, t_mini *mini)
+static int	open_file_more(t_base *ptr, int i, t_mini *mini, int ret)
 {
-	char	*opendir;
 	char	*filename;
-	int		ret;
 
-	opendir = ptr->av[i];
 	filename = ptr->av[i + 1];
-	ret = 0;
 	if ((ptr->av[i + 2]) && (ft_strcmp(ptr->av[i + 1], "") == 0)
 		&& (ft_strcmp(ptr->av[i + 2], "") != 0))
 	{
 		filename = ptr->av[i + 2];
 		ret = 1;
 	}
-	if (ft_strcmp(">", opendir) == 0)
+	if (ft_strcmp(">", ptr->av[i]) == 0)
 	{
 		mini->stdout = open(filename, R | C | T, 0666);
 		if (mini->stdout == -1)
 			return (error_opening(filename, mini));
 	}
-	if (ft_strcmp(">>", opendir) == 0)
+	if (ft_strcmp(">>", ptr->av[i]) == 0)
 	{
 		mini->stdout = open(filename, R | C | A, 0666);
 		if (mini->stdout == -1)
 			return (error_opening(filename, mini));
 	}
-	if (ft_strcmp("<", opendir) == 0)
+	if (ft_strcmp("<", ptr->av[i]) == 0)
 	{
 		mini->stdin = open(filename, R, 0666);
 		if (mini->stdin == -1)
@@ -96,12 +75,11 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 {
 	int	ret;
 
-	// printf("here\n");
 	if (check_file_toredir(ptr, i, mini) == -1)
 		return (-1);
 	if (ptr->redir == 0)
 		return (i);
-	ret = open_file_more(ptr, i, mini);
+	ret = open_file_more(ptr, i, mini, 0);
 	if (ret == -1)
 		return (-1);
 	ptr->size = ptr->size - 2;
@@ -130,7 +108,7 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 	{
 		if (ptr->redir == 1)
 		{
-			if (direction_list(ptr, i, mini) == -1)
+			if (direction_list(ptr, i) == -1)
 				return (-1);
 			if (ft_open_file(ptr, i, mini) == -1)
 				return (-1);

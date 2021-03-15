@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/15 08:20:33 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 17:57:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,9 @@ static void 	sort_struct_before_redir(t_base *ptr, t_mini *mini)
 				|| (ptr->av[i][0] == '\'' && ptr->av[i][1] == '\''
 					&& ptr->av[i][2] == '\0')))
 			i++;
-	 		if (i < ptr->size && ptr->av[i] && ((i == 0)
-			 || (ft_strcmp(ptr->av[0], "export") != 0 && ft_strcmp(ptr->av[0], "echo") != 0)))
+	 	if (i < ptr->size && ptr->av[i] && ((i == 0)
+				 || (ft_strcmp(ptr->av[0], "export") != 0
+					&& ft_strcmp(ptr->av[0], "echo") != 0)))
 		{
 			temp = ptr->av[i];
 			ptr->av[i] = ft_strtrim_backslash(temp, ' ');
@@ -148,12 +149,6 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	if ((ptr == NULL) || (ptr->size == 0))
 		return (0);
 	sort_struct_before_redir(ptr, mini);
-	// int i = 0;
-	// while (i < ptr->size && ptr->av[i])
-	// {
-	// 	printf("ptr->av[%d][%s]\n", i, ptr->av[i]);
-	// 	i++;
-	// }
 	ptr = ft_redir(mini, ptr);
 	if (ptr == NULL)
 		return (0);

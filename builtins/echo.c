@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/15 14:43:31 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 18:09:50 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,18 @@ static int	check_n_argv(char *string, t_mini *mini)
 	char	*tempptr;
 
 	i = 0;
-	if (string == NULL || ft_strcmp(string, "") == 0 || ft_strcmp(string, "-") == 0)
-		return(-1);
+	if (string == NULL || ft_strcmp(string, "") == 0
+		|| ft_strcmp(string, "-") == 0)
+		return (-1);
 	tempptr = string;
 	string = ft_strtrim_backslash(tempptr, ' ');
-	free(tempptr);
-	string = mem_check_tkns(string, mini, 0 , 6);
-	if (string == NULL || ft_strcmp(string, "") == 0 || ft_strcmp(string, "-") == 0)
-		return(-1);
+	// free(tempptr);
+	string = mem_check_tkns(string, mini, 0, 6);
+	if (string == NULL || ft_strcmp(string, "") == 0
+		|| ft_strcmp(string, "-") == 0)
+		return (-1);
 	if (string[i] != '-')
-		return(-1);
+		return (-1);
 	i++;
 	while (string[i] == 'n')
 		i++;
@@ -130,25 +132,25 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
 	// free(tempptr); // LEAK WITHOUT BUT WITH THIS IN IT BREAKS echo hallo"$USER"abc | cat -e
 	while (ptr->av[i])
 	{
-		// if (ptr->av[i][0] == '$' || !(ptr->av[i+1]))
-		if (!(ptr->av[i+1]))
+		if (!(ptr->av[i + 1]))
 		{
+			free(tempptr);
 			tempptr = ft_strdup(ptr->av[i]);
 			free(ptr->av[i]);
 			ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
-			free(tempptr);
+			// free(tempptr);
 		}
 		string = ft_strjoin(tmp, ptr->av[i]);
-		tmp22 = check_tokens(ptr->av[i], mini, 0 , 6);
+		tmp22 = check_tokens(ptr->av[i], mini, 0, 6);
 		string2 = ft_strjoin(tmp2, tmp22);
 		free(tmp);
-		if (ft_strcmp(tmp, "") == 0 && string2[ft_strlen(string2)-1] == ' ' && ptr->av[i +1] == NULL)
+		if (ft_strcmp(tmp, "") == 0 && ptr->av[i + 1] == NULL
+			&& string2[ft_strlen(string2) - 1] == ' ')
 		{
 			tmp = string2;
 			free(string2);
 			string2 = ft_substr(tmp, 0, ft_strlen(tmp) - 1);
 		}
-		// printf("string[%s], string2[%s], tmp2[%s], tmp22[%s]\n", string, string2, tmp2, tmp22);
 		free(tmp22);
 		free(tmp2);
 		tmp = string;
@@ -156,6 +158,7 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
 		i++;
 	}
 	free(string);
+	free(tempptr);
 	return (string2);
 }
 

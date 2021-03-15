@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/04 11:10:44 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/03/15 13:03:39 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 18:04:47 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,36 +69,39 @@ char	*ft_strtrim_backslash(char const *s1, char c)
 	return (newstr);
 }
 
-static int 	fill_av_more(t_mini *mini, int j, int k)
+// m is the mini version of t_mini *mini
+
+static int 	fill_av_more(t_mini *m, int j, int k)
 {
 	char	*result;
 
-	result = mem_check_tkns(ft_substr(mini->cmd_part, k, j - k + 1), mini, 0, 4);
-	while (mini->cmd_part[j] && ((mini->cmd_part[j] != ' '
-				|| (mini->cmd_part[j] != ' ' && mini->cmd_part[j + 1] != '\\'))
+	result = mem_check_tkns(ft_substr(m->cmd_part, k, j - k + 1), m, 0, 4);
+	while (m->cmd_part[j] && ((m->cmd_part[j] != ' '
+				|| (m->cmd_part[j] != ' ' && m->cmd_part[j + 1] != '\\'))
 			|| result == NULL))
 	{
 		free(result);
-		result = mem_check_tkns(ft_substr(mini->cmd_part, k, j - k + 1), mini, 0, 4);
-		if ((mini->cmd_part[j] == '>' || mini->cmd_part[j] == '<')
-			&& mini->cmd_part[j + 1] != '>'
+		result = mem_check_tkns(ft_substr(m->cmd_part, k, j - k + 1), m, 0, 4);
+		if ((m->cmd_part[j] == '>' || m->cmd_part[j] == '<')
+			&& m->cmd_part[j + 1] != '>'
 			 && result != NULL)
 		{
-			if ((mini->cmd_part[j + 1] == '"')
-				|| (mini->cmd_part[j + 1] == '\''))
+			if ((m->cmd_part[j + 1] == '"')
+				|| (m->cmd_part[j + 1] == '\''))
 				j++;
 			break ;
 		}
-		if (result != NULL && (mini->cmd_part[j] == '\'' || mini->cmd_part[j] == '"')  && ((mini->cmd_part[j + 1] == ' ') || (mini->cmd_part[j + 1] == '\0')))
+		if (result != NULL && (m->cmd_part[j] == '\'' || m->cmd_part[j] == '"')
+			&& ((m->cmd_part[j + 1] == ' ') || (m->cmd_part[j + 1] == '\0')))
 		{
 			j++;
 			break ;
 		}
 		free(result);
-		result = mem_check_tkns(ft_substr(mini->cmd_part, k, j - k + 1), mini, 0, 4);
+		result = mem_check_tkns(ft_substr(m->cmd_part, k, j - k + 1), m, 0, 4);
 		j++;
 	}
-	while (mini->cmd_part[j] == ' ')
+	while (m->cmd_part[j] == ' ')
 		j++;
 	if (result)
 		free(result);

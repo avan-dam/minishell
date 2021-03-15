@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/15 14:57:13 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 18:06:30 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (ptr->av[i][j])
 	{
-		if ((ptr->av[i][j] >= '0' && ptr->av[i][j] <= '9') || ptr->av[i][j] == '-')
+		if ((ptr->av[i][j] >= '0' && ptr->av[i][j] <= '9')
+			|| ptr->av[i][j] == '-')
 		{
 			ft_putstr_fd("bash: export: ", mini->stderr);
 			ft_putstr_fd(ptr->av[i], mini->stderr);
@@ -45,12 +46,13 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 int	ft_export(t_base *ptr, t_mini *mini)
 {
 	int	i;
+	int	j;
 
 	i = 1;
-	int j = 0;
+	j = 0;
 	while (j < ptr->size && ptr->av[i])
 	{
-		ptr->av[j] = mem_check_tkns(ptr->av[j], mini, 0 , 6);
+		ptr->av[j] = mem_check_tkns(ptr->av[j], mini, 0, 6);
 		j++;
 	}
 	if (ptr->av[1] == NULL || ft_strcmp(ptr->av[1], "") == 0)

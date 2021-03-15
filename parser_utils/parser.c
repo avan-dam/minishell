@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/15 12:16:00 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 17:53:17 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,35 +42,31 @@ static int	free_before_exit(t_base *ptr, t_base *tmp)
 	return (-1);
 }
 
-static int	check_valid_dividers(t_base *tmp, t_mini *mini)
+static int	check_valid_dividers(t_base *t, t_base *t2, t_base *t3, t_mini *m)
 {
-	t_base	*tmp2;
-	
-	tmp2 = tmp;
-	while(tmp)
+	while (t)
 	{
-		if ((tmp->av[0][0] == ';')
-				|| (tmp->av[0][0] == '|'))
+		if ((t->av[0][0] == ';')
+			|| (t->av[0][0] == '|'))
 		{
-			ft_putstr_fd("bash: syntax error near ", mini->stderr);
-			ft_putstr_fd("unexpected token `", mini->stderr);
-			ft_putchar_fd(tmp->av[0][0], mini->stderr);
-			ft_putstr_fd("'\n", mini->stderr);
-			mini->exit = 258;
-			while (tmp2)
+			ft_putstr_fd("bash: syntax error near ", m->stderr);
+			ft_putstr_fd("unexpected token `", m->stderr);
+			ft_putchar_fd(t->av[0][0], m->stderr);
+			ft_putstr_fd("'\n", m->stderr);
+			m->exit = 258;
+			while (t2)
 			{
-				one_baseclear(tmp2);
-				tmp2 = tmp2->next;
-				// free(tmp2);
+				one_baseclear(t2);
+				t2 = t2->next;
 			}
-			// while (ptr)
-			// {		
-			// 	free(ptr);
-			// 	ptr = ptr->next;
-			// }
+			while (t3)
+			{		
+				free(t3);
+				t3 = t3->next;
+			}
 			return (-1);
 		}
-		tmp = tmp->next;
+		t = t->next;
 	}
 	return (0);
 }
@@ -82,7 +78,7 @@ static int	send_exec_cmds(t_base *ptr, char **envp, t_mini *mini, char *line)
 
 	tmp = ptr;
 	free(line);
-	if (check_valid_dividers(ptr, mini) == -1)
+	if (check_valid_dividers(ptr, ptr, ptr, mini) == -1)
 		return (0);
 	while (tmp)
 	{

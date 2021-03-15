@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 07:59:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/15 12:32:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/15 17:46:41 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	set_mini_return(t_mini *mini, int numb, char *line, int i)
 
 static int	break_check(char *line, int i, char *result, char *tmp)
 {
-	if ((line[i] == '|' || line[i] == ';')) // && (result != NULL)
+	if ((line[i] == '|' || line[i] == ';'))
 	{
 		ft_free_tmps(tmp, result);
 		return (1);

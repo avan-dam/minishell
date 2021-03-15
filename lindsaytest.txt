@@ -100,3 +100,31 @@ echo '\;
 \
 echo -n \
 echo -n "\"
+echo >\
+echo > \ ;
+echo >"";
+echo >""test;
+echo >""
+echo >"
+echo >";
+echo >'\
+echo >' \ ;
+echo |\
+echo | \ ;
+echo |"";
+echo |""test;
+echo |""
+echo |"
+echo |";
+echo |'\
+echo |' \ ;
+echo "BlaBla" | cat > test.txt; cat test.txt | cat | cat | cat | cat >> test.txt; cat test.txt; rm test.txt
+echo "bla;la | I'm not a shell >> don't" 'codam > 42 || codam >> 42;'
+echo "exit 2" > test.sh; bash test.sh; echo $?; rm test.sh
+echo "can you \\\" escape \' this"
+echo $empty | cat -e
+mkdir deleteme; cd deleteme; mkdir more; pwd; cd more; pwd; rm -rf ../../deleteme; pwd; cd ..; pwd; cd ..; pwd
+exit 1 | exit 2 | exit 3 | echo $?; echo "stayin' alive"
+export TEST=CODAM; echo $TEST; unset TEST; echo $TEST
+unset PATH; ls -la; /bin/ls
+fakecommand; echo "hello"

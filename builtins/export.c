@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/15 18:22:55 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/16 10:06:22 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 		|| (ft_strcmp(ptr->av[i], "=") == 0)
 		|| (ft_lst_cmp(mini, ptr->av[i])))
 	{
+		ft_putstr_fd("bash: export: ", mini->stderr);
+		ft_putstr_fd(ptr->av[i], mini->stderr);
+		ft_putstr_fd(" : not a valid identifier\n", mini->stderr);
+		mini->exit = 1;
 		return (-1);
 	}
 	return (0);
@@ -62,7 +66,7 @@ int	ft_export(t_base *ptr, t_mini *mini)
 	}
 	while (i < ptr->size && ptr->av[i])
 	{
-		if (check_valid_export(ptr, mini, i) == -1)
+		if (check_valid_export(ptr, mini, i) == -1)	
 			return (-1);
 		ft_split_into_tlist(mini, ptr->av[i]);
 		mini->exit = 0;

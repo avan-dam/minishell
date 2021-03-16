@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/15 17:38:09 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/16 15:14:12 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_correct_backslash(t_line *s, int i)
 					&& ((i == 0) || ((i > 0) && (s->str[i - 1] != '\\'))))
 				|| s->str[i] == '\'' || s->str[i] == '"'))
 		{
-			if (s->str[i] == '\'')
+			if (s->str[i] == '\'' && s->str[i + 1] != ' ')
 				i++;
 			i++;
 		}

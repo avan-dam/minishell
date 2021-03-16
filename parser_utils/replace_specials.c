@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/16 14:06:51 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/16 15:10:03 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 	int	backslash;
 
 	backslash = no_org_backslash(str, 0);
+	// printf("check valid has s->s%d and s->d%d and s->str is [%s] and str is [%s]\n", s->s, s->d, s->str, str);
 	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
 	{
 		if (j == 0)

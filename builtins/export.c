@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/16 10:06:22 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/16 12:10:46 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 	j = 0;
 	while (ptr->av[i][j])
 	{
-		if ((ptr->av[i][0] == '=') || (((numb_char(ptr->av[i], '=') == 0)) && ((ptr->av[i][j] >= '0' && ptr->av[i][j] <= '9')
+		if ((ptr->av[i][0] == '=') || ptr->av[i][j] == '_' || (((numb_char(ptr->av[i], '=') == 0)) && ((ptr->av[i][j] >= '0' && ptr->av[i][j] <= '9')
 			|| ptr->av[i][j] == '-')))
 		{
 			ft_putstr_fd("bash: export: ", mini->stderr);
 			ft_putstr_fd(ptr->av[i], mini->stderr);
-			ft_putstr_fd(" : not a valid identifier\n", mini->stderr);
+			ft_putstr_fd(": not a valid identifier\n", mini->stderr);
 			mini->exit = 1;
 			return (-1);
 		} // not good because can have these past the = sign

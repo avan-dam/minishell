@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/16 12:03:56 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/16 12:05:50 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static int	check_n_argv(char *string, t_mini *mini)
 		return (-1);
 	tempptr = string;
 	string = ft_strtrim_backslash(tempptr, ' ');
-	// free(tempptr);
 	string = mem_check_tkns(string, mini, 0, 6);
 	if (string == NULL || ft_strcmp(string, "") == 0
 		|| ft_strcmp(string, "-") == 0)
@@ -157,8 +156,6 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
 		}
 		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
 		{
-			// printf("in this\n");
-			// printf("ptr->av[i + 1][%s] string[ft_strlen(string) - 1][%c]\n", ptr->av[i + 1], string[ft_strlen(string) - 1]);
 			if (!(ptr->av[i + 1]) && tmp22 && tmp22[ft_strlen(tmp22) - 1] == ' ')
 			{
 				k = ft_strlen(tmp22) - 1;
@@ -177,7 +174,6 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
 		i++;
 	}
 	free(tempptr);
-	// printf("string is [%s]\n", string);
 	return (string);
 }
 

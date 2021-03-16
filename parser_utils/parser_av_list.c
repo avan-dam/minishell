@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/04 11:10:44 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/03/15 18:04:47 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/16 13:03:35 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static int 	fill_av_more(t_mini *m, int j, int k)
 {
 	char	*result;
 
+	// printf("m->cmd_part is [%s]\n", m->cmd_part);
 	result = mem_check_tkns(ft_substr(m->cmd_part, k, j - k + 1), m, 0, 4);
 	while (m->cmd_part[j] && ((m->cmd_part[j] != ' '
 				|| (m->cmd_part[j] != ' ' && m->cmd_part[j + 1] != '\\'))
@@ -138,6 +139,7 @@ int	fill_av_list(t_base *new, t_mini *mini, int j, int l)
 			{
 				new->av[l] = ft_substr(mini->cmd_part, k, j - k);
 			}
+			// printf("new->av[l] is [%s]\n", new->av[l]);
 		}
 		l++;
 	}

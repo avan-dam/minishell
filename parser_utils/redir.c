@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/16 11:49:53 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/16 12:24:57 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,47 +39,39 @@ static int	direction_list(t_base *ptr, int i)
 	return (0);
 }
 
-static int	open_file_more(t_base *ptr, int i, t_mini *mini, int ret)
+static int	open_file_more(t_base *ptr, int i, t_mini *mini)
 {
-	char	*filename;
-
-	filename = ptr->av[i + 1];
-	if ((ptr->av[i + 2]) && (ft_strcmp(ptr->av[i + 1], "") == 0)
-		&& (ft_strcmp(ptr->av[i + 2], "") != 0))
-	{
-		filename = ptr->av[i + 2];
-		ret = 1;
-	}
 	if (ft_strcmp(">", ptr->av[i]) == 0)
 	{
-		mini->stdout = open(filename, R | C | T, 0666);
+		mini->stdout = open(ptr->av[i + 1], R | C | T, 0666);
 		if (mini->stdout == -1)
-			return (error_opening(filename, mini));
+			return (error_opening(ptr->av[i + 1], mini));
 	}
 	if (ft_strcmp(">>", ptr->av[i]) == 0)
 	{
-		mini->stdout = open(filename, R | C | A, 0666);
+		mini->stdout = open(ptr->av[i + 1], R | C | A, 0666);
 		if (mini->stdout == -1)
-			return (error_opening(filename, mini));
+			return (error_opening(ptr->av[i + 1], mini));
 	}
 	if (ft_strcmp("<", ptr->av[i]) == 0)
 	{
-		mini->stdin = open(filename, R, 0666);
+		mini->stdin = open(ptr->av[i + 1], R, 0666);
 		if (mini->stdin == -1)
-			return (error_opening(filename, mini));
+			return (error_opening(ptr->av[i + 1], mini));
 	}
-	return (ret);
+	return (0);
 }
 
 static int	ft_open_file(t_base *ptr, int i, t_mini *mini, int k)
 {
 	int	ret;
 
+	direction_list(ptr, i);
 	if (check_file_toredir(ptr, i, mini, k) == -1)
 		return (-1);
 	if (ptr->redir == 0)
 		return (i);
-	ret = open_file_more(ptr, i, mini, 0);
+	ret = open_file_more(ptr, i, mini);
 	if (ret == -1)
 		return (-1);
 	ptr->size = ptr->size - 2;
@@ -94,7 +86,7 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini, int k)
 
 static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 {
-	int k;
+	int	k;
 
 	k = 0;
 	if (ptr->av[i + 1] && ptr->av[i + 1][0] == ' ')
@@ -109,16 +101,11 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 		return (0);
 	while (ptr->av[i][j] != '>' && ptr->av[i][j] != '<')
 		j++;
-	if (j <= 0)
+	if (j <= 0 && ptr->redir == 1)
 	{
-		if (ptr->redir == 1)
-		{
-			if (direction_list(ptr, i) == -1)
-				return (-1);
-			if (ft_open_file(ptr, i, mini, k) == -1)
-				return (-1);
-			return (0);
-		}
+		if (ft_open_file(ptr, i, mini, k) == -1)
+			return (-1);
+		return (0);
 	}
 	if (add_new_into_list(j, ptr, i) == -1)
 		return (-1);

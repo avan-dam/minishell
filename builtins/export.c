@@ -6,11 +6,20 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/16 12:10:46 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/16 12:29:11 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	export_error_msg(t_mini *mini, char *string)
+{
+	ft_putstr_fd("bash: export: ", mini->stderr);
+	ft_putstr_fd(string, mini->stderr);
+	ft_putstr_fd(": not a valid identifier\n", mini->stderr);
+	mini->exit = 1;
+	return (-1);
+}
 
 static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 {
@@ -19,15 +28,13 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 	j = 0;
 	while (ptr->av[i][j])
 	{
-		if ((ptr->av[i][0] == '=') || ptr->av[i][j] == '_' || (((numb_char(ptr->av[i], '=') == 0)) && ((ptr->av[i][j] >= '0' && ptr->av[i][j] <= '9')
-			|| ptr->av[i][j] == '-')))
+		if ((ptr->av[i][0] == '=') || ptr->av[i][j] == '_'
+			|| (((numb_char(ptr->av[i], '=') == 0))
+				&& ((ptr->av[i][j] >= '0' && ptr->av[i][j] <= '9')
+					|| ptr->av[i][j] == '-')))
 		{
-			ft_putstr_fd("bash: export: ", mini->stderr);
-			ft_putstr_fd(ptr->av[i], mini->stderr);
-			ft_putstr_fd(": not a valid identifier\n", mini->stderr);
-			mini->exit = 1;
-			return (-1);
-		} // not good because can have these past the = sign
+			return (export_error_msg(mini, ptr->av[i]));
+		}
 		if (ptr->av[i][j] == '=')
 			break ;
 		j++;
@@ -38,11 +45,7 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 		|| (ft_strcmp(ptr->av[i], "=") == 0)
 		|| (ft_lst_cmp(mini, ptr->av[i])))
 	{
-		ft_putstr_fd("bash: export: ", mini->stderr);
-		ft_putstr_fd(ptr->av[i], mini->stderr);
-		ft_putstr_fd(" : not a valid identifier\n", mini->stderr);
-		mini->exit = 1;
-		return (-1);
+		return (export_error_msg(mini, ptr->av[i]));
 	}
 	return (0);
 }
@@ -66,7 +69,7 @@ int	ft_export(t_base *ptr, t_mini *mini)
 	}
 	while (i < ptr->size && ptr->av[i])
 	{
-		if (check_valid_export(ptr, mini, i) == -1)	
+		if (check_valid_export(ptr, mini, i) == -1)
 			return (-1);
 		ft_split_into_tlist(mini, ptr->av[i]);
 		mini->exit = 0;

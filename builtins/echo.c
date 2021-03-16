@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/15 19:29:36 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/16 12:03:56 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ static int	check_empty(char *string)
 	int	i;
 
 	i = 0;
-	// printf("in\n");
 	if (string == NULL || ft_strcmp(string, "") == 0)
 		return (-1);
 	while (string[i])
@@ -110,18 +109,14 @@ static int	check_empty(char *string)
 	return (-1);
 }
 
-static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
-{
-	char	*tmp;
+static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
+{ // MEMLEAK IN HERE
 	char	*tmp2;
-	char	*string;
 	char	*tempptr;
 	char	*tmp22;
-	char	*result;
+	int		k;
 
-	tmp = ft_strdup("");
 	tmp2 = ft_strdup("");
-	string = NULL;
 	tempptr = ft_strdup(ptr->av[i]);
 	while (check_n_argv(tempptr, mini) == 1)
 	{
@@ -142,33 +137,48 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string2, t_mini *mini)
 			free(ptr->av[i]);
 			ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
 		}
-		string = ft_strjoin(tmp, ptr->av[i]);
 		tmp22 = check_tokens(ptr->av[i], mini, 0, 6);
-		result = check_tokens(ptr->av[i], mini, 0, 0);
-		free(tmp);
-		if (check_empty(tmp22) == -1 && result != NULL && ptr->av[i] != NULL && check_empty(ptr->av[i]) != -1 && numb_char(string, '$') > 0)
+		// printf("tmp22 is [%s] and ptr->av[i] is [%s]\n", tmp22, ptr->av[i]);
+		if ((check_empty(tmp22) == -1) && (numb_char(ptr->av[i], '$') > 0))
 		{
 			free(tmp22);
 			tmp22 = ft_strdup("");
-			if (string2)
+			// printf("ptr->av[i + 1][%s] string[ft_strlen(string) - 1][%c]\n", ptr->av[i + 1], string[ft_strlen(string) - 1]);
+			if (!(ptr->av[i + 1]) && string && string[ft_strlen(string) - 1] == ' ')
 			{
-				if (string2[ft_strlen(string2) - 1] == ' ')
-					tmp = string2;
-					free(string2);
-					string2 = ft_substr(tmp, 0, ft_strlen(tmp) - 1);
-					free(tmp);
+				k = ft_strlen(string) - 1;
+				while (k >= 0)
+				{
+					if (string[k] == ' ')
+						ft_memmove(&string[k], &string[k + 1], ft_strlen(string) - k);
+				k--;
+				}
 			}
 		}
-		string2 = ft_strjoin(tmp2, tmp22);
+		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
+		{
+			// printf("in this\n");
+			// printf("ptr->av[i + 1][%s] string[ft_strlen(string) - 1][%c]\n", ptr->av[i + 1], string[ft_strlen(string) - 1]);
+			if (!(ptr->av[i + 1]) && tmp22 && tmp22[ft_strlen(tmp22) - 1] == ' ')
+			{
+				k = ft_strlen(tmp22) - 1;
+				while (k >= 0)
+				{
+					if (tmp22[k] == ' ')
+						ft_memmove(&tmp22[k], &tmp22[k + 1], ft_strlen(tmp22) - k);
+				k--;
+				}
+			}
+		}
+		string = ft_strjoin(tmp2, tmp22);
 		free(tmp22);
 		free(tmp2);
-		tmp = string;
-		tmp2 = string2;
+		tmp2 = string;
 		i++;
 	}
-	free(string);
 	free(tempptr);
-	return (string2);
+	// printf("string is [%s]\n", string);
+	return (string);
 }
 
 int	ft_echo(t_base *ptr, t_mini *mini)

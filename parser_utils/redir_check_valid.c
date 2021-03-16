@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:44:30 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/15 17:40:33 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/16 11:52:08 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,11 @@ int	ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i)
 	return (1);
 }
 
-int	check_file_toredir(t_base *ptr, int i, t_mini *mini)
+int	check_file_toredir(t_base *ptr, int i, t_mini *mini, int k)
 {
 	char	*tmp;
 
+	// printf("k is %d\n", k);
 	if (ptr->av[i + 1] == NULL)
 	{
 		ft_putstr_fd("bash: syntax error near ", mini->stderr);
@@ -97,14 +98,14 @@ int	check_file_toredir(t_base *ptr, int i, t_mini *mini)
 	}
 	tmp = ptr->av[i + 1];
 	ptr->av[i + 1] = check_tokens(tmp, mini, 0, 0);
-	if (ptr->av[i + 1] == NULL && ((tmp[0] == '"' && tmp[1] == '"' && tmp[2] == '\0') || (tmp[0] == '\'' && tmp[1] == '\'' && tmp[2] == '\0')))
+	if (ptr->av[i + 1] == NULL && ((k == 0) || (tmp[0] == '"' && tmp[1] == '"' && tmp[2] == '\0') || (tmp[0] == '\'' && tmp[1] == '\'' && tmp[2] == '\0')))
 	{
 		ft_putstr_fd("bash: : No such file or directory\n", mini->stderr);
 		mini->exit = 1;
 		free(tmp);
 		return (-1);
 	}
-	if (ptr->av[i + 1] == NULL && ft_strcmp(tmp, "") == 0)
+	if (ptr->av[i + 1] == NULL)
 	{
 		free(tmp);
 		return (-1);

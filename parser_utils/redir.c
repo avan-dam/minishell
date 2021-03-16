@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/15 18:13:37 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/16 11:49:53 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ static int	open_file_more(t_base *ptr, int i, t_mini *mini, int ret)
 	return (ret);
 }
 
-static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
+static int	ft_open_file(t_base *ptr, int i, t_mini *mini, int k)
 {
 	int	ret;
 
-	if (check_file_toredir(ptr, i, mini) == -1)
+	if (check_file_toredir(ptr, i, mini, k) == -1)
 		return (-1);
 	if (ptr->redir == 0)
 		return (i);
@@ -94,6 +94,11 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini)
 
 static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 {
+	int k;
+
+	k = 0;
+	if (ptr->av[i + 1] && ptr->av[i + 1][0] == ' ')
+		k = 1;
 	if ((numb_char(ptr->av[i], '"') != 0) || (numb_char(ptr->av[i], '\'') != 0))
 	{
 		ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0, 4);
@@ -110,7 +115,7 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 		{
 			if (direction_list(ptr, i) == -1)
 				return (-1);
-			if (ft_open_file(ptr, i, mini) == -1)
+			if (ft_open_file(ptr, i, mini, k) == -1)
 				return (-1);
 			return (0);
 		}

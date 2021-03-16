@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/16 11:48:40 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/16 14:48:09 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ char				**ft_remove_redir_av(t_base *ptr, int i, int j);
 int					add_new_into_list(int j, t_base *ptr, int i);
 void				redir_change_backslash(t_base *ptr, int i);
 int					ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i);
-int					check_file_toredir(t_base *ptr, int i, t_mini *mini, int k);
+int					check_file_toredir(t_base *ptr, int i, t_mini *mini);
 int					error_opening(char *error, t_mini *mini);
 int					fill_av_list(t_base *new, t_mini *mini, int j, int l);
 int					create_av_list(t_base **ptr, char *line, t_mini *mini);
@@ -137,6 +137,7 @@ int					no_of_commands(char *line, t_mini *mini, int i, int numb);
 void				ft_free_tmps(char *tmp, char *result);
 char				*free_reset_tmp(char *tmp, char *result, char *line, int i);
 char				*ft_strtrim_backslash(char const *s1, char c);
+int					redir_error(t_mini *mini, int i);
 
 /*
 **	EXECVE FUNCTION
@@ -160,5 +161,6 @@ char				*ft_trim_paths(char *line, char *set);
 char				*mem_check_tkns(char *str, t_mini *mini, int i, int j);
 char				*ft_string_insert(char *string, int i, char *middle);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
+int	ft_check_empty(char *string);
 
 #endif

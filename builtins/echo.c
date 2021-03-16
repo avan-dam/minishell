@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/16 12:05:50 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/16 14:48:35 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,6 @@ static int	ft_echo_n(char *string, t_mini *mini)
 	ft_putstr_fd(string, mini->stdout);
 	free(string);
 	mini->exit = 0;
-	return (0);
-}
-
-static int	ft_check_empty(char *string)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	if (ft_strcmp(string, "") == 0)
-		return (1);
-	while (string[i] != '\0')
-	{
-		if (string[i] == ' ')
-			j++;
-		i++;
-	}
-	if (i == j)
-	{
-		free(string);
-		return (1);
-	}
 	return (0);
 }
 
@@ -137,12 +114,10 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
 			ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
 		}
 		tmp22 = check_tokens(ptr->av[i], mini, 0, 6);
-		// printf("tmp22 is [%s] and ptr->av[i] is [%s]\n", tmp22, ptr->av[i]);
 		if ((check_empty(tmp22) == -1) && (numb_char(ptr->av[i], '$') > 0))
 		{
 			free(tmp22);
 			tmp22 = ft_strdup("");
-			// printf("ptr->av[i + 1][%s] string[ft_strlen(string) - 1][%c]\n", ptr->av[i + 1], string[ft_strlen(string) - 1]);
 			if (!(ptr->av[i + 1]) && string && string[ft_strlen(string) - 1] == ' ')
 			{
 				k = ft_strlen(string) - 1;
@@ -150,7 +125,7 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
 				{
 					if (string[k] == ' ')
 						ft_memmove(&string[k], &string[k + 1], ft_strlen(string) - k);
-				k--;
+					k--;
 				}
 			}
 		}
@@ -163,7 +138,7 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
 				{
 					if (tmp22[k] == ' ')
 						ft_memmove(&tmp22[k], &tmp22[k + 1], ft_strlen(tmp22) - k);
-				k--;
+					k--;
 				}
 			}
 		}

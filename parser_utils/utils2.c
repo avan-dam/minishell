@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 19:28:33 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/15 17:35:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/16 14:27:15 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,27 @@ int	unvalid_ident(char *error, t_mini *mini, int exitstatus)
 	ft_putstr_fd(": command not found\n", mini->stderr);
 	mini->exit = exitstatus;
 	return (-1);
+}
+
+int	ft_check_empty(char *string)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (ft_strcmp(string, "") == 0)
+		return (1);
+	while (string[i] != '\0')
+	{
+		if (string[i] == ' ')
+			j++;
+		i++;
+	}
+	if (i == j)
+	{
+		free(string);
+		return (1);
+	}
+	return (0);
 }

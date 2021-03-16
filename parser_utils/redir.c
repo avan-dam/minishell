@@ -6,15 +6,14 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/16 12:24:57 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/16 14:54:06 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	direction_list(t_base *ptr, int i)
+static int	direction_list(t_base *ptr, int i, int j, int k)
 {
-	int		j;
 	char	*temp;
 
 	if ((ft_strchr_numb(ptr->av[i + 1], '>', 0) != -1)
@@ -28,19 +27,27 @@ static int	direction_list(t_base *ptr, int i)
 		if (add_new_into_list(j, ptr, i + 1) == -1)
 			i++;
 	}
-	i = 0;
-	while (ptr->av[i])
+	while (ptr->av[k])
 	{
-		temp = ptr->av[i];
-		ptr->av[i] = ft_strtrim_backslash(temp, ' ');
-		free(temp);
-		i++;
+		if (ft_strcmp(ptr->av[0], "echo") != 0 || numb_char(ptr->av[k], '>') > 0
+			|| numb_char(ptr->av[k], '<') > 0)
+		{
+			temp = ptr->av[k];
+			ptr->av[k] = ft_strtrim_backslash(temp, ' ');
+			free(temp);
+		}
+		k++;
 	}
 	return (0);
 }
 
-static int	open_file_more(t_base *ptr, int i, t_mini *mini)
+static int	open_file_more(t_base *ptr, int i, t_mini *mini, int k)
 {
+	if (ft_check_empty(ptr->av[i + 1]) == 1 && k == 1)
+	{
+		mini->exit = 0;
+		return (-1);
+	}
 	if (ft_strcmp(">", ptr->av[i]) == 0)
 	{
 		mini->stdout = open(ptr->av[i + 1], R | C | T, 0666);
@@ -64,14 +71,18 @@ static int	open_file_more(t_base *ptr, int i, t_mini *mini)
 
 static int	ft_open_file(t_base *ptr, int i, t_mini *mini, int k)
 {
-	int	ret;
+	int		ret;
+	char	*temp;
 
-	direction_list(ptr, i);
-	if (check_file_toredir(ptr, i, mini, k) == -1)
+	direction_list(ptr, i, i, 0);
+	if (check_file_toredir(ptr, i, mini) == -1)
 		return (-1);
 	if (ptr->redir == 0)
 		return (i);
-	ret = open_file_more(ptr, i, mini);
+	temp = ptr->av[i + 1];
+	ptr->av[i + 1] = ft_strtrim_backslash(temp, ' ');
+	free(temp);
+	ret = open_file_more(ptr, i, mini, k);
 	if (ret == -1)
 		return (-1);
 	ptr->size = ptr->size - 2;
@@ -89,7 +100,8 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 	int	k;
 
 	k = 0;
-	if (ptr->av[i + 1] && ptr->av[i + 1][0] == ' ')
+	if (ptr->av[i + 1] && ((ptr->av[i + 1][0] == ' ')
+			|| (ptr->av[i + 1][0] == '\\')))
 		k = 1;
 	if ((numb_char(ptr->av[i], '"') != 0) || (numb_char(ptr->av[i], '\'') != 0))
 	{

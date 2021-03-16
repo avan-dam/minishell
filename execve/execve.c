@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/15 17:57:37 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/16 14:07:11 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static void 	sort_struct_before_redir(t_base *ptr, t_mini *mini)
 			i++;
 	 	if (i < ptr->size && ptr->av[i] && ((i == 0)
 				 || (ft_strcmp(ptr->av[0], "export") != 0
-					&& ft_strcmp(ptr->av[0], "echo") != 0)))
+					&& ft_strcmp(ptr->av[0], "echo") != 0))) // individual letters
 		{
 			temp = ptr->av[i];
 			ptr->av[i] = ft_strtrim_backslash(temp, ' ');

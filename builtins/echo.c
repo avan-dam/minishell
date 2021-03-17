@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/17 13:35:02 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/17 13:58:56 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
 		if (!(ptr->av[i + 1]))
 		{
 			tempptr = ptr->av[i];
-			free(ptr->av[i]);
+			if (ft_strcmp(ptr->av[i], "") != 0)
+				free(ptr->av[i]);
 			ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
 		}
 		tmp22 = check_tokens(ptr->av[i], mini, 0, 6);
@@ -159,6 +160,7 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
 		tmp2 = string;
 		i++;
 	}
+
 	return (string);
 }
 

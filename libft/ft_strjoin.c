@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:10:14 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/17 13:24:01 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/17 13:48:30 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t		i;
 	size_t		j;
 
+	if (s1 == NULL && s2 == NULL)
+		return (ft_strdup(""));
 	if (s1 == NULL || ft_strcmp(s1, "") == 0)
 		return (ft_strdup(s2));
 	if (s2 == NULL || ft_strcmp(s2, "") == 0)

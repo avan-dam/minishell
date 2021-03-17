@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/16 14:48:35 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/17 13:58:56 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,34 @@ static int	check_n_argv(char *string, t_mini *mini)
 	i = 0;
 	if (string == NULL || ft_strcmp(string, "") == 0
 		|| ft_strcmp(string, "-") == 0)
+	{
+		free(string);
 		return (-1);
+	}
 	tempptr = string;
 	string = ft_strtrim_backslash(tempptr, ' ');
-	string = mem_check_tkns(string, mini, 0, 6);
+	free(string);
+	string = check_tokens(string, mini, 0, 6);
 	if (string == NULL || ft_strcmp(string, "") == 0
 		|| ft_strcmp(string, "-") == 0)
+	{
+		free(string);
 		return (-1);
+	}
 	if (string[i] != '-')
+	{
+		free(string);
 		return (-1);
+	}
 	i++;
 	while (string[i] == 'n')
 		i++;
 	if (string[i] != '\0')
+	{
+		free(string);
 		return (-1);
+	}
+	free(string);
 	return (1);
 }
 
@@ -84,16 +98,15 @@ static int	check_empty(char *string)
 	}
 	return (-1);
 }
-
 static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
-{ // MEMLEAK IN HERE
+{
 	char	*tmp2;
 	char	*tempptr;
 	char	*tmp22;
 	int		k;
 
-	tmp2 = ft_strdup("");
-	tempptr = ft_strdup(ptr->av[i]);
+	tmp2 = NULL;
+	tempptr = ptr->av[i];
 	while (check_n_argv(tempptr, mini) == 1)
 	{
 		free(ptr->av[i]);
@@ -101,16 +114,15 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
 		i++;
 		if (ptr->av[i] == NULL)
 			break ;
-		free(tempptr);
-		tempptr = ft_strdup(ptr->av[i]);
+		tempptr = ptr->av[i];
 	}
 	while (ptr->av[i])
 	{
 		if (!(ptr->av[i + 1]))
 		{
-			free(tempptr);
-			tempptr = ft_strdup(ptr->av[i]);
-			free(ptr->av[i]);
+			tempptr = ptr->av[i];
+			if (ft_strcmp(ptr->av[i], "") != 0)
+				free(ptr->av[i]);
 			ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
 		}
 		tmp22 = check_tokens(ptr->av[i], mini, 0, 6);
@@ -148,7 +160,7 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
 		tmp2 = string;
 		i++;
 	}
-	free(tempptr);
+
 	return (string);
 }
 
@@ -160,14 +172,14 @@ int	ft_echo(t_base *ptr, t_mini *mini)
 	if ((ft_strcmp("", ptr->av[0]) == 0) || (ptr->av[1] == NULL))
 		return (ft_putstr_fd("", mini->stdout));
 	string = ft_avs_into_string(ptr, 1, NULL, mini);
+	if (ft_strcmp(ptr->av[1], "-n") == 0)
+		return (ft_echo_n(string, mini));
 	if (string == NULL || ft_check_empty(string) == 1)
 	{
-		if (string == NULL)
+		if (string == NULL || ft_strcmp("", string) == 0)
 			free(string);
 		return (ft_putchar_fd('\n', mini->stdout));
 	}
-	if (ft_strcmp(ptr->av[1], "-n") == 0)
-		return (ft_echo_n(string, mini));
 	ft_putstr_fd(string, mini->stdout);
 	free(string);
 	return (ft_putchar_fd('\n', mini->stdout));

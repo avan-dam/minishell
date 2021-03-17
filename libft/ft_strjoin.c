@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:10:14 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/06 13:58:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/17 13:24:01 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t		i;
 	size_t		j;
 
-	if (s1 == NULL)
+	if (s1 == NULL || ft_strcmp(s1, "") == 0)
 		return (ft_strdup(s2));
-	if (s2 == NULL)
+	if (s2 == NULL || ft_strcmp(s2, "") == 0)
 		return (ft_strdup(s1));
 	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (str == NULL)

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:04:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/15 17:38:53 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/17 13:13:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	ft_find_dolla(int i, int j, t_mini *mini, t_line *s)
 	}
 	free(oldvar);
 	retval = ft_len(newvar) - 1;
+	free(s->str);
 	s->str = ft_strjoin_three(start, newvar, end);
 	return (retval);
 }

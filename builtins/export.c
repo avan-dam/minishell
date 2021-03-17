@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/17 10:04:38 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/17 22:36:30 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 			break ;
 		j++;
 	}
+	printf("value of ptr->av after = is found: %s\n", ptr->av[i]);
 	if ((ptr->av[i][0] >= '0' && ptr->av[i][0] <= '9')
 		|| (ptr->av[i][0] == '+') || (ptr->av[i][0] == '/')
 		|| (ptr->av[i][0] == '?') || (ptr->av[i][0] == '$')

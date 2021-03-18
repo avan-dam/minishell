@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/17 14:41:45 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/18 11:31:38 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,13 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 	int	j;
 
 	j = 0;
-	// while (ptr->av[i][j])
-	// {
-	// 	printf("ptr->av[i][j]: %c\n", ptr->av[i][j]);
-	// 	j++;
-	// }
-	// j = 0;
+	while (ptr->av[i][j])
+		j++;
+	j = 0;
 	while (ptr->av[i][j])
 	{
 		if ((ptr->av[i][0] == '=') || (((numb_char(ptr->av[i], '=') == 0))
-				&& ((ptr->av[i][j] >= '0' && ptr->av[i][j] <= '9')
+				&& ((ptr->av[0][j] >= '0' && ptr->av[0][j] <= '9')
 					|| ptr->av[i][j] == '-')))
 			return (export_error_msg(mini, ptr->av[i]));
 		if (ptr->av[i][j] == '=')
@@ -46,7 +43,6 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 		|| (ptr->av[i][0] == '+') || (ptr->av[i][0] == '/')
 		|| (ptr->av[i][0] == '?') || (ptr->av[i][0] == '$')
 		|| (ft_strcmp(ptr->av[i], "=") == 0))
-		//|| (ft_lst_cmp(mini, ptr->av[i])))
 		return (export_error_msg(mini, ptr->av[i]));
 	return (0);
 }

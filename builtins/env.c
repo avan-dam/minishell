@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 09:49:25 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/18 11:09:53 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ void	ft_lstprint_env(t_list *lst, t_mini *mini, t_base *ptr)
 	}
 	while (tmp != NULL)
 	{
+		if (tmp->var2 == NULL)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
 		ft_putstr_fd(tmp->var1, mini->stdout);
 		ft_putstr_fd("=", mini->stdout);
 		ft_putstr_fd(tmp->var2, mini->stdout);

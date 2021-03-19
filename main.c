@@ -6,10 +6,9 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/18 11:31:21 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/19 16:13:48 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 

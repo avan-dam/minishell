@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/16 14:48:09 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/19 16:14:44 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,6 @@ char				*ft_trim_paths(char *line, char *set);
 char				*mem_check_tkns(char *str, t_mini *mini, int i, int j);
 char				*ft_string_insert(char *string, int i, char *middle);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
-int	ft_check_empty(char *string);
+int					ft_check_empty(char *string);
 
 #endif

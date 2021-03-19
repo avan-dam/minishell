@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:09:58 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/11/15 16:09:59 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/19 16:11:45 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strchr(const char *s, int c)
 	while (i < len)
 	{
 		if (s[i] == (char)c)
-			return ((char*)&s[i]);
+			return ((char *)&s[i]);
 		i++;
 	}
 	return (0);

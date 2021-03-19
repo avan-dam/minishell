@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:50:24 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/10 09:48:02 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/17 22:29:26 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ t_list	*ft_lstnew(void *var1, void *var2)
 	if (tmp)
 	{
 		tmp->var1 = ft_strdup(var1);
-		tmp->var2 = ft_strdup(var2);
+		if (var2 == NULL)
+			tmp->var2 = NULL;
+		else
+			tmp->var2 = ft_strdup(var2);
 		tmp->next = NULL;
 	}
 	return (tmp);

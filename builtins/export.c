@@ -6,7 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2021/03/19 16:19:46 by ambervandam   ########   odam.nl         */
+=======
+/*   Updated: 2021/03/19 16:04:08 by salbregh      ########   odam.nl         */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +31,12 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 
 	j = 0;
 	while (ptr->av[i][j])
+		j++;
+	j = 0;
+	while (ptr->av[i][j])
 	{
 		if ((ptr->av[i][0] == '=') || (((numb_char(ptr->av[i], '=') == 0))
-				&& ((ptr->av[i][j] >= '0' && ptr->av[i][j] <= '9')
+				&& ((ptr->av[0][j] >= '0' && ptr->av[0][j] <= '9')
 					|| ptr->av[i][j] == '-')))
 			return (export_error_msg(mini, ptr->av[i]));
 		if (ptr->av[i][j] == '=')
@@ -40,7 +47,6 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 		|| (ptr->av[i][0] == '+') || (ptr->av[i][0] == '/')
 		|| (ptr->av[i][0] == '?') || (ptr->av[i][0] == '$')
 		|| (ft_strcmp(ptr->av[i], "=") == 0))
-		//|| (ft_lst_cmp(mini, ptr->av[i])))
 		return (export_error_msg(mini, ptr->av[i]));
 	return (0);
 }
@@ -52,6 +58,7 @@ int	ft_export(t_base *ptr, t_mini *mini)
 
 	i = 1;
 	j = 0;
+	mini->exit = 0;
 	while (j < ptr->size && ptr->av[i])
 	{
 		ptr->av[j] = mem_check_tkns(ptr->av[j], mini, 0, 6);

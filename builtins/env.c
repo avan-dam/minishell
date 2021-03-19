@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 09:49:25 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/19 16:17:29 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ void	ft_set_env(char **av, char **envp, t_mini *mini)
 	mini->exit = 0;
 }
 
+static void	ft_env_error(t_mini *mini, t_base *ptr)
+{
+	ft_putstr_fd("env: ", STDOUT);
+	ft_putstr_fd(ptr->av[1], STDOUT);
+	ft_putstr_fd(": No such file or directory\n", STDOUT);
+	mini->exit = 127;
+}
+
 void	ft_lstprint_env(t_list *lst, t_mini *mini, t_base *ptr)
 {
 	t_list	*tmp;
@@ -42,14 +50,16 @@ void	ft_lstprint_env(t_list *lst, t_mini *mini, t_base *ptr)
 		return ;
 	if (ptr->av[1])
 	{
-		ft_putstr_fd("env: ", STDOUT);
-		ft_putstr_fd(ptr->av[1], STDOUT);
-		ft_putstr_fd(": No such file or directory\n", STDOUT);
-		mini->exit = 127;
+		ft_env_error(mini, ptr);
 		return ;
 	}
 	while (tmp != NULL)
 	{
+		if (tmp->var2 == NULL)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
 		ft_putstr_fd(tmp->var1, mini->stdout);
 		ft_putstr_fd("=", mini->stdout);
 		ft_putstr_fd(tmp->var2, mini->stdout);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:12 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/21 21:11:34 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/18 10:58:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,19 @@ int	ft_split_into_tlist(t_mini *mini, char *line)
 
 	i = ft_strchr_numb(line, '=', 0);
 	if (i == -1)
+	{
+		i = 0;
+		while (line[i] && line[i] != ' ')
+			i++;
+		var1 = ft_substr(line, 0, i);
+		var2 = NULL;
+		ft_unset(mini, var1);
+		newnode = ft_lstnew(var1, NULL);
+		free(var1);
+		free(var2);
+		ft_lstadd_back(&mini->env1, newnode);
 		return (0);
+	}
 	if (line[i - 1] == ' ' || line[i + 1] == ' ')
 		return (0);
 	var1 = ft_substr(line, 0, i);

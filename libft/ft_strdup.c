@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:10:02 by salbregh      #+#    #+#                 */
-/*   Updated: 2020/11/15 16:10:04 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/19 16:39:06 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ char	*ft_strdup(const char *s1)
 		ptr[i] = s1[i];
 		i++;
 	}
-	return ((char*)ptr);
+	return ((char *)ptr);
 }

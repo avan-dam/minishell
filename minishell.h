@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/19 16:14:44 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/19 17:14:12 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void				ft_baseclear(t_base **lst);
 void				clear_leaks(t_base *ptr);
 void				one_baseclear(t_base *store);
 int					ft_lst_cmp(t_mini *mini, char *value);
+void				delete_node(t_list *lst, t_list *target, t_mini *mini);
 
 /*
 **	BUILTIN FUNCTION
@@ -146,6 +147,8 @@ int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 int					look_for_non_builtin(t_base *ptr, int i);
 int					ft_is_builtin(char *str);
 int					ft_execve(t_mini *mini, char **envp);
+void				sort_struct_before_redir(t_base *ptr, t_mini *mini);
+void				sort_struct_after_redir(t_base *ptr);
 
 /*
 **	UTILS

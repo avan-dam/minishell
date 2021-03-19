@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/18 15:49:11 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/19 16:08:52 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/19 16:35:04 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_lstprintold(t_list *lst)
 void	ft_put_var_with_extra_backslash(char *tmpvar2, t_mini *mini)
 {
 	int	i;
+
 	if (!tmpvar2)
 		return ;
 	i = 0;

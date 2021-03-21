@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 19:28:33 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/16 14:27:15 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/19 16:28:18 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,27 +66,6 @@ char	*mem_check_tkns(char *str, t_mini *mini, int i, int j)
 	str = check_tokens(temp, mini, i, j);
 	free(temp);
 	return (str);
-}
-
-int	unvalid_ident(char *error, t_mini *mini, int exitstatus)
-{
-	if ((ft_strcmp(error, "|") == 0)
-		|| (ft_strcmp(error, ";") == 0))
-	{
-		ft_putstr_fd("bash: syntax error ", mini->stderr);
-		ft_putstr_fd("near unexpected token '", mini->stderr);
-		ft_putstr_fd(error, mini->stderr);
-		ft_putstr_fd("'\n", mini->stderr);
-		mini->exit = exitstatus;
-		return (-1);
-	}
-	if (ft_strcmp(error, "\\$?") == 0)
-		error = "$?";
-	ft_putstr_fd("bash: ", mini->stderr);
-	ft_putstr_fd(error, mini->stderr);
-	ft_putstr_fd(": command not found\n", mini->stderr);
-	mini->exit = exitstatus;
-	return (-1);
 }
 
 int	ft_check_empty(char *string)

@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/18 10:56:06 by salbregh      ########   odam.nl          #
+#    Updated: 2021/03/19 17:14:00 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,10 @@ SRCS =		main.c \
 			list_utils/ft_lstnew.c \
 			list_utils/ft_lstprint.c \
 			list_utils/ft_split_into_list.c \
+			list_utils/delete_node.c \
 			parser_utils/utils.c \
 			parser_utils/utils2.c \
+			parser_utils/utils3.c \
 			parser_utils/replace_specials.c \
 			parser_utils/replace_dolla.c \
 			parser_utils/replace_quote_backslash.c \
@@ -38,6 +40,7 @@ SRCS =		main.c \
 			parser_utils/parser_av_list.c \
 			parser_utils/parser_no_commands.c \
 			execve/execve.c \
+			execve/sort_struct.c \
 			leaks.c \
 			execve/builtins.c
 # lets delete the leaks.c

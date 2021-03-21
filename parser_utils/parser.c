@@ -6,24 +6,11 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/15 17:53:17 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/19 16:34:32 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	ft_free_tmps(char *tmp, char *result)
-{
-	free(tmp);
-	if (result)
-		free(result);
-}
-
-char	*free_reset_tmp(char *tmp, char *result, char *line, int i)
-{
-	ft_free_tmps(tmp, result);
-	return (ft_substr(line, 0, i));
-}
 
 static int	free_before_exit(t_base *ptr, t_base *tmp)
 {

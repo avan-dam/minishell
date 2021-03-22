@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/16 15:14:12 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/22 16:06:14 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,13 @@ int	ft_replace_quotes(t_line *s, int i, int j)
 			s->d++;
 	}
 	return (i);
+}
+
+int	ft_extra_check_dolla(t_line *s, int i, int j)
+{
+	if (s->str[j] == '*')
+		i++;
+	if (s->str[i - 1] == '"')
+		return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/22 15:04:17 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/22 15:50:45 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ static int	check_empty(char *str)
 
 static char	*try_this(t_base *ptr, char *str, int i)
 {
-	int k;
+	int	k;
+
 	if (!(ptr->av[i + 1]) && str && str[ft_strlen(str) - 1] == ' ')
 	{
 		k = ft_strlen(str) - 1;
@@ -111,7 +112,6 @@ static char	*ft_avs_into_str(t_base *ptr, int i, char *str, t_mini *mini)
 	char	*tmp2;
 	char	*tempptr;
 	char	*tmp22;
-	// int		k;
 
 	tmp2 = NULL;
 	tempptr = ptr->av[i];
@@ -139,31 +139,9 @@ static char	*ft_avs_into_str(t_base *ptr, int i, char *str, t_mini *mini)
 			free(tmp22);
 			tmp22 = ft_strdup("");
 			str = try_this(ptr, str, i);
-			// if (!(ptr->av[i + 1]) && str && str[ft_strlen(str) - 1] == ' ')
-			// {
-			// 	k = ft_strlen(str) - 1;
-			// 	while (k >= 0)
-			// 	{
-			// 		if (str[k] == ' ')
-			// 			ft_memmove(&str[k], &str[k + 1], ft_strlen(str) - k);
-			// 		k--;
-			// 	}
-			// }
 		}
 		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
-		{
 			tmp22 = try_this(ptr, tmp22, i);
-			// if (!(ptr->av[i + 1]) && tmp22 && tmp22[ft_strlen(tmp22) - 1] == ' ')
-			// {
-			// 	k = ft_strlen(tmp22) - 1;
-			// 	while (k >= 0)
-			// 	{
-			// 		if (tmp22[k] == ' ')
-			// 			ft_memmove(&tmp22[k], &tmp22[k + 1], ft_strlen(tmp22) - k);
-			// 		k--;
-			// 	}
-			// }
-		}
 		str = ft_strjoin(tmp2, tmp22);
 		free(tmp22);
 		free(tmp2);

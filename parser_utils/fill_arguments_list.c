@@ -6,13 +6,13 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/22 13:14:31 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/22 13:20:48 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/22 15:10:14 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	try_this(t_mini *m, int j, char *result)
+static int	check_redir(t_mini *m, int j, char *result)
 {
 	if ((m->part[j] == '>' || m->part[j] == '<') && m->part[j + 1] != '>'
 		&& result != NULL)
@@ -40,7 +40,7 @@ static int 	fill_av_more(t_mini *m, int j, int k)
 	{
 		free(result);
 		result = mem_check_tkns(ft_substr(m->part, k, j - k + 1), m, 0, 4);
-		if (try_this(m, j, result) == 1)
+		if (check_redir(m, j, result) == 1)
 		{
 			j++;
 			break ;
@@ -56,7 +56,7 @@ static int 	fill_av_more(t_mini *m, int j, int k)
 	return (j);
 }
 
-static int	try_this_now(t_mini *mini, int j, int l, t_base *new)
+static int	substr_av(t_mini *mini, int j, int l, t_base *new)
 {
 	int	k;
 
@@ -88,7 +88,7 @@ int	fill_av_list(t_base *new, t_mini *mini, int j, int l)
 		if (mini->part[j] == '\0')
 			new->av[l] = NULL;
 		else
-			j = try_this_now(mini, j, l, new);
+			j = substr_av(mini, j, l, new);
 		l++;
 	}
 	return (0);

@@ -6,103 +6,112 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/19 16:21:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/22 15:04:17 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*ft_howmany_n(char *string, int i, int j)
+static char	*ft_howmany_n(char *str, int i, int j)
 {
-	if (ft_strcmp(string, "-n") == 0)
-		return (ft_substr(string, 3, ft_strlen(string) - 3));
-	while (string[i] != '\0')
+	if (ft_strcmp(str, "-n") == 0)
+		return (ft_substr(str, 3, ft_strlen(str) - 3));
+	while (str[i] != '\0')
 	{
 		j = i;
-		if (string[i] != '-')
-			return (ft_substr(string, j, ft_strlen(string) - j));
+		if (str[i] != '-')
+			return (ft_substr(str, j, ft_strlen(str) - j));
 		i++;
-		while (string[i] == 'n')
+		while (str[i] == 'n')
 			i++;
-		if (string[i] != ' ')
-			return (ft_substr(string, j, ft_strlen(string) - j));
+		if (str[i] != ' ')
+			return (ft_substr(str, j, ft_strlen(str) - j));
 		i++;
 	}
 	return ("");
 }
 
-static int	ft_echo_n(char *string, t_mini *mini)
+static int	ft_echo_n(char *str, t_mini *mini)
 {
-	if (string == NULL)
+	if (str == NULL)
 		return (0);
-	string = ft_howmany_n(string, 0, 0);
-	if (ft_strcmp(string, "") == 0)
+	str = ft_howmany_n(str, 0, 0);
+	if (ft_strcmp(str, "") == 0)
 		return (0);
-	ft_putstr_fd(string, mini->stdout);
-	free(string);
+	ft_putstr_fd(str, mini->stdout);
+	free(str);
 	return (0);
 }
 
-static int	check_n_argv(char *string, t_mini *mini)
+static int	free_return(char *str)
+{
+	free(str);
+	return (-1);
+}
+
+static int	check_n_argv(char *str, t_mini *mini)
 {
 	int		i;
 	char	*tempptr;
 
 	i = 0;
-	if (string == NULL || ft_strcmp(string, "") == 0
-		|| ft_strcmp(string, "-") == 0)
-	{
-		free(string);
-		return (-1);
-	}
-	tempptr = string;
-	string = ft_strtrim_backslash(tempptr, ' ');
-	free(string);
-	string = check_tokens(string, mini, 0, 6);
-	if (string == NULL || ft_strcmp(string, "") == 0
-		|| ft_strcmp(string, "-") == 0)
-	{
-		free(string);
-		return (-1);
-	}
-	if (string[i] != '-')
-	{
-		free(string);
-		return (-1);
-	}
+	if (str == NULL || ft_strcmp(str, "") == 0 || ft_strcmp(str, "-") == 0)
+		return (free_return(str));
+	tempptr = str;
+	str = ft_strtrim_backslash(tempptr, ' ');
+	free(str);
+	str = check_tokens(str, mini, 0, 6);
+	if (str == NULL || ft_strcmp(str, "") == 0 || ft_strcmp(str, "-") == 0)
+		return (free_return(str));
+	if (str[i] != '-')
+		return (free_return(str));
 	i++;
-	while (string[i] == 'n')
+	while (str[i] == 'n')
 		i++;
-	if (string[i] != '\0')
-	{
-		free(string);
-		return (-1);
-	}
-	free(string);
+	if (str[i] != '\0')
+		return (free_return(str));
+	free(str);
 	return (1);
 }
 
-static int	check_empty(char *string)
+static int	check_empty(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (string == NULL || ft_strcmp(string, "") == 0)
+	if (str == NULL || ft_strcmp(str, "") == 0)
 		return (-1);
-	while (string[i])
+	while (str[i])
 	{
-		if (string[i] != ' ')
+		if (str[i] != ' ')
 			return (0);
 		i++;
 	}
 	return (-1);
 }
-static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
+
+static char	*try_this(t_base *ptr, char *str, int i)
+{
+	int k;
+	if (!(ptr->av[i + 1]) && str && str[ft_strlen(str) - 1] == ' ')
+	{
+		k = ft_strlen(str) - 1;
+		while (k >= 0)
+		{
+			if (str[k] == ' ')
+				ft_memmove(&str[k], &str[k + 1], ft_strlen(str) - k);
+			k--;
+		}
+	}
+	return (str);
+}
+
+static char	*ft_avs_into_str(t_base *ptr, int i, char *str, t_mini *mini)
 {
 	char	*tmp2;
 	char	*tempptr;
 	char	*tmp22;
-	int		k;
+	// int		k;
 
 	tmp2 = NULL;
 	tempptr = ptr->av[i];
@@ -129,60 +138,61 @@ static char	*ft_avs_into_string(t_base *ptr, int i, char *string, t_mini *mini)
 		{
 			free(tmp22);
 			tmp22 = ft_strdup("");
-			if (!(ptr->av[i + 1]) && string && string[ft_strlen(string) - 1] == ' ')
-			{
-				k = ft_strlen(string) - 1;
-				while (k >= 0)
-				{
-					if (string[k] == ' ')
-						ft_memmove(&string[k], &string[k + 1], ft_strlen(string) - k);
-					k--;
-				}
-			}
+			str = try_this(ptr, str, i);
+			// if (!(ptr->av[i + 1]) && str && str[ft_strlen(str) - 1] == ' ')
+			// {
+			// 	k = ft_strlen(str) - 1;
+			// 	while (k >= 0)
+			// 	{
+			// 		if (str[k] == ' ')
+			// 			ft_memmove(&str[k], &str[k + 1], ft_strlen(str) - k);
+			// 		k--;
+			// 	}
+			// }
 		}
 		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
 		{
-			if (!(ptr->av[i + 1]) && tmp22 && tmp22[ft_strlen(tmp22) - 1] == ' ')
-			{
-				k = ft_strlen(tmp22) - 1;
-				while (k >= 0)
-				{
-					if (tmp22[k] == ' ')
-						ft_memmove(&tmp22[k], &tmp22[k + 1], ft_strlen(tmp22) - k);
-					k--;
-				}
-			}
+			tmp22 = try_this(ptr, tmp22, i);
+			// if (!(ptr->av[i + 1]) && tmp22 && tmp22[ft_strlen(tmp22) - 1] == ' ')
+			// {
+			// 	k = ft_strlen(tmp22) - 1;
+			// 	while (k >= 0)
+			// 	{
+			// 		if (tmp22[k] == ' ')
+			// 			ft_memmove(&tmp22[k], &tmp22[k + 1], ft_strlen(tmp22) - k);
+			// 		k--;
+			// 	}
+			// }
 		}
-		string = ft_strjoin(tmp2, tmp22);
+		str = ft_strjoin(tmp2, tmp22);
 		free(tmp22);
 		free(tmp2);
-		tmp2 = string;
+		tmp2 = str;
 		i++;
 	}
-
-	return (string);
+	return (str);
 }
 
 int	ft_echo(t_base *ptr, t_mini *mini)
 {
-	char	*string;
+	char	*str;
 
 	if ((ft_strcmp("", ptr->av[0]) == 0) || (ptr->av[1] == NULL))
 	{
 		mini->exit = 0;
 		return (ft_putstr_fd("", mini->stdout));
 	}
-	string = ft_avs_into_string(ptr, 1, NULL, mini);
+	str = ft_avs_into_str(ptr, 1, NULL, mini);
 	mini->exit = 0;
 	if (ft_strcmp(ptr->av[1], "-n") == 0)
-		return (ft_echo_n(string, mini));
-	if (string == NULL || ft_check_empty(string) == 1)
+		return (ft_echo_n(str, mini));
+	if (str == NULL || ft_check_empty(str) == 1)
 	{
-		if (string == NULL || ft_strcmp("", string) == 0)
-			free(string);
+		if (str == NULL || ft_strcmp("", str) == 0)
+			free(str);
 		return (ft_putchar_fd('\n', mini->stdout));
 	}
-	ft_putstr_fd(string, mini->stdout);
-	free(string);
+	ft_putstr_fd(str, mini->stdout);
+	free(str);
 	return (ft_putchar_fd('\n', mini->stdout));
 }

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 07:59:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/16 13:05:10 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/22 12:21:52 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	no_of_commands_more(t_mini *mini, int i, char *line, int numb)
 {
 	mini->numb_cmds = numb;
-	mini->cmd_part = ft_substr(line, 0, i);
+	mini->part = ft_substr(line, 0, i);
 	if (line[i] == '|')
 		mini->type_end = T_PIPE;
 	else if (line[i] == ';')
@@ -40,7 +40,7 @@ static int	no_commands_line(char *line, int i, int numb, t_mini *mini)
 static int	set_mini_return(t_mini *mini, int numb, char *line, int i)
 {
 	mini->numb_cmds = numb;
-	mini->cmd_part = ft_substr(line, 0, i);
+	mini->part = ft_substr(line, 0, i);
 	mini->type_end = T_END;
 	return (i);
 }

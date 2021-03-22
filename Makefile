@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/19 17:14:00 by salbregh      ########   odam.nl          #
+#    Updated: 2021/03/22 13:20:20 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,8 @@ SRCS =		main.c \
 			parser_utils/parser.c \
 			parser_utils/parser_av_list.c \
 			parser_utils/parser_no_commands.c \
+			parser_utils/backslash_trimming.c \
+			parser_utils/fill_arguments_list.c \
 			execve/execve.c \
 			execve/sort_struct.c \
 			leaks.c \

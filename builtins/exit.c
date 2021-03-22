@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/09 15:28:07 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/22 12:21:52 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	ft_print_exit_status(t_mini *mini)
 
 void	clear_mini(t_mini *mini, int i)
 {
-	if (mini->cmd_part)
-		free(mini->cmd_part);
+	if (mini->part)
+		free(mini->part);
 	mini->type_end = 0;
 	mini->numb_cmds = 0;
 	ft_reset_fds(mini);

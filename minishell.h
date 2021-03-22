@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/21 11:25:03 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/22 12:21:52 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_mini
 	int				stdout;
 	int				stderr;
 	int				numb_cmds;
-	char			*cmd_part;
+	char			*part;
 	int				type_end;
 	int				stdin;
 	int				exit;

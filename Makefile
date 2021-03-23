@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/23 21:43:59 by ambervandam   ########   odam.nl          #
+#    Updated: 2021/03/23 21:45:04 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,8 @@ OFILES =	$(SRCS:.c=.o)
 INCLUDES =	./get_next_line/get_next_line.h \
 			./libft/libft.h \
 			minishell.h
+
+CC		=	gcc
 
 all:		$(NAME)
 

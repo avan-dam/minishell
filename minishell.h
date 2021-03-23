@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/22 16:06:08 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/23 11:04:28 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
-# include <stdio.h> // delete after
 # include <stdlib.h>
 # include <sys/syslimits.h>
 # include <fcntl.h>
@@ -136,6 +135,7 @@ int					error_opening(char *error, t_mini *mini);
 int					fill_av_list(t_base *new, t_mini *mini, int j, int l);
 int					create_av_list(t_base **ptr, char *line, t_mini *mini);
 int					no_of_commands(char *line, t_mini *mini, int i, int numb);
+int					no_of_commands_more(t_mini *mini, int i, char *line, int numb);
 void				ft_free_tmps(char *tmp, char *result);
 char				*free_reset_tmp(char *tmp, char *result, char *line, int i);
 char				*ft_strtrim_backslash(char const *s1, char c);

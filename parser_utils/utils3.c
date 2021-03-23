@@ -6,11 +6,22 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 16:27:02 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/22 13:05:25 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 11:02:15 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	no_of_commands_more(t_mini *mini, int i, char *line, int numb)
+{
+	mini->numb_cmds = numb;
+	mini->part = ft_substr(line, 0, i);
+	if (line[i] == '|')
+		mini->type_end = T_PIPE;
+	else if (line[i] == ';')
+		mini->type_end = T_BREAK;
+	return (i);
+}
 
 void	ft_free_tmps(char *tmp, char *result)
 {

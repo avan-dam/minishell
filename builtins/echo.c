@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/22 15:50:45 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/23 09:47:16 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	check_empty(char *str)
 	return (-1);
 }
 
-static char	*try_this(t_base *ptr, char *str, int i)
+static char	*trim_string(t_base *ptr, char *str, int i)
 {
 	int	k;
 
@@ -106,6 +106,40 @@ static char	*try_this(t_base *ptr, char *str, int i)
 	}
 	return (str);
 }
+
+// static char	*try_this(t_base *ptr, int i, t_mini *mini, char *str)
+// {
+// 	char	*tempptr;
+// 	char	*tmp2;
+// 	char	*tmp22;
+
+// 	while (ptr->av[i])
+// 	{
+// 		tmp2 = NULL;
+// 		if (!(ptr->av[i + 1]))
+// 		{
+// 			tempptr = ptr->av[i];
+// 			if (ft_strcmp(ptr->av[i], "") != 0)
+// 				free(ptr->av[i]);
+// 			ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
+// 		}
+// 		tmp22 = check_tokens(ptr->av[i], mini, 0, 6);
+// 		if ((check_empty(tmp22) == -1) && (numb_char(ptr->av[i], '$') > 0))
+// 		{
+// 			free(tmp22);
+// 			tmp22 = ft_strdup("");
+// 			str = trim_string(ptr, str, i);
+// 		}
+// 		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
+// 			tmp22 = trim_string(ptr, tmp22, i);
+// 		str = ft_strjoin(tmp2, tmp22);
+// 		free(tmp22);
+// 		free(tmp2);
+// 		tmp2 = str;
+// 		i++;
+// 	}
+// 	return (str);
+// }
 
 static char	*ft_avs_into_str(t_base *ptr, int i, char *str, t_mini *mini)
 {
@@ -138,10 +172,10 @@ static char	*ft_avs_into_str(t_base *ptr, int i, char *str, t_mini *mini)
 		{
 			free(tmp22);
 			tmp22 = ft_strdup("");
-			str = try_this(ptr, str, i);
+			str = trim_string(ptr, str, i);
 		}
 		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
-			tmp22 = try_this(ptr, tmp22, i);
+			tmp22 = trim_string(ptr, tmp22, i);
 		str = ft_strjoin(tmp2, tmp22);
 		free(tmp22);
 		free(tmp2);

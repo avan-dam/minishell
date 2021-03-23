@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 21:23:07 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 22:12:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	check_n_argv(char *str, t_mini *mini)
 		return (free_return(str));
 	tempptr = str;
 	str = ft_strtrim_backslash(tempptr, ' ');
-	free(str);
+	// free(str);
 	str = check_tokens(str, mini, 0, 6);
 	if (str == NULL || ft_strcmp(str, "") == 0 || ft_strcmp(str, "-") == 0)
 		return (free_return(str));
@@ -33,7 +33,7 @@ static int	check_n_argv(char *str, t_mini *mini)
 		i++;
 	if (str[i] != '\0')
 		return (free_return(str));
-	free(str);
+	// free(str);
 	return (1);
 }
 
@@ -67,15 +67,15 @@ static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 		tmp2 = check_tokens(ptr->av[i], mini, 0, 6);
 		if ((check_empty(tmp2) == -1) && (numb_char(ptr->av[i], '$') > 0))
 		{
-			free(tmp2);
+			// free(tmp2);
 			tmp2 = ft_strdup("");
 			str = trim_string(ptr, str, i);
 		}
 		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
 			tmp2 = trim_string(ptr, tmp2, i);
 		str = ft_strjoin(tmp, tmp2);
-		free(tmp2);
-		free(tmp);
+		// free(tmp2);
+		// free(tmp);
 		tmp = str;
 		i++;
 	}
@@ -90,7 +90,7 @@ static char	*ft_avs_into_str(t_base *ptr, int i, t_mini *mini)
 	tempptr = ptr->av[i];
 	while (check_n_argv(tempptr, mini) == 1)
 	{
-		free(ptr->av[i]);
+		// free(ptr->av[i]);
 		ptr->av[i] = ft_strdup("-n");
 		i++;
 		if (ptr->av[i] == NULL)
@@ -117,10 +117,10 @@ int	ft_echo(t_base *ptr, t_mini *mini)
 	if (str == NULL || ft_check_empty(str) == 1)
 	{
 		if (str == NULL || ft_strcmp("", str) == 0)
-			free(str);
+			// free(str);
 		return (ft_putchar_fd('\n', mini->stdout));
 	}
 	ft_putstr_fd(str, mini->stdout);
-	free(str);
+	// free(str);
 	return (ft_putchar_fd('\n', mini->stdout));
 }

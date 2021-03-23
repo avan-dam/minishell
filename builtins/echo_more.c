@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/23 17:21:47 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 17:26:43 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 22:13:05 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	check_empty(char *str)
 
 int	free_return(char *str)
 {
-	free(str);
+	(void)str; //comment out
+	// free(str);
 	return (-1);
 }
 
@@ -40,7 +41,7 @@ void	check_last_arg(t_base *ptr, int i)
 
 	tempptr = ptr->av[i];
 	if (ft_strcmp(ptr->av[i], "") != 0)
-		free(ptr->av[i]);
+		// free(ptr->av[i]);
 	ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
 }
 
@@ -71,10 +72,10 @@ int	ft_echo_n(char *str, t_mini *mini)
 		return (0);
 	tmp = str;
 	str = ft_howmany_n(tmp, 0, 0);
-	free(tmp);
+	// free(tmp);
 	if (ft_strcmp(str, "") == 0)
 		return (0);
 	ft_putstr_fd(str, mini->stdout);
-	free(str);
+	// free(str);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/23 17:38:14 by salbregh      ########   odam.nl          #
+#    Updated: 2021/03/23 21:34:04 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,8 +51,9 @@ FLAGS = 	-Wall -Werror -Wextra
 
 OFILES =	$(SRCS:.c=.o)
 
-INCLUDES =	./get_next_line \
-			./libft
+INCLUDES =	./get_next_line/get_next_line.h \
+			./libft/libft.h \
+			minishell.h
 
 all:		$(NAME)
 

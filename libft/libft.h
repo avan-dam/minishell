@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 16:12:13 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/21 20:26:58 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/23 21:20:14 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-intmax_t	ft_atoi(const char *str);
+int			ft_atoi(const char *str);
 void		ft_bzero(void *s, size_t n);
 void		*ft_calloc(size_t count, size_t size);
 int			ft_isalnum(int c);

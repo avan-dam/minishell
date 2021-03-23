@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 17:39:38 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 18:42:23 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void				ft_lstadd_back_base(t_base **ptr, t_base *new);
 void				ft_lstprint(t_list *lst, t_mini *mini, int i);
 void				ft_lstclear(t_list **lst);
 int					ft_split_into_tlist(t_mini *mini, char *line);
-void				ft_baseclear(t_base **lst);
 void				clear_leaks(t_base *ptr);
 void				one_baseclear(t_base *store);
 void				delete_node(t_list *lst, t_list *target, t_mini *mini);
@@ -160,13 +159,11 @@ void				sort_struct_after_redir(t_base *ptr);
 */
 
 int					ft_strchr_numb(char *line, char c, int i);
-int					ft_strrchr_numb(char *line, char c, int i);
 int					numb_char(char *line, char c);
 int					ft_is_str_int(char *str);
 void				clear_mini(t_mini *mini, int i);
 void				ft_reset_fds(t_mini *mini);
 char				*ft_strtolower(char *str);
-char				*ft_trim_paths(char *line, char *set);
 char				*mem_check_tkns(char *str, t_mini *mini, int i, int j);
 char				*ft_string_insert(char *string, int i, char *middle);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);

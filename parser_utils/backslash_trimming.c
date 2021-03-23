@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   backslash__trimming.c                              :+:    :+:            */
+/*   backslash_trimming.c                               :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/22 13:05:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/22 13:07:29 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 21:25:06 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ static int	ft_begin(const char *s1, char c)
 static int	ft_end(const char *s1, char c)
 {
 	int		i;
-	int		inset;
 
 	i = ft_strlen(s1) - 1;
-	inset = 0;
 	while (i >= 0)
 	{
 		if (s1[i] != c || i == 0 || s1[i - 1] == '\\')

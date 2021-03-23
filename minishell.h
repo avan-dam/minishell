@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 18:42:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/23 21:20:21 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
 # include <stdlib.h>
-# include <sys/syslimits.h>
+// # include <sys/syslimits.h>
+# include <limits.h>
 # include <fcntl.h>
 # include <signal.h>
 # include <dirent.h>

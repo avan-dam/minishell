@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 17:29:58 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 21:23:07 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,9 @@ static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 
 static char	*ft_avs_into_str(t_base *ptr, int i, t_mini *mini)
 {
-	char	*tmp2;
 	char	*tempptr;
 	char	*str;
 
-	tmp2 = NULL;
 	tempptr = ptr->av[i];
 	while (check_n_argv(tempptr, mini) == 1)
 	{

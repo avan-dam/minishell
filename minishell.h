@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 21:27:17 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 21:28:11 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 // # include <sys/syslimits.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <limits.h>
 # include <fcntl.h>
 # include <signal.h>

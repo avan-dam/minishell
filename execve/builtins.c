@@ -6,12 +6,11 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/15 17:56:10 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/23 17:33:00 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <dirent.h>
 
 static int	ft_check_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 {
@@ -81,11 +80,6 @@ int	ft_is_builtin(char *str)
 		return (1);
 	return (0);
 }
-
-/*
-**	dir is the directory pointer
-** 	opendir() opes the directory and point to the first entry in the directory
-*/
 
 int	look_for_non_builtin(t_base *ptr, int i)
 {

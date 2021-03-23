@@ -6,15 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/19 16:17:29 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 17:30:41 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/*
-**	Function that adds all environmental variables in a list called mini->env1
-*/
 
 void	ft_set_env(char **av, char **envp, t_mini *mini)
 {

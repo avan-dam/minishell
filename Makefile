@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/23 13:03:24 by salbregh      ########   odam.nl          #
+#    Updated: 2021/03/23 17:38:14 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME =		minishell
 
 SRCS =		main.c \
 			builtins/echo.c \
+			builtins/echo_more.c \
 			builtins/unset.c \
 			builtins/pwd.c \
 			builtins/env.c \
@@ -39,6 +40,7 @@ SRCS =		main.c \
 			parser_utils/parser.c \
 			parser_utils/parser_av_list.c \
 			parser_utils/parser_no_commands.c \
+			parser_utils/parser_commands.c \
 			parser_utils/backslash_trimming.c \
 			parser_utils/fill_arguments_list.c \
 			execve/execve.c \
@@ -46,8 +48,6 @@ SRCS =		main.c \
 			execve/builtins.c
 
 FLAGS = 	-Wall -Werror -Wextra 
-
-SEGFAULT =	-g -fsanitize=address
 
 OFILES =	$(SRCS:.c=.o)
 

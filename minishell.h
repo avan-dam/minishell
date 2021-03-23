@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 12:51:54 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 17:39:38 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/syslimits.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <dirent.h>
 
 # define R O_RDWR
 # define C O_CREAT
@@ -68,10 +69,6 @@ typedef struct s_mini
 	int				exit;
 }					t_mini;
 
-/*
-** fd[0] - read fd[1] - write made by pipe(fd);
-*/
-
 typedef struct s_piper
 {
 	int				check;
@@ -81,25 +78,29 @@ typedef struct s_piper
 }					t_piper;
 
 /*
-**	LIST FUNCTION
+**	LIST FUNCTIONS
 */
+
 t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstadd_back_base(t_base **ptr, t_base *new);
 void				ft_lstprint(t_list *lst, t_mini *mini, int i);
 void				ft_lstclear(t_list **lst);
 int					ft_split_into_tlist(t_mini *mini, char *line);
-void				ft_lstprintold(t_list *lst);
 void				ft_baseclear(t_base **lst);
 void				clear_leaks(t_base *ptr);
 void				one_baseclear(t_base *store);
-int					ft_lst_cmp(t_mini *mini, char *value);
 void				delete_node(t_list *lst, t_list *target, t_mini *mini);
 
 /*
-**	BUILTIN FUNCTION
+**	BUILTIN FUNCTIONS
 */
+
 int					ft_echo(t_base *ptr, t_mini *mini);
+void				check_last_arg(t_base *ptr, int i);
+int					ft_echo_n(char *str, t_mini *mini);
+int					free_return(char *str);
+int					check_empty(char *str);
 int					ft_export(t_base *ptr, t_mini *mini);
 int					ft_unset(t_mini *mini, char *unset);
 void				ft_cd(t_base *ptr, t_mini *mini);
@@ -116,6 +117,7 @@ int					ft_unset_builtin(t_mini *mini, char *unset, t_base *ptr);
 /*
 **	PARSER FUNCTIONS
 */
+
 int					parse_input(char *line, t_mini *mini, char **envp, int i);
 char				*check_tokens(char *line, t_mini *mini, int i, int j);
 int					ft_find_dolla(int i, int j, t_mini *mini, t_line *s);
@@ -133,15 +135,19 @@ int					error_opening(char *error, t_mini *mini);
 int					fill_av_list(t_base *new, t_mini *mini, int j, int l);
 int					create_av_list(t_base **ptr, char *line, t_mini *mini);
 int					no_of_commands(char *line, t_mini *mini, int i, int numb);
-int					no_of_commands_more(t_mini *mini, int i, char *line, int numb);
+int					no_of_commands_more(t_mini *mini, int i, char *line,
+						int numb);
 void				ft_free_tmps(char *tmp, char *result);
 char				*free_reset_tmp(char *tmp, char *result, char *line, int i);
 char				*ft_strtrim_backslash(char const *s1, char c);
 int					redir_error(t_mini *mini, int i);
+int					pre_break_check(char *line, int i, char *tmp, t_mini *mini);
+int					no_commands_line(char *line, int i, int numb, t_mini *mini);
 
 /*
 **	EXECVE FUNCTION
 */
+
 int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 int					look_for_non_builtin(t_base *ptr, int i);
 int					ft_is_builtin(char *str);
@@ -152,6 +158,7 @@ void				sort_struct_after_redir(t_base *ptr);
 /*
 **	UTILS
 */
+
 int					ft_strchr_numb(char *line, char c, int i);
 int					ft_strrchr_numb(char *line, char c, int i);
 int					numb_char(char *line, char c);

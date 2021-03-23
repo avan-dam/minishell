@@ -6,18 +6,11 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/23 09:49:16 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 17:40:43 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/*
-**	struct t_line contains line as it is being changed
-**	and make sure that it is valid i.e. not multiline quotes
-**	and contains the number of valid/registered single(s) quotes
-**	and double(d)quotes
-*/
 
 static int	no_org_backslash(char *str, int backslash)
 {

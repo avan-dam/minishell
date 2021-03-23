@@ -6,20 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:12 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/19 16:55:15 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 17:35:19 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/*
-**	used for export and env to create the environmental variable list
-**	and add values to the list by using export
-**	var1 contains the environmental variable
-**	var2 contains what comes after the '=' sign
-**	if variable already excist unset it first
-**	add new node to the end of the list of environmental variables
-*/
 
 static void	free_and_add(t_mini *mini, char *var1, char *var2)
 {

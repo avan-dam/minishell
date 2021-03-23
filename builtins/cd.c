@@ -6,25 +6,11 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 17:20:54 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 17:20:06 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/*
-**	syntax: cd [directory]
-**	cd: change directory
-**	Implement for only a relative or absolute path
-**	Change the current working directory to directory,
-**	if [directory] is not supplied, the value of HOME shell variable is used
-**	any additional arguments following [directory] are ignored
-**
-** cd ~ 		~ is short for home directory
-** cd .			. is short for current directory
-** cd ..		.. is short for parent directory
-** cd /			use to move to the root directory
-*/
 
 static void	ft_add_env(char *env, char *path, t_mini *mini)
 {

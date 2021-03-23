@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/22 13:20:20 by salbregh      ########   odam.nl          #
+#    Updated: 2021/03/23 13:03:24 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,9 +43,8 @@ SRCS =		main.c \
 			parser_utils/fill_arguments_list.c \
 			execve/execve.c \
 			execve/sort_struct.c \
-			leaks.c \
 			execve/builtins.c
-# lets delete the leaks.c
+
 FLAGS = 	-Wall -Werror -Wextra 
 
 SEGFAULT =	-g -fsanitize=address
@@ -62,8 +61,7 @@ $(NAME):	$(OFILES) $(INCLUDES)
 			cp get_next_line/libgnl.a .
 			make -C libft/
 			cp libft/libft.a .
-			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS) 
-			#$(SEGFAULT)
+			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS)
 			
 %.o:		%.c
 			gcc -Ilibft -Ignl $(FLAGS) -c $< -o $@

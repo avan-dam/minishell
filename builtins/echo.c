@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 09:47:16 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 13:08:24 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ static int	ft_echo_n(char *str, t_mini *mini)
 {
 	if (str == NULL)
 		return (0);
-	str = ft_howmany_n(str, 0, 0);
+	char *tmp = str;
+	str = ft_howmany_n(tmp, 0, 0);
+	free(tmp);
 	if (ft_strcmp(str, "") == 0)
 		return (0);
 	ft_putstr_fd(str, mini->stdout);
@@ -107,66 +109,28 @@ static char	*trim_string(t_base *ptr, char *str, int i)
 	return (str);
 }
 
-// static char	*try_this(t_base *ptr, int i, t_mini *mini, char *str)
-// {
-// 	char	*tempptr;
-// 	char	*tmp2;
-// 	char	*tmp22;
+static void	check_last_arg(t_base *ptr, int i)
+{
+	char	*tempptr;
 
-// 	while (ptr->av[i])
-// 	{
-// 		tmp2 = NULL;
-// 		if (!(ptr->av[i + 1]))
-// 		{
-// 			tempptr = ptr->av[i];
-// 			if (ft_strcmp(ptr->av[i], "") != 0)
-// 				free(ptr->av[i]);
-// 			ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
-// 		}
-// 		tmp22 = check_tokens(ptr->av[i], mini, 0, 6);
-// 		if ((check_empty(tmp22) == -1) && (numb_char(ptr->av[i], '$') > 0))
-// 		{
-// 			free(tmp22);
-// 			tmp22 = ft_strdup("");
-// 			str = trim_string(ptr, str, i);
-// 		}
-// 		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
-// 			tmp22 = trim_string(ptr, tmp22, i);
-// 		str = ft_strjoin(tmp2, tmp22);
-// 		free(tmp22);
-// 		free(tmp2);
-// 		tmp2 = str;
-// 		i++;
-// 	}
-// 	return (str);
-// }
+	tempptr = ptr->av[i];
+	if (ft_strcmp(ptr->av[i], "") != 0)
+		free(ptr->av[i]);
+	ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
+}
 
-static char	*ft_avs_into_str(t_base *ptr, int i, char *str, t_mini *mini)
+static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini)
 {
 	char	*tmp2;
-	char	*tempptr;
 	char	*tmp22;
-
+	char	*str;
+	
+	str = NULL;
 	tmp2 = NULL;
-	tempptr = ptr->av[i];
-	while (check_n_argv(tempptr, mini) == 1)
-	{
-		free(ptr->av[i]);
-		ptr->av[i] = ft_strdup("-n");
-		i++;
-		if (ptr->av[i] == NULL)
-			break ;
-		tempptr = ptr->av[i];
-	}
 	while (ptr->av[i])
 	{
 		if (!(ptr->av[i + 1]))
-		{
-			tempptr = ptr->av[i];
-			if (ft_strcmp(ptr->av[i], "") != 0)
-				free(ptr->av[i]);
-			ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
-		}
+			check_last_arg(ptr, i);
 		tmp22 = check_tokens(ptr->av[i], mini, 0, 6);
 		if ((check_empty(tmp22) == -1) && (numb_char(ptr->av[i], '$') > 0))
 		{
@@ -185,6 +149,27 @@ static char	*ft_avs_into_str(t_base *ptr, int i, char *str, t_mini *mini)
 	return (str);
 }
 
+static char	*ft_avs_into_str(t_base *ptr, int i, t_mini *mini)
+{
+	char	*tmp2;
+	char	*tempptr;
+	char	*str;
+
+	tmp2 = NULL;
+	tempptr = ptr->av[i];
+	while (check_n_argv(tempptr, mini) == 1)
+	{
+		free(ptr->av[i]);
+		ptr->av[i] = ft_strdup("-n");
+		i++;
+		if (ptr->av[i] == NULL)
+			break ;
+		tempptr = ptr->av[i];
+	}
+	str = set_string_after_n(ptr, i, mini);
+	return (str);
+}
+
 int	ft_echo(t_base *ptr, t_mini *mini)
 {
 	char	*str;
@@ -194,7 +179,7 @@ int	ft_echo(t_base *ptr, t_mini *mini)
 		mini->exit = 0;
 		return (ft_putstr_fd("", mini->stdout));
 	}
-	str = ft_avs_into_str(ptr, 1, NULL, mini);
+	str = ft_avs_into_str(ptr, 1, mini);
 	mini->exit = 0;
 	if (ft_strcmp(ptr->av[1], "-n") == 0)
 		return (ft_echo_n(str, mini));

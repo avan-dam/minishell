@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 11:04:28 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 12:51:54 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ typedef struct s_piper
 	char			*read_side;
 	int				fd[2];
 }					t_piper;
-
-void				ft_leaks(void); // DELETE
 
 /*
 **	LIST FUNCTION

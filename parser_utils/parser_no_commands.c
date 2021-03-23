@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 07:59:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/23 12:18:13 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 12:46:20 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	break_check(char *line, int i, char *result, char *tmp)
 	return (0);
 }
 
-static int	try(char *line, int i, char *tmp, t_mini *mini)
+static int	pre_break_check(char *line, int i, char *tmp, t_mini *mini)
 {
 	char	*result;
 
@@ -54,6 +54,8 @@ static int	try(char *line, int i, char *tmp, t_mini *mini)
 		if (break_check(line, i, result, tmp) == 1)
 			return (0);
 	}
+	if (result)
+		free(result);
 	return (1);
 }
 
@@ -90,11 +92,11 @@ int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 			i = space_start(line, i);
 			tmp = free_reset_tmp(tmp, result, line, i);
 			result = check_tokens(tmp, mini, 0, 1);
-			if (try(line, i, tmp, mini) == 0)
+			if (pre_break_check(line, i, tmp, mini) == 0)
 				return (no_of_commands_more(mini, i, line, numb));
 			numb++;
 		}
-		if (try(line, i, tmp, mini) == 0)
+		if (pre_break_check(line, i, tmp, mini) == 0)
 			return (no_of_commands_more(mini, i, line, numb));
 		numb = no_commands_line(line, i, numb, mini);
 		i++;

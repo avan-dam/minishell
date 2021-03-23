@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/23 21:56:11 by ambervandam   ########   odam.nl          #
+#    Updated: 2021/03/23 22:01:00 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,9 +47,9 @@ SRCS =		main.c \
 			execve/sort_struct.c \
 			execve/builtins.c
 
-FLAGS = 	-Wall -Werror -Wextra 
+FLAGS 	= 	-Wall -Werror -Wextra 
 
-OFILES =	$(SRCS:.c=.o)
+OFILES 	=	$(SRCS:.c=.o)
 
 INCLUDES =	./get_next_line/get_next_line.h \
 			./libft/libft.h \

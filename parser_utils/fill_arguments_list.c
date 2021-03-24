@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/22 13:14:31 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/22 15:10:14 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/24 13:20:10 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	check_redir(t_mini *m, int j, char *result)
 {
 	if ((m->part[j] == '>' || m->part[j] == '<') && m->part[j + 1] != '>'
-		&& result != NULL)
+		&& m->part[j + 1] != '<' && result != NULL)
 	{
 		if ((m->part[j + 1] == '"') || (m->part[j + 1] == '\''))
 			j++;

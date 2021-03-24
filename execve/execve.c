@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/19 17:07:59 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/24 15:56:05 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,7 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 {
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
-	{
-		if (ptr->av[1] != NULL)
-		{
-			if (ft_is_str_int(ptr->av[1]) == 0)
-				mini->exit = 255;
-			else
-			{
-				mini->exit = ft_atoi(ptr->av[1]);
-				if (ptr->av[2] != NULL)
-					mini->exit = 1;
-			}
-		}
-		return (-1);
-	}
+		return (sort_exit_statement(ptr, mini));
 	else if (look_for_non_builtin(ptr, 0) == 2)
 		unvalid_ident(ptr->av[0], mini, 127);
 	else

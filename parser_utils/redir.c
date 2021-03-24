@@ -6,40 +6,11 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/16 14:54:06 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/24 14:15:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static int	direction_list(t_base *ptr, int i, int j, int k)
-{
-	char	*temp;
-
-	if ((ft_strchr_numb(ptr->av[i + 1], '>', 0) != -1)
-		|| (ft_strchr_numb(ptr->av[i + 1], '<', 0) != -1))
-	{
-		if (ft_strchr_numb(ptr->av[i + 1], '>', 0) != -1)
-			j = ft_strchr_numb(ptr->av[i + 1], '>', 0);
-		if ((ft_strchr_numb(ptr->av[i + 1], '<', 0) != -1)
-			&& ft_strchr_numb(ptr->av[i + 1], '<', 0) < j)
-			j = ft_strchr_numb(ptr->av[i + 1], '<', 0);
-		if (add_new_into_list(j, ptr, i + 1) == -1)
-			i++;
-	}
-	while (ptr->av[k])
-	{
-		if (ft_strcmp(ptr->av[0], "echo") != 0 || numb_char(ptr->av[k], '>') > 0
-			|| numb_char(ptr->av[k], '<') > 0)
-		{
-			temp = ptr->av[k];
-			ptr->av[k] = ft_strtrim_backslash(temp, ' ');
-			free(temp);
-		}
-		k++;
-	}
-	return (0);
-}
 
 static int	open_file_more(t_base *ptr, int i, t_mini *mini, int k)
 {
@@ -95,6 +66,25 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini, int k)
 	return (i);
 }
 
+static int	check_no_redirs(t_base *ptr, int i, t_mini *mini)
+{
+	if (numb_char(ptr->av[i], '>') > 2 || ((numb_char(ptr->av[i], '>') > 0
+				&& numb_char(ptr->av[i], '<') > 0)
+			&& ((ft_strchr_numb(ptr->av[i], '<', 0))
+				> (ft_strchr_numb(ptr->av[i], '>', 0)))))
+		return (unvalid_ident(">", mini, 258));
+	if (numb_char(ptr->av[i], '<') == 2)
+	{
+		ft_putstr_fd("minishell does not ", mini->stderr);
+		ft_putstr_fd("support multiline quotes\n", mini->stderr);
+		mini->exit = 2;
+		return (-1);
+	}
+	if (numb_char(ptr->av[i], '<') > 3)
+		return (unvalid_ident("<", mini, 258));
+	return (0);
+}
+
 static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 {
 	int	k;
@@ -135,6 +125,8 @@ t_base	*ft_redir(t_mini *mini, t_base *ptr)
 			|| (ft_strchr_numb(ptr->av[i], '<', 0) != -1))
 		{
 			redir_change_backslash(ptr, i);
+			if (check_no_redirs(ptr, i, mini) == -1)
+				return (NULL);
 			if (ft_backslash_redir(ptr, i, mini, 0) == -1)
 				return (NULL);
 			if (ptr->redir == 1 && i != 0)

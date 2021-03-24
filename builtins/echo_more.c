@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/23 17:21:47 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 22:16:25 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/24 12:56:23 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	check_empty(char *str)
 
 int	free_return(char *str)
 {
-	(void)str; //comment out
-	// free(str);
+	free(str);
 	return (-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/22 12:21:52 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/24 15:58:12 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,31 @@ void	clear_mini(t_mini *mini, int i)
 void	ft_exit(t_mini *mini, int exitstatus)
 {
 	clear_mini(mini, 0);
-	write(STDERR, "exit\n", 5);
 	exit(exitstatus);
+}
+
+int	sort_exit_statement(t_base *ptr, t_mini *mini)
+{
+	ft_putstr_fd("exit\n", mini->stderr);
+	if (ptr->av[1] != NULL)
+	{
+		if (ft_is_str_int(ptr->av[1]) == 0)
+		{
+			ft_putstr_fd("bash: exit: ", mini->stderr);
+			ft_putstr_fd(ptr->av[1], mini->stderr);
+			ft_putstr_fd(": numeric argument required\n", mini->stderr);
+			mini->exit = 255;
+		}
+		else
+		{
+			mini->exit = ft_atoi(ptr->av[1]);
+			if (ptr->av[2] != NULL)
+			{
+				ft_putstr_fd("bash: exit: too many arguments\n", mini->stderr);
+				mini->exit = 1;
+				return (0);
+			}
+		}
+	}
+	return (-1);
 }

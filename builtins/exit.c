@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/24 15:58:12 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/24 18:32:21 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	sort_exit_statement(t_base *ptr, t_mini *mini)
 	ft_putstr_fd("exit\n", mini->stderr);
 	if (ptr->av[1] != NULL)
 	{
+		ptr->av[1] = mem_check_tkns(ptr->av[1], mini, 0, 6);
 		if (ft_is_str_int(ptr->av[1]) == 0)
 		{
 			ft_putstr_fd("bash: exit: ", mini->stderr);

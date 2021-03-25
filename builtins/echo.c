@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 22:16:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/25 14:26:50 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 	{
 		if (!(ptr->av[i + 1]))
 			check_last_arg(ptr, i);
-		tmp2 = check_tokens(ptr->av[i], mini, 0, 6);
+		tmp2 = check_tokens(ptr->av[i], mini, 0, 9);
+		if (tmp2 == NULL && ptr->av[i] != NULL)
+			tmp2 = ft_strdup(ptr->av[i]);
 		if ((check_empty(tmp2) == -1) && (numb_char(ptr->av[i], '$') > 0))
 		{
 			free(tmp2);
@@ -104,7 +106,9 @@ static char	*ft_avs_into_str(t_base *ptr, int i, t_mini *mini)
 int	ft_echo(t_base *ptr, t_mini *mini)
 {
 	char	*str;
-
+//COMMENT OTU
+	for (int i = 0; ptr->av[i]; i++)
+		// printf("ptr->av[%d][%s]\n", i, ptr->av[i]);
 	if ((ft_strcmp("", ptr->av[0]) == 0) || (ptr->av[1] == NULL))
 	{
 		mini->exit = 0;

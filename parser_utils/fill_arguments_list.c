@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/22 13:14:31 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/25 10:15:22 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/25 14:29:13 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	check_redir(t_mini *m, int j, char *result)
 	if ((m->part[j] == '>' || m->part[j] == '<') && m->part[j + 1] != '>'
 		&& m->part[j + 1] != '<' && result != NULL)
 	{
+		// printf("out this result [%s]\n", result);
 		if ((m->part[j + 1] == '"') || (m->part[j + 1] == '\''))
 			j++;
 		return (1);
@@ -24,6 +25,7 @@ static int	check_redir(t_mini *m, int j, char *result)
 	if (result != NULL && (m->part[j] == '\'' || m->part[j] == '"')
 		&& ((m->part[j + 1] == ' ') || (m->part[j + 1] == '\0')))
 	{
+		// printf("out that\n");
 		j++;
 		return (1);
 	}
@@ -78,6 +80,7 @@ static int	substr_av(t_mini *mini, int j, int l, t_base *new)
 	}
 	else
 		new->av[l] = ft_substr(mini->part, k, j - k);
+	printf("new->av[l][%s]n\n", new->av[l]);
 	return (j);
 }
 

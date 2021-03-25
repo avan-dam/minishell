@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/25 10:25:41 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/25 14:06:56 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ static int	check_no_redirs(t_base *ptr, int i, t_mini *mini, int k)
 static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 {
 	int	k;
+	// char *temp;
 
 	k = 0;
 	if (ptr->av[i + 1] && ((ptr->av[i + 1][0] == ' ')
@@ -111,7 +112,16 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 		k = 1;
 	if ((numb_char(ptr->av[i], '"') != 0) || (numb_char(ptr->av[i], '\'') != 0))
 	{
+		// temp = ft_strdup(ptr->av[i]);
 		ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0, 9);
+		// if (ptr->av[i] == NULL && temp != NULL)
+		// {
+		// 	free(ptr->av[i]);
+		// 	ptr->av[i] = temp;
+		// }
+		// else
+		// 	free(temp);
+		// printf("beforeptr->av[i][%s]\n", ptr->av[i]);
 		ptr->redir = 5;
 		return (1);
 	}

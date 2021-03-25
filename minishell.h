@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/24 17:11:31 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/25 09:57:45 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <dirent.h>
+
+#include <stdio.h> //takeout
 
 # define R O_RDWR
 # define C O_CREAT
@@ -146,6 +148,7 @@ char				*ft_strtrim_backslash(char const *s1, char c);
 int					redir_error(t_mini *mini, int i);
 int					pre_break_check(char *line, int i, char *tmp, t_mini *mini);
 int					no_commands_line(char *line, int i, int numb, t_mini *mini);
+int					ft_print_error(t_mini *mini);
 
 /*
 **	EXECVE FUNCTION
@@ -155,7 +158,7 @@ int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 int					look_for_non_builtin(t_base *ptr, int i);
 int					ft_is_builtin(char *str);
 int					ft_execve(t_mini *mini, char **envp);
-void				sort_struct_before_redir(t_base *ptr, t_mini *mini);
+int					sort_struct_before_redir(t_base *ptr, t_mini *mini);
 void				sort_struct_after_redir(t_base *ptr);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/23 17:40:43 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/25 10:22:17 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ static int	no_org_backslash(char *str, int backslash)
 	return (backslash);
 }
 
-static void	ft_print_error(t_mini *mini)
+int	ft_print_error(t_mini *mini)
 {
 	ft_putstr_fd("minishell does not ", mini->stderr);
 	ft_putstr_fd("support multiline quotes\n", mini->stderr);
 	mini->exit = 2;
+	return (-1);
 }
 
 static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
@@ -41,6 +42,7 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 	int	backslash;
 
 	backslash = no_org_backslash(str, 0);
+	// printf("s->s:%d s->d:%d backslask%d\n", s->s, s->d, backslash);
 	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
 	{
 		if (j == 0)

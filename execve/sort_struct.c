@@ -6,18 +6,20 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 17:04:06 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/22 15:47:43 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/25 10:01:20 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	sort_struct_before_redir(t_base *ptr, t_mini *mini)
+int	sort_struct_before_redir(t_base *ptr, t_mini *mini)
 {
 	char	*temp;
 	int		i;
 
 	i = 0;
+	if (((ptr->av[0][0] == '"' && ptr->av[0][1] == '"') || (ptr->av[0][0] == '\'' && ptr->av[0][1] == '\'')) && (ptr->av[0][2] == '\0' || ptr->av[0][2] == ' '))
+		return (unvalid_ident("", mini, 127));
 	while (i < ptr->size && ptr->av[i])
 	{
 		while (i < ptr->size && ptr->av[i] && ((ptr->av[i][0] == '"'
@@ -36,6 +38,7 @@ void	sort_struct_before_redir(t_base *ptr, t_mini *mini)
 		}
 		i++;
 	}
+	return (0);
 }
 
 void	sort_struct_after_redir(t_base *ptr)

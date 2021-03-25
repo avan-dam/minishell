@@ -6,11 +6,20 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 17:30:41 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/25 10:07:25 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	up_shell_level(t_mini *mini)
+{
+	ft_putnbr_fd(mini->shell_level, 1);
+	mini->shell_level++;
+	ft_putnbr_fd(mini->shell_level, 1);
+	ft_unset(mini, "SHLVL");
+	ft_add_env("SHLVL", ft_itoa(mini->shell_level), mini);
+}
 
 void	ft_set_env(char **av, char **envp, t_mini *mini)
 {
@@ -26,6 +35,7 @@ void	ft_set_env(char **av, char **envp, t_mini *mini)
 		i++;
 	}
 	envp[i] = NULL;
+	up_shell_level(mini);
 	mini->exit = 0;
 }
 

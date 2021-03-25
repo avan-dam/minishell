@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 21:49:35 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/25 09:59:33 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_mini
 	int				type_end;
 	int				stdin;
 	int				exit;
+	int				shell_level;
 }					t_mini;
 
 typedef struct s_piper
@@ -106,6 +107,9 @@ int					check_empty(char *str);
 int					ft_export(t_base *ptr, t_mini *mini);
 int					ft_unset(t_mini *mini, char *unset);
 void				ft_cd(t_base *ptr, t_mini *mini);
+void				ft_add_env(char *env, char *path, t_mini *mini);
+char				*ft_get_env(char *env, t_mini *mini);
+void				up_shell_level(t_mini *mini);
 void				ft_pwd(t_mini *mini);
 void				ft_exit(t_mini *mini, int exitstatus);
 void				ft_print_exit_status(t_mini *mini);

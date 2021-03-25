@@ -6,13 +6,13 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/24 22:41:13 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/25 09:41:53 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	ft_add_env(char *env, char *path, t_mini *mini)
+void	ft_add_env(char *env, char *path, t_mini *mini)
 {
 	t_list		*lst;
 
@@ -20,7 +20,7 @@ static void	ft_add_env(char *env, char *path, t_mini *mini)
 	ft_lstadd_back(&mini->env1, lst);
 }
 
-static char	*ft_get_env(char *env, t_mini *mini)
+char	*ft_get_env(char *env, t_mini *mini)
 {
 	t_list		*lst;
 	char		*pathname;

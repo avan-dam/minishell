@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/23 17:21:47 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/24 12:56:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/25 12:31:06 by avan-dam      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ void	check_last_arg(t_base *ptr, int i)
 	char	*tempptr;
 
 	tempptr = ptr->av[i];
-	if (ft_strcmp(ptr->av[i], "") != 0)
-		free(ptr->av[i]);
+	// if (ft_strcmp(ptr->av[i], "") != 0)
+		// free(ptr->av[i]);
 	ptr->av[i] = ft_strtrim_backslash(tempptr, ' ');
+	free(tempptr);
 }
 
 static char	*ft_howmany_n(char *str, int i, int j)

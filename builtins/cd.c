@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 12:13:01 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/26 12:17:58 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	ft_cd(t_base *ptr, t_mini *mini)
 	else if (ptr->av[1] != NULL)
 		ft_change_directory(mini, ptr->av[1]);
 }
-
 
 // void	ft_add_env(char *env, char *path, t_mini *mini)
 // {

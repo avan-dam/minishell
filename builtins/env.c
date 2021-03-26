@@ -6,11 +6,33 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 17:30:41 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/26 12:01:27 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	up_shell_level(t_mini *mini)
+{
+	mini->shell_level++;
+	ft_add_env("SHLVL", ft_itoa(mini->shell_level), mini);
+}
+
+static int	ft_set_shell_level(char *str, t_mini *mini)
+{
+	char	*tmp;
+	int		i;
+
+	if (mini->shell_level != 0)
+		return (mini->shell_level);
+	i = 0;
+	while (str[i] != '=')
+		i++;
+	i++;
+	tmp = str;
+	str = ft_substr(tmp, i, ft_strlen(str));
+	return (ft_atoi(str));
+}
 
 void	ft_set_env(char **av, char **envp, t_mini *mini)
 {
@@ -22,10 +44,16 @@ void	ft_set_env(char **av, char **envp, t_mini *mini)
 	{
 		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
 			i++;
+		if (ft_strncmp(envp[i], "SHLVL", 5) == 0)
+		{
+			mini->shell_level = ft_set_shell_level(envp[i], mini);
+			i++;
+		}
 		ft_split_into_tlist(mini, envp[i]);
 		i++;
 	}
 	envp[i] = NULL;
+	up_shell_level(mini);
 	mini->exit = 0;
 }
 

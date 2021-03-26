@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/25 09:57:45 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/26 13:00:59 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_mini
 	int				type_end;
 	int				stdin;
 	int				exit;
+	int				shell_level;
 }					t_mini;
 
 typedef struct s_piper
@@ -99,6 +100,7 @@ void				delete_node(t_list *lst, t_list *target, t_mini *mini);
 **	BUILTIN FUNCTIONS
 */
 
+void				handle_line(int lineret, t_mini *mini, char **envp);
 int					ft_echo(t_base *ptr, t_mini *mini);
 void				check_last_arg(t_base *ptr, int i);
 int					ft_echo_n(char *str, t_mini *mini);
@@ -107,6 +109,9 @@ int					check_empty(char *str);
 int					ft_export(t_base *ptr, t_mini *mini);
 int					ft_unset(t_mini *mini, char *unset);
 void				ft_cd(t_base *ptr, t_mini *mini);
+void				ft_add_env(char *env, char *path, t_mini *mini);
+char				*ft_get_env(char *env, t_mini *mini);
+void				up_shell_level(t_mini *mini);
 void				ft_pwd(t_mini *mini);
 void				ft_exit(t_mini *mini, int exitstatus);
 int					sort_exit_statement(t_base *ptr, t_mini *mini);

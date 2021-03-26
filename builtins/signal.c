@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/07 16:52:26 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/23 17:32:19 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **	(sig == SIGINT) handles CTRL-C
 **	(sig == SIGQUIT) handles CTRL-\
 **	CTRL slash this overwrites the previous two chars
-**	CTRL D detected by EOF so handled differently when lineret ==0
+**	CTRL D detected by EOF so handled differently when lineret == 0
 */
 
 void	handle_sigint(int sig)

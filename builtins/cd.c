@@ -6,27 +6,13 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 17:20:54 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/26 12:02:48 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-**	syntax: cd [directory]
-**	cd: change directory
-**	Implement for only a relative or absolute path
-**	Change the current working directory to directory,
-**	if [directory] is not supplied, the value of HOME shell variable is used
-**	any additional arguments following [directory] are ignored
-**
-** cd ~ 		~ is short for home directory
-** cd .			. is short for current directory
-** cd ..		.. is short for parent directory
-** cd /			use to move to the root directory
-*/
-
-static void	ft_add_env(char *env, char *path, t_mini *mini)
+void	ft_add_env(char *env, char *path, t_mini *mini)
 {
 	t_list		*lst;
 
@@ -34,7 +20,7 @@ static void	ft_add_env(char *env, char *path, t_mini *mini)
 	ft_lstadd_back(&mini->env1, lst);
 }
 
-static char	*ft_get_env(char *env, t_mini *mini)
+char	*ft_get_env(char *env, t_mini *mini)
 {
 	t_list		*lst;
 	char		*pathname;
@@ -94,20 +80,34 @@ static void	ft_change_directory(t_mini *mini, char *path)
 
 void	ft_cd(t_base *ptr, t_mini *mini)
 {
+	char		cwd[PATH_MAX];
+
 	mini->exit = 0;
-	if (ptr->av[1] == NULL || ft_strcmp(ptr->av[1], "~") == 0)
+	if (ptr->av[1] == NULL || ptr->av[1][0] == '~')
 	{
 		chdir(ft_get_env("HOME", mini));
+		if (ptr->av[1][1] == '/' && ft_strcmp(ptr->av[1], "~/") != 0)
+		{
+			if (chdir(&ptr->av[1][2]))
+			{
+				ft_putstr_fd("bash: cd: ", STDERR);
+				ft_putstr_fd(ft_get_env("HOME", mini), STDERR);
+				ft_putstr_fd(&ptr->av[1][1], STDERR);
+				ft_putstr_fd(": No such file or directory\n", STDERR);
+			}
+			ft_unset(mini, "OLDPWD");
+			ft_add_env("OLDPWD", ft_get_env("PWD", mini), mini);
+			ft_unset(mini, "PWD");
+			ft_add_env("PWD", getcwd(cwd, sizeof(cwd)), mini);
+			return ;
+		}
 		ft_unset(mini, "OLDPWD");
 		ft_add_env("OLDPWD", ft_get_env("PWD", mini), mini);
 		ft_unset(mini, "PWD");
 		ft_add_env("PWD", ft_get_env("HOME", mini), mini);
 	}
 	else if (ft_strcmp(ptr->av[1], "-") == 0)
-	{
-		ft_no_oldpwd(mini);
-		return ;
-	}
+		return (ft_no_oldpwd(mini));
 	else if (ptr->av[1] != NULL)
 		ft_change_directory(mini, ptr->av[1]);
 }

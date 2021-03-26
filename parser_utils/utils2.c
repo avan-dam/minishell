@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 19:28:33 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/19 16:28:18 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/23 18:41:55 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,6 @@ char	*ft_strtolower(char *str)
 		i++;
 	}
 	return (str);
-}
-
-char	*ft_trim_paths(char *line, char *set)
-{
-	char	*tmp1;
-	int		i;
-	char	*tmp2;
-
-	tmp2 = NULL;
-	i = 0;
-	tmp1 = ft_strtrim(line, set);
-	if (tmp1[0] == ' ' || tmp1[ft_strlen(tmp1)] == ' ')
-	{
-		tmp2 = ft_strtrim(tmp1, " ");
-		free(tmp1);
-		return (tmp2);
-	}
-	return (tmp1);
 }
 
 char	*mem_check_tkns(char *str, t_mini *mini, int i, int j)

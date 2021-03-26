@@ -3,51 +3,52 @@
 /*                                                        ::::::::            */
 /*   ft_atoi.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
+/*   By: avan-dam <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/15 16:06:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/02/21 20:24:44 by ambervandam   ########   odam.nl         */
+/*   Created: 2019/11/06 13:03:21 by avan-dam      #+#    #+#                 */
+/*   Updated: 2021/03/23 21:16:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-static long int	check_atoi(unsigned long int result, const char *str, int neg)
+static long int	ft_check_atoi(unsigned long int res, const char *str, int neg)
 {
 	while (*str != '\0' && *str > 47 && *str < 58)
 	{
-		if (result >= 922337203685477580 && (*str - '0') < '7' && (neg == 1))
-			return (-1);
-		if (result >= 922337203685477580 && (*str - '0') < '8' && (neg == -1))
-			return (0);
-		result = result * 10 + (*str - '0');
+		res = res * 10 + (*str - '0');
 		str++;
+		if (res > 9223372036854775807)
+		{
+			if (neg == 1)
+				return (-1);
+			return (0);
+		}
 	}
-	return (result);
+	return (res);
 }
 
-intmax_t	ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	intmax_t	result;
-	int			neg;
+	unsigned long int	result;
+	int					neg;
 
 	result = 0;
 	neg = 1;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
+	while (*str == 32 || *str == 9 || *str == 10
+		|| *str == 11 || *str == 12 || *str == 13)
 		str++;
-	if (*str == '+')
-	{
-		str++;
-		if (*str == '-' || *str == '+')
-			return (0);
-	}
 	if (*str == '-')
 	{
 		neg = -1;
 		str++;
-		if (*str == '-' || *str == '+')
+		if (*str == '+' || *str == '-')
 			return (0);
 	}
-	result = (check_atoi(result, str, neg));
-	return (result * neg);
+	if (*str == '+')
+	{
+		str++;
+		if (*str == '+' || *str == '-')
+			return (0);
+	}
+	result = (ft_check_atoi(result, str, neg));
+	return (neg * result);
 }

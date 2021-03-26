@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/07 09:31:16 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/23 18:42:07 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,6 @@ int	ft_strchr_numb(char *line, char c, int i)
 		if (line[i] == c)
 			return (i);
 		i++;
-	}
-	return (-1);
-}
-
-int	ft_strrchr_numb(char *line, char c, int i)
-{
-	if (line == NULL || i < 0)
-		return (-1);
-	if (i > (int)ft_strlen(line))
-		return (-1);
-	while (i >= 0)
-	{
-		if (line[i] == c)
-			return (i);
-		i--;
 	}
 	return (-1);
 }

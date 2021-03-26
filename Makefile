@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/22 13:20:20 by salbregh      ########   odam.nl          #
+#    Updated: 2021/03/23 22:01:00 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME =		minishell
 
 SRCS =		main.c \
 			builtins/echo.c \
+			builtins/echo_more.c \
 			builtins/unset.c \
 			builtins/pwd.c \
 			builtins/env.c \
@@ -39,21 +40,25 @@ SRCS =		main.c \
 			parser_utils/parser.c \
 			parser_utils/parser_av_list.c \
 			parser_utils/parser_no_commands.c \
+			parser_utils/parser_commands.c \
 			parser_utils/backslash_trimming.c \
 			parser_utils/fill_arguments_list.c \
 			execve/execve.c \
 			execve/sort_struct.c \
-			leaks.c \
 			execve/builtins.c
-# lets delete the leaks.c
-FLAGS = 	-Wall -Werror -Wextra 
 
-SEGFAULT =	-g -fsanitize=address
+FLAGS 	= 	-Wall -Werror -Wextra 
 
-OFILES =	$(SRCS:.c=.o)
+OFILES 	=	$(SRCS:.c=.o)
 
-INCLUDES =	./get_next_line \
-			./libft
+INCLUDES =	./get_next_line/get_next_line.h \
+			./libft/libft.h \
+			minishell.h
+
+EXTE_LIBS = ./get_next_line/libgnl.a \
+			./libft/libft.a 
+
+CC		=	gcc
 
 all:		$(NAME)
 
@@ -62,10 +67,9 @@ $(NAME):	$(OFILES) $(INCLUDES)
 			cp get_next_line/libgnl.a .
 			make -C libft/
 			cp libft/libft.a .
-			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS) 
-			#$(SEGFAULT)
+			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS) $(EXTE_LIBS)
 			
-%.o:		%.c
+%.o:		%.c $(INCLUDES)
 			gcc -Ilibft -Ignl $(FLAGS) -c $< -o $@
 
 clean:

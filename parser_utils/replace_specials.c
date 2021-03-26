@@ -6,18 +6,11 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/19 16:19:24 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/23 17:40:43 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/*
-**	struct t_line contains line as it is being changed
-**	and make sure that it is valid i.e. not multiline quotes
-**	and contains the number of valid/registered single(s) quotes
-**	and double(d)quotes
-*/
 
 static int	no_org_backslash(char *str, int backslash)
 {
@@ -90,8 +83,8 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 	s.str = ft_strdup(str);
 	while (s.str[i] != '\0')
 	{
-		if (s.str[i] == '\\' && ((j == 7) || (numb_char(s.str, '>') == 0
-					&& numb_char(s.str, '<') == 0)))
+		if (s.str[i] == '\\' && ((j == 7)
+				|| (numb_char(s.str, '>') == 0 && numb_char(s.str, '<') == 0)))
 			i = ft_correct_backslash(&s, i);
 		if ((s.str[i] == '$') && (s.str[i + 1] != '/') && (s.str[i + 1] != '\\')
 			&& (s.str[i + 1] != '\0') && (s.str[i + 1] != '?') && j == 6)

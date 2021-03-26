@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 12:02:23 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/26 12:09:57 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ static void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 
 static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 {
+	if (ft_strcmp(ptr->av[0], "./minishell") == 0)
+	{
+		mini->shell_level++;
+		ft_add_env("SHLVL", ft_itoa(mini->shell_level), mini);
+		handle_line(1, mini, envp);
+	}
 	if (ft_is_builtin(ptr->av[0]) == 0 && look_for_non_builtin(ptr, 1) == 2
 		&& (ptr->av[0][1] != '.' && ptr->av[0][1] != '/'))
 		unvalid_ident(ptr->av[0], mini, 127);
@@ -41,12 +47,6 @@ static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 	if (ft_strcmp(ptr->av[0], "exit") != 0
 		&& ft_is_builtin(ptr->av[0]) == 1)
 		exec_builtin(ptr, mini);
-	if (ft_strcmp(ptr->av[0], "./minishell") == 0)
-	{
-		mini->shell_level++;
-		ft_add_env("SHLVL", ft_itoa(mini->shell_level), mini);
-		handle_line(1, mini, envp);
-	}
 	else if (execve(ptr->av[0], ptr->av, envp) < 0 || !ptr->av[1])
 		return (1);
 	else

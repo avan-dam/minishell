@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/26 18:32:54 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/26 22:26:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_correct_backslash(t_line *s, int i)
 {
-	if (s->str[i + 1] == '>' || s->str[i + 1] == '<')
+	if (s->str[i + 1] == '>' || s->str[i + 1] == '<' || (s->str[i + 1] == '~' && s->d % 2 == 1))
 		return (i + 2);
 	if (s->str[i + 1] != '>' && s->str[i + 1] != '<'
 		&& ((s->str[i + 1] == '`') || (s->str[i + 1] == '~')

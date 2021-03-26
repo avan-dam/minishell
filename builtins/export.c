@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/25 13:17:53 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/26 16:05:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,9 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 	j = 0;
 	while (ptr->av[i][j])
 	{
-				// printf("in here with [%s] [%c]\n", ptr->av[i], ptr->av[i][j]);
-		// if ((ptr->av[i][0] == '=') || (((numb_char(ptr->av[i], '=') == 0))
-		if ((ptr->av[i][0] == '=') ||
-				((ptr->av[0][j] >= '0' && ptr->av[0][j] <= '9')
-					|| ptr->av[i][j] == '-'))
-			{
-				return (export_error_msg(mini, ptr->av[i]));}
+		if ((ptr->av[i][0] == '=') || ((ptr->av[0][j] >= '0'
+					&& ptr->av[0][j] <= '9') || ptr->av[i][j] == '-'))
+			return (export_error_msg(mini, ptr->av[i]));
 		if (ptr->av[i][j] == '=')
 			break ;
 		j++;

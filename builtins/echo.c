@@ -6,11 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2021/03/25 14:26:50 by avan-dam      ########   odam.nl         */
-=======
-/*   Updated: 2021/03/26 10:33:41 by salbregh      ########   odam.nl         */
->>>>>>> master
+/*   Updated: 2021/03/26 15:56:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +22,7 @@ static int	check_n_argv(char *str, t_mini *mini)
 		return (free_return(str));
 	tempptr = str;
 	str = ft_strtrim_backslash(tempptr, ' ');
-	free(str);
-	str = check_tokens(str, mini, 0, 6);
+	str = mem_check_tkns(str, mini, 0, 6);
 	if (str == NULL || ft_strcmp(str, "") == 0 || ft_strcmp(str, "-") == 0)
 		return (free_return(str));
 	if (str[i] != '-')
@@ -110,9 +105,7 @@ static char	*ft_avs_into_str(t_base *ptr, int i, t_mini *mini)
 int	ft_echo(t_base *ptr, t_mini *mini)
 {
 	char	*str;
-//COMMENT OTU
-	for (int i = 0; ptr->av[i]; i++)
-		// printf("ptr->av[%d][%s]\n", i, ptr->av[i]);
+
 	if ((ft_strcmp("", ptr->av[0]) == 0) || (ptr->av[1] == NULL))
 	{
 		mini->exit = 0;

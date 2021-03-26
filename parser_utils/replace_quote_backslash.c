@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/26 11:25:34 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/26 15:49:24 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ int	ft_correct_backslash(t_line *s, int i)
 	if (s->str[i + 1] == '>' || s->str[i + 1] == '<')
 		return (i + 2);
 	if (s->str[i + 1] != '>' && s->str[i + 1] != '<'
-		&& ((s->str[i + 1] == '`') || (s->str[i + 1] == '"')
-			|| ((s->str[i + 1] == '\'') && (s->d % 2 == 0))
-			|| s->str[i + 1] == '$' || s->str[i + 1] == '\\'))
+		&& ((s->str[i + 1] == '`') || (s->str[i + 1] == '~')
+			|| (s->str[i + 1] == '"') || ((s->str[i + 1] == '\'')
+				&& (s->d % 2 == 0)) || s->str[i + 1] == '$'
+			|| s->str[i + 1] == '\\'))
 	{
 		ft_memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
 		if (s->str[i] != '\0' && ((s->str[i] == '$'
 					&& ((i == 0) || ((i > 0) && (s->str[i - 1] != '\\'))))
-				|| s->str[i] == '\'' || s->str[i] == '"'))
+				|| s->str[i] == '\'' || s->str[i] == '"' || s->str[i] == '~'))
 		{
 			if (s->str[i] == '\'' && s->str[i + 1] != ' ')
 				i++;
@@ -64,8 +65,8 @@ static int	ft_single_quotes(t_line *s, int i)
 
 int	ft_replace_quotes(t_line *s, int i, int j)
 {
-	// if ((numb_char(s->str, '>') != 0 || numb_char(s->str, '<') != 0) && (j != 6 && j != 9))
-	if (j != 6 && j != 9)
+	if ((numb_char(s->str, '>') != 0 || numb_char(s->str, '<') != 0)
+		&& (j != 6 && j != 9))
 	{
 		s->d++;
 		return (i);

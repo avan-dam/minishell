@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/22 13:14:31 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 12:53:43 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/26 15:46:42 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	check_redir(t_mini *m, int j, char *result)
 	if ((m->part[j] == '>' || m->part[j] == '<') && m->part[j + 1] != '>'
 		&& m->part[j + 1] != '<' && result != NULL)
 	{
-		// printf("out this result [%s]\n", result);
 		if ((m->part[j + 1] == '"') || (m->part[j + 1] == '\''))
 			j++;
 		return (1);
@@ -25,7 +24,6 @@ static int	check_redir(t_mini *m, int j, char *result)
 	if (result != NULL && (m->part[j] == '\'' || m->part[j] == '"')
 		&& ((m->part[j + 1] == ' ') || (m->part[j + 1] == '\0')))
 	{
-		// printf("out that\n");
 		j++;
 		return (1);
 	}
@@ -45,7 +43,6 @@ static int 	fill_av_more(t_mini *m, int j, int k)
 		if (check_redir(m, j, result) == 1)
 		{
 			j++;
-			// printf("out this result is [%s]\n", result);
 			break ;
 		}
 		free(result);
@@ -56,7 +53,6 @@ static int 	fill_av_more(t_mini *m, int j, int k)
 		j++;
 	if (result)
 		free(result);
-	// printf("out that result is [%s]\n", result);
 	return (j);
 }
 
@@ -82,7 +78,6 @@ static int	substr_av(t_mini *mini, int j, int l, t_base *new)
 	}
 	else
 		new->av[l] = ft_substr(mini->part, k, j - k);
-	// printf("new->av[l][%s]\n", new->av[l]);
 	return (j);
 }
 

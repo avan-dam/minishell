@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/26 12:55:37 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/26 15:54:16 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 	int	backslash;
 
 	backslash = no_org_backslash(str, 0);
-	// printf("s->s:%d s->d:%d backslask%d s->str is [%s] str is [%s]\n", s->s, s->d, backslash, s->str, str);
 	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
 	{
 		if (j == 0)
@@ -75,6 +74,29 @@ void	ft_exit_status_replace(t_line *s, int i, t_mini *mini)
 	s->str = ft_strjoin_three(start, middle, end);
 }
 
+int ft_replace_tilda(t_line *s, int i, t_mini *mini)
+{
+	char	*start;
+	char	*end;
+	int		ret;
+
+	if (s->str[i + 1] == ' ' || s->str[i + 1] == '\0' || s->str[i + 1] == '/')
+	{
+		ft_memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
+		end = ft_substr(s->str, i, ft_strlen(s->str) - i);
+		start = ft_get_env("HOME", mini);
+		ret = i + ft_strlen(start);
+		free(s->str);
+		s->str = ft_strjoin(start, end);
+		free(end);
+		if (s->str[ret] == '\\' || s->str[ret] == ' ')
+			ret++;
+		ret--;
+		return (ret);
+	}
+	return (i + 1);
+}
+
 char	*check_tokens(char *str, t_mini *mini, int i, int j)
 {
 	t_line	s;
@@ -85,14 +107,16 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 	s.str = ft_strdup(str);
 	while (s.str[i] != '\0')
 	{
-		if (s.str[i] == '\\' && ((j == 7)
-				|| (numb_char(s.str, '>') == 0 && numb_char(s.str, '<') == 0)))
+		if (s.str[i] == '\\' && ((j == 7) || (numb_char(s.str, '>') == 0
+					&& numb_char(s.str, '<') == 0)))
 			i = ft_correct_backslash(&s, i);
 		if ((s.str[i] == '$') && (s.str[i + 1] != '/') && (s.str[i + 1] != '\\')
 			&& (s.str[i + 1] != '\0') && (s.str[i + 1] != '?') && (j == 6 || j == 9))
 			i = i + ft_find_dolla(i + 1, i + 1, mini, &s);
 		else if ((s.str[i] == '\'') || (s.str[i] == '"'))
 			i = ft_replace_quotes(&s, i, j);
+		else if (s.str[i] == '~' && i == 0 && s.d % 2 == 0 && s.s == 0)
+			i = ft_replace_tilda(&s, i, mini);
 		else if (s.str[i] == '$' && s.str[i + 1] == '?'
 			&& (s.d == 0 || s.d % 2 == 1) && (s.s == 0 || s.s % 2 == 0))
 			ft_exit_status_replace(&s, i, mini);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 16:27:02 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/25 13:39:24 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/26 14:50:25 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	unvalid_ident(char *error, t_mini *mini, int exitstatus)
 	ft_putstr_fd(error, mini->stderr);
 	ft_putstr_fd(": command not found\n", mini->stderr);
 	mini->exit = exitstatus;
+	if (ft_strcmp(error, ft_get_env("HOME", mini)) == 0)
+		mini->exit = 126;
 	return (-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 12:01:27 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/26 21:18:18 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,20 @@
 
 void	up_shell_level(t_mini *mini)
 {
+	char	*tmp;
+	
+	ft_unset(mini, "SHLVL");
 	mini->shell_level++;
-	ft_add_env("SHLVL", ft_itoa(mini->shell_level), mini);
+	tmp = ft_itoa(mini->shell_level);
+	ft_add_env("SHLVL", tmp, mini);
+	free(tmp);
 }
 
 static int	ft_set_shell_level(char *str, t_mini *mini)
 {
 	char	*tmp;
 	int		i;
+	int		level;
 
 	if (mini->shell_level != 0)
 		return (mini->shell_level);
@@ -31,7 +37,9 @@ static int	ft_set_shell_level(char *str, t_mini *mini)
 	i++;
 	tmp = str;
 	str = ft_substr(tmp, i, ft_strlen(str));
-	return (ft_atoi(str));
+	level = ft_atoi(str);
+	free(str);
+	return (level);
 }
 
 void	ft_set_env(char **av, char **envp, t_mini *mini)
@@ -43,11 +51,15 @@ void	ft_set_env(char **av, char **envp, t_mini *mini)
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
+		{
 			i++;
-		if (ft_strncmp(envp[i], "SHLVL", 5) == 0)
+			continue ;
+		}
+		else if (ft_strncmp(envp[i], "SHLVL", 5) == 0)
 		{
 			mini->shell_level = ft_set_shell_level(envp[i], mini);
 			i++;
+			continue ;
 		}
 		ft_split_into_tlist(mini, envp[i]);
 		i++;

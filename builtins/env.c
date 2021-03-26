@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 21:01:59 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/26 21:36:27 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,15 @@ void	ft_set_env(char **av, char **envp, t_mini *mini)
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
+		{
 			i++;
-		if (ft_strncmp(envp[i], "SHLVL", 5) == 0)
+			continue ;
+		}
+		else if (ft_strncmp(envp[i], "SHLVL", 5) == 0)
 		{
 			mini->shell_level = ft_set_shell_level(envp[i], mini);
 			i++;
+			continue ;
 		}
 		ft_split_into_tlist(mini, envp[i]);
 		i++;

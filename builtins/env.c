@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 19:24:58 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/26 21:01:59 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 void	up_shell_level(t_mini *mini)
 {
+	char	*tmp;
+	
 	ft_unset(mini, "SHLVL");
 	mini->shell_level++;
-	ft_add_env("SHLVL", ft_itoa(mini->shell_level), mini);
+	tmp = ft_itoa(mini->shell_level);
+	ft_add_env("SHLVL", tmp, mini);
+	free(tmp);
 }
 
 static int	ft_set_shell_level(char *str, t_mini *mini)

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 12:09:57 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/26 19:20:06 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 	if (ft_strcmp(ptr->av[0], "./minishell") == 0)
 	{
 		mini->shell_level++;
+		ft_unset(mini, "SHLVL");
 		ft_add_env("SHLVL", ft_itoa(mini->shell_level), mini);
 		handle_line(1, mini, envp);
 	}

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/26 15:49:24 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/26 18:32:54 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,27 @@ int	ft_extra_check_dolla(t_line *s, int i, int j)
 	if (s->str[i - 1] == '"')
 		return (0);
 	return (1);
+}
+
+int	ft_replace_tilda(t_line *s, int i, t_mini *mini)
+{
+	char	*start;
+	char	*end;
+	int		ret;
+
+	if (s->str[i + 1] == ' ' || s->str[i + 1] == '\0' || s->str[i + 1] == '/')
+	{
+		ft_memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
+		end = ft_substr(s->str, i, ft_strlen(s->str) - i);
+		start = ft_get_env("HOME", mini);
+		ret = i + ft_strlen(start);
+		free(s->str);
+		s->str = ft_strjoin(start, end);
+		free(end);
+		if (s->str[ret] == '\\' || s->str[ret] == ' ')
+			ret++;
+		ret--;
+		return (ret);
+	}
+	return (i + 1);
 }

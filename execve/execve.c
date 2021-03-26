@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 13:03:11 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/26 18:31:14 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 }
 
 static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
-{
+{// remeber to add  && (look_for_non_builtin(ptr, 0) == 2) && (ptr->av[0][1] != '.' && ptr->av[0][1] != '/')
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
 		return (sort_exit_statement(ptr, mini));
 	else if (look_for_non_builtin(ptr, 0) == 2)

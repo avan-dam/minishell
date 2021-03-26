@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 13:00:59 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/26 18:32:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int					parse_input(char *line, t_mini *mini, char **envp, int i);
 char				*check_tokens(char *line, t_mini *mini, int i, int j);
 int					ft_find_dolla(int i, int j, t_mini *mini, t_line *s);
 int					ft_replace_quotes(t_line *s, int i, int j);
+int					ft_replace_tilda(t_line *s, int i, t_mini *mini);
 int					ft_correct_backslash(t_line *s, int i);
 int					ft_extra_check_dolla(t_line *s, int i, int j);
 int					unvalid_ident(char *error, t_mini *mini, int exitstatus);

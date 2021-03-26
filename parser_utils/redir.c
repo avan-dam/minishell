@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/26 15:55:03 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/26 18:41:52 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,15 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini, int k)
 	return (i);
 }
 
+static int	send_to_unvalid(t_mini *mini, int j)
+{
+	if (j == 2)
+		return (ft_print_error(mini));
+	if (j > 3)
+		return (unvalid_ident("<", mini, 258));
+	return (0);
+}
+
 static int	check_no_redirs(t_base *ptr, int i, t_mini *mini, int k)
 {
 	int	j;
@@ -92,10 +101,8 @@ static int	check_no_redirs(t_base *ptr, int i, t_mini *mini, int k)
 					|| ptr->av[i][k + 1] == '<')) || ((j == 2 || j == 3)
 				&& ptr->av[i][k] == '>'))
 			return (unvalid_ident(">", mini, 258));
-		if (j == 2)
-			return (ft_print_error(mini));
-		if (j > 3)
-			return (unvalid_ident("<", mini, 258));
+		if (send_to_unvalid(mini, j) == -1)
+			return (-1);
 		k++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/26 15:54:16 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/26 18:34:39 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,6 @@ void	ft_exit_status_replace(t_line *s, int i, t_mini *mini)
 	end = ft_substr(s->str, i + 1, ft_strlen(s->str) - i - 1);
 	free(s->str);
 	s->str = ft_strjoin_three(start, middle, end);
-}
-
-int ft_replace_tilda(t_line *s, int i, t_mini *mini)
-{
-	char	*start;
-	char	*end;
-	int		ret;
-
-	if (s->str[i + 1] == ' ' || s->str[i + 1] == '\0' || s->str[i + 1] == '/')
-	{
-		ft_memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
-		end = ft_substr(s->str, i, ft_strlen(s->str) - i);
-		start = ft_get_env("HOME", mini);
-		ret = i + ft_strlen(start);
-		free(s->str);
-		s->str = ft_strjoin(start, end);
-		free(end);
-		if (s->str[ret] == '\\' || s->str[ret] == ' ')
-			ret++;
-		ret--;
-		return (ret);
-	}
-	return (i + 1);
 }
 
 char	*check_tokens(char *str, t_mini *mini, int i, int j)

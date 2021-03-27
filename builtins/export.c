@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:43 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/23 09:32:32 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/26 16:05:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ static int	check_valid_export(t_base *ptr, t_mini *mini, int i)
 	j = 0;
 	while (ptr->av[i][j])
 	{
-		if ((ptr->av[i][0] == '=') || (((numb_char(ptr->av[i], '=') == 0))
-				&& ((ptr->av[0][j] >= '0' && ptr->av[0][j] <= '9')
-					|| ptr->av[i][j] == '-')))
+		if ((ptr->av[i][0] == '=') || ((ptr->av[0][j] >= '0'
+					&& ptr->av[0][j] <= '9') || ptr->av[i][j] == '-'))
 			return (export_error_msg(mini, ptr->av[i]));
 		if (ptr->av[i][j] == '=')
 			break ;
@@ -62,7 +61,7 @@ int	ft_export(t_base *ptr, t_mini *mini)
 	}
 	if (ptr->av[1] == NULL || ft_strcmp(ptr->av[1], "") == 0)
 	{
-		ft_lstprint(mini->env1, mini, 1);
+		ft_lstprint(mini->env1, mini);
 		return (0);
 	}
 	while (i < ptr->size && ptr->av[i])

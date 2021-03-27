@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/27 09:47:34 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/27 09:54:47 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct s_piper
 t_list				*ft_lstnew(void *var1, void *var2);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstadd_back_base(t_base **ptr, t_base *new);
-void				ft_lstprint(t_list *lst, t_mini *mini, int i);
+void				ft_lstprint(t_list *lst, t_mini *mini);
 void				ft_lstclear(t_list **lst);
 int					ft_split_into_tlist(t_mini *mini, char *line);
 void				clear_leaks(t_base *ptr);
@@ -112,6 +112,7 @@ char				*ft_get_env(char *env, t_mini *mini);
 void				up_shell_level(t_mini *mini);
 void				ft_pwd(t_mini *mini);
 void				ft_exit(t_mini *mini, int exitstatus);
+int					sort_exit_statement(t_base *ptr, t_mini *mini);
 void				ft_print_exit_status(t_mini *mini);
 void				ft_set_env(char **av, char **envp, t_mini *mini);
 void				handle_sigint(int sig);
@@ -128,6 +129,7 @@ int					parse_input(char *line, t_mini *mini, char **envp, int i);
 char				*check_tokens(char *line, t_mini *mini, int i, int j);
 int					ft_find_dolla(int i, int j, t_mini *mini, t_line *s);
 int					ft_replace_quotes(t_line *s, int i, int j);
+int					ft_replace_tilda(t_line *s, int i, t_mini *mini);
 int					ft_correct_backslash(t_line *s, int i);
 int					ft_extra_check_dolla(t_line *s, int i, int j);
 int					unvalid_ident(char *error, t_mini *mini, int exitstatus);
@@ -135,6 +137,7 @@ t_base				*ft_redir(t_mini *mini, t_base *ptr);
 char				**ft_remove_redir_av(t_base *ptr, int i, int j);
 int					add_new_into_list(int j, t_base *ptr, int i);
 void				redir_change_backslash(t_base *ptr, int i);
+int					direction_list(t_base *ptr, int i, int j, int k);
 int					ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i);
 int					check_file_toredir(t_base *ptr, int i, t_mini *mini);
 int					error_opening(char *error, t_mini *mini);
@@ -149,6 +152,7 @@ char				*ft_strtrim_backslash(char const *s1, char c);
 int					redir_error(t_mini *mini, int i);
 int					pre_break_check(char *line, int i, char *tmp, t_mini *mini);
 int					no_commands_line(char *line, int i, int numb, t_mini *mini);
+int					ft_print_error(t_mini *mini);
 
 /*
 **	EXECVE FUNCTION
@@ -158,7 +162,7 @@ int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
 int					look_for_non_builtin(t_base *ptr, int i);
 int					ft_is_builtin(char *str);
 int					ft_execve(t_mini *mini, char **envp);
-void				sort_struct_before_redir(t_base *ptr, t_mini *mini);
+int					sort_struct_before_redir(t_base *ptr, t_mini *mini);
 void				sort_struct_after_redir(t_base *ptr);
 
 /*

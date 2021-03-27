@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 10:33:41 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/26 15:56:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ static int	check_n_argv(char *str, t_mini *mini)
 		return (free_return(str));
 	tempptr = str;
 	str = ft_strtrim_backslash(tempptr, ' ');
-	free(str);
-	str = check_tokens(str, mini, 0, 6);
+	str = mem_check_tkns(str, mini, 0, 6);
 	if (str == NULL || ft_strcmp(str, "") == 0 || ft_strcmp(str, "-") == 0)
 		return (free_return(str));
 	if (str[i] != '-')
@@ -64,7 +63,9 @@ static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 	{
 		if (!(ptr->av[i + 1]))
 			check_last_arg(ptr, i);
-		tmp2 = check_tokens(ptr->av[i], mini, 0, 6);
+		tmp2 = check_tokens(ptr->av[i], mini, 0, 9);
+		if (tmp2 == NULL && ptr->av[i] != NULL)
+			tmp2 = ft_strdup(ptr->av[i]);
 		if ((check_empty(tmp2) == -1) && (numb_char(ptr->av[i], '$') > 0))
 		{
 			free(tmp2);

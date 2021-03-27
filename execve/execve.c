@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/27 17:49:54 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/27 18:08:24 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		dup2(mini->stdout, STDOUT);
 		if (child_process(ptr, mini, envp) == 1)
 			exit (EXIT_FAILURE);
-        if (ft_strcmp(ptr->av[0], "exit") == 0)
-            exit (mini->exit);
+        if (ft_strcmp(ptr->av[0], "exit") == 0) // LOOK AT THIS
+            exit (mini->exit); // NEED THIS IN FOR exit 88 | exit 9 BUT OUT FOR exit 1 | exit 2 | exit 3 | echo $?; echo "stayin' alive"
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -92,7 +92,6 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 
 static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 {
-
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
 		return (sort_exit_statement(ptr, mini, 1));
 	else if (ptr->av[0][0] == '.' && ptr->av[0][1] == '/')

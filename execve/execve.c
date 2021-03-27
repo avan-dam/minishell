@@ -6,9 +6,10 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/27 09:38:25 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/27 17:49:03 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
@@ -36,6 +37,11 @@ static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 		ft_unset(mini, "SHLVL");
 		ft_add_env("SHLVL", ft_itoa(mini->shell_level), mini);
 		handle_line(1, mini, envp);
+	}
+	if (ft_strcmp(ptr->av[0], "exit") == 0)
+    {
+	    sort_exit_statement(ptr, mini, 0);
+		return (0);
 	}
 	if (ft_is_builtin(ptr->av[0]) == 0 && look_for_non_builtin(ptr, 1) == 2
 		&& (ptr->av[0][1] != '.' && ptr->av[0][1] != '/'))
@@ -76,6 +82,8 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		dup2(mini->stdout, STDOUT);
 		if (child_process(ptr, mini, envp) == 1)
 			exit (EXIT_FAILURE);
+        if (ft_strcmp(ptr->av[0], "exit") == 0)
+            exit (mini->exit);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -86,7 +94,7 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 {
 
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
-		return (sort_exit_statement(ptr, mini));
+		return (sort_exit_statement(ptr, mini, 1));
 	else if (ptr->av[0][0] == '.' && ptr->av[0][1] == '/')
 		execves(ptr, envp, mini);
 	else if (look_for_non_builtin(ptr, 0) == 2)

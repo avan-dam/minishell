@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 13:02:37 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/27 16:41:48 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ void	ft_reset_fds(t_mini *mini)
 	}
 }
 
-void	ft_print_exit_status(t_mini *mini)
-{
-	ft_putstr_fd("bash: ", STDERR);
-	ft_putnbr_fd(mini->exit, STDERR);
-	ft_putstr_fd(": command not found\n", STDERR);
-	mini->exit = 127;
-}
-
 void	clear_mini(t_mini *mini, int i)
 {
 	if (mini->part)
@@ -62,9 +54,10 @@ void	ft_exit(t_mini *mini, int exitstatus)
 	exit(exitstatus);
 }
 
-int	sort_exit_statement(t_base *ptr, t_mini *mini)
+int	sort_exit_statement(t_base *ptr, t_mini *mini, int i)
 {
-	ft_putstr_fd("exit\n", mini->stderr);
+	if (i == 1)
+		ft_putstr_fd("exit\n", mini->stderr);
 	if (ptr->av[1] != NULL)
 	{
 		ptr->av[1] = mem_check_tkns(ptr->av[1], mini, 0, 6);

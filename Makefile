@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/27 17:18:49 by ambervandam   ########   odam.nl          #
+#    Updated: 2021/03/29 16:01:25 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS =		main.c \
 			parser_utils/utils.c \
 			parser_utils/utils2.c \
 			parser_utils/utils3.c \
+			parser_utils/utils4.c \
 			parser_utils/replace_specials.c \
 			parser_utils/replace_dolla.c \
 			parser_utils/replace_quote_backslash.c \

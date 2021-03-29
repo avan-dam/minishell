@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 15:33:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/29 15:34:29 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,7 @@ static int	child_process(t_base *ptr, t_mini *mini, char **envp)
     {
 		sort_exit_statement(ptr, mini, 0);
 		if (ptr->next && ft_strcmp(ptr->next->av[0], "echo ") == 0 && ft_strcmp(ptr->next->av[1], "$?") == 0)
-		{
-			// printf("INSIDE in mini->exit%d\n", mini->exit);
 			mini->exit = 0;
-		}
-		// else
-		    // sort_exit_statement(ptr, mini, 0);
-		// printf("in with ptr->next->av[0][%s] ptr->next->av[1][%s]\n", ptr->next->av[0], ptr->next->av[1]);
-		// printf("BEFORE in mini->exit%d\n", mini->exit);
-		// if (ptr->next && ft_strcmp(ptr->next->av[0], "echo ") == 0 && ft_strcmp(ptr->next->av[1], "$?") == 0)
-		// {
-		// 	printf("INSIDE in mini->exit%d\n", mini->exit);
-		// 	mini->exit = 0;
-		// }
-		// printf("OUT ALL in mini->exit%d\n", mini->exit);
 		return (0);
 	}
 	if (ptr->type == T_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
@@ -103,10 +90,8 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		dup2(mini->stdout, STDOUT);
 		if (child_process(ptr, mini, envp) == 1)
 			exit (EXIT_FAILURE);
-        if (ft_strcmp(ptr->av[0], "exit") == 0) // LOOK AT THIS and if type next is pipe then 
-		{	
+        if (ft_strcmp(ptr->av[0], "exit") == 0)
 			exit (mini->exit);
-		}
 		exit(EXIT_SUCCESS);
 	}
 	else

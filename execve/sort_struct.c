@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 17:04:06 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 16:27:46 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/29 18:40:22 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	sort_struct_before_redir(t_base *ptr, t_mini *mini)
 	while (i < ptr->size && ptr->av[i])
 	{
 		while (i < ptr->size && ptr->av[i] && ((ptr->av[i][0] == '"'
-					&& ptr->av[i][1] == '"' && ptr->av[i][2] == '\0')
+				&& ptr->av[i][1] == '"' && ptr->av[i][2] == '\0')
 				|| (ptr->av[i][0] == '\'' && ptr->av[i][1] == '\''
 					&& ptr->av[i][2] == '\0')))
 			i++;

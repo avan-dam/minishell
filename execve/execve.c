@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 16:38:45 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/29 18:40:10 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 	if (ft_strcmp(ptr->av[0], "/usr/bin/gcc") != 0
 		&& ft_is_builtin(ptr->av[0]) == 0
 		&& look_for_non_builtin(ptr, 1) == 2 && (ptr->av[0][0] != '.'
-			&& ptr->av[0][1] != '/'))
+		&& ptr->av[0][1] != '/'))
 		unvalid_ident(ptr->av[0], mini, 127);
 	if (ft_exit_check(ptr, mini) == 0)
 		return (0);

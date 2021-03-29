@@ -6,11 +6,24 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 14:50:10 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 15:09:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/29 16:38:24 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	ft_exit_check(t_base *ptr, t_mini *mini)
+{
+	if (ft_strcmp(ptr->av[0], "exit") == 0)
+	{
+		sort_exit_statement(ptr, mini, 0);
+		if (ptr->next && ft_strcmp(ptr->next->av[0], "echo ") == 0
+			&& ft_strcmp(ptr->next->av[1], "$?") == 0)
+			mini->exit = 0;
+		return (0);
+	}
+	return (1);
+}
 
 void	ft_reset_fds(t_mini *mini)
 {

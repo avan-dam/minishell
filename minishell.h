@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/27 09:54:47 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/29 15:05:00 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,7 @@ char				*ft_get_env(char *env, t_mini *mini);
 void				up_shell_level(t_mini *mini);
 void				ft_pwd(t_mini *mini);
 void				ft_exit(t_mini *mini, int exitstatus);
-int					sort_exit_statement(t_base *ptr, t_mini *mini);
-void				ft_print_exit_status(t_mini *mini);
+int					sort_exit_statement(t_base *ptr, t_mini *mini, int i);
 void				ft_set_env(char **av, char **envp, t_mini *mini);
 void				handle_sigint(int sig);
 void				ft_signals(t_mini *mini, int i);

@@ -6,9 +6,10 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 11:30:42 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/29 15:05:50 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
@@ -41,6 +42,13 @@ static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 		&& ft_is_builtin(ptr->av[0]) == 0
 		&& look_for_non_builtin(ptr, 1) == 2 && (ptr->av[0][0] != '.'
 			&& ptr->av[0][1] != '/'))
+	if (ft_strcmp(ptr->av[0], "exit") == 0)
+    {
+	    sort_exit_statement(ptr, mini, 0);
+		return (0);
+	}
+	if (ft_is_builtin(ptr->av[0]) == 0 && look_for_non_builtin(ptr, 1) == 2
+		&& (ptr->av[0][1] != '.' && ptr->av[0][1] != '/'))
 		unvalid_ident(ptr->av[0], mini, 127);
 	if (ptr->type == T_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 		return (1);
@@ -49,7 +57,9 @@ static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 		return (1);
 	if (ft_strcmp(ptr->av[0], "exit") != 0
 		&& ft_is_builtin(ptr->av[0]) == 1)
+	{
 		exec_builtin(ptr, mini);
+	}
 	else if (execve(ptr->av[0], ptr->av, envp) < 0 || !ptr->av[1])
 		return (1);
 	else
@@ -78,6 +88,10 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		dup2(mini->stdout, STDOUT);
 		if (child_process(ptr, mini, envp) == 1)
 			exit (EXIT_FAILURE);
+        if (ft_strcmp(ptr->av[0], "exit") == 0) // LOOK AT THIS and if type next is pipe then 
+        {
+			exit (mini->exit);
+		} // NEED THIS IN FOR exit 88 | exit 9 BUT OUT FOR exit 1 | exit 2 | exit 3 | echo $?; echo "stayin' alive"
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -87,7 +101,7 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 {
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
-		return (sort_exit_statement(ptr, mini));
+		return (sort_exit_statement(ptr, mini, 1));
 	else if (ptr->av[0][0] == '.' && ptr->av[0][1] == '/')
 		execves(ptr, envp, mini);
 	else if (look_for_non_builtin(ptr, 0) == 2)

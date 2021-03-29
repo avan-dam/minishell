@@ -6,10 +6,9 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 15:30:57 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/03/29 16:34:29 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../minishell.h"
 
@@ -29,6 +28,10 @@ static void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 		close(ptr->prev->fd[0]);
 }
 
+	// if (ptr->prev && ptr->prev->type == T_PIPE
+	// 	&& dup2(ptr->prev->fd[0], STDIN) < 0)
+	// 	return (1);
+
 static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 {
 	if (ft_strcmp(ptr->av[0], "./minishell") == 0)
@@ -44,17 +47,18 @@ static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 			&& ptr->av[0][1] != '/'))
 		unvalid_ident(ptr->av[0], mini, 127);
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
-    {
-	    sort_exit_statement(ptr, mini, 0);
+	{
+		sort_exit_statement(ptr, mini, 0);
+		if (ptr->next && ft_strcmp(ptr->next->av[0], "echo ") == 0
+			&& ft_strcmp(ptr->next->av[1], "$?") == 0)
+			mini->exit = 0;
 		return (0);
 	}
-	if (ptr->type == T_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
+	if ((ptr->type == T_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
+		|| (ptr->prev && ptr->prev->type == T_PIPE
+			&& dup2(ptr->prev->fd[0], STDIN) < 0))
 		return (1);
-	if (ptr->prev && ptr->prev->type == T_PIPE
-		&& dup2(ptr->prev->fd[0], STDIN) < 0)
-		return (1);
-	if (ft_strcmp(ptr->av[0], "exit") != 0
-		&& ft_is_builtin(ptr->av[0]) == 1)
+	if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]) == 1)
 		exec_builtin(ptr, mini);
 	else if (execve(ptr->av[0], ptr->av, envp) < 0 || !ptr->av[1])
 		return (1);
@@ -84,9 +88,8 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		dup2(mini->stdout, STDOUT);
 		if (child_process(ptr, mini, envp) == 1)
 			exit (EXIT_FAILURE);
-        if (ft_strcmp(ptr->av[0], "exit") == 0) // LOOK AT THIS and if type next is pipe then 
+		if (ft_strcmp(ptr->av[0], "exit") == 0)
 			exit (mini->exit);
-		// NEED THIS IN FOR exit 88 | exit 9 BUT OUT FOR exit 1 | exit 2 | exit 3 | echo $?; echo "stayin' alive"
 		exit(EXIT_SUCCESS);
 	}
 	else

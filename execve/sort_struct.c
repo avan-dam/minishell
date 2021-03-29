@@ -6,11 +6,20 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 17:04:06 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 15:05:54 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/29 16:27:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	ft_check_unvalid(t_base *ptr)
+{
+	if (((ptr->av[0][0] == '"' && ptr->av[0][1] == '"')
+			|| (ptr->av[0][0] == '\'' && ptr->av[0][1] == '\''))
+		&& (ptr->av[0][2] == '\0' || ptr->av[0][2] == ' '))
+		return (-1);
+	return (0);
+}
 
 int	sort_struct_before_redir(t_base *ptr, t_mini *mini)
 {
@@ -18,9 +27,7 @@ int	sort_struct_before_redir(t_base *ptr, t_mini *mini)
 	int		i;
 
 	i = 0;
-	if (((ptr->av[0][0] == '"' && ptr->av[0][1] == '"')
-			|| (ptr->av[0][0] == '\'' && ptr->av[0][1] == '\''))
-		&& (ptr->av[0][2] == '\0' || ptr->av[0][2] == ' '))
+	if (ft_check_unvalid(ptr) == -1)
 		return (unvalid_ident("", mini, 127));
 	while (i < ptr->size && ptr->av[i])
 	{

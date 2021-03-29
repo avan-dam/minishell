@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/27 18:08:24 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/29 10:56:57 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		dup2(mini->stdout, STDOUT);
 		if (child_process(ptr, mini, envp) == 1)
 			exit (EXIT_FAILURE);
-        if (ft_strcmp(ptr->av[0], "exit") == 0) // LOOK AT THIS
+        if (ft_strcmp(ptr->av[0], "exit") == 0) // LOOK AT THIS and if type next is pipe then 
             exit (mini->exit); // NEED THIS IN FOR exit 88 | exit 9 BUT OUT FOR exit 1 | exit 2 | exit 3 | echo $?; echo "stayin' alive"
 		exit(EXIT_SUCCESS);
 	}

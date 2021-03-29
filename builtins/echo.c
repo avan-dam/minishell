@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 14:57:17 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/29 16:12:25 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
 			tmp2 = trim_string(ptr, tmp2, i);
 		str = ft_strjoin(tmp, tmp2);
-		free(tmp2);
-		free(tmp);
+		free_all(tmp2, tmp);
 		tmp = str;
 		i++;
 	}

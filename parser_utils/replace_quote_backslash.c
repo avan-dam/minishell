@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/26 22:26:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/29 15:47:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	ft_correct_backslash(t_line *s, int i)
 {
-	if (s->str[i + 1] == '>' || s->str[i + 1] == '<' || (s->str[i + 1] == '~' && s->d % 2 == 1))
+	if (s->str[i + 1] == '>' || s->str[i + 1] == '<'
+		|| (s->str[i + 1] == '~' && s->d % 2 == 1))
 		return (i + 2);
 	if (s->str[i + 1] != '>' && s->str[i + 1] != '<'
 		&& ((s->str[i + 1] == '`') || (s->str[i + 1] == '~')
@@ -81,15 +82,6 @@ int	ft_replace_quotes(t_line *s, int i, int j)
 			s->d++;
 	}
 	return (i);
-}
-
-int	ft_extra_check_dolla(t_line *s, int i, int j)
-{
-	if (s->str[j] == '*')
-		i++;
-	if (s->str[i - 1] == '"')
-		return (0);
-	return (1);
 }
 
 int	ft_replace_tilda(t_line *s, int i, t_mini *mini)

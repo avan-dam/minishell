@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 16:00:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/29 16:02:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/29 16:12:31 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,10 @@ int	send_to_unvalid_one(int j, char *s, int k, t_mini *mini)
 	if (j > 2)
 		return (unvalid_ident(">", mini, 258));
 	return (0);
+}
+
+void	free_all(char *tmp2, char *tmp)
+{
+	free(tmp2);
+	free(tmp);
 }

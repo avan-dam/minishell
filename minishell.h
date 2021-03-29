@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 16:03:27 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/29 16:12:45 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,5 +180,6 @@ char				*ft_strjoin_three(char *start, char *newvar, char *end);
 int					ft_check_empty(char *string);
 int					send_to_unvalid(t_mini *mini, int j);
 int					send_to_unvalid_one(int j, char *s, int k, t_mini *mini);
+void				free_all(char *tmp2, char *tmp);
 
 #endif

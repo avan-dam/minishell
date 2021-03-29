@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 10:56:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/29 15:00:11 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 		return (1);
 	if (ft_strcmp(ptr->av[0], "exit") != 0
 		&& ft_is_builtin(ptr->av[0]) == 1)
+	{
 		exec_builtin(ptr, mini);
+	}
 	else if (execve(ptr->av[0], ptr->av, envp) < 0 || !ptr->av[1])
 		return (1);
 	else
@@ -83,7 +85,9 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		if (child_process(ptr, mini, envp) == 1)
 			exit (EXIT_FAILURE);
         if (ft_strcmp(ptr->av[0], "exit") == 0) // LOOK AT THIS and if type next is pipe then 
-            exit (mini->exit); // NEED THIS IN FOR exit 88 | exit 9 BUT OUT FOR exit 1 | exit 2 | exit 3 | echo $?; echo "stayin' alive"
+        {
+			exit (mini->exit);
+		} // NEED THIS IN FOR exit 88 | exit 9 BUT OUT FOR exit 1 | exit 2 | exit 3 | echo $?; echo "stayin' alive"
 		exit(EXIT_SUCCESS);
 	}
 	else

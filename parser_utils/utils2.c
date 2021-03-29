@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 19:28:33 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/23 18:41:55 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/24 15:55:01 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_is_str_int(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == '-')
+		i++;
 	while (str[i])
 	{
 		if (str[i] < 48 || str[i] > 57)

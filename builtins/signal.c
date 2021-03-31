@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/27 09:50:51 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/31 14:15:01 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	handle_sigint(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\b\b  \b\b", 6);
-		ft_putstr_fd("\n> ", 1);
+		ft_putstr_fd("\n> ", 0);
 	}
 	if (sig == SIGQUIT)
 		write(1, "\b\b  \b\b", 6);

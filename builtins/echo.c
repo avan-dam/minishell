@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 16:12:25 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/31 13:17:30 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,13 @@ static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 	str = NULL;
 	while (ptr->av[i])
 	{
+		// printf("ptr->av[i][%s]\n", ptr->av[i]);
 		if (!(ptr->av[i + 1]))
 			check_last_arg(ptr, i);
+		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
+			tmp2 = trim_string(ptr, tmp2, i);
 		tmp2 = check_tokens(ptr->av[i], mini, 0, 9);
+		// printf("tmp2[%s]\n", tmp2);
 		if (tmp2 == NULL && ptr->av[i] != NULL)
 			tmp2 = ft_strdup(ptr->av[i]);
 		if ((check_empty(tmp2) == -1) && (numb_char(ptr->av[i], '$') > 0))
@@ -72,8 +76,10 @@ static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 			tmp2 = ft_strdup("");
 			str = trim_string(ptr, str, i);
 		}
-		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
-			tmp2 = trim_string(ptr, tmp2, i);
+		// printf("tmp2[%s]\n", tmp2);
+		// if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
+		// 	tmp2 = trim_string(ptr, tmp2, i);
+		// printf("tmp2[%s]\n", tmp2);
 		str = ft_strjoin(tmp, tmp2);
 		free_all(tmp2, tmp);
 		tmp = str;
@@ -105,12 +111,17 @@ int	ft_echo(t_base *ptr, t_mini *mini)
 {
 	char	*str;
 
-	if ((ft_strcmp("", ptr->av[0]) == 0) || (ptr->av[1] == NULL))
+	if ((ft_strcmp("", ptr->av[0]) == 0) || (ptr->av[1] == NULL)
+		|| (ft_strcmp("", ptr->av[1]) == 0))
 	{
 		mini->exit = 0;
-		return (ft_putstr_fd("", mini->stdout));
+		ft_putstr_fd("", mini->stdout);
+		if (ptr->av[1] == NULL || ft_strcmp("", ptr->av[1]) == 0)
+			ft_putstr_fd("\n", mini->stdout);
+		return (-1);
 	}
 	str = ft_avs_into_str(ptr, 1, mini);
+	// printf("str is [%s]\n", str);
 	mini->exit = 0;
 	if (ft_strcmp(ptr->av[1], "-n") == 0)
 		return (ft_echo_n(str, mini));

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/29 15:47:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/31 13:16:25 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	ft_correct_backslash(t_line *s, int i)
 {
+	// printf("1s->str[i][%c] s->str[i + 1][%c] s->str[%s]\n", s->str[i], s->str[i + 1], s->str);
 	if (s->str[i + 1] == '>' || s->str[i + 1] == '<'
 		|| (s->str[i + 1] == '~' && s->d % 2 == 1))
 		return (i + 2);
@@ -23,19 +24,27 @@ int	ft_correct_backslash(t_line *s, int i)
 				&& (s->d % 2 == 0)) || s->str[i + 1] == '$'
 			|| s->str[i + 1] == '\\'))
 	{
+		// printf("in this\n");
 		ft_memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
 		if (s->str[i] != '\0' && ((s->str[i] == '$'
 					&& ((i == 0) || ((i > 0) && (s->str[i - 1] != '\\'))))
 				|| s->str[i] == '\'' || s->str[i] == '"' || s->str[i] == '~'))
 		{
+			// printf("and this\n");
 			if (s->str[i] == '\'' && s->str[i + 1] != ' ')
 				i++;
 			i++;
+		}
+		if (s->str[i] == '\\' && s->str[i + 1] == ' ' && (i + 2 == (int)ft_strlen(s->str)))
+		{
+			ft_memmove(&s->str[i + 1], &s->str[i + 2], ft_strlen(s->str) - i - 1);
 		}
 	}
 	else if ((s->s % 2 == 0) && (s->d % 2 == 0)
 		&& (s->str[i + 1] != '>') && (s->str[i + 1] != '<'))
 		ft_memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
+	// printf("2s->str[i][%c] s->str[i + 1][%c] s->str[%s] ft_strlen(s->str)[%zu] i[%d]\n", s->str[i], s->str[i + 1], s->str, ft_strlen(s->str), i);
+	// printf("s->str[%s]\n", s->str);
 	return (i);
 }
 

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/26 13:03:17 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/31 13:59:04 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,5 @@ void	exec_builtin(t_base *tmp, t_mini *mini)
 		|| ft_strcmp(tmp->av[0], "/usr/bin/cd") == 0)
 		ft_cd(tmp, mini);
 	else if (ft_strcmp(tmp->av[0], "unset") == 0)
-		ft_unset_builtin(mini, tmp->av[1], tmp);
+		ft_unset_builtin(mini, tmp);
 }

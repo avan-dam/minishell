@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/23 17:21:47 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/25 13:56:04 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/03/31 10:43:47 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ int	ft_echo_n(char *str, t_mini *mini)
 
 	if (str == NULL)
 		return (0);
+	if (ft_strcmp("", str) == 0)
+	{
+		str = ft_strdup("a");
+		return (0);
+	}
 	tmp = str;
 	str = ft_howmany_n(tmp, 0, 0);
 	free(tmp);

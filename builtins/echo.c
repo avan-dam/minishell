@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 16:12:25 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/03/31 10:40:14 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,14 @@ int	ft_echo(t_base *ptr, t_mini *mini)
 {
 	char	*str;
 
-	if ((ft_strcmp("", ptr->av[0]) == 0) || (ptr->av[1] == NULL))
+	if ((ft_strcmp("", ptr->av[0]) == 0) || (ptr->av[1] == NULL)
+		|| (ft_strcmp("", ptr->av[1]) == 0))
 	{
 		mini->exit = 0;
-		return (ft_putstr_fd("", mini->stdout));
+		ft_putstr_fd("", mini->stdout);
+		if (ptr->av[1] == NULL || ft_strcmp("", ptr->av[1]) == 0)
+			ft_putstr_fd("\n", mini->stdout);
+		return (-1);
 	}
 	str = ft_avs_into_str(ptr, 1, mini);
 	mini->exit = 0;

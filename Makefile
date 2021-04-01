@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/04/01 21:29:56 by salbregh      ########   odam.nl          #
+#    Updated: 2021/04/01 23:30:25 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRCS =		main.c \
 			execve/execve.c \
 			execve/sort_struct.c \
 			execve/usr_bin_check.c \
+			execve/processes.c \
 			execve/builtins.c
 
 FLAGS 	= 	-Wall -Werror -Wextra 

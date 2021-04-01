@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/31 12:52:31 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/01 16:47:12 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,30 @@ static void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 	}
 	if (ptr->prev && ptr->prev->type == T_PIPE)
 		close(ptr->prev->fd[0]);
+	kill(pid, SIGQUIT);
+	kill(pid, SIGINT);
 }
 
 static int	child_process(t_base *ptr, t_mini *mini, char **envp)
 {
+	char	*home = ft_get_env("HOME", mini);
+	home = ft_substr(home, 1, ft_strlen(home) - 1); // leak
 	if (ft_strcmp(ptr->av[0], "./minishell") == 0)
 	{
 		mini->shell_level++;
+		mini->in_exec = 1;
 		ft_unset(mini, "SHLVL");
 		ft_add_env("SHLVL", ft_itoa(mini->shell_level), mini);
 		handle_line(1, mini, envp);
 	}
-	if (ft_strcmp(ptr->av[0], "/usr/bin/gcc") != 0
-		&& ft_is_builtin(ptr->av[0]) == 0
-		&& look_for_non_builtin(ptr, 1) == 2 && (ptr->av[0][0] != '.'
-		&& ptr->av[0][1] != '/'))
-		unvalid_ident(ptr->av[0], mini, 127);
 	if (ft_exit_check(ptr, mini) == 0)
 		return (0);
+	if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]) == 1)
+		exec_builtin(ptr, mini);
+	if (look_for_non_builtin(ptr, 1, mini) == -1 && execve(ptr->av[0], ptr->av, envp) < 0)
+		ft_exit(mini, 127);
+	if (look_for_non_builtin(ptr, 1, mini) == 2 && execve(ptr->av[0], ptr->av, envp) < 0)
+		unvalid_ident(ptr->av[0], mini, 127);
 	if ((ptr->type == T_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 		|| (ptr->prev && ptr->prev->type == T_PIPE
 			&& dup2(ptr->prev->fd[0], STDIN) < 0))
@@ -62,6 +68,7 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 	pid_t		pid;
 	int			piped;
 
+	
 	piped = 0;
 	if (ptr->type == T_PIPE || (ptr->prev && ptr->prev->type == T_PIPE))
 	{
@@ -74,6 +81,8 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		exit(0);
 	if (pid == 0)
 	{
+		signal(SIGQUIT, handle_sigint);
+		signal(SIGINT, handle_sigint);
 		dup2(mini->stdin, STDIN);
 		dup2(mini->stdout, STDOUT);
 		if (child_process(ptr, mini, envp) == 1)
@@ -88,11 +97,19 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 
 static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 {
+	char	*home;
+	
+	home = ft_get_env("HOME", mini);
+	home = ft_substr(home, 1, ft_strlen(home) - 1); // leak
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
 		return (sort_exit_statement(ptr, mini, 1));
-	else if (ptr->av[0][0] == '.' && ptr->av[0][1] == '/')
+	else if ((ptr->av[0][0] == '.' && ptr->av[0][1] == '/')
+		|| ptr->av[0][0] == '.' || ptr->av[0][0] == '/'
+		|| ft_strncmp(ptr->av[0], home, ft_strlen(home)) == 0)
 		execves(ptr, envp, mini);
-	else if (look_for_non_builtin(ptr, 0) == 2)
+	else if (look_for_non_builtin(ptr, 0, mini) == -1)
+		return (0);
+	else if (look_for_non_builtin(ptr, 0, mini) == 2)
 		unvalid_ident(ptr->av[0], mini, 127);
 	else
 		execves(ptr, envp, mini);

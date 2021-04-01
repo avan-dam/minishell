@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/31 17:56:22 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/01 16:27:06 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <dirent.h>
+#include <stdio.h>
 
 # define R O_RDWR
 # define C O_CREAT
@@ -70,6 +71,7 @@ typedef struct s_mini
 	int				stdin;
 	int				exit;
 	int				shell_level;
+	int				in_exec;
 }					t_mini;
 
 typedef struct s_piper
@@ -159,7 +161,7 @@ int					ft_print_error(t_mini *mini);
 */
 
 int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
-int					look_for_non_builtin(t_base *ptr, int i);
+int					look_for_non_builtin(t_base *ptr, int i, t_mini *mini);
 int					ft_is_builtin(char *str);
 int					ft_execve(t_mini *mini, char **envp);
 int					sort_struct_before_redir(t_base *ptr, t_mini *mini);

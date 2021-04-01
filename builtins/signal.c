@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/31 14:15:01 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/01 17:03:30 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_signals(t_mini *mini, int i)
 			mini->exit = 0;
 			ft_exit(mini, mini->exit);
 		}
-		if (signal(SIGINT, &handle_sigint) == SIG_ERR)
+		else if (signal(SIGINT, &handle_sigint) == SIG_ERR)
 		{
 			mini->exit = 0;
 			ft_exit(mini, mini->exit);

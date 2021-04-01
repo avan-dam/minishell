@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/01 16:01:11 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/01 17:33:59 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ int	look_for_non_builtin(t_base *ptr, int i, t_mini *mini)
 	{
 		if (ptr->av[0][0] == '.' || ptr->av[0][0] == '/')
 			return (-1);
-		ft_putstr_fd("bash: ", 1);
-		ft_putstr_fd(tmp->av[0], 1);
-		ft_putstr_fd(": No such file or directory\n", 1);
+		ft_putstr_fd("bash: ", STDERR);
+		ft_putstr_fd(tmp->av[0], STDERR);
+		ft_putstr_fd(": No such file or directory\n", STDERR);
 		mini->exit = 127;
 		return (-1);
 	}
@@ -123,9 +123,9 @@ void	exec_builtin(t_base *tmp, t_mini *mini)
 	&& ft_strncmp(tmp->av[0], "/bin/", 5) != 0
 	&& ft_strncmp(tmp->av[0], "/usr/bin/", 9) != 0)
 	{
-		ft_putstr_fd("bash: ", 1);
-		ft_putstr_fd(tmp->av[0], 1);
-		ft_putstr_fd(": No such file or directory\n", 1);
+		ft_putstr_fd("bash: ", STDERR);
+		ft_putstr_fd(tmp->av[0], STDERR);
+		ft_putstr_fd(": No such file or directory\n", STDERR);
 	}
 	else if (ft_strcmp(tmp->av[0], "env") == 0
 		|| ft_strcmp(tmp->av[0], "/usr/bin/env") == 0)

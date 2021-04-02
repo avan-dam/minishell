@@ -6,11 +6,23 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 13:11:08 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/02 13:23:04 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static void	prep_child_proces(t_base *ptr, t_mini *mini, char **envp)
+{
+	if (child_process(ptr, mini, envp) == 1)
+	{	
+		if (ft_strcmp(ptr->av[0], "~") == 0)
+			exit (mini->exit);
+		exit (EXIT_FAILURE);
+	}
+	if (ft_strcmp(ptr->av[0], "exit") == 0 || ft_strcmp(ptr->av[0], "~") == 0)
+		exit (mini->exit);
+}
 
 static void	execves(t_base *ptr, char **envp, t_mini *mini)
 {
@@ -31,23 +43,16 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 	{
 		dup2(mini->stdin, STDIN);
 		dup2(mini->stdout, STDOUT);
-		if (child_process(ptr, mini, envp) == 1)
-		{	
-			if (ft_strcmp(ptr->av[0], "~") == 0)
-				exit (mini->exit);
-			exit (EXIT_FAILURE);
-		}
-		if (ft_strcmp(ptr->av[0], "exit") == 0 || ft_strcmp(ptr->av[0], "~") == 0)
-			exit (mini->exit);
+		prep_child_proces(ptr, mini, envp);
 		exit(EXIT_SUCCESS);
 	}
 	else
 		parent_proces(pid, mini, ptr, piped);
 }
 
-static int tilda_check(char *home, char *ptrstr)
+static int	tilda_check(char *home, char *ptrstr)
 {
-	char *sub;
+	char	*sub;
 
 	sub = ft_substr(ptrstr, 1, ft_strlen(ptrstr) - 1);
 	if (ft_strcmp(home, sub) == 0)
@@ -69,8 +74,9 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
 		return (sort_exit_statement(ptr, mini, 1));
 	else if ((((ptr->av[0][0] == '.' && ptr->av[0][1] == '/')
-		|| ptr->av[0][0] == '.' || ptr->av[0][0] == '/')
-		|| ft_strncmp(ptr->av[0], home, ft_strlen(home)) == 0) && tilda_check(home, ptr->av[0]) != -1)
+				|| ptr->av[0][0] == '.' || ptr->av[0][0] == '/')
+			|| ft_strncmp(ptr->av[0], home, ft_strlen(home)) == 0)
+		&& tilda_check(home, ptr->av[0]) != -1)
 		execves(ptr, envp, mini);
 	else if (look_for_non_builtin(ptr, 0, mini, 0) == 2)
 		unvalid_ident(ptr->av[0], mini, 127);

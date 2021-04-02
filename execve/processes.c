@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/01 23:29:14 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 12:27:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/02 12:48:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	child_process(t_base *ptr, t_mini *mini, char **envp)
 	if (look_for_non_builtin(ptr, 1, mini, 1) == -1
 		&& execve(ptr->av[0], ptr->av, envp) < 0)
 		return (1);
+	if (ft_exit_check(ptr, mini) == 0)
+		return (0);
 	else if (look_for_non_builtin(ptr, 1, mini, 1) == 2
 		&& execve(ptr->av[0], ptr->av, envp) < 0)
 	{

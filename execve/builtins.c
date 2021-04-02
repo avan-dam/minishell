@@ -6,67 +6,11 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/01 21:29:28 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/02 11:08:26 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// int	ft_check_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
-// {
-// 	char		*command;
-// 	char		*tmp;
-// 	char		*startcmd;
-
-// 	command = ptr->av[0];
-// 	tmp = command;
-// 	startcmd = ft_substr(command, 0, 9);
-// 	free(startcmd);
-// 	if ((ft_strcmp(startcmd, "/usr/bin/")) == 0)
-// 		tmp = ft_substr(command, 9, ft_strlen(command) - 9);
-// 	dit = readdir(dirp);
-// 	while (dit)
-// 	{
-// 		if (ft_strcmp(dit->d_name, tmp) == 0)
-// 		{
-// 			ptr->av[0] = ft_strjoin("/usr/bin/", tmp);
-// 			if (tmp && i == 0)
-// 				free(tmp);
-// 			closedir(dirp);
-// 			return (0);
-// 		}
-// 		dit = readdir(dirp);
-// 	}
-// 	return (1);
-// }
-
-// int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
-// {
-// 	char		*command;
-// 	char		*tmp;
-// 	char		*startcmd;
-
-// 	command = ptr->av[0];
-// 	tmp = command;
-// 	startcmd = ft_substr(command, 0, 5);
-// 	if ((ft_strcmp(startcmd, "/bin/") == 0))
-// 		tmp = ft_substr(command, 5, ft_strlen(command) - 5);
-// 	free(startcmd);
-// 	dit = readdir(dirp);
-// 	while (dit)
-// 	{
-// 		if (ft_strcmp(dit->d_name, tmp) == 0)
-// 		{
-// 			ptr->av[0] = ft_strjoin("/bin/", tmp);
-// 			if (tmp && i == 0)
-// 				free(tmp);
-// 			closedir(dirp);
-// 			return (0);
-// 		}
-// 		dit = readdir(dirp);
-// 	}
-// 	return (1);
-// }
 
 int	ft_is_builtin(char *str)
 {
@@ -85,13 +29,17 @@ static int	ft_check_unset(t_mini *mini, t_base *tmp)
 {
 	if (ft_get_env("PATH", mini) == NULL
 		&& ft_strncmp(tmp->av[0], "/bin/", 5) != 0
-		&& ft_strncmp(tmp->av[0], "/usr/bin/", 9) != 0)
+		&& ft_strncmp(tmp->av[0], "/usr/bin/", 9) != 0
+		&& ft_strcmp(tmp->av[0], "export") != 0
+		&& ft_strcmp(tmp->av[0], "unset") != 0)
 	{
 		if (tmp->av[0][0] == '.' || tmp->av[0][0] == '/')
 			return (-1);
+		ft_putstr_fd("hier", 1);
 		ft_putstr_fd("bash: ", 1);
 		ft_putstr_fd(tmp->av[0], 1);
 		ft_putstr_fd(": No such file or directory\n", 1);
+		mini->exit = 127;
 		return (-1);
 	}
 	return (0);

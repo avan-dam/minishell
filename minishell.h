@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/01 23:30:16 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/02 11:10:30 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,8 @@ int					ft_check_usr_bin(t_base *ptr, struct dirent *dit,
 int					ft_check_in_bin(t_base *ptr, struct dirent *dit,
 						DIR *dirp, int i);
 int					child_process(t_base *ptr, t_mini *mini, char **envp);
-void				parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped);
+void				parent_proces(pid_t pid, t_mini *mini, t_base *ptr,
+						int piped);
 
 /*
 **	UTILS

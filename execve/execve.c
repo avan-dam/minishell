@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 00:00:43 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/02 11:05:12 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 		|| ptr->av[0][0] == '.' || ptr->av[0][0] == '/'
 		|| ft_strncmp(ptr->av[0], home, ft_strlen(home)) == 0)
 		execves(ptr, envp, mini);
-	// else if (look_for_non_builtin(ptr, 0, mini) == -1)
-	// 	unvalid_ident(ptr->av[0], mini, 127);
 	else if (look_for_non_builtin(ptr, 0, mini) == 2)
 		unvalid_ident(ptr->av[0], mini, 127);
 	else

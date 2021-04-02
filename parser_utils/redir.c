@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/02 13:29:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/02 15:39:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	open_file_more(t_base *ptr, int i, t_mini *mini, int k)
 {
+	ft_reset_fds(mini);
 	if (ft_check_empty(ptr->av[i + 1]) == 1 && k == 1)
 	{
 		mini->exit = 0;

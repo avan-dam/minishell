@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/01 21:31:35 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/02 13:29:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static int	ft_backslash_redir(t_base *ptr, int i, t_mini *mini, int j)
 
 	k = 0;
 	if (ptr->av[i + 1] && ((ptr->av[i + 1][0] == ' ')
-			|| (ptr->av[i + 1][0] == '\\')))
+		|| (ptr->av[i + 1][0] == '\\')))
 		k = 1;
 	if ((numb_char(ptr->av[i], '"') != 0) || (numb_char(ptr->av[i], '\'') != 0))
 	{

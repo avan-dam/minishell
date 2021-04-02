@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/04/02 12:21:29 by ambervandam   ########   odam.nl          #
+#    Updated: 2021/04/02 14:49:35 by salbregh      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ SRCS =		main.c \
 			execve/processes.c \
 			execve/builtins.c
 
-FLAGS 	= 	-Wall -Werror -Wextra 
+FLAGS 	= 	-Wall -Werror -Wextra
 
 OFILES 	=	$(SRCS:.c=.o)
 
@@ -59,7 +59,7 @@ INCLUDES =	./get_next_line/get_next_line.h \
 			minishell.h
 
 EXTE_LIBS = ./get_next_line/libgnl.a \
-			./libft/libft.a 
+			./libft/libft.a
 
 CC		=	gcc
 
@@ -70,8 +70,9 @@ $(NAME):	$(OFILES) $(INCLUDES)
 			cp get_next_line/libgnl.a .
 			make -C libft/
 			cp libft/libft.a .
-			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS) $(EXTE_LIBS)
-			
+			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES)\
+			$(FLAGS) $(EXTE_LIBS)
+
 %.o:		%.c $(INCLUDES)
 			gcc -Ilibft -Ignl $(FLAGS) -c $< -o $@
 

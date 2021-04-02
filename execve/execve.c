@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 12:37:47 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/02 13:11:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,31 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		dup2(mini->stdin, STDIN);
 		dup2(mini->stdout, STDOUT);
 		if (child_process(ptr, mini, envp) == 1)
+		{	
+			if (ft_strcmp(ptr->av[0], "~") == 0)
+				exit (mini->exit);
 			exit (EXIT_FAILURE);
-		if (ft_strcmp(ptr->av[0], "exit") == 0)
+		}
+		if (ft_strcmp(ptr->av[0], "exit") == 0 || ft_strcmp(ptr->av[0], "~") == 0)
 			exit (mini->exit);
 		exit(EXIT_SUCCESS);
 	}
 	else
 		parent_proces(pid, mini, ptr, piped);
+}
+
+static int tilda_check(char *home, char *ptrstr)
+{
+	char *sub;
+
+	sub = ft_substr(ptrstr, 1, ft_strlen(ptrstr) - 1);
+	if (ft_strcmp(home, sub) == 0)
+	{	
+		free(sub);
+		return (-1);
+	}
+	free(sub);
+	return (1);
 }
 
 static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
@@ -50,14 +68,15 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 	home = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
 		return (sort_exit_statement(ptr, mini, 1));
-	else if ((ptr->av[0][0] == '.' && ptr->av[0][1] == '/')
-		|| ptr->av[0][0] == '.' || ptr->av[0][0] == '/'
-		|| ft_strncmp(ptr->av[0], home, ft_strlen(home)) == 0)
+	else if ((((ptr->av[0][0] == '.' && ptr->av[0][1] == '/')
+		|| ptr->av[0][0] == '.' || ptr->av[0][0] == '/')
+		|| ft_strncmp(ptr->av[0], home, ft_strlen(home)) == 0) && tilda_check(home, ptr->av[0]) != -1)
 		execves(ptr, envp, mini);
 	else if (look_for_non_builtin(ptr, 0, mini, 0) == 2)
 		unvalid_ident(ptr->av[0], mini, 127);
 	else
 		execves(ptr, envp, mini);
+	free(home);
 	return (0);
 }
 

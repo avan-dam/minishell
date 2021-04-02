@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 11:44:31 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/02 13:11:23 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	main(int ac, char **av, char **envp)
 		mini.stdout = 1;
 		mini.stderr = 2;
 		handle_line(1, &mini, envp);
-		system("leaks minishell");
 	}
 	else
 		ft_putstr_fd("No argument needed.\nUsage: ./minishell\n", STDERR);

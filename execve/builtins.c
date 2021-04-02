@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 11:08:26 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/02 12:30:42 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_is_builtin(char *str)
 	return (0);
 }
 
-static int	ft_check_unset(t_mini *mini, t_base *tmp)
+static int	ft_check_unset(t_mini *mini, t_base *tmp, int j)
 {
 	if (ft_get_env("PATH", mini) == NULL
 		&& ft_strncmp(tmp->av[0], "/bin/", 5) != 0
@@ -33,9 +33,10 @@ static int	ft_check_unset(t_mini *mini, t_base *tmp)
 		&& ft_strcmp(tmp->av[0], "export") != 0
 		&& ft_strcmp(tmp->av[0], "unset") != 0)
 	{
+		if (j == 0)
+			return (-1);
 		if (tmp->av[0][0] == '.' || tmp->av[0][0] == '/')
 			return (-1);
-		ft_putstr_fd("hier", 1);
 		ft_putstr_fd("bash: ", 1);
 		ft_putstr_fd(tmp->av[0], 1);
 		ft_putstr_fd(": No such file or directory\n", 1);
@@ -45,14 +46,14 @@ static int	ft_check_unset(t_mini *mini, t_base *tmp)
 	return (0);
 }
 
-int	look_for_non_builtin(t_base *ptr, int i, t_mini *mini)
+int	look_for_non_builtin(t_base *ptr, int i, t_mini *mini, int j)
 {
 	t_base			*tmp;
 	DIR				*dirp;
 	struct dirent	*dit;
 
 	tmp = ptr;
-	if (ft_check_unset(mini, tmp) == -1)
+	if (ft_check_unset(mini, tmp, j) == -1)
 		return (-1);
 	if (ft_is_builtin(tmp->av[0]) == 1)
 		return (1);
@@ -75,7 +76,7 @@ int	look_for_non_builtin(t_base *ptr, int i, t_mini *mini)
 
 void	exec_builtin(t_base *tmp, t_mini *mini)
 {
-	if (ft_check_unset(mini, tmp) == -1)
+	if (ft_check_unset(mini, tmp, 0) == -1)
 		return ;
 	else if (ft_strcmp(tmp->av[0], "env") == 0
 		|| ft_strcmp(tmp->av[0], "/usr/bin/env") == 0)

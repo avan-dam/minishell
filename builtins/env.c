@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 22:27:08 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/29 11:30:59 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/01 17:32:56 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void	ft_set_env(char **av, char **envp, t_mini *mini)
 
 static void	ft_env_error(t_mini *mini, t_base *ptr)
 {
-	ft_putstr_fd("env: ", STDOUT);
-	ft_putstr_fd(ptr->av[1], STDOUT);
-	ft_putstr_fd(": No such file or directory\n", STDOUT);
+	ft_putstr_fd("env: ", STDERR);
+	ft_putstr_fd(ptr->av[1], STDERR);
+	ft_putstr_fd(": No such file or directory\n", STDERR);
 	mini->exit = 127;
 }
 

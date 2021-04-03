@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/03/29 16:01:25 by ambervandam   ########   odam.nl          #
+#    Updated: 2021/04/02 20:43:57 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,11 @@ SRCS =		main.c \
 			parser_utils/fill_arguments_list.c \
 			execve/execve.c \
 			execve/sort_struct.c \
+			execve/usr_bin_check.c \
+			execve/processes.c \
 			execve/builtins.c
 
-FLAGS 	= 	-Wall -Werror -Wextra 
+FLAGS 	= 	-Wall -Werror -Wextra
 
 OFILES 	=	$(SRCS:.c=.o)
 
@@ -57,7 +59,7 @@ INCLUDES =	./get_next_line/get_next_line.h \
 			minishell.h
 
 EXTE_LIBS = ./get_next_line/libgnl.a \
-			./libft/libft.a 
+			./libft/libft.a
 
 CC		=	gcc
 
@@ -68,8 +70,9 @@ $(NAME):	$(OFILES) $(INCLUDES)
 			cp get_next_line/libgnl.a .
 			make -C libft/
 			cp libft/libft.a .
-			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES) $(FLAGS) $(EXTE_LIBS)
-			
+			$(CC) -Lget_next_line -lgnl -Llibft -lft -o $(NAME) $(OFILES)\
+			$(FLAGS) $(EXTE_LIBS)
+
 %.o:		%.c $(INCLUDES)
 			gcc -Ilibft -Ignl $(FLAGS) -c $< -o $@
 

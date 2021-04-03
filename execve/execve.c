@@ -6,55 +6,22 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/31 12:52:31 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/02 19:42:35 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
+static void	prep_child_proces(t_base *ptr, t_mini *mini, char **envp)
 {
-	int			status;
-
-	waitpid(pid, &status, 0);
-	mini->exit = WEXITSTATUS(status);
-	if (piped)
-	{
-		close(ptr->fd[1]);
-		if (ptr->type != T_PIPE)
-			close(ptr->fd[0]);
+	if (child_process(ptr, mini, envp) == 1)
+	{	
+		if (ft_strcmp(ptr->av[0], "~") == 0)
+			exit (mini->exit);
+		exit (EXIT_FAILURE);
 	}
-	if (ptr->prev && ptr->prev->type == T_PIPE)
-		close(ptr->prev->fd[0]);
-}
-
-static int	child_process(t_base *ptr, t_mini *mini, char **envp)
-{
-	if (ft_strcmp(ptr->av[0], "./minishell") == 0)
-	{
-		mini->shell_level++;
-		ft_unset(mini, "SHLVL");
-		ft_add_env("SHLVL", ft_itoa(mini->shell_level), mini);
-		handle_line(1, mini, envp);
-	}
-	if (ft_strcmp(ptr->av[0], "/usr/bin/gcc") != 0
-		&& ft_is_builtin(ptr->av[0]) == 0
-		&& look_for_non_builtin(ptr, 1) == 2 && (ptr->av[0][0] != '.'
-		&& ptr->av[0][1] != '/'))
-		unvalid_ident(ptr->av[0], mini, 127);
-	if (ft_exit_check(ptr, mini) == 0)
-		return (0);
-	if ((ptr->type == T_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
-		|| (ptr->prev && ptr->prev->type == T_PIPE
-			&& dup2(ptr->prev->fd[0], STDIN) < 0))
-		return (1);
-	if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]) == 1)
-		exec_builtin(ptr, mini);
-	else if (execve(ptr->av[0], ptr->av, envp) < 0 || !ptr->av[1])
-		return (1);
-	else
-		unvalid_ident(ptr->av[0], mini, 127);
-	return (0);
+	if (ft_strcmp(ptr->av[0], "exit") == 0 || ft_strcmp(ptr->av[0], "~") == 0)
+		exit (mini->exit);
 }
 
 static void	execves(t_base *ptr, char **envp, t_mini *mini)
@@ -76,26 +43,46 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 	{
 		dup2(mini->stdin, STDIN);
 		dup2(mini->stdout, STDOUT);
-		if (child_process(ptr, mini, envp) == 1)
-			exit (EXIT_FAILURE);
-		if (ft_strcmp(ptr->av[0], "exit") == 0)
-			exit (mini->exit);
+		prep_child_proces(ptr, mini, envp);
 		exit(EXIT_SUCCESS);
 	}
 	else
 		parent_proces(pid, mini, ptr, piped);
 }
 
+static int	tilda_check(char *home, char *ptrstr)
+{
+	char	*sub;
+
+	sub = ft_substr(ptrstr, 1, ft_strlen(ptrstr) - 1);
+	if (ft_strcmp(home, sub) == 0)
+	{	
+		free(sub);
+		return (-1);
+	}
+	free(sub);
+	return (1);
+}
+
 static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 {
+	char	*home;
+	char	*tmp;
+
+	tmp = ft_get_env("HOME", mini);
+	home = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
 		return (sort_exit_statement(ptr, mini, 1));
-	else if (ptr->av[0][0] == '.' && ptr->av[0][1] == '/')
+	else if ((((ptr->av[0][0] == '.' && ptr->av[0][1] == '/')
+				|| ptr->av[0][0] == '.' || ptr->av[0][0] == '/')
+			|| ft_strncmp(ptr->av[0], home, ft_strlen(home)) == 0)
+		&& tilda_check(home, ptr->av[0]) != -1)
 		execves(ptr, envp, mini);
-	else if (look_for_non_builtin(ptr, 0) == 2)
+	else if (look_for_non_builtin(ptr, 0, mini, 0) == 2)
 		unvalid_ident(ptr->av[0], mini, 127);
 	else
 		execves(ptr, envp, mini);
+	free(home);
 	return (0);
 }
 

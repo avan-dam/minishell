@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/31 17:56:22 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/03 15:02:02 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,11 +159,19 @@ int					ft_print_error(t_mini *mini);
 */
 
 int					exec_cmds(t_base *ptr, char **envp, t_mini *mini);
-int					look_for_non_builtin(t_base *ptr, int i);
+int					look_for_non_builtin(t_base *ptr, int i, t_mini *mini,
+						int j);
 int					ft_is_builtin(char *str);
 int					ft_execve(t_mini *mini, char **envp);
 int					sort_struct_before_redir(t_base *ptr, t_mini *mini);
 void				sort_struct_after_redir(t_base *ptr);
+int					ft_check_usr_bin(t_base *ptr, struct dirent *dit,
+						DIR *dirp, int i);
+int					ft_check_in_bin(t_base *ptr, struct dirent *dit,
+						DIR *dirp, int i);
+int					child_process(t_base *ptr, t_mini *mini, char **envp);
+void				parent_proces(pid_t pid, t_mini *mini, t_base *ptr,
+						int piped);
 
 /*
 **	UTILS

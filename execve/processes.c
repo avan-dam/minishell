@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/01 23:29:14 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 13:18:27 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/03 12:44:03 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 		close(ptr->prev->fd[0]);
 }
 
+static void	error_message(t_mini *mini, char *str)
+{
+	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
+	mini->exit = 127; // still returns 0 env does return 127
+}
+
 static void	child_process_shell(t_mini *mini, char **envp)
 {
 	mini->shell_level++;
@@ -44,7 +52,7 @@ static int	child_process_more(t_base *ptr, char **envp, t_mini *mini)
 		&& dup2(ptr->prev->fd[0], STDIN) < 0)
 		return (1);
 	if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]) == 1)
-		exec_builtin(ptr, mini);
+		exec_builtin(ptr, mini, envp);
 	else if (execve(ptr->av[0], ptr->av, envp) < 0 || !ptr->av[1])
 		return (1);
 	return (0);
@@ -54,16 +62,16 @@ int	child_process(t_base *ptr, t_mini *mini, char **envp)
 {
 	if (ft_strcmp(ptr->av[0], "./minishell") == 0)
 		child_process_shell(mini, envp);
-	if (look_for_non_builtin(ptr, 1, mini, 1) == -1
+	if (look_for_non_builtin(ptr, 1, mini, envp) == -1
 		&& execve(ptr->av[0], ptr->av, envp) < 0)
 		return (1);
 	if (ft_exit_check(ptr, mini) == 0)
 		return (0);
-	else if (look_for_non_builtin(ptr, 1, mini, 1) == 2
+	else if (look_for_non_builtin(ptr, 1, mini, envp) == 2
 		&& execve(ptr->av[0], ptr->av, envp) < 0)
 	{
-		unvalid_ident(ptr->av[0], mini, 127);
-		return (1);
+		error_message(mini, ptr->av[0]);
+		return (-1);
 	}
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
 	{

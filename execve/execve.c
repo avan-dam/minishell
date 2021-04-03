@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 13:30:00 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/03 12:43:52 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 			|| ft_strncmp(ptr->av[0], home, ft_strlen(home)) == 0)
 		&& tilda_check(home, ptr->av[0]) != -1)
 		execves(ptr, envp, mini);
-	else if (look_for_non_builtin(ptr, 0, mini, 0) == 2)
+	else if (look_for_non_builtin(ptr, 0, mini, envp) == 2)
 		unvalid_ident(ptr->av[0], mini, 127);
 	else
 		execves(ptr, envp, mini);
@@ -108,7 +108,7 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	else if (ft_strcmp("", ptr->av[0]) == 0)
 		return (0);
 	else if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]))
-		exec_builtin(ptr, mini);
+		exec_builtin(ptr, mini, envp);
 	else if (execve_more(ptr, mini, envp) == -1)
 		return (-1);
 	return (0);

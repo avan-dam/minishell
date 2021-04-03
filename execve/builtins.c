@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 15:27:39 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/03 12:44:46 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,19 @@ int	ft_is_builtin(char *str)
 	return (0);
 }
 
-static int	ft_check_unset(t_mini *mini, t_base *tmp, int j)
+static int	ft_check_unset(t_mini *mini, t_base *tmp, int j, char **envp)
 {
 	if (ft_get_env("PATH", mini) == NULL
 		&& ft_strncmp(tmp->av[0], "/bin/", 5) != 0
 		&& ft_strncmp(tmp->av[0], "/usr/bin/", 9) != 0
 		&& ft_strcmp(tmp->av[0], "export") != 0
-		&& ft_strcmp(tmp->av[0], "unset") != 0)
+		&& ft_strcmp(tmp->av[0], "unset") != 0
+		&& ft_strcmp(tmp->av[0], "exit") != 0)
 	{
-		if (j == 0)
+		if (j == 0 && ft_is_builtin(tmp->av[0]) == 0)
 			return (-1);
-		if (tmp->av[0][0] == '.' || tmp->av[0][0] == '/')
+		if ((tmp->av[0][0] == '.' || tmp->av[0][0] == '/')
+			&& execve(tmp->av[0], tmp->av, envp) < 0)
 			return (-1);
 		ft_putstr_fd("bash: ", 1);
 		ft_putstr_fd(tmp->av[0], 1);
@@ -46,14 +48,14 @@ static int	ft_check_unset(t_mini *mini, t_base *tmp, int j)
 	return (0);
 }
 
-int	look_for_non_builtin(t_base *ptr, int i, t_mini *mini, int j)
+int	look_for_non_builtin(t_base *ptr, int i, t_mini *mini, char **envp)
 {
 	t_base			*tmp;
 	DIR				*dirp;
 	struct dirent	*dit;
 
 	tmp = ptr;
-	if (ft_check_unset(mini, tmp, j) == -1)
+	if (ft_check_unset(mini, tmp, i, envp) == -1)
 		return (-1);
 	if (ft_is_builtin(tmp->av[0]) == 1)
 		return (1);
@@ -74,9 +76,9 @@ int	look_for_non_builtin(t_base *ptr, int i, t_mini *mini, int j)
 	return (2);
 }
 
-void	exec_builtin(t_base *tmp, t_mini *mini)
+void	exec_builtin(t_base *tmp, t_mini *mini, char **envp)
 {
-	if (ft_check_unset(mini, tmp, 0) == -1)
+	if (ft_check_unset(mini, tmp, 0, envp) == -1)
 		return ;
 	else if (ft_strcmp(tmp->av[0], "env") == 0
 		|| ft_strcmp(tmp->av[0], "/usr/bin/env") == 0)

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/01 23:29:14 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/04 12:37:32 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/04 12:49:34 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,16 @@ void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 {
 	int			status;
 
-	// CHANGE THIS
 	waitpid(pid, &status, 0);
-	// if (WIFEXITED(status) && mini->exit != 127)
-	mini->exit = WEXITSTATUS(status);
+	if (ft_get_env("PATH", mini) == NULL
+		&& ft_strncmp(ptr->av[0], "/bin/", 5) != 0
+		&& ft_strncmp(ptr->av[0], "/usr/bin/", 9) != 0
+		&& ft_strcmp(ptr->av[0], "export") != 0
+		&& ft_strcmp(ptr->av[0], "unset") != 0
+		&& ft_strcmp(ptr->av[0], "exit") != 0)
+		mini->exit = 127;
+	else
+		mini->exit = WEXITSTATUS(status);
 	if (piped)
 	{
 		close(ptr->fd[1]);

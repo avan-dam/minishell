@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 16:00:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/29 16:12:31 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/03 15:10:12 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,13 @@ void	free_all(char *tmp2, char *tmp)
 {
 	free(tmp2);
 	free(tmp);
+}
+
+int	dolla_while_checker(char *s, int i)
+{
+	if (s[i] != '\0' && s[i] != '$' && s[i] != '-' && s[i] != '=' && s[i]
+		!= ' ' && s[i] != '\'' && s[i] != '"' && s[i] != '\\' && s[i] != '/'
+		&& s[i] != '%' && s[i] != '*')
+		return (1);
+	return (0);
 }

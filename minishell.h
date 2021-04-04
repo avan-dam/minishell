@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/03 15:02:02 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/04 19:18:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <dirent.h>
+# include <stdio.h>
 
 # define R O_RDWR
 # define C O_CREAT
@@ -150,7 +151,8 @@ void				ft_free_tmps(char *tmp, char *result);
 char				*free_reset_tmp(char *tmp, char *result, char *line, int i);
 char				*ft_strtrim_backslash(char const *s1, char c);
 int					redir_error(t_mini *mini, int i);
-int					pre_break_check(char *line, int i, char *tmp, t_mini *mini);
+// int					pre_break_check(char *line, int i, char *tmp, t_mini *mini);
+int					pre_break_check(char *line, int i, char *result, char *tmp);
 int					no_commands_line(char *line, int i, int numb, t_mini *mini);
 int					ft_print_error(t_mini *mini);
 
@@ -190,5 +192,6 @@ int					ft_check_empty(char *string);
 int					send_to_unvalid(t_mini *mini, int j);
 int					send_to_unvalid_one(int j, char *s, int k, t_mini *mini);
 void				free_all(char *tmp2, char *tmp);
+int					dolla_while_checker(char *s, int i);
 
 #endif

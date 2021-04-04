@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 07:59:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/03 15:01:21 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/04 19:20:09 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,11 @@ int	no_of_commands(char *line, t_mini *mini, int i, int numb)
 			i = space_start(line, i);
 			tmp = free_reset_tmp(tmp, result, line, i);
 			result = check_tokens(tmp, mini, 0, 1);
-			if (pre_break_check(line, i, tmp, mini) == 0)
-			{	
-				free(result);
+			if (pre_break_check(line, i, result, tmp) != 1)
 				return (no_of_commands_more(mini, i, line, numb));
-			}
 			numb++;
 		}
-		if (pre_break_check(line, i, tmp, mini) == 0)
+		if (pre_break_check(line, i, result, tmp) == 0)
 			return (no_of_commands_more(mini, i, line, numb));
 		numb = no_commands_line(line, i, numb, mini);
 		i++;

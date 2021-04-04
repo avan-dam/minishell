@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 16:27:02 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 21:05:14 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/04 19:21:19 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@ int	no_of_commands_more(t_mini *mini, int i, char *line, int numb)
 {
 	mini->numb_cmds = numb;
 	mini->part = ft_substr(line, 0, i);
-	if (line[i] == '|')
+	if (line[i] == '|' || (i != 0 && line[i - 1] == '|'))
 		mini->type_end = T_PIPE;
-	else if (line[i] == ';')
+	else if (line[i] == ';' || (i != 0 && line[i - 1] == ';'))
 		mini->type_end = T_BREAK;
 	return (i);
 }
 
 void	ft_free_tmps(char *tmp, char *result)
 {
-	free(tmp);
+	if (tmp)
+		free(tmp);
 	if (result)
 		free(result);
 }

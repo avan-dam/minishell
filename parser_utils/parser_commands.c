@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/23 17:37:54 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/03 14:58:24 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/04 19:21:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,13 @@ int	no_commands_line(char *line, int i, int numb, t_mini *mini)
 	return (numb);
 }
 
-static int	break_check(char *line, int i, char *result, char *tmp)
+int	pre_break_check(char *line, int i, char *result, char *tmp)
 {
-	if ((line[i] == '|' || line[i] == ';'))
-	{
-		ft_free_tmps(tmp, result);
-		return (1);
-	}
-	return (0);
-}
-
-int	pre_break_check(char *line, int i, char *tmp, t_mini *mini)
-{
-	char	*result;
-
-	result = check_tokens(tmp, mini, 0, 1);
 	if ((line[i] == '|' || line[i] == ';') && result != NULL)
 	{
-		if (break_check(line, i, result, tmp) == 1)
-			return (0);
-	}
-	if (result)
+		free(tmp);
 		free(result);
+		return (0);
+	}
 	return (1);
 }

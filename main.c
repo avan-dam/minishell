@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/03 15:01:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/03 15:16:04 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	handle_line(int lineret, t_mini *mini, char **envp)
 			exit(1);
 		}
 		ft_send_to_parser(line, mini, envp);
+		system("leaks minishell");
 	}
 	if (lineret == 0)
 		ft_signals(mini, 1);

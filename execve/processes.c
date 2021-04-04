@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/01 23:29:14 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/04 11:29:26 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/04 12:27:41 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 	int			status;
 
 	waitpid(pid, &status, 0);
-	mini->exit = WEXITSTATUS(status);
+	if (WIFEXITED(status) && mini->exit != 127)
+		mini->exit = WEXITSTATUS(status);
 	if (piped)
 	{
 		close(ptr->fd[1]);
@@ -30,10 +31,10 @@ void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 
 static void	error_message(t_mini *mini, char *str)
 {
-	ft_putstr_fd("bash: ", 2);
-	ft_putstr_fd(str, 2);
+	ft_putstr_fd("bash: ", STDERR);
+	ft_putstr_fd(str, STDERR);
 	ft_putstr_fd(": No such file or directory\n", 2);
-	mini->exit = 127; // still returns 0 env does return 127
+	mini->exit = 127;
 }
 
 static void	child_process_shell(t_mini *mini, char **envp)

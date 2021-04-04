@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/03 12:44:46 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/04 12:03:07 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ static int	ft_check_unset(t_mini *mini, t_base *tmp, int j, char **envp)
 	{
 		if (j == 0 && ft_is_builtin(tmp->av[0]) == 0)
 			return (-1);
-		if ((tmp->av[0][0] == '.' || tmp->av[0][0] == '/')
-			&& execve(tmp->av[0], tmp->av, envp) < 0)
+		if (execve(tmp->av[0], tmp->av, envp) < 0)
+		{		
+			mini->exit = 127;
+			ft_putstr_fd("bash: ", STDERR);
+			ft_putstr_fd(tmp->av[0], STDERR);
+			ft_putstr_fd(": No such file or directory\n", STDERR);
 			return (-1);
-		ft_putstr_fd("bash: ", 1);
-		ft_putstr_fd(tmp->av[0], 1);
-		ft_putstr_fd(": No such file or directory\n", 1);
-		mini->exit = 127;
+		}
 		return (-1);
 	}
 	return (0);

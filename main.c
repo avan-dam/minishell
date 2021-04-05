@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 16:14:45 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/05 11:54:38 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		ft_memset(&mini, 0, sizeof(t_mini));
+		mini.part = NULL;
 		ft_set_env(av, envp, &mini);
 		mini.stdout = 1;
 		mini.stderr = 2;

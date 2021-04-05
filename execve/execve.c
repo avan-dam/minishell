@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/03 12:43:52 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/05 11:53:58 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
 		return (sort_exit_statement(ptr, mini, 1));
 	else if ((((ptr->av[0][0] == '.' && ptr->av[0][1] == '/')
-		|| ptr->av[0][0] == '.' || ptr->av[0][0] == '/')
+				|| ptr->av[0][0] == '.' || ptr->av[0][0] == '/')
 			|| ft_strncmp(ptr->av[0], home, ft_strlen(home)) == 0)
 		&& tilda_check(home, ptr->av[0]) != -1)
 		execves(ptr, envp, mini);

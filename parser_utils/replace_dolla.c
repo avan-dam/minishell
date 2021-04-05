@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:04:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/02 16:13:56 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/03 15:10:07 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,6 @@ static char	*find_newvar(char *oldvar, char *end, t_mini *mini)
 	return (newvar);
 }
 
-static int	dolla_while_checker(char *s, int i)
-{
-	if (s[i] != '\0' && s[i] != '$' && s[i] != '-' && s[i] != '=' && s[i]
-		!= ' ' && s[i] != '\'' && s[i] != '"' && s[i] != '\\' && s[i] != '/'
-		&& s[i] != '%' && s[i] != '*')
-		return (1);
-	return (0);
-}
-
 static int	ft_len_replace_dolla(int j, int i, char *s, int k)
 {
 	while (dolla_while_checker(s, i) == 1)
@@ -86,6 +77,17 @@ static int	ft_len_replace_dolla(int j, int i, char *s, int k)
 	return (i);
 }
 
+int	free_set_ret(char *oldvar, char *newvar)
+{
+	int	retval;
+
+	free(oldvar);
+	retval = 0;
+	if (newvar)
+		retval = ft_len(newvar) - 1;
+	return (retval);
+}
+
 int	ft_find_dolla(int i, int j, t_mini *mini, t_line *s)
 {
 	char	*oldvar;
@@ -107,10 +109,8 @@ int	ft_find_dolla(int i, int j, t_mini *mini, t_line *s)
 		free(newvar);
 		newvar = ft_strdup("$");
 	}
-	free(oldvar);
-	retval = 0;
-	if (newvar)
-		retval = ft_len(newvar) - 1;
+	retval = free_set_ret(oldvar, newvar);
+	free(s->str);
 	s->str = ft_strjoin_three(start, newvar, end);
 	return (retval);
 }

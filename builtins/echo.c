@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/02 17:11:42 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/05 11:54:19 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int	ft_echo(t_base *ptr, t_mini *mini)
 {
 	char	*str;
 
-	// system("leaks minishell");
 	if ((ft_strcmp("", ptr->av[0]) == 0) || (ptr->av[1] == NULL)
 		|| (ft_strcmp("", ptr->av[1]) == 0))
 	{
@@ -127,6 +126,5 @@ int	ft_echo(t_base *ptr, t_mini *mini)
 	}
 	ft_putstr_fd(str, mini->stdout);
 	free(str);
-		// system("leaks minishell");
 	return (ft_putchar_fd('\n', mini->stdout));
 }

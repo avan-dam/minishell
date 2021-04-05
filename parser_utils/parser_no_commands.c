@@ -6,15 +6,14 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 07:59:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/25 13:38:57 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/04/05 11:50:15 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	set_mini_return(t_mini *mini, int numb, char *line, int i)
+static int	set_mini_return(t_mini *mini, char *line, int i)
 {
-	mini->numb_cmds = numb;
 	mini->part = ft_substr(line, 0, i);
 	mini->type_end = T_END;
 	return (i);
@@ -39,31 +38,30 @@ static int	line_valid(char *line, int i, char *result)
 	return (0);
 }
 
-int	no_of_commands(char *line, t_mini *mini, int i, int numb)
+int	no_of_commands(char *str, t_mini *mini, int i)
 {
 	char	*tmp;
 	char	*result;
 
-	tmp = ft_substr(line, 0, i);
+	tmp = ft_substr(str, 0, i);
 	result = check_tokens(tmp, mini, 0, 1);
-	while (line_valid(line, i, result) == 1)
+	while (line_valid(str, i, result) == 1)
 	{
-		if (space_start(line, i) != -1)
+		if (space_start(str, i) != -1)
 		{
-			i = space_start(line, i);
-			tmp = free_reset_tmp(tmp, result, line, i);
+			i = space_start(str, i);
+			tmp = free_reset_tmp(tmp, result, str, i);
 			result = check_tokens(tmp, mini, 0, 1);
-			if (pre_break_check(line, i, tmp, mini) == 0)
-				return (no_of_commands_more(mini, i, line, numb));
-			numb++;
+			if (div_str(str, (i * -1), result, tmp) > 0)
+				return (mini_vals(mini, i, str, div_str(str, i, result, tmp)));
+			mini->numb_cmds++;
 		}
-		if (pre_break_check(line, i, tmp, mini) == 0)
-			return (no_of_commands_more(mini, i, line, numb));
-		numb = no_commands_line(line, i, numb, mini);
-		i++;
-		tmp = free_reset_tmp(tmp, result, line, i);
+		if (div_str(str, (i * -1), result, tmp) > 0)
+			return (mini_vals(mini, i, str, div_str(str, i, result, tmp)));
+		i = no_commands_line(str, i, mini);
+		tmp = free_reset_tmp(tmp, result, str, i);
 		result = check_tokens(tmp, mini, 0, 1);
 	}
 	ft_free_tmps(tmp, result);
-	return (set_mini_return(mini, numb, line, i));
+	return (set_mini_return(mini, str, i));
 }

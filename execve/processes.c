@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/01 23:29:14 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/04 12:49:34 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/05 12:07:04 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,16 @@ static int	child_process_more(t_base *ptr, char **envp, t_mini *mini)
 		&& dup2(ptr->prev->fd[0], STDIN) < 0)
 		return (1);
 	if (ft_strcmp(ptr->av[0], "exit") != 0 && ft_is_builtin(ptr->av[0]) == 1)
+	{
 		exec_builtin(ptr, mini, envp);
+		return (2);
+	}
 	else if (execve(ptr->av[0], ptr->av, envp) < 0 || !ptr->av[1])
 		return (1);
 	return (0);
 }
 
-int	child_process(t_base *ptr, t_mini *mini, char **envp)
+int	child_process(t_base *ptr, t_mini *mini, char **envp, int k)
 {
 	if (ft_strcmp(ptr->av[0], "./minishell") == 0)
 		child_process_shell(mini, envp);
@@ -86,9 +89,10 @@ int	child_process(t_base *ptr, t_mini *mini, char **envp)
 		sort_exit_statement(ptr, mini, 0);
 		return (0);
 	}
-	if (child_process_more(ptr, envp, mini) == 1)
+	k = child_process_more(ptr, envp, mini);
+	if (k == 1)
 		return (1);
-	else
+	else if (k != 2)
 		unvalid_ident(ptr->av[0], mini, 127);
 	return (0);
 }

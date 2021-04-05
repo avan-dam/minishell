@@ -6,21 +6,11 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:38:57 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/16 14:06:48 by avan-dam      ########   odam.nl         */
+/*   Updated: 2021/04/05 13:29:37 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	error_opening(char *error, t_mini *mini)
-{
-	ft_putstr_fd("bash: ", mini->stderr);
-	ft_putstr_fd(error, mini->stderr);
-	ft_putstr_fd(": No such file or directory\n", mini->stderr);
-	ft_reset_fds(mini);
-	mini->exit = 1;
-	return (-1);
-}
 
 static void	ft_free_array(char **array)
 {
@@ -116,4 +106,19 @@ char	**ft_remove_redir_av(t_base *ptr, int i, int j)
 	}
 	free(ptr->av);
 	return (temp);
+}
+
+void	fix_redir_space_echo(t_base *ptr, int i)
+{
+	char	*tmp;
+
+	if (i != 0 && ft_strcmp(ptr->av[0], "echo") == 0)
+	{
+		if (ptr->av[i + 1] && ptr->av[i][ft_strlen(ptr->av[i]) - 1] != ' ')
+		{
+			tmp = ptr->av[i];
+			ptr->av[i] = ft_strjoin(tmp, " ");
+			free(tmp);
+		}
+	}
 }

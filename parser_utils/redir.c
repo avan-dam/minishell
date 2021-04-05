@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/02 15:39:13 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/05 13:29:31 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ t_base	*ft_redir(t_mini *mini, t_base *ptr)
 			if (ptr->redir == 0 || ptr->redir == 5)
 				i++;
 		}
+		else
+			fix_redir_space_echo(ptr, i);
 		ptr->redir = 0;
 		i++;
 	}

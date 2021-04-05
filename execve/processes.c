@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/01 23:29:14 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/05 14:21:47 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/05 14:47:47 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,7 @@ void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 	int			status;
 
 	waitpid(pid, &status, 0);
-	if (ft_get_env("PATH", mini) == NULL
-		&& ft_strncmp(ptr->av[0], "/bin/", 5) != 0
-		&& ft_strncmp(ptr->av[0], "/usr/bin/", 9) != 0
-		&& ft_strcmp(ptr->av[0], "export") != 0
-		&& ft_strcmp(ptr->av[0], "unset") != 0
-		&& ft_strcmp(ptr->av[0], "exit") != 0
-		&& ft_strcmp(ptr->av[0], "cd") != 0
-		&& ft_strcmp(ptr->av[0], "pwd") != 0
-		&& ft_strcmp(ptr->av[0], "echo") != 0)
+	if (check_builtins_unset_path(ptr, mini) == 1)
 		mini->exit = 127;
 	else
 	{	

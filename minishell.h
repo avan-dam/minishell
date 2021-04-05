@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/05 14:22:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/05 14:47:20 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void				ft_signals(t_mini *mini, int i);
 void				exec_builtin(t_base *tmp, t_mini *mini, char **envp);
 void				ft_lstprint_env(t_list *lst, t_mini *mini, t_base *ptr);
 int					ft_unset_builtin(t_mini *mini, t_base *ptr);
+int					check_builtins_unset_path(t_base *ptr, t_mini *mini);
 
 /*
 **	PARSER FUNCTIONS

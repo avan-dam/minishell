@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/01 23:29:14 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/05 12:07:04 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/05 12:35:57 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 		&& ft_strncmp(ptr->av[0], "/usr/bin/", 9) != 0
 		&& ft_strcmp(ptr->av[0], "export") != 0
 		&& ft_strcmp(ptr->av[0], "unset") != 0
-		&& ft_strcmp(ptr->av[0], "exit") != 0)
+		&& ft_strcmp(ptr->av[0], "exit") != 0
+		&& ft_strcmp(ptr->av[0], "cd") != 0
+		&& ft_strcmp(ptr->av[0], "pwd") != 0
+		&& ft_strcmp(ptr->av[0], "echo") != 0)
 		mini->exit = 127;
 	else
 		mini->exit = WEXITSTATUS(status);

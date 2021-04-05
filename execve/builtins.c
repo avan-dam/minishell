@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 15:06:53 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/04 12:03:07 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/05 12:35:31 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ static int	ft_check_unset(t_mini *mini, t_base *tmp, int j, char **envp)
 		&& ft_strncmp(tmp->av[0], "/usr/bin/", 9) != 0
 		&& ft_strcmp(tmp->av[0], "export") != 0
 		&& ft_strcmp(tmp->av[0], "unset") != 0
-		&& ft_strcmp(tmp->av[0], "exit") != 0)
+		&& ft_strcmp(tmp->av[0], "exit") != 0
+		&& ft_strcmp(tmp->av[0], "cd") != 0
+		&& ft_strcmp(tmp->av[0], "pwd") != 0
+		&& ft_strcmp(tmp->av[0], "echo") != 0)
 	{
 		if (j == 0 && ft_is_builtin(tmp->av[0]) == 0)
 			return (-1);

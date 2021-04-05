@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/04 19:18:58 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/05 11:51:05 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <dirent.h>
-# include <stdio.h>
 
 # define R O_RDWR
 # define C O_CREAT
@@ -144,16 +143,14 @@ int					check_file_toredir(t_base *ptr, int i, t_mini *mini);
 int					error_opening(char *error, t_mini *mini);
 int					fill_av_list(t_base *new, t_mini *mini, int j, int l);
 int					create_av_list(t_base **ptr, char *line, t_mini *mini);
-int					no_of_commands(char *line, t_mini *mini, int i, int numb);
-int					no_of_commands_more(t_mini *mini, int i, char *line,
-						int numb);
+int					no_of_commands(char *line, t_mini *mini, int i);
+int					mini_vals(t_mini *mini, int i, char *line, int check);
 void				ft_free_tmps(char *tmp, char *result);
 char				*free_reset_tmp(char *tmp, char *result, char *line, int i);
 char				*ft_strtrim_backslash(char const *s1, char c);
 int					redir_error(t_mini *mini, int i);
-// int					pre_break_check(char *line, int i, char *tmp, t_mini *mini);
-int					pre_break_check(char *line, int i, char *result, char *tmp);
-int					no_commands_line(char *line, int i, int numb, t_mini *mini);
+int					div_str(char *line, int i, char *result, char *tmp);
+int					no_commands_line(char *line, int i, t_mini *mini);
 int					ft_print_error(t_mini *mini);
 
 /*

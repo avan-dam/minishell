@@ -6,20 +6,32 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 16:27:02 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/04 19:21:19 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/05 11:46:47 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	no_of_commands_more(t_mini *mini, int i, char *line, int numb)
+int	mini_vals(t_mini *mini, int i, char *line, int check)
 {
-	mini->numb_cmds = numb;
-	mini->part = ft_substr(line, 0, i);
-	if (line[i] == '|' || (i != 0 && line[i - 1] == '|'))
-		mini->type_end = T_PIPE;
-	else if (line[i] == ';' || (i != 0 && line[i - 1] == ';'))
-		mini->type_end = T_BREAK;
+	if (check == 1)
+	{
+		mini->part = ft_substr(line, 0, i);
+		if (line[i] == '|' || (i != 0 && line[i - 1] == '|'))
+			mini->type_end = T_PIPE;
+		else if (line[i] == ';' || (i != 0 && line[i - 1] == ';'))
+			mini->type_end = T_BREAK;
+		return (i);
+	}
+	if (check == 2)
+	{
+		mini->part = ft_substr(line, 0, i + 1);
+		if (line[i + 1] == '|')
+			mini->type_end = T_PIPE;
+		else if (line[i + 1] == ';')
+			mini->type_end = T_BREAK;
+		return (i + 1);
+	}
 	return (i);
 }
 

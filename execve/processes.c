@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/01 23:29:14 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/05 12:35:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/05 14:21:47 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ void	parent_proces(pid_t pid, t_mini *mini, t_base *ptr, int piped)
 		&& ft_strcmp(ptr->av[0], "echo") != 0)
 		mini->exit = 127;
 	else
+	{	
 		mini->exit = WEXITSTATUS(status);
+		if (look_for_non_builtin(ptr, 0, mini, NULL) == 2)
+			mini->exit = 127;
+	}
 	if (piped)
 	{
 		close(ptr->fd[1]);

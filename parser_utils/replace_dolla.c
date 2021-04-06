@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:04:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/06 13:23:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/06 13:27:11 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static int	ft_len_replace_dolla(int j, int i, char *s, int k)
 {
 	while (dolla_while_checker(s, i) == 1)
 	{
-		if (s[i] == '@' || s[j] == '#' || s[i] == '#' || s[i] == ']'|| s[i] == '[')
+		if (s[i] == '@' || s[j] == '#' || s[i] == '#'
+			|| s[i] == ']' || s[i] == '[')
 		{
 			if (s[i] == '@' || s[j] == '#')
 				i++;

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:38:57 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/05 13:29:37 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/06 18:16:27 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ static char	**add_tmp_tolist(char *tmp, t_base *ptr, int i, int j)
 		j++;
 	}
 	new[j] = tmp;
+	if (tmp == NULL)
+	{
+		ft_free_array(ptr->av);
+		return (new);
+	}
 	j++;
 	while (j < ptr->size && ptr->av[j - 1])
 	{

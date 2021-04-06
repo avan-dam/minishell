@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/04/04 19:46:18 by ambervandam   ########   odam.nl          #
+#    Updated: 2021/04/06 18:53:06 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS =		main.c \
 			parser_utils/redir.c \
 			parser_utils/redir_adapt_array.c \
 			parser_utils/redir_check_valid.c \
+			parser_utils/redir_utils.c \
 			parser_utils/parser.c \
 			parser_utils/parser_av_list.c \
 			parser_utils/parser_no_commands.c \

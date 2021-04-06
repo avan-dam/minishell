@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/06 14:40:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/06 20:38:15 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_get_env(char *env, t_mini *mini)
 		lst = lst->next;
 	}
 	ft_lstclear(&lst);
-	return ("");
+	return (NULL);
 }
 
 static void	ft_no_oldpwd(t_mini *mini)

@@ -6,11 +6,25 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/01 21:29:11 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/05 14:48:23 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/06 18:23:32 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static char	*set_temp_bin(char *tmp, char *command)
+{
+	free(tmp);
+	tmp = ft_substr(command, 5, ft_strlen(command) - 5);
+	return (tmp);
+}
+
+static char	*set_temp_usr_bin(char *tmp, char *command)
+{
+	free(tmp);
+	tmp = ft_substr(command, 9, ft_strlen(command) - 9);
+	return (tmp);
+}
 
 int	ft_check_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 {
@@ -23,7 +37,7 @@ int	ft_check_usr_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 	startcmd = ft_substr(command, 0, 9);
 	free(startcmd);
 	if ((ft_strcmp(startcmd, "/usr/bin/")) == 0)
-		tmp = ft_substr(command, 9, ft_strlen(command) - 9);
+		tmp = set_temp_usr_bin(tmp, command);
 	dit = readdir(dirp);
 	while (dit)
 	{
@@ -49,9 +63,9 @@ int	ft_check_in_bin(t_base *ptr, struct dirent *dit, DIR *dirp, int i)
 	command = ptr->av[0];
 	tmp = command;
 	startcmd = ft_substr(command, 0, 5);
-	if ((ft_strcmp(startcmd, "/bin/") == 0))
-		tmp = ft_substr(command, 5, ft_strlen(command) - 5);
 	free(startcmd);
+	if ((ft_strcmp(startcmd, "/bin/") == 0))
+		tmp = set_temp_bin(tmp, command);
 	dit = readdir(dirp);
 	while (dit)
 	{

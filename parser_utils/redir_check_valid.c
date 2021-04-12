@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:44:30 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/06 18:13:22 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/12 17:54:40 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,14 @@ int	check_file_toredir(t_base *ptr, int i, t_mini *mini)
 	char	*tmp;
 
 	if (ptr->av[i + 1] == NULL)
-		return (redir_error(mini, 1));
+		return (redir_error(mini, 1, ptr));
 	tmp = ptr->av[i + 1];
 	ptr->av[i + 1] = check_tokens(tmp, mini, 0, 0);
 	free(tmp);
 	if (ptr->av[i + 1] == NULL)
 		return (-1);
 	if (ft_strcmp(ptr->av[i + 1], ">") == 0)
-		return (redir_error(mini, 1));
+		return (redir_error(mini, 3, ptr));
 	return (0);
 }
 

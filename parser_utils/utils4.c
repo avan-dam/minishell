@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 16:00:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/05 11:53:52 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/12 18:06:13 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	ft_print_error(t_mini *mini)
 
 int	send_to_unvalid(t_mini *mini, int j)
 {
+	
 	if (j == 2)
 		return (ft_print_error(mini));
 	if (j > 3)

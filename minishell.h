@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/12 16:16:12 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/12 17:48:00 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <dirent.h>
+
+#include <stdio.h> // DEL
 
 # define R O_RDWR
 # define C O_CREAT
@@ -149,7 +151,7 @@ int					mini_vals(t_mini *mini, int i, char *line, int check);
 void				ft_free_tmps(char *tmp, char *result);
 char				*free_reset_tmp(char *tmp, char *result, char *line, int i);
 char				*ft_strtrim_backslash(char const *s1, char c);
-int					redir_error(t_mini *mini, int i);
+int					redir_error(t_mini *mini, int i, t_base *ptr);
 int					ft_tokens_open_argv(t_base *ptr, t_mini *mini, int i);
 int					div_str(char *line, int i, char *result, char *tmp);
 int					no_commands_line(char *line, int i, t_mini *mini);

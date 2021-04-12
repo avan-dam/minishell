@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/12 16:14:47 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/12 16:21:32 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,7 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 		&& tilda_check(home, ptr->av[0]) != -1)
 		execves(ptr, envp, mini);
 	else if (look_for_non_builtin(ptr, 0, mini, envp) == 2)
-	{
 		unvalid_ident(ptr->av[0], mini, 127);
-		return (-2);
-	}
 	else
 		execves(ptr, envp, mini);
 	free(home);

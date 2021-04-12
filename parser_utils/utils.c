@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/05 14:21:45 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/12 17:25:47 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,13 @@ char	*ft_string_insert(char *string, int i, char *middle)
 }
 
 int	error_opening(char *error, t_mini *mini)
-{
+{	
 	ft_putstr_fd("bash: ", mini->stderr);
 	ft_putstr_fd(error, mini->stderr);
-	ft_putstr_fd(": No such file or directory\n", mini->stderr);
+	if (error[0] == '/')
+		ft_putstr_fd(": Is a directory\n", mini->stderr);
+	else
+		ft_putstr_fd(": No such file or directory\n", mini->stderr);
 	ft_reset_fds(mini);
 	mini->exit = 1;
 	return (-1);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/12 16:21:32 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/12 17:51:15 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 	char	*home;
 	char	*tmp;
 
-	tmp = ft_get_env("HOME", mini);
+	tmp = mini->home;
+	// tmp = ft_get_env("HOME", mini);
+	// if (tmp == NULL)
+	// 	tmp = ft_strdup("");
 	home = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
 	{

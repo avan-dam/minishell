@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 18:51:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/12 17:59:04 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/12 17:38:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	redir_error(t_mini *mini, int i, t_base *ptr)
 {
 	if (i == 1)
 	{
-		if (ptr->av[i + 1] && (numb_char(ptr->av[i + 1], '>') > 0 || (numb_char(ptr->av[i + 1], '<') > 0)))
+		if (ptr->av[i + 1] && ptr->av[i + 2] && (numb_char(ptr->av[i + 1], '>') > 0 || (numb_char(ptr->av[i + 1], '<') > 0)))
 		{
 			ft_putstr_fd("bash: syntax error near ", mini->stderr);
 			ft_putstr_fd("unexpected token `", mini->stderr);
@@ -46,8 +46,7 @@ int	redir_error(t_mini *mini, int i, t_base *ptr)
 			ft_putstr_fd("'\n", mini->stderr);
 		}
 		else
-		// printf("ptr->av[i][0]: %c\n", ptr->av[i + 1][0]);
-		{// printf("ptr->av[i]: %s\n", ptr->av[i]);
+		{
 			ft_putstr_fd("bash: syntax error near ", mini->stderr);
 			ft_putstr_fd("unexpected token `newline'\n", mini->stderr);
 			ft_reset_fds(mini);
@@ -59,16 +58,5 @@ int	redir_error(t_mini *mini, int i, t_base *ptr)
 		ft_putstr_fd("bash: : No such file or directory\n", mini->stderr);
 		mini->exit = 1;
 	}
-	// if (i == 3)
-	// {
-	// 	printf("ptr->av[i][0]: %c\n", ptr->av[i][0]);
-	// 	printf("ptr->av[i]: %s\n", ptr->av[i]);
-	// 	ft_putstr_fd("bash: syntax error near ", mini->stderr);
-	// 	ft_putstr_fd("unexpected token `", mini->stderr);
-	// 	ft_putstr_fd(" IN HERE ", 1);
-	// 	ft_putstr_fd("'\n", mini->stderr);
-	// 	ft_reset_fds(mini);
-	// 	mini->exit = 258;	
-	// }
 	return (-1);
 }

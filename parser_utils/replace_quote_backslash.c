@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/03/31 13:54:05 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/12 17:46:36 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	ft_replace_tilda(t_line *s, int i, t_mini *mini)
 	{
 		ft_memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
 		end = ft_substr(s->str, i, ft_strlen(s->str) - i);
-		start = ft_get_env("HOME", mini);
+		start = mini->home;
 		ret = i + ft_strlen(start);
 		free(s->str);
 		s->str = ft_strjoin(start, end);

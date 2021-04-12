@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/12 17:48:00 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/12 17:45:42 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_mini
 	int				stdin;
 	int				exit;
 	int				shell_level;
+	char			*home;
 }					t_mini;
 
 typedef struct s_piper
@@ -192,7 +193,7 @@ char				*mem_check_tkns(char *str, t_mini *mini, int i, int j);
 char				*ft_string_insert(char *string, int i, char *middle);
 char				*ft_strjoin_three(char *start, char *newvar, char *end);
 int					ft_check_empty(char *string);
-int					send_to_unvalid(t_mini *mini, int j);
+int					send_to_unvalid(t_mini *mini, int j, char *s);
 int					send_to_unvalid_one(int j, char *s, int k, t_mini *mini);
 void				free_all(char *tmp2, char *tmp);
 int					dolla_while_checker(char *s, int i);

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/12 18:05:45 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/12 17:17:53 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	check_no_redirs(char *s, t_mini *mini, int k, int j)
 		if ((j == 1 && s[k] == '>' && (s[k + 1] == '>'
 					|| s[k + 1] == '<')) || ((j == 2 || j == 3) && s[k] == '>'))
 			return (unvalid_ident(">", mini, 258));
-		if (send_to_unvalid(mini, j) == -1)
+		if (send_to_unvalid(mini, j, s) == -1)
 			return (-1);
 		k++;
 	}

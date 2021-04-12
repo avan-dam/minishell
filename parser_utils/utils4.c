@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 16:00:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/12 18:06:13 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/12 17:17:42 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,20 @@ int	ft_print_error(t_mini *mini)
 	return (-1);
 }
 
-int	send_to_unvalid(t_mini *mini, int j)
+int	send_to_unvalid(t_mini *mini, int j, char *s)
 {
 	
 	if (j == 2)
+	{	
+		if (s && ft_strcmp(s, "<<") == 0)
+		{
+			ft_putstr_fd("bash: syntax error near ", mini->stderr);
+			ft_putstr_fd("unexpected token `newline'\n", mini->stderr);
+			mini->exit = 258;
+			return (-1);
+		}
 		return (ft_print_error(mini));
+	}
 	if (j > 3)
 		return (unvalid_ident("<", mini, 258));
 	return (0);

@@ -6,10 +6,9 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/12 15:56:51 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/12 16:16:06 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -36,7 +35,7 @@ void	handle_line(int lineret, t_mini *mini, char **envp)
 
 	while (lineret)
 	{
-		// ft_putstr_fd("> ", mini->stdout);
+		ft_putstr_fd("> ", mini->stdout);
 		ft_signals(mini, 0);
 		lineret = get_next_line(mini->stdin, &line);
 		if (lineret < 0)

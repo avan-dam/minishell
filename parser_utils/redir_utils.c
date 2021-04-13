@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 18:51:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/12 17:38:08 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/13 11:07:41 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	redir_error(t_mini *mini, int i, t_base *ptr)
 {
 	if (i == 1)
 	{
-		if (ptr->av[i + 1] && ptr->av[i + 2] && (numb_char(ptr->av[i + 1], '>') > 0 || (numb_char(ptr->av[i + 1], '<') > 0)))
+		if (ptr->av[i + 1] && ptr->av[i + 2]
+			&& (numb_char(ptr->av[i + 1], '>') > 0
+				|| (numb_char(ptr->av[i + 1], '<') > 0)))
 		{
 			ft_putstr_fd("bash: syntax error near ", mini->stderr);
 			ft_putstr_fd("unexpected token `", mini->stderr);

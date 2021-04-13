@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:46:57 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/03/31 14:06:39 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/13 20:02:49 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ int	check_valid_unset(char *unset, t_mini *mini)
 static int	ft_unset_builtin_go(t_mini *mini, char *unset)
 {
 	t_list		*tlist;
-	int			i;
 
-	i = 0;
 	if (unset == NULL)
 		return (0);
 	if (check_valid_unset(unset, mini) == -1)

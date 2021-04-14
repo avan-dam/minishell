@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:38:57 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/06 18:16:27 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 10:47:46 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,28 @@ int	add_new_into_list(int j, t_base *ptr, int i)
 char	**ft_remove_redir_av(t_base *ptr, int i, int j)
 {
 	char	**temp;
+	int		k;
 
+	k = 2;
+	ptr->size = ptr->size - 2;
+	if (ptr->prev && ptr->prev->type == T_PIPE)
+	{	
+		// printf("k--\n");
+		ptr->size++;
+		k--;
+	}
 	temp = (char **)malloc(sizeof(char *) * (ptr->size + 1));
 	if (temp == NULL)
 		return (NULL);
 	while (j < i)
 	{
 		temp[j] = ft_strdup(ptr->av[j]);
+		// printf("temp[j]");
 		j++;
 	}
-	while (ptr->av[j + 2] && j < ptr->size)
+	while (ptr->av[j + k] && j < ptr->size)
 	{
-		temp[j] = ft_strdup(ptr->av[j + 2]);
+		temp[j] = ft_strdup(ptr->av[j + k]);
 		j++;
 	}
 	temp[j] = NULL;

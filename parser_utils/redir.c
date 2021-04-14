@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 10:37:21 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 10:48:49 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ static int	open_file_more(t_base *ptr, int i, t_mini *mini, int k)
 	if (ft_strcmp("<", ptr->av[i]) == 0)
 	{
 		mini->stdin = 0;
-		printf("then open\n");
+		// printf("then open\n");
 		if (!(ptr->prev) || (ptr->prev && ptr->prev->type != T_PIPE))
 		{
-			printf("do i open\n");
+			// printf("do i open\n");
 			mini->stdin = open(ptr->av[i + 1], R, 0666);
 			if (mini->stdin == -1)
 				return (error_opening(ptr->av[i + 1], mini));
 		}
-		printf("mini->stdin%d mini->stdout%d\n", mini->stdin, mini->stdout);
+		// printf("mini->stdin%d mini->stdout%d\n", mini->stdin, mini->stdout);
 	}
-	printf("mini->stdin%d mini->stdout%d\n", mini->stdin, mini->stdout);
+	// printf("mini->stdin%d mini->stdout%d\n", mini->stdin, mini->stdout);
 	return (0);
 }
 
@@ -71,11 +71,16 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini, int k)
 	ret = open_file_more(ptr, i, mini, k);
 	if (ret == -1)
 		return (-1);
-	ptr->size = ptr->size - 2;
 	if (ret == 0)
+	{	
+		// printf("remove me\n");
 		ptr->av = ft_remove_redir_av(ptr, i, 0);
+	}
 	if (ret == 1)
+	{	
+		// printf("remove twooo\n");
 		ptr->av = ft_remove_redir_av(ptr, i + 1, 0);
+	}
 	if (ptr->av == NULL)
 		return (-1);
 	return (i);

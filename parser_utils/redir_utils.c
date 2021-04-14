@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 18:51:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 10:30:43 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 10:48:53 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_close_correct(char *open, t_mini *mini, t_base *ptr)
 	(void)ptr;
 	if (ptr->prev && ptr->prev->type == T_PIPE)
 	{
-		printf("in me\n");
+		// printf("in me\n");
 		if (mini->stdout != 1)
 		{	
 			close(mini->stdout);

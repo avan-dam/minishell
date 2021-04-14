@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/01 23:29:14 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/12 17:38:36 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 10:34:52 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static void	child_process_shell(t_mini *mini, char **envp)
 
 static int	child_process_more(t_base *ptr, char **envp, t_mini *mini)
 {
+	printf("ptr->av[0][%s] IN CHILDE mini->stdout%d mini->stdin%d\n", ptr->av[0], mini->stdout, mini->stdin);
+	printf("IN CHILDE STDOUT%d STDIN%d\n", STDOUT, STDIN);
 	if (ptr->type == T_PIPE && dup2(ptr->fd[1], STDOUT) < 0)
 		return (1);
 	if (ptr->prev && ptr->prev->type == T_PIPE

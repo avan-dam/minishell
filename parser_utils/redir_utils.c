@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 18:51:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/13 11:45:39 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 10:30:43 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	redir_error(t_mini *mini, int i, t_base *ptr)
 	return (-1);
 }
 
-void	ft_close_correct(char *open, t_mini *mini)
+void	ft_close_correct(char *open, t_mini *mini, t_base *ptr)
 {
 	if ((ft_strcmp(">", open) == 0) || (ft_strcmp(">>", open) == 0))
 	{
@@ -74,5 +74,20 @@ void	ft_close_correct(char *open, t_mini *mini)
 	{
 		if (mini->stdin != 0)
 			close(mini->stdin);
+	}
+	(void)ptr;
+	if (ptr->prev && ptr->prev->type == T_PIPE)
+	{
+		printf("in me\n");
+		if (mini->stdout != 1)
+		{	
+			close(mini->stdout);
+			mini->stdout = 1;
+		}
+		if (mini->stdin != 0)
+		{	
+			close(mini->stdin);
+			mini->stdout = 0;
+		}
 	}
 }

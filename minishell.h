@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 08:54:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 09:50:06 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int					div_str(char *line, int i, char *result, char *tmp);
 int					no_commands_line(char *line, int i, t_mini *mini);
 int					ft_print_error(t_mini *mini);
 void				fix_redir_space_echo(t_base *ptr, int i);
-void				ft_close_correct(char *open, t_mini *mini);
+void				ft_close_correct(char *open, t_mini *mini, t_base *ptr);
 
 /*
 **	EXECVE FUNCTION

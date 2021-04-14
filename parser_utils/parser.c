@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 12:45:03 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 16:19:23 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	check_valid_dividers(t_base *t, t_base *t2, t_base *t3, t_mini *m)
 		if ((t->av[0][0] == ';')
 			|| (t->av[0][0] == '|'))
 		{
+			printf("in herrrrrrre\n");
 			ft_putstr_fd("bash: syntax error near ", m->stderr);
 			ft_putstr_fd("unexpected token `", m->stderr);
 			ft_putchar_fd(t->av[0][0], m->stderr);

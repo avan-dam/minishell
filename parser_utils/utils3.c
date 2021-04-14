@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 16:27:02 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 14:34:30 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 16:19:02 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	unvalid_ident(char *error, t_mini *mini, int exitstatus)
 		|| (ft_strcmp(error, ">") == 0)
 		|| (ft_strcmp(error, "<") == 0))
 	{
+		printf("in here\n");
 		ft_putstr_fd("bash: syntax error ", mini->stderr);
 		ft_putstr_fd("near unexpected token '", mini->stderr);
 		ft_putstr_fd(error, mini->stderr);

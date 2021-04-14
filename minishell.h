@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 12:45:37 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 14:33:21 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void				handle_line(int lineret, t_mini *mini, char **envp);
 int					ft_echo(t_base *ptr, t_mini *mini);
 void				check_last_arg(t_base *ptr, int i);
 int					ft_echo_n(char *str, t_mini *mini);
+char				*trim_string(t_base *ptr, char *str, int i);
 int					free_return(char *str);
 int					check_empty(char *str);
 int					ft_export(t_base *ptr, t_mini *mini);
@@ -171,6 +172,8 @@ int					ft_is_builtin(char *str);
 int					ft_execve(t_mini *mini, char **envp);
 int					sort_struct_before_redir(t_base *ptr, t_mini *mini);
 void				sort_struct_after_redir(t_base *ptr);
+int					ptr_size_null(t_base *ptr, t_mini *mini);
+int					ft_check_empty_av(t_base *ptr);
 int					ft_check_usr_bin(t_base *ptr, struct dirent *dit,
 						DIR *dirp, int i);
 int					ft_check_in_bin(t_base *ptr, struct dirent *dit,
@@ -198,5 +201,6 @@ int					send_to_unvalid(t_mini *mini, int j, char *s);
 int					send_to_unvalid_one(int j, char *s, int k, t_mini *mini);
 void				free_all(char *tmp2, char *tmp);
 int					dolla_while_checker(char *s, int i);
+char				*create_tmp2(t_base *ptr, int i, char *tmp2, t_mini *mini);
 
 #endif

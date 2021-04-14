@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 17:04:06 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 08:55:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 14:29:40 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,30 @@ void	sort_struct_after_redir(t_base *ptr)
 		}
 		i++;
 	}
+}
+
+int	ptr_size_null(t_base *ptr, t_mini *mini)
+{
+	while (ptr->size == 0)
+	{
+		ptr = ptr->next;
+		if (ptr == NULL)
+			return (0);
+		ptr = ft_redir(mini, ptr);
+	}
+	return (1);
+}
+
+int	ft_check_empty_av(t_base *ptr)
+{
+	int	i;
+
+	i = 0;
+	while (ptr->av[i])
+	{
+		if (ft_strcmp("", ptr->av[i]) == 0)
+			return (-2);
+		i++;
+	}
+	return (0);
 }

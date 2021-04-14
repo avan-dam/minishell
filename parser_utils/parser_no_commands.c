@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 07:59:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 12:39:53 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 14:04:34 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@ static int	set_mini_return(t_mini *mini, char *line, int i)
 {
 	mini->part = ft_substr(line, 0, i);
 	mini->type_end = T_END;
-	// if (line[i] == ';')
-	// {
-	// 	ft_putstr_fd("bash: syntax error near unexpected token `;;'\n", mini->stderr);
-	// 	mini->exit = 258;
-	// 	return (-1);
-	// }
 	return (i);
 }
 

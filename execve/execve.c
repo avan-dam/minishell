@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 12:45:08 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 14:04:17 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 
 int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
+	int		i;
+
+	i = 0;
 	if ((ptr == NULL) || (ptr->size == 0))
 		return (0);
-	int i = 0;
 	while (ptr->av[i])
 	{
 		if (ft_strcmp("", ptr->av[i]) == 0)

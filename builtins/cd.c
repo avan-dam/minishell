@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/06 12:49:32 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 08:51:41 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 14:02:34 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,8 @@ static void	ft_change_directory(t_mini *mini, char *path)
 void	ft_cd(t_base *ptr, t_mini *mini)
 {
 	mini->exit = 0;
-	if (ptr->av[1] == NULL || ft_strcmp(ptr->av[1], "") == 0 
-		|| ft_strcmp(ptr->av[1], "~") == 0)
+	if (ptr->av[1] == NULL || ft_strcmp(ptr->av[1], "~") == 0)
 	{
-		if (ft_strcmp(ptr->av[1], "") == 0 && ptr->av[2])
-		{	
-			ft_change_directory(mini, ptr->av[2]);
-			return ;
-		}
 		if (ptr->av[1] == NULL && ft_get_env("HOME", mini) == NULL)
 		{	
 			ft_putstr_fd("bash: cd: HOME not set\n", mini->stderr);

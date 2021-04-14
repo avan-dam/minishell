@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:44:30 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 11:01:59 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 17:21:36 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,19 @@ int	ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i)
 int	check_file_toredir(t_base *ptr, int i, t_mini *mini)
 {
 	char	*tmp;
+	char	*tmpptr;
 
+	tmpptr = NULL;
+	tmp = NULL;
 	if (ptr->av[i + 1] == NULL)
 		return (redir_error(mini, 1, ptr));
 	if ((ptr->av[i + 1][0] == '"' && ptr->av[i + 1][1] == '"'
 			&& ptr->av[i + 1][2] == '\0') || (ptr->av[i + 1][0] == '\''
 		&& ptr->av[i + 1][1] == '\'' && ptr->av[i + 1][2] == '\0'))
 		return (redir_error(mini, 2, ptr));
+	tmpptr = ptr->av[i + 1];
+	ptr->av[i + 1] = ft_strtrim_backslash(tmpptr, ' ');
+	free(tmpptr);
 	tmp = ptr->av[i + 1];
 	ptr->av[i + 1] = check_tokens(tmp, mini, 0, 0);
 	free(tmp);

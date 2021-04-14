@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 12:17:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 17:19:45 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,12 @@ static int	open_file_more(t_base *ptr, int i, t_mini *mini, int k)
 static int	ft_open_file(t_base *ptr, int i, t_mini *mini, int k)
 {
 	int		ret;
-	char	*temp;
 
 	direction_list(ptr, i, i, 0);
 	if (check_file_toredir(ptr, i, mini) == -1)
 		return (-1);
 	if (ptr->redir == 0)
 		return (i);
-	temp = ptr->av[i + 1];
-	ptr->av[i + 1] = ft_strtrim_backslash(temp, ' ');
-	free(temp);
 	if (ft_tokens_open_argv(ptr, mini, i) == -1)
 		return (-1);
 	ret = open_file_more(ptr, i, mini, k);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:15:39 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/14 15:32:31 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <dirent.h>
-
-#include <stdio.h> // del
 
 # define R O_RDWR
 # define C O_CREAT

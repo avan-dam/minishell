@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 10:48:40 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 10:52:01 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	execves(t_base *ptr, char **envp, t_mini *mini)
 		exit(0);
 	if (pid == 0)
 	{
-		// printf("I AM DUPING HERE mini->stdin%d mini->stdout%d\n", mini->stdin, mini->stdout);
 		dup2(mini->stdin, STDIN);
 		dup2(mini->stdout, STDOUT);
 		prep_child_proces(ptr, mini, envp);

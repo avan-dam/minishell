@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:38:57 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 10:47:46 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 11:11:34 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,26 +84,30 @@ int	add_new_into_list(int j, t_base *ptr, int i)
 	return (0);
 }
 
-char	**ft_remove_redir_av(t_base *ptr, int i, int j)
+int	find_k(t_base *ptr)
 {
-	char	**temp;
-	int		k;
+	int	k;
 
 	k = 2;
 	ptr->size = ptr->size - 2;
 	if (ptr->prev && ptr->prev->type == T_PIPE)
 	{	
-		// printf("k--\n");
 		ptr->size++;
 		k--;
 	}
+	return (k);
+}
+
+char	**ft_remove_redir_av(t_base *ptr, int i, int j, int k)
+{
+	char	**temp;
+
 	temp = (char **)malloc(sizeof(char *) * (ptr->size + 1));
 	if (temp == NULL)
 		return (NULL);
 	while (j < i)
 	{
 		temp[j] = ft_strdup(ptr->av[j]);
-		// printf("temp[j]");
 		j++;
 	}
 	while (ptr->av[j + k] && j < ptr->size)
@@ -121,19 +125,4 @@ char	**ft_remove_redir_av(t_base *ptr, int i, int j)
 	}
 	free(ptr->av);
 	return (temp);
-}
-
-void	fix_redir_space_echo(t_base *ptr, int i)
-{
-	char	*tmp;
-
-	if (i != 0 && ft_strcmp(ptr->av[0], "echo") == 0)
-	{
-		if (ptr->av[i + 1] && ptr->av[i][ft_strlen(ptr->av[i]) - 1] != ' ')
-		{
-			tmp = ptr->av[i];
-			ptr->av[i] = ft_strjoin(tmp, " ");
-			free(tmp);
-		}
-	}
 }

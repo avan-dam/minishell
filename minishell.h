@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 09:50:06 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 11:11:14 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ int					ft_correct_backslash(t_line *s, int i);
 int					ft_extra_check_dolla(t_line *s, int i, int j);
 int					unvalid_ident(char *error, t_mini *mini, int exitstatus);
 t_base				*ft_redir(t_mini *mini, t_base *ptr);
-char				**ft_remove_redir_av(t_base *ptr, int i, int j);
+char				**ft_remove_redir_av(t_base *ptr, int i, int j, int k);
+int					find_k(t_base *ptr);
 int					add_new_into_list(int j, t_base *ptr, int i);
 void				redir_change_backslash(t_base *ptr, int i);
 int					direction_list(t_base *ptr, int i, int j, int k);
@@ -159,6 +160,7 @@ int					no_commands_line(char *line, int i, t_mini *mini);
 int					ft_print_error(t_mini *mini);
 void				fix_redir_space_echo(t_base *ptr, int i);
 void				ft_close_correct(char *open, t_mini *mini, t_base *ptr);
+int					ft_special_open_stdin(t_mini *mini, t_base *ptr, int i);
 
 /*
 **	EXECVE FUNCTION

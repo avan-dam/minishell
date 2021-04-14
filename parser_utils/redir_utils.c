@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 18:51:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 10:48:53 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 11:10:57 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	ft_close_correct(char *open, t_mini *mini, t_base *ptr)
 	(void)ptr;
 	if (ptr->prev && ptr->prev->type == T_PIPE)
 	{
-		// printf("in me\n");
 		if (mini->stdout != 1)
 		{	
 			close(mini->stdout);
@@ -88,6 +87,33 @@ void	ft_close_correct(char *open, t_mini *mini, t_base *ptr)
 		{	
 			close(mini->stdin);
 			mini->stdout = 0;
+		}
+	}
+}
+
+int	ft_special_open_stdin(t_mini *mini, t_base *ptr, int i)
+{
+	mini->stdin = 0;
+	if (!(ptr->prev) || (ptr->prev && ptr->prev->type != T_PIPE))
+	{
+		mini->stdin = open(ptr->av[i + 1], R, 0666);
+		if (mini->stdin == -1)
+			return (error_opening(ptr->av[i + 1], mini));
+	}
+	return (0);
+}
+
+void	fix_redir_space_echo(t_base *ptr, int i)
+{
+	char	*tmp;
+
+	if (i != 0 && ft_strcmp(ptr->av[0], "echo") == 0)
+	{
+		if (ptr->av[i + 1] && ptr->av[i][ft_strlen(ptr->av[i]) - 1] != ' ')
+		{
+			tmp = ptr->av[i];
+			ptr->av[i] = ft_strjoin(tmp, " ");
+			free(tmp);
 		}
 	}
 }

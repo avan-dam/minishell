@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 14:04:17 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/14 14:21:53 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,19 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 	return (0);
 }
 
+// extra check if works, if yes only this needs to go in another file
+static int	ptr_size_null(t_base *ptr, t_mini *mini)
+{
+	while (ptr->size == 0)
+	{
+		ptr = ptr->next;
+		if (ptr == NULL)
+			return (0);
+		ptr = ft_redir(mini, ptr);
+	}
+	return (1);
+}
+
 int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
 	int		i;
@@ -107,13 +120,15 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 	if (ptr == NULL)
 		return (0);
 	sort_struct_after_redir(ptr);
-	while (ptr->size == 0)
-	{
-		ptr = ptr->next;
-		if (ptr == NULL)
-			return (0);
-		ptr = ft_redir(mini, ptr);
-	}
+	if (ptr_size_null(ptr, mini) == 0)
+		return (0);
+	// while (ptr->size == 0)
+	// {
+	// 	ptr = ptr->next;
+	// 	if (ptr == NULL)
+	// 		return (0);
+	// 	ptr = ft_redir(mini, ptr);
+	// }
 	if ((ptr->type == T_PIPE || (ptr->prev && ptr->prev->type == T_PIPE))
 		&& ft_is_builtin(ptr->av[0]) == 1)
 		execves(ptr, envp, mini);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 10:51:58 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 14:25:12 by salbregh      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,18 @@ static char	*trim_string(t_base *ptr, char *str, int i)
 	return (str);
 }
 
+// MAYBE THIS WORKS PLEASE CHECK EXTRA if yes change name and del comments
+static char	*try_this(t_base *ptr, int i, char *tmp2, t_mini *mini)
+{
+	if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
+		tmp2 = trim_string(ptr, tmp2, i);
+	if (numb_char(ptr->av[i], '>') == 0 && numb_char(ptr->av[i], '<') == 0 )
+		tmp2 = check_tokens(ptr->av[i], mini, 0, 9);
+	if (tmp2 == NULL && ptr->av[i] != NULL)
+		tmp2 = ft_strdup(ptr->av[i]);
+	return (tmp2);
+}
+
 static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 {
 	char	*tmp2;
@@ -65,12 +77,13 @@ static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 	{
 		if (!(ptr->av[i + 1]))
 			check_last_arg(ptr, i);
-		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
-			tmp2 = trim_string(ptr, tmp2, i);
-		if (numb_char(ptr->av[i], '>') == 0 && numb_char(ptr->av[i], '<') == 0 )
-			tmp2 = check_tokens(ptr->av[i], mini, 0, 9);
-		if (tmp2 == NULL && ptr->av[i] != NULL)
-			tmp2 = ft_strdup(ptr->av[i]);
+		tmp2 = try_this(ptr, i, tmp2, mini);
+		// if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
+		// 	tmp2 = trim_string(ptr, tmp2, i);
+		// if (numb_char(ptr->av[i], '>') == 0 && numb_char(ptr->av[i], '<') == 0 )
+		// 	tmp2 = check_tokens(ptr->av[i], mini, 0, 9);
+		// if (tmp2 == NULL && ptr->av[i] != NULL)
+		// 	tmp2 = ft_strdup(ptr->av[i]);
 		if ((check_empty(tmp2) == -1) && (numb_char(ptr->av[i], '$') > 0))
 		{
 			free(tmp2);

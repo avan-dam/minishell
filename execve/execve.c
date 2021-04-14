@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 12:09:30 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 12:45:08 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,13 @@ int	exec_cmds(t_base *ptr, char **envp, t_mini *mini)
 {
 	if ((ptr == NULL) || (ptr->size == 0))
 		return (0);
+	int i = 0;
+	while (ptr->av[i])
+	{
+		if (ft_strcmp("", ptr->av[i]) == 0)
+			return (-2);
+		i++;
+	}
 	sort_struct_before_redir(ptr, mini);
 	ptr = ft_redir(mini, ptr);
 	if (ptr == NULL)

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 12:09:21 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 12:45:03 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,7 @@ int	parse_input(char *line, t_mini *mini, char **envp, int i)
 		tmp = ft_strdup(&line[i]);
 		k = create_av_list(&ptr, tmp, mini);
 		if (k == -1)
-		{
-			mini->exit = 1;
 			return (0);
-		}
 		i = i + k;
 		if (!line[i])
 			break ;

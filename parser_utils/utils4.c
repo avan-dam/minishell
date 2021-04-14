@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 16:00:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/13 11:08:00 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 12:19:13 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	send_to_unvalid(t_mini *mini, int j, char *s)
 	{	
 		if (s && ft_strcmp(s, "<<") == 0)
 		{
-			ft_putstr_fd("bash: syntax error near ", mini->stderr);
-			ft_putstr_fd("unexpected token `newline'\n", mini->stderr);
+			ft_putstr_fd("minishell does not supprt <<\n", mini->stderr);
 			mini->exit = 258;
 			return (-1);
 		}

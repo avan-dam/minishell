@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 17:04:06 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 15:32:13 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 16:56:26 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,16 @@ int	ptr_size_null(t_base *ptr, t_mini *mini)
 int	ft_check_empty_av(t_base *ptr, t_mini *mini)
 {
 	int	i;
+	int	len;
 
 	i = 0;
 	while (ptr->av[i])
 	{
 		if (ft_strcmp("", ptr->av[i]) == 0)
 		{
-			if (mini->check == 0)
+			len = ft_strlen(ptr->av[i - 1]) - 1;
+			if (mini->check == 0 && (i == 0
+					|| ((ptr->av[i - 1][len]) != '\\')))
 			{
 				ft_putstr_fd("bash: syntax error near", mini->stderr);
 				ft_putstr_fd(" unexpected token `;;'\n", mini->stderr);

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/22 13:14:31 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 15:30:02 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 16:58:15 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ static int	check_redir(t_mini *m, int j, char *result)
 
 static int	extra_j_check(t_mini *mini, int j)
 {
+	while (mini->part[j] == ' ' && mini->part[j + 1] != '>'
+		&& mini->part[j + 1] != '<')
+		j++;
+	if (j > 0 && (mini->part[j - 1] == '>' || mini->part[j - 1] == '<'))
+	{
+		while (mini->part[j] == '\\')
+			j++;
+	}
 	if (mini->part[j - 1] == '<' || mini->part[j - 1] == '>')
 	{
 		if (j > 1 && (mini->part[j - 2] == '\'' || mini->part[j - 2] == '"'))
@@ -64,10 +72,6 @@ static int 	fill_av_more(t_mini *m, int j, int k)
 		}
 		free(result);
 		result = mem_check_tkns(ft_substr(m->part, k, j - k + 1), m, 0, 4);
-		j++;
-	}
-	while (m->part[j] == ' ' && m->part[j + 1] != '>' && m->part[j + 1] != '<')
-	{	
 		j++;
 	}
 	if (result)

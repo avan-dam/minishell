@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/22 13:14:31 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 12:45:06 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 14:42:21 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static int	extra_j_check(t_mini *mini, int j)
 			j++;
 		}
 	}
-	if (mini->part[j - 1] == ';' && j == (int)ft_strlen(mini->part))
+	if (mini->part[j - 1] == ';' && j == (int)ft_strlen(mini->part)
+		&& (j < 2 || mini->part[j - 2] != '\\'))
 		j--;
 	return (j);
 }

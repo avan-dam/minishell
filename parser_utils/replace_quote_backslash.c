@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/13 11:06:24 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 08:22:54 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,12 @@ int	ft_replace_quotes(t_line *s, int i, int j)
 	{
 		ft_memmove(&s->str[i], &s->str[i + 1], ft_strlen(s->str) - i);
 		i--;
+		if (i == (int)ft_strlen(s->str))
+			i--;
 		if (s->s % 2 == 0)
 			s->d++;
+		if (i == -1 && (ft_strlen(s->str) == 1 || ft_strlen(s->str) == 0))
+			i++;
 	}
 	return (i);
 }

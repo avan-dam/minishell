@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:04:37 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/13 19:21:09 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/13 20:51:51 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	ft_len_replace_dolla(int j, int i, char *s, int k)
 	return (i);
 }
 
-int	free_set_ret(char *oldvar, char *newvar)
+int	free_set_ret(char *oldvar, char *newvar, t_line *s)
 {
 	int	retval;
 
@@ -86,6 +86,8 @@ int	free_set_ret(char *oldvar, char *newvar)
 	retval = 0;
 	if (newvar)
 		retval = ft_len(newvar) - 1;
+	if (retval == -1 && ft_strcmp("", s->str) == 0)
+		retval = 0;
 	return (retval);
 }
 
@@ -110,7 +112,7 @@ int	ft_find_dolla(int i, int j, t_mini *mini, t_line *s)
 		free(newvar);
 		newvar = ft_strdup("$");
 	}
-	retval = free_set_ret(oldvar, newvar);
+	retval = free_set_ret(oldvar, newvar, s);
 	free(s->str);
 	s->str = ft_strjoin_three(start, newvar, end);
 	return (retval);

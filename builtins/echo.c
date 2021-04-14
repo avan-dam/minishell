@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/05 13:26:29 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/13 20:43:57 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 	char	*str;
 
 	str = NULL;
+	tmp2 = NULL;
 	while (ptr->av[i])
 	{
 		if (!(ptr->av[i + 1]))

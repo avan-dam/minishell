@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/13 11:45:09 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 08:27:05 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define STDIN		0
 # define STDOUT		1
 # define STDERR		2
-# define T_END		3	
+# define T_END		3
 # define T_PIPE		4
 # define T_BREAK	5
 

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/12 17:46:50 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/13 20:12:34 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	free_before_exit(t_base *ptr, t_base *tmp)
 {
 	int		k;
+	t_base	*tmp2;
 
 	k = 0;
 	while (ptr)
@@ -23,8 +24,9 @@ static int	free_before_exit(t_base *ptr, t_base *tmp)
 			k = 1;
 		if (k == 1)
 			one_baseclear(ptr);
+		tmp2 = ptr->next;
 		free(ptr);
-		ptr = ptr->next;
+		ptr = tmp2;
 	}
 	return (-1);
 }
@@ -64,7 +66,8 @@ static int	send_exec_cmds(t_base *ptr, char **envp, t_mini *mini, char *line)
 	t_base	*tmp2;
 
 	tmp = ptr;
-	free(line);
+	if (line)
+		free(line);
 	if (check_valid_dividers(ptr, ptr, ptr, mini) == -1)
 		return (0);
 	while (tmp)
@@ -77,9 +80,10 @@ static int	send_exec_cmds(t_base *ptr, char **envp, t_mini *mini, char *line)
 		ft_reset_fds(mini);
 	}
 	while (ptr)
-	{		
+	{
+		tmp = ptr->next;
 		free(ptr);
-		ptr = ptr->next;
+		ptr = tmp;
 	}
 	return (0);
 }

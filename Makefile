@@ -6,7 +6,7 @@
 #    By: salbregh <salbregh@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/29 23:26:43 by salbregh      #+#    #+#                  #
-#    Updated: 2021/04/13 20:06:56 by salbregh      ########   odam.nl          #
+#    Updated: 2021/04/14 08:15:13 by ambervandam   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,9 @@ SRCS =		main.c \
 			execve/processes.c \
 			execve/builtins.c
 
-FLAGS 	= 	-Wall -Werror -Wextra
+FLAGS 	= 	-Wall -Werror -Wextra 
+# -g -fsanitize=address
+
 
 OFILES 	=	$(SRCS:.c=.o)
 

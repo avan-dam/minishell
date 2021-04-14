@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:44:30 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/12 17:54:40 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/14 09:39:38 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,9 @@ int	check_file_toredir(t_base *ptr, int i, t_mini *mini)
 
 	if (ptr->av[i + 1] == NULL)
 		return (redir_error(mini, 1, ptr));
+	if ((ptr->av[i + 1][0] == '"' && ptr->av[i + 1][1] == '"' && ptr->av[i + 1][2] == '\0')
+		|| (ptr->av[i + 1][0] == '\'' && ptr->av[i + 1][1] == '\'' && ptr->av[i + 1][2] == '\0'))
+		return (redir_error(mini,2, ptr));
 	tmp = ptr->av[i + 1];
 	ptr->av[i + 1] = check_tokens(tmp, mini, 0, 0);
 	free(tmp);
@@ -103,6 +106,8 @@ int	direction_list(t_base *ptr, int i, int j, int k)
 {
 	char	*temp;
 
+	// if (ft_strcmp(ptr->av[i + 1], "") == 0)
+	
 	if ((ft_strchr_numb(ptr->av[i + 1], '>', 0) != -1)
 		|| (ft_strchr_numb(ptr->av[i + 1], '<', 0) != -1))
 	{

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/13 20:43:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 09:42:44 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static int	check_n_argv(char *str, t_mini *mini)
 		return (free_return(str));
 	tempptr = str;
 	str = ft_strtrim_backslash(tempptr, ' ');
-	str = mem_check_tkns(str, mini, 0, 6);
+	if (numb_char(str, '>') == 0 && numb_char(str, '<') == 0 )
+		str = mem_check_tkns(str, mini, 0, 6);
 	if (str == NULL || ft_strcmp(str, "") == 0 || ft_strcmp(str, "-") == 0)
 		return (free_return(str));
 	if (str[i] != '-')
@@ -64,9 +65,13 @@ static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 	{
 		if (!(ptr->av[i + 1]))
 			check_last_arg(ptr, i);
+		// printf("beforeFORREAL tmp2[%s]\n", tmp2);
 		if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
 			tmp2 = trim_string(ptr, tmp2, i);
-		tmp2 = check_tokens(ptr->av[i], mini, 0, 9);
+		// printf("before tmp2[%s]\n", tmp2);
+		if (numb_char(ptr->av[i], '>') == 0 && numb_char(ptr->av[i], '<') == 0 )
+			tmp2 = check_tokens(ptr->av[i], mini, 0, 9);
+		// printf("after tmp2[%s]\n", tmp2);
 		if (tmp2 == NULL && ptr->av[i] != NULL)
 			tmp2 = ft_strdup(ptr->av[i]);
 		if ((check_empty(tmp2) == -1) && (numb_char(ptr->av[i], '$') > 0))

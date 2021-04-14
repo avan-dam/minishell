@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/02 14:34:29 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/13 19:38:00 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 09:40:09 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	open_file_more(t_base *ptr, int i, t_mini *mini, int k)
 {
+	// printf("ptr->av[i + 1][%s]\n", ptr->av[i + 1]);
 	if (ft_check_empty(ptr->av[i + 1]) == 1 && k == 1)
 	{
 		mini->exit = 0;
@@ -46,7 +47,9 @@ static int	ft_open_file(t_base *ptr, int i, t_mini *mini, int k)
 	int		ret;
 	char	*temp;
 
+	// printf("ptr->av[i + 1][%s]\n", ptr->av[i + 1]);
 	direction_list(ptr, i, i, 0);
+	// printf("ptr->av[i + 1][%s]\n", ptr->av[i + 1]);
 	if (check_file_toredir(ptr, i, mini) == -1)
 		return (-1);
 	if (ptr->redir == 0)
@@ -131,6 +134,10 @@ t_base	*ft_redir(t_mini *mini, t_base *ptr)
 	int		i;
 
 	i = 0;
+	// for (int i = 0; ptr->av[i]; i++)
+	// {
+	// 	printf("BEFORE ptr->av[i][%s]\n", ptr->av[i]);
+	// }
 	while (ptr->av[i] && i < ptr->size)
 	{
 		if ((ft_strchr_numb(ptr->av[i], '>', 0) != -1)
@@ -151,5 +158,9 @@ t_base	*ft_redir(t_mini *mini, t_base *ptr)
 		ptr->redir = 0;
 		i++;
 	}
+	// for (int i = 0; ptr->av[i]; i++)
+	// {
+	// 	printf("ptr->av[i][%s]\n", ptr->av[i]);
+	// }
 	return (ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/22 13:14:31 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 08:26:09 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 09:39:57 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,24 @@ static int 	fill_av_more(t_mini *m, int j, int k)
 		j++;
 	}
 	while (m->part[j] == ' ' && m->part[j + 1] != '>' && m->part[j + 1] != '<')
+	{	
 		j++;
+	}
+	// printf("here\n");
+	// 		if (m->part[j - 1] == '<' || m->part[j - 1] == '>')
+	// 	{
+	// 		printf("inme\n");
+	// 		if (j > 1 && (m->part[j - 2] == '\'' || m->part[j - 2] == '"'))
+	// 		{
+	// 			while ((m->part[j] == '\'' || m->part[j] == '"'))
+	// 				j++;
+	// 		}
+	// 	}
+	// if(m->part[j + 1] == '>' || m->part[j + 1] == '<')
+	// {
+	// 	while (m->part[j + 2] == '\'' ||  m->part[j + 2] == '"')
+	// 	j++;
+	// }
 	if (result)
 		free(result);
 	return (j);
@@ -69,15 +86,33 @@ static int	substr_av(t_mini *mini, int j, int l, t_base *new)
 	{
 		if (mini->part[j + 1] == '>')
 		{
+			// printf("in this\n");
 			new->av[l] = ft_substr(mini->part, k, j - k + 2);
 			j++;
 		}
 		else
-			new->av[l] = ft_substr(mini->part, k, j - k + 1);
+		{
+			// printf("out middle\n");
+			new->av[l] = ft_substr(mini->part, k, j - k + 1);}
 		j++;
 	}
 	else
+	{	
+		if (mini->part[j - 1] == '<' || mini->part[j - 1] == '>')
+		{
+			if (j > 1 && (mini->part[j - 2] == '\'' || mini->part[j - 2] == '"'))
+			{
+				while ((mini->part[j] == '\'' || mini->part[j] == '"'))
+					j++;
+				j++;
+			}
+		}
+		if (mini->part[j - 1] == ';' && j == (int)ft_strlen(mini->part))
+			j--;
+		// printf("mini->part[j - 1][%c] j is %d && ft_strlen(mini->part is %zu\n", mini->part[j - 1], j, ft_strlen(mini->part));
 		new->av[l] = ft_substr(mini->part, k, j - k);
+		// printf("out here new->av[l][%s]\n", new->av[l]);
+	}
 	return (j);
 }
 

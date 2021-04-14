@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/04 11:10:44 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/04/06 14:30:35 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/14 12:03:22 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 	}
 	mini->numb_cmds = 1;
 	numb_characters = no_of_commands(line, mini, 0);
+	// if (numb_characters == -1)
+	// 	return (-1);
 	new = (t_base *)malloc(sizeof(t_base));
 	if (new == NULL)
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/15 12:04:29 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 16:05:14 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	ft_single_quotes(t_line *s, int i)
 int	ft_replace_quotes(t_line *s, int i, int j)
 {
 	if ((nb_str(s->str, '>') != 0 || nb_str(s->str, '<') != 0)
-		&& (j != 6 && j != 9 && j != 8 && j != 7))
+		&& (j != 6 && j != 9 && j != 8 && j != 7 && j != 5))
 	{
 		s->d++;
 		return (i);

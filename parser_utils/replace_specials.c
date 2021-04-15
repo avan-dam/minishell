@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/15 12:02:50 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 16:04:42 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 	start_struct(&s, str);
 	while (s.str[i] != '\0')
 	{
-		if (s.str[i] == '\\' && ((j == 7) || (j == 8)
+		if (s.str[i] == '\\' && ((j == 7) || (j == 8) || (j == 5)
 				|| (nb_str(s.str, '>') == 0 && nb_str(s.str, '<') == 0)))
 			i = ft_correct_backslash(&s, i);
 		else if ((s.str[i] == '$') && (s.str[i + 1] != '/')

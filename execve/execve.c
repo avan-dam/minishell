@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:41:50 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/15 10:44:37 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 15:53:54 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ static int	execve_more(t_base *ptr, t_mini *mini, char **envp)
 
 	tmp = mini->home;
 	home = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
+	if (ptr->av[0] == NULL)
+		return (0);
 	if (ft_strcmp(ptr->av[0], "exit") == 0)
 	{
 		free(home);

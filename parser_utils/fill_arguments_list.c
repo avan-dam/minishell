@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/22 13:14:31 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/15 10:25:38 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 16:08:05 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static int	extra_j_check(t_mini *mini, int j)
 		j++;
 	if (j > 0 && (mini->part[j - 1] == '>' || mini->part[j - 1] == '<'))
 	{
-		while (mini->part[j] == '\\')
+		while (mini->part[j] == '\\' || mini->part[j] == '\''
+			|| mini->part[j] == '"' || mini->part[j] == '|' )
 			j++;
 	}
 	if (mini->part[j - 1] == '<' || mini->part[j - 1] == '>')

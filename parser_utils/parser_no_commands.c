@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 07:59:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 15:29:42 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 16:04:26 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ int	no_of_commands(char *str, t_mini *mini, int i)
 	char	*result;
 
 	tmp = ft_substr(str, 0, i);
-	result = check_tokens(tmp, mini, 0, 1);
+	result = check_tokens(tmp, mini, 0, 5);
 	while (line_valid(str, i, result) == 1)
 	{
 		if (space_start(str, i) != -1)
 		{
 			i = space_start(str, i);
 			tmp = free_reset_tmp(tmp, result, str, i);
-			result = check_tokens(tmp, mini, 0, 1);
+			result = check_tokens(tmp, mini, 0, 5);
 			if (div_str(str, (i * -1), result, tmp) > 0)
 				return (mini_vals(mini, i, str, div_str(str, i, result, tmp)));
 			mini->numb_cmds++;
@@ -62,7 +62,7 @@ int	no_of_commands(char *str, t_mini *mini, int i)
 			return (mini_vals(mini, i, str, div_str(str, i, result, tmp)));
 		i = no_commands_line(str, i, mini);
 		tmp = free_reset_tmp(tmp, result, str, i);
-		result = check_tokens(tmp, mini, 0, 1);
+		result = check_tokens(tmp, mini, 0, 5);
 	}
 	ft_free_tmps(tmp, result);
 	return (set_mini_return(mini, str, i));

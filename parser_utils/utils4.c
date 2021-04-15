@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 16:00:38 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 16:47:55 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/15 11:00:29 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	send_to_unvalid(t_mini *mini, int j, char *s)
 	{	
 		if (s && ft_strcmp(s, "<<") == 0)
 		{
-			ft_putstr_fd("minishell does not supprt <<\n", mini->stderr);
+			ft_putstr_fd("minishell does not support <<\n", mini->stderr);
 			mini->exit = 258;
 			return (-1);
 		}

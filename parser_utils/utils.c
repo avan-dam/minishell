@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/15 12:04:33 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 16:55:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	nb_str(char *line, char c)
 
 	i = 0;
 	j = 0;
-	if (line == NULL)
+	if (line == NULL || ft_strcmp(line, "") == 0)
 		return (0);
 	while (line[i] != '\0')
 	{

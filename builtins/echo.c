@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 16:52:44 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 14:33:34 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 10:46:48 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	check_n_argv(char *str, t_mini *mini)
 		return (free_return(str));
 	tempptr = str;
 	str = ft_strtrim_backslash(tempptr, ' ');
-	if (numb_char(str, '>') == 0 && numb_char(str, '<') == 0 )
+	if (nb_str(str, '>') == 0 && nb_str(str, '<') == 0 )
 		str = mem_check_tkns(str, mini, 0, 6);
 	if (str == NULL || ft_strcmp(str, "") == 0 || ft_strcmp(str, "-") == 0)
 		return (free_return(str));
@@ -66,7 +66,7 @@ static char	*set_string_after_n(t_base *ptr, int i, t_mini *mini, char *tmp)
 		if (!(ptr->av[i + 1]))
 			check_last_arg(ptr, i);
 		tmp2 = create_tmp2(ptr, i, tmp2, mini);
-		if ((check_empty(tmp2) == -1) && (numb_char(ptr->av[i], '$') > 0))
+		if ((check_empty(tmp2) == -1) && (nb_str(ptr->av[i], '$') > 0))
 		{
 			free(tmp2);
 			tmp2 = ft_strdup("");

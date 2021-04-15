@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 08:24:36 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 10:47:10 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*check_line_valid(t_line *s, t_mini *mini, int j, char *str)
 	backslash = no_org_backslash(str, 0);
 	if (s->s % 2 != 0 || s->d % 2 != 0 || backslash % 2 != 0)
 	{
-		if (j == 0)
+		if (j == 0 || j == 7)
 			ft_print_error(mini);
 		if (j != 2)
 		{
@@ -81,8 +81,8 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 	start_struct(&s, str);
 	while (s.str[i] != '\0')
 	{
-		if (s.str[i] == '\\' && ((j == 7) || (numb_char(s.str, '>') == 0
-					&& numb_char(s.str, '<') == 0)))
+		if (s.str[i] == '\\' && ((j == 7) || (j == 8)
+				|| (nb_str(s.str, '>') == 0 && nb_str(s.str, '<') == 0)))
 			i = ft_correct_backslash(&s, i);
 		if ((s.str[i] == '$') && (s.str[i + 1] != '/') && (s.str[i + 1] != '\\')
 			&& (s.str[i + 1] != '\0') && (s.str[i + 1] != '?')

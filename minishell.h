@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:58:46 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 10:53:06 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int					ft_print_error(t_mini *mini);
 void				fix_redir_space_echo(t_base *ptr, int i);
 void				ft_close_correct(char *open, t_mini *mini, t_base *ptr);
 int					ft_special_open_stdin(t_mini *mini, t_base *ptr, int i);
+int					open_file_more(t_base *ptr, int i, t_mini *mini, int k);
 
 /*
 **	EXECVE FUNCTION
@@ -189,7 +190,7 @@ void				parent_proces(pid_t pid, t_mini *mini, t_base *ptr,
 */
 
 int					ft_strchr_numb(char *line, char c, int i);
-int					numb_char(char *line, char c);
+int					nb_str(char *line, char c);
 int					ft_is_str_int(char *str);
 void				clear_mini(t_mini *mini, int i);
 void				ft_reset_fds(t_mini *mini);

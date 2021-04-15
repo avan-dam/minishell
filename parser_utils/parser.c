@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 10:25:51 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 15:29:59 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 10:16:38 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ int	parse_input(char *line, t_mini *mini, char **envp, int i)
 		else
 			i++;
 	}
+	mini->check = 0;
 	return (send_exec_cmds(ptr, envp, mini, line));
 }

@@ -6,7 +6,7 @@
 /*   By: avan-dam <avan-dam@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/04 11:10:44 by avan-dam      #+#    #+#                 */
-/*   Updated: 2021/04/14 12:27:28 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 10:46:48 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	more_av_list(t_base *new, t_mini *mini, t_base **ptr, char *line)
 		return (-1);
 	}
 	new->type = mini->type_end;
-	if (numb_char(new->av[0], '$') == 0)
+	if (nb_str(new->av[0], '$') == 0)
 		new->av[0] = ft_strtolower(new->av[0]);
 	ft_lstadd_back_base(ptr, new);
 	free(line);
@@ -33,7 +33,7 @@ static int	more_av_list(t_base *new, t_mini *mini, t_base **ptr, char *line)
 
 int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 {
-	int		numb_characters;
+	int		nb_stracters;
 	t_base	*new;
 
 	if (ft_strcmp(line, "") == 0)
@@ -44,8 +44,8 @@ int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 		mini->part = NULL;
 	}
 	mini->numb_cmds = 1;
-	numb_characters = no_of_commands(line, mini, 0);
-	if (numb_characters == -1)
+	nb_stracters = no_of_commands(line, mini, 0);
+	if (nb_stracters == -1)
 		return (-1);
 	new = (t_base *)malloc(sizeof(t_base));
 	if (new == NULL)
@@ -55,5 +55,5 @@ int	create_av_list(t_base **ptr, char *line, t_mini *mini)
 		return (-1);
 	if (more_av_list(new, mini, ptr, line) == -1)
 		return (-1);
-	return (numb_characters);
+	return (nb_stracters);
 }

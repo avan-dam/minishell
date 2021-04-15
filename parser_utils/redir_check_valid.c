@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:44:30 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 17:21:36 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/15 10:46:48 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int	ft_check_redir_in_quotes(t_base *ptr, t_mini *mini, int i)
 
 	tmp = ft_avs_before_redir(ptr, i, 0, NULL);
 	tmp2 = check_tokens(tmp, mini, 0, 1);
-	if ((tmp != NULL && tmp2 == NULL) || (numb_char(ptr->av[i], '\'') > 0
-			|| (numb_char(ptr->av[i], '"') > 0)))
+	if ((tmp != NULL && tmp2 == NULL) || (nb_str(ptr->av[i], '\'') > 0
+			|| (nb_str(ptr->av[i], '"') > 0)))
 	{
 		ptr->av[i] = mem_check_tkns(ptr->av[i], mini, 0, 2);
 		ptr->redir = 3;
@@ -126,8 +126,8 @@ int	direction_list(t_base *ptr, int i, int j, int k)
 	}
 	while (ptr->av[k])
 	{
-		if (ft_strcmp(ptr->av[0], "echo") != 0 || numb_char(ptr->av[k], '>') > 0
-			|| numb_char(ptr->av[k], '<') > 0)
+		if (ft_strcmp(ptr->av[0], "echo") != 0 || nb_str(ptr->av[k], '>') > 0
+			|| nb_str(ptr->av[k], '<') > 0)
 		{
 			temp = ptr->av[k];
 			ptr->av[k] = ft_strtrim_backslash(temp, ' ');

@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 16:27:02 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 15:30:03 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 10:46:48 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ int	unvalid_ident(char *error, t_mini *mini, int exitstatus)
 
 char	*create_tmp2(t_base *ptr, int i, char *tmp2, t_mini *mini)
 {
-	if (!(ptr->av[i + 1]) && (numb_char(ptr->av[i], '\\') > 0) && i == 1)
+	if (!(ptr->av[i + 1]) && (nb_str(ptr->av[i], '\\') > 0) && i == 1)
 		tmp2 = trim_string(ptr, tmp2, i);
-	if (numb_char(ptr->av[i], '>') == 0 && numb_char(ptr->av[i], '<') == 0 )
+	if (nb_str(ptr->av[i], '>') == 0 && nb_str(ptr->av[i], '<') == 0 )
 		tmp2 = check_tokens(ptr->av[i], mini, 0, 9);
 	if (tmp2 == NULL && ptr->av[i] != NULL)
 		tmp2 = ft_strdup(ptr->av[i]);

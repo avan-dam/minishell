@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:25:44 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 10:53:39 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	ft_send_to_parser(char *line, t_mini *mini, char **envp)
 	char	*result;
 
 	tmp = line;
-	result = check_tokens(tmp, mini, 0, 0);
+	result = check_tokens(tmp, mini, 0, 7);
 	if (result != NULL)
 	{
 		free(result);
@@ -35,7 +35,7 @@ void	handle_line(int lineret, t_mini *mini, char **envp)
 
 	while (lineret)
 	{
-		// ft_putstr_fd("> ", mini->stdout);
+		ft_putstr_fd("> ", mini->stdout);
 		ft_signals(mini, 0);
 		lineret = get_next_line(mini->stdin, &line);
 		if (lineret < 0)

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 09:38:57 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/14 17:17:31 by salbregh      ########   odam.nl         */
+/*   Updated: 2021/04/15 10:46:48 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	add_new_into_list(int j, t_base *ptr, int i)
 	if (j > 0)
 	{
 		tmp = ft_substr(ptr->av[i], 0, j);
-		if (ptr->redir != 1 && numb_char(tmp, '\\') == (int)ft_strlen(tmp))
+		if (ptr->redir != 1 && nb_str(tmp, '\\') == (int)ft_strlen(tmp))
 			tmp = ft_memmove(&tmp[0], &tmp[1], ft_strlen(tmp));
 		newav = ptr->av[i];
 		ptr->av[i] = ft_substr(newav, j, ft_strlen(newav) - j);

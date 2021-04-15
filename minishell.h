@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/29 23:26:56 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/15 10:53:06 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 12:04:45 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,6 @@ int					send_to_unvalid_one(int j, char *s, int k, t_mini *mini);
 void				free_all(char *tmp2, char *tmp);
 int					dolla_while_checker(char *s, int i);
 char				*create_tmp2(t_base *ptr, int i, char *tmp2, t_mini *mini);
+void				remove_space_end(t_line *s, int i);
 
 #endif

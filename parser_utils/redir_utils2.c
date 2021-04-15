@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/15 10:50:58 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/15 10:52:57 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 12:04:01 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,17 @@ int	open_file_more(t_base *ptr, int i, t_mini *mini, int k)
 			return (-1);
 	}
 	return (0);
+}
+
+int	error_opening(char *error, t_mini *mini)
+{	
+	ft_putstr_fd("bash: ", mini->stderr);
+	ft_putstr_fd(error, mini->stderr);
+	if (error[0] == '/')
+		ft_putstr_fd(": Is a directory\n", mini->stderr);
+	else
+		ft_putstr_fd(": No such file or directory\n", mini->stderr);
+	ft_reset_fds(mini);
+	mini->exit = 1;
+	return (-1);
 }

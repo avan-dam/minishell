@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/15 10:47:10 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 12:02:50 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ char	*check_tokens(char *str, t_mini *mini, int i, int j)
 		if (s.str[i] == '\\' && ((j == 7) || (j == 8)
 				|| (nb_str(s.str, '>') == 0 && nb_str(s.str, '<') == 0)))
 			i = ft_correct_backslash(&s, i);
-		if ((s.str[i] == '$') && (s.str[i + 1] != '/') && (s.str[i + 1] != '\\')
-			&& (s.str[i + 1] != '\0') && (s.str[i + 1] != '?')
-			&& (j == 6 || j == 9))
+		else if ((s.str[i] == '$') && (s.str[i + 1] != '/')
+			&& (s.str[i + 1] != '\\') && (s.str[i + 1] != '\0')
+			&& (s.str[i + 1] != '?') && (j == 6 || j == 9))
 			i = i + ft_find_dolla(i + 1, i + 1, mini, &s);
 		else if ((s.str[i] == '\'') || (s.str[i] == '"'))
 			i = ft_replace_quotes(&s, i, j);

@@ -6,24 +6,31 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/16 20:06:59 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/15 10:46:48 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 12:04:29 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	remove_space_end(t_line *s, int i)
+static int	backslash_i_val(t_line *s, int i)
 {
-	if (s->str[i] == '\\' && s->str[i + 1] == ' '
-		&& (i + 2 == (int)ft_strlen(s->str)))
-		ft_memmove(&s->str[i + 1], &s->str[i + 2], ft_strlen(s->str) - i - 1);
+	if (s->str[i] == '\'' && s->str[i + 1] != ' ')
+		i++;
+	if (s->str[i] != '"' && (i == 0
+			|| s->str[i - 1] != ' ' || s->str[i - 1] != '"'))
+		i++;
+	return (i);
 }
 
 int	ft_correct_backslash(t_line *s, int i)
 {
 	if (s->str[i + 1] == '>' || s->str[i + 1] == '<'
 		|| (s->str[i + 1] == '~' && s->d % 2 == 1))
+	{
+		if (s->str[i + 2] == '"' || s->str[i + 2] == '\'')
+			return (i + 1);
 		return (i + 2);
+	}
 	if (s->str[i + 1] != '>' && s->str[i + 1] != '<'
 		&& ((s->str[i + 1] == '`') || (s->str[i + 1] == '~')
 			|| (s->str[i + 1] == '"') || ((s->str[i + 1] == '\'')
@@ -34,11 +41,7 @@ int	ft_correct_backslash(t_line *s, int i)
 		if (s->str[i] != '\0' && ((s->str[i] == '$'
 					&& ((i == 0) || ((i > 0) && (s->str[i - 1] != '\\'))))
 				|| s->str[i] == '\'' || s->str[i] == '"' || s->str[i] == '~'))
-		{
-			if (s->str[i] == '\'' && s->str[i + 1] != ' ')
-				i++;
-			i++;
-		}
+			i = backslash_i_val(s, i);
 		remove_space_end(s, i);
 	}
 	else if ((s->s % 2 == 0) && (s->d % 2 == 0)

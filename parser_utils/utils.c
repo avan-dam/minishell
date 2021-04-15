@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/27 17:39:30 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/15 10:46:48 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/15 12:04:33 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,9 @@ char	*ft_string_insert(char *string, int i, char *middle)
 	return (ft_strjoin_three(start, middle, end));
 }
 
-int	error_opening(char *error, t_mini *mini)
-{	
-	ft_putstr_fd("bash: ", mini->stderr);
-	ft_putstr_fd(error, mini->stderr);
-	if (error[0] == '/')
-		ft_putstr_fd(": Is a directory\n", mini->stderr);
-	else
-		ft_putstr_fd(": No such file or directory\n", mini->stderr);
-	ft_reset_fds(mini);
-	mini->exit = 1;
-	return (-1);
+void	remove_space_end(t_line *s, int i)
+{
+	if (s->str[i] == '\\' && s->str[i + 1] == ' '
+		&& (i + 2 == (int)ft_strlen(s->str)))
+		ft_memmove(&s->str[i + 1], &s->str[i + 2], ft_strlen(s->str) - i - 1);
 }

@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/19 20:43:55 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/19 20:58:28 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	handle_sigint1(int sig)
 		ft_putstr_fd("\n", STDOUT);
 	}
 	if (sig == SIGQUIT)
-	{
+	{	
 		ft_putstr_fd("Quit: 3\n", STDOUT);
 	}
 }

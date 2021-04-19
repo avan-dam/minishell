@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/19 18:59:43 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/19 20:47:41 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	handle_line(int lineret, t_mini *mini, char **envp)
 			ft_signals(mini, 1);
 		while (lineret == 0 && line != NULL)
 		{
+			write(1, "  \b\b", 4);
 			lineret = get_next_line(mini->stdin, &templine);
 			tmp = line;
 			line = ft_strjoin(tmp, templine);

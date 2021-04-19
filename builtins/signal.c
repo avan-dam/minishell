@@ -6,7 +6,7 @@
 /*   By: ambervandam <ambervandam@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/07 16:29:41 by ambervandam   #+#    #+#                 */
-/*   Updated: 2021/04/19 19:00:54 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/19 20:43:55 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,23 @@ void	handle_sigint(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1, "\b\b  \b\b", 6);
-		ft_putstr_fd("\n> ", 0);
+		write(STDOUT, "\b\b  \b\b", 6);
+		ft_putstr_fd("\n> ", STDOUT);
 	}
 	if (sig == SIGQUIT)
-		write(1, "\b\b  \b\b", 6);
+		write(STDOUT, "\b\b  \b\b", 6);
 }
 
 void	handle_sigint1(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1, "\b\b  \b\b", 6);
+		ft_putstr_fd("\n", STDOUT);
 	}
 	if (sig == SIGQUIT)
-		write(1, "\b\b  \b\b", 6);
+	{
+		ft_putstr_fd("Quit: 3\n", STDOUT);
+	}
 }
 
 static void	ft_signals_more(t_mini *mini, int i)
@@ -59,6 +61,7 @@ static void	ft_signals_more(t_mini *mini, int i)
 
 void	ft_signals(t_mini *mini, int i)
 {
+	ft_signals_more(mini, i);
 	if (i == 0)
 	{
 		if (signal(SIGQUIT, &handle_sigint) == SIG_ERR)

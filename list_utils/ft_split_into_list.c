@@ -6,7 +6,7 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 20:43:12 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/19 20:55:34 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/19 21:02:26 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	ft_split_into_tlist(t_mini *mini, char *line)
 	var1 = ft_substr(line, 0, i);
 	if (nb_str(var1, '\\') != 0)
 	{
-		printf("i print here\n");
 		unvalid_ident(line, mini, 1);
 		free(var1);
 		return (-1);

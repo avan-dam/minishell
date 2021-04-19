@@ -6,11 +6,21 @@
 /*   By: salbregh <salbregh@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/17 22:36:40 by salbregh      #+#    #+#                 */
-/*   Updated: 2021/04/15 16:43:05 by ambervandam   ########   odam.nl         */
+/*   Updated: 2021/04/19 18:59:43 by ambervandam   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	main_error_check(int lineret, char *line, t_mini *mini)
+{
+	if (lineret < 0)
+	{
+		free(line);
+		ft_lstclear(&mini->env1);
+		exit(1);
+	}
+}
 
 static void	ft_send_to_parser(char *line, t_mini *mini, char **envp)
 {
@@ -32,22 +42,27 @@ static void	ft_send_to_parser(char *line, t_mini *mini, char **envp)
 void	handle_line(int lineret, t_mini *mini, char **envp)
 {
 	char	*line;
+	char	*templine;
+	char	*tmp;
 
 	while (lineret)
 	{
 		ft_putstr_fd("> ", mini->stdout);
 		ft_signals(mini, 0);
 		lineret = get_next_line(mini->stdin, &line);
-		if (lineret < 0)
+		if (lineret == 0 && ft_strcmp(line, "") == 0)
+			ft_signals(mini, 1);
+		while (lineret == 0 && line != NULL)
 		{
-			free(line);
-			ft_lstclear(&mini->env1);
-			exit(1);
+			lineret = get_next_line(mini->stdin, &templine);
+			tmp = line;
+			line = ft_strjoin(tmp, templine);
+			free(templine);
+			free(tmp);
 		}
+		main_error_check(lineret, line, mini);
 		ft_send_to_parser(line, mini, envp);
 	}
-	if (lineret == 0)
-		ft_signals(mini, 1);
 	ft_lstclear(&mini->env1);
 }
 
